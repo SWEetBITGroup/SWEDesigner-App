@@ -1,2 +1,2 @@
 theme: jekyll-theme-hacker
-include: _*/**/*.html
+include: _*.html
