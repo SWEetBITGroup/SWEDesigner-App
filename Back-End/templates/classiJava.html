@@ -1,0 +1,18 @@
+Class {{name}}{
+{{#private}} private:
+    {{#attrP}}
+        {{typeP}} {{varP}} {{#defP}} = {{valueP}} {{/defP}};
+    {{/attrP}}
+    {{#methodsP}}
+        {{typeMethodP}} {{nameMethodP}}({{#paramP}} {{#lastP}} {{tParPL}} {{nParPL}} {{/lastP}} {{#notLastP}} {{tParP}} {{nParP}}, {{/notLastP}} {{/paramP}});
+    {{/methodsP}}  
+{{/private}}
+{{#public}} public:
+    {{#attrPU}}
+        {{typePU}} {{varPU}} {{#defPU}} = {{valuePU}} {{/defPU}};
+    {{/attrPU}}
+    {{#methodsPU}}
+        {{typeMethodPU}} {{nameMethodPU}}({{#paramPU}} {{#lastPU}} {{tParPUL}} {{nParPUL}} {{/lastPU}} {{#notLastPU}} {{tParPU}} {{nParPU}}, {{/notLastPU}} {{/paramPU}});
+    {{/methodsPU}}  
+{{/public}}}
+}

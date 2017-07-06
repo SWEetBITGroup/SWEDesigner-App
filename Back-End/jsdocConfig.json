@@ -1,0 +1,35 @@
+{
+    "tags": {
+        "allowUnknownTags": true
+    },
+    "source" :{
+        "include" : ["index.js",
+            "serverLoader.js",
+            "./controller/middleware/midLoader.js",
+            "./controller/middleware/parse.js",
+            "./controller/middleware/encrypt.js",
+            "./controller/services/parseService.js",
+            "./controller/services/encryptService.js",
+            "./model/mongooseConnection.js",
+            "./model/mongooseRequest.js",
+            "./model/cryptKeySchema.js"
+        ],
+        "includePattern": ".+\\.js(doc)?$",
+        "excludePattern": "(^|\\/|\\\\)_"
+    },
+   "opts": {
+    "template": "node_modules/tui-jsdoc-template"
+    },
+    "templates": {
+        "name": "SWEDesigner API",
+        "footerText" : "SWEDesigner by SWEet Bit",
+        "tabNames": {
+            "api" : "API"
+        },
+        "logo": {
+            "url": "https://github.com/SWEetBIT/SWEDesigner--Documentazione/blob/master/common/logo%20trasparente.png?raw=true",
+            "width": "auto",
+            "height": "auto"
+        }
+    }
+}

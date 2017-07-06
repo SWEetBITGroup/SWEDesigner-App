@@ -1,0 +1,40 @@
+import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
+
+Class {{name}}{
+    {{#private}} private:
+        {{#attrP}}
+            {{typeP}} {{varP}} {{#defP}} = {{valueP}} {{/defP}};
+        {{/attrP}}
+        {{#methodsP}}
+            private {{typeMethodP}} {{nameMethodP}}({{#paramP}} {{#lastP}} {{tParPL}} {{nParPL}} {{/lastP}} {{#notLastP}} {{tParP}} {{nParP}}, {{/notLastP}} {{/paramP}}){
+                {{corpoMP}}
+            }
+        {{/methodsP}}  
+    {{/private}}
+    {{#public}} public:
+        {{#attrPU}}
+            {{typePU}} {{varPU}} {{#defPU}} = {{valuePU}} {{/defPU}};
+        {{/attrPU}}
+        {{#methodsPU}}
+            {{#main}}public static void Main(String Args{}){
+                {{corpoM}}
+            }
+            {{/main}}
+            {{#notMain}}
+            public {{typeMethodPU}} {{nameMethodPU}}({{#paramPU}} {{#lastPU}} {{tParPUL}} {{nParPUL}} {{/lastPU}} {{#notLastPU}} {{tParPU}} {{nParPU}}, {{/notLastPU}} {{/paramPU}}){
+                {{corpoME}}
+            }
+            {{/notMain}}
+        {{/methodsPU}} 
+    {{/public}}
+}
+        
+            
+                
+    
