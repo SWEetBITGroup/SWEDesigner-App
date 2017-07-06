@@ -204,16 +204,28 @@ login: function(mail, pwd, cb){ //giusta
     }
   });
 },
-//DA MODIFICARE TUTTE LE FUNZIONI DI SEGUITO
-/*forgot_mail: function(){
-      app.post('/ritorna_email', function(req, res){
-      user.find({'username': req.body.username}, '-_id email', function(err, em){
-      if(err) console.log(err);
-      res.send(em);
-      console.log(em);
-  });
-});
+/**
+ * @function forgot_mail
+ * @description
+ * This function fetch a particular mail from Database
+ * @param {string} usr Username of user
+ * @param {function} cb Callback
+ * @return {void}
+ */
+forgot_mail: function(usr, cb){
+    user.find({'username': usr}, '-_id email', function(err, mail){
+        if(err){
+            console.log("errore nel recupero della mail");
+            cb(true, "");
+        }
+        else{
+            console.log("Mail recuperata");
+            cb(false, mail);
+        }
+    })
 },
+//DA MODIFICARE TUTTE LE FUNZIONI DI SEGUITO
+/*
 //		FUNZIONI DI AGGIORNAMENTO
 update_proj: function(){
       app.post('/aggiorna_progetto', function(req, res){		//Funzione che aggiorna un progetto dato il nome progetto e l'utente, ritorna true se l'aggiornamento è andato a buon fine, false altrimenti

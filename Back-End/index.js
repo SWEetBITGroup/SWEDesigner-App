@@ -180,6 +180,19 @@ app.listen(port, ()=>{
           }
         })
       })
+      app.post("/forgotMail", function(req, res){
+        var usr = req.body.username;
+        mongooseRequest.forgot_mail(usr, function(err, x){
+          if(err){
+            console.log("problema con il recupero mail");
+            res.send("problema con il recupero mail");
+          }
+          else{
+            console.log("email recuperata: "+x);
+            res.send("email recuperata: "+x);
+          }
+        })
+      })
     //Projects' Query
     app.post("/insProject", function(req, res){
       var name = req.body.nome_progetto;
