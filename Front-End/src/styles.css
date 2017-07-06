@@ -1,0 +1,10 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import '~https://fonts.googleapis.com/icon?family=Material+Icons';
+@import '~@angular/material/prebuilt-themes/purple-green.css';
+
+ body {
+   margin: 0;
+   padding: 0;
+   min-height: 100vh;
+ }

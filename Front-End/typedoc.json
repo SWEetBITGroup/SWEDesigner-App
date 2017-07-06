@@ -1,0 +1,17 @@
+{
+  "name": "SWEDesigner",
+  "mode": "modules",
+  "out": "./doc",
+  "theme": "default",
+  "exclude": "**/*+(e2e|spec|index|po|module|test|polyfills|main|environment|prod|app.component).ts",
+  "ignoreCompilerErrors": "true",
+  "experimentalDecorators": "true",
+  "emitDecoratorMetadata": "true",
+  "target": "ES5",
+  "moduleResolution": "node",
+  "preserveConstEnums": "true",
+  "stripInternal": "true",
+  "suppressExcessPropertyErrors": "true",
+  "suppressImplicitAnyIndexErrors": "true",
+  "module": "commonjs"
+}

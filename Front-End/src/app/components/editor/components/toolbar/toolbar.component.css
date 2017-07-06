@@ -1,0 +1,107 @@
+.toolbar {
+  height: 100%;
+  background-color: #F1EDEA;
+  overflow: hidden;
+}
+
+.classi {
+  /*display: none;*/
+}
+
+.tipo {
+  text-align: center;
+  font-weight: bold;
+  vertical-align: middle;
+}
+
+.icona {
+  margin:0 auto;
+  display: block;
+  height: 40px;
+  width: 40px;
+}
+
+.add {
+  cursor: pointer;
+  height: 40px;
+  width: 40px;
+  outline:none;
+  vertical-align: middle;
+  padding: 0;
+
+}
+
+.add:hover {
+  opacity: 0.4;
+}
+
+.addClasse {
+    background: url(imgs/Classi/Class.svg) no-repeat top left;
+    background-size: contain;
+
+}
+
+.addInterfaccia {
+    background: url(imgs/Classi/Interface.svg) no-repeat top left;
+    background-size: contain;
+}
+
+.addAstratta {
+    background: url(imgs/Classi/Abstract.svg) no-repeat top left;
+    background-size: contain;
+}
+
+.addCommento {
+    background: url(imgs/Classi/EsempioClasse.png) no-repeat top left;
+    background-size: contain;
+}
+
+.addAssociazione {
+    background: url(imgs/Connettori/Association.svg) no-repeat top left;
+    background-size: contain;
+}
+
+.addGeneralizzazione {
+    background: url(imgs/Connettori/Generalization.svg) no-repeat top left;
+    background-size: contain;
+}
+
+.addImplementazione {
+    background: url(imgs/Connettori/Implementation.svg) no-repeat top left;
+    background-size: contain;
+}
+
+.addStart {
+  background: url(imgs/Activity/Cerchio.svg) no-repeat top left;
+  background-size:100%;
+}
+
+.addEnd {
+  background: url(imgs/Activity/CerchioCerchio.svg) no-repeat;
+  background-size:100%;
+}
+
+.addAttivita {
+  background: url(imgs/Activity/Rettangolo.svg) no-repeat top left;
+  background-size:100%;
+}
+
+.addAttivitaFor {
+  background: url(imgs/Activity/RettangoloForchetta.svg) no-repeat top left;
+  background-size:100%;
+}
+
+.addConnettore {
+  background: url(imgs/Activity/Freccia.svg) no-repeat;
+  background-size:100%;
+}
+
+.addDecision {
+  background: url(imgs/Activity/Rombo.svg) no-repeat;
+  background-size:100%;
+}
+
+/*Blocco di icone inizialmente settato a false*/
+.activity {
+  /*display: none;*/
+}

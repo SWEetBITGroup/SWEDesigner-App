@@ -1,0 +1,28 @@
+#paper {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.editClass {
+  z-index: 10;
+  position: absolute;
+  width: 33.4%;
+  margin: 0;
+  padding: 0;
+  top: 0;
+  left: 100%;
+}
+
+.toolbar {
+  position: absolute;
+  width: 95px;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  top: 0;
+  left: 0;
+  border-right: 1px solid black;
+}
