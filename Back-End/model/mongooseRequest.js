@@ -20,6 +20,16 @@ var db = mongoose.connection;
 
 module.exports ={
 //INSERIMENTI
+/**
+ * @function ins_usr
+ * @description
+ * This function create and insert a new user into Database.
+ * @param {string} usr Username of new user.
+ * @param {string} pwd Password of new user.
+ * @param {string} mail Email of new user.
+ * @param {function} cb Callback 
+ * @return {void}
+ */
 ins_usr: function(usr, pwd, mail, cb){  //giusta
     var ins= new user({
         username: usr,
@@ -37,6 +47,15 @@ ins_usr: function(usr, pwd, mail, cb){  //giusta
         }
     });
 },
+/**
+* @function ins_proj
+* @description
+* This function create and insert a new project into Database.
+* @param {string} name Name of new user.
+* @param {Object} proj JSON of project.
+* @param {function} cb Callback 
+* @return {void}
+*/
 ins_proj: function(name, usr, proj, cb){ //giusta
     var ins= new proget({
     nome_progetto: name,
@@ -81,6 +100,14 @@ ins_crypt_param: function(k, i, cb){
       });
 },
 // 		FUNZIONI CON RITORNO DATI SALVATI NEL DATABASE
+/**
+ * @function load_allProj
+ * @description
+ * This function fetch all projects of a specific user
+ * @param {string} username Username of user
+ * @param {function} cb Callback
+ * @return {void}
+ */
 load_allProj: function(username, cb){
       proget.find({'username': username},' -_id nome_progetto', function(err, progetti){ //giusta
       if(err){
@@ -113,7 +140,14 @@ load_keyCrypt: function(cb){
                   cb(false, json);
           }
       })        
-},
+    },
+    /**
+     * @function load_all_usr
+     * @description 
+     * This function fetch all user from Database
+     * @param {function} cb Callback
+     * @return {void}
+     */
 load_all_usr : function(cb){ //giusta
     user.find({}, function(err, utenti){
         if(err){
@@ -125,6 +159,14 @@ load_all_usr : function(cb){ //giusta
         }
     })
 },
+/**
+ * @function load_proj
+ * @description
+ * This function fetch from Database a single project of an specific user
+ * @param {string} name Name of project
+ * @param {string} usr Username of user
+ * @param {function} cb Callback
+ */
 load_proj: function(name, usr, cb){ //giusta
     proget.findOne({'nome_progetto': name, 'username': usr}, 'project', function(err, proj){
       if(err){
@@ -136,6 +178,14 @@ load_proj: function(name, usr, cb){ //giusta
     } 
   });
 },
+/**
+ * @function login
+ * @description
+ * This Function control if a speciic user is in Database and send to client True or False for the login function
+ * @param {string} mail Email of user
+ * @param {string} pwd Password of user
+ * @param {function} cb Callback
+ */
 login: function(mail, pwd, cb){ //giusta
       user.find({'mail': mail, 'pass': pwd}, '-_id mail pass', function(err, logged){
       if(err){
@@ -154,7 +204,8 @@ login: function(mail, pwd, cb){ //giusta
     }
   });
 },
-forgot_mail: function(){
+//DA MODIFICARE TUTTE LE FUNZIONI DI SEGUITO
+/*forgot_mail: function(){
       app.post('/ritorna_email', function(req, res){
       user.find({'username': req.body.username}, '-_id email', function(err, em){
       if(err) console.log(err);
@@ -252,7 +303,7 @@ delete_usr: function(){
           });
   });
 });
-},
+},*/
 /**
  * @function drop_schema
  * @description
