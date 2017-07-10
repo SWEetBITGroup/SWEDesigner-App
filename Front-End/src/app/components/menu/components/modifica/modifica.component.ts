@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 
 
-import { EditServiceService } from '../../../../services/edit-service.service';
+import { MenuService } from '../../../../services/menu.service';
 
 @Component({
   selector: 'app-modifica',
@@ -12,16 +12,16 @@ export class ModificaComponent implements OnInit {
 
 
 
-  constructor(private editService: EditServiceService) {
+  constructor(private menuService: MenuService) {
 
   }
 
   doZoomIn(){
-    this.editService.zoomIn();
+    this.menuService.zoomIn();
   }
 
   doZoomOut(){
-    this.editService.zoomOut();
+    this.menuService.zoomOut();
   }
 
   ngOnInit() {

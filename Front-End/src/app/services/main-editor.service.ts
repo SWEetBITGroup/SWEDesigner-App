@@ -196,4 +196,8 @@ export class MainEditorService {
     return this.project.getClasse(name);
   }
 
+  getProject() {
+    return this.project;
+  }
+
 }

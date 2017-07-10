@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
+import { MenuService } from '../../../../services/menu.service';
+import { MainEditorService } from '../../../../services/main-editor.service';
+
 @Component({
   selector: 'app-file',
   templateUrl: './file.component.html',
@@ -7,12 +10,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FileComponent implements OnInit {
 
-  constructor() { }
+  constructor(private menuService: MenuService,
+              private mainEditorService: MainEditorService) { }
 
   ngOnInit() {
   }
   
   esporta() {
-    
+    this.menuService.encrypt(JSON.parse(this.mainEditorService.getProject().toJSON()));
   }
 }

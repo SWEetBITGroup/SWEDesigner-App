@@ -5,7 +5,7 @@ import { Classe } from '../components/editor/models/classe';
  * to retrive it's inforations
  */
 export class Global {
-  private nome_progetto = "culo";
+  private nome_progetto = "Proj";
   private diagramma: string;
   private classi = new Array<Classe>();
 

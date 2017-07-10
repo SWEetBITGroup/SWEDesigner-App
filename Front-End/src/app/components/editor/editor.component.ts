@@ -1,7 +1,7 @@
 import { Component, OnInit , AfterViewInit, Input } from '@angular/core';
 
 import { ClassMenuService } from './services/class-menu.service';
-import { EditServiceService } from '../../services/edit-service.service';
+import { MenuService } from '../../services/menu.service';
 import { MainEditorService } from '../../services/main-editor.service';
 
 import { Subscription } from 'rxjs/Subscription';
@@ -66,12 +66,12 @@ export class EditorComponent implements OnInit {
    * @param mainEditorService
    */
   constructor(private classMenuService: ClassMenuService,
-              private editService: EditServiceService,
+              private menuService: MenuService,
               private mainEditorService: MainEditorService) {
     this.selectedCell = null;
 
     // Subscribe all'oggetto observable per la funzione di zoom
-    this.sub = editService.selectedGrapg$.subscribe(
+    this.sub = menuService.selectedGrapg$.subscribe(
       (x) => {
         if(x=='+')
           this.zoomIn();
