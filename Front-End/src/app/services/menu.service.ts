@@ -28,6 +28,8 @@ export class MenuService {
     this.selectedGraphService.next('-');
   }
 
+
+
   encrypt(proj: JSON) {
     // let headers = new Headers({ 'Content-Type': 'application/json' });
     // let options = new RequestOptions({ headers: headers });
@@ -43,27 +45,61 @@ export class MenuService {
                console.log('diobueo');
               },
               error => {console.log(JSON.stringify(error));});
+            }
+            
+  readFile(file, onloadCallBack){
+    var reader = new FileReader();
+    reader.readAsText(file, "UTF-8");
+    reader.onload = onloadCallBack;
   }
 
   import(event) {
-    let fileList: FileList = event.target.files;
-    console.log(fileList);
-    if(fileList.length > 0) {
-        let file: File = fileList[0];
-        let formData:FormData = new FormData();
-        var reader = new FileReader();
-        formData.append(file.name, file);
-        console.log(reader.readAsText(file));
-        let headers = new Headers();
-        headers.append('Content-Type', 'multipart/form-data');
-        headers.append('Accept', 'application/json');
-        let options = new RequestOptions({ headers: headers });
-        this.http.post('/decrypt', formData, options)
-            .map(res => res.json())
-            .subscribe(
-                data => console.log('banana'+data),
-                error => console.log(error)
-            )
+    var file = event.srcElement.files[0];
+    var readed;
+    if(file){
+      this.readFile(file, function(e){
+        var contents: any = e.target;
+        var readed = JSON.parse(contents.result);
+        console.log(readed);
+        this.http.post('/decrypt', readed.data, {
+          method: RequestMethod.Post,
+          headers: new Headers({'Content-Type': 'application/json'})})
+          .subscribe((data)=>{
+            console.log(data);
+          },
+        error => {console.log(error)})
+      })
     }
+    
   }
 }
+
+/*
+var file = event.target.files[0];
+var reader = new FileReader();
+reader.onload = file =>{
+  var contents: any = file.target;
+  this.contentProj = contents.result;
+};
+console.log("madonnamaiala" + this.contentProj);
+this.http.post('/decrypt', this.contentProj, {
+  method: RequestMethod.Post,
+  headers: new Headers({'Content-Type': 'application/json'})})
+  .subscribe((data)=>{
+    console.log(data);
+  },
+error => {console.log(error)})
+}*/
+
+/*
+if(file){
+  var reader = new FileReader();
+  reader.readAsText(file, "UTF-8");
+  reader.onload = function(e){
+    var contents: any = e.target;
+    readed = JSON.parse(contents.result);
+  }
+  reader.onerror = function(e){
+    console.log("non leggo dio cane");
+  }
+}*/

@@ -629,6 +629,249 @@ var ToolbarComponent = (function () {
     ToolbarComponent.prototype.addConnettore = function (cellView) {
         this.mainEditorService.addConnettore(cellView);
     };
+    ToolbarComponent.prototype.addStart = function () {
+        var svgFile = [
+            '<?xml version="1.0" encoding="UTF-8" standalone="no"?>',
+            '<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" id="svg8" version="1.1" viewBox="0 0 210 297" height="297mm" width="210mm">',
+            '<defs id="defs2" />',
+            '<metadata id="metadata5">',
+            '<rdf:RDF>',
+            '<cc:Work rdf:about="">',
+            '<dc:format>image/svg+xml</dc:format>',
+            '<dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />',
+            '<dc:title></dc:title>',
+            '</cc:Work>',
+            '</rdf:RDF>',
+            '</metadata>',
+            '<g id="layer1">',
+            '<path id="path3894" d="m 97.101844,223.47134 c -13.058249,-1.69775 -28.777879,-8.47282 -39.272609,-16.92628 -11.86883,-9.56029 -22.85336,-26.2492 -26.64107,-40.47603 -9.83115,-36.92635 6.85343,-74.96661 40.44513,-92.21352 12.41101,-6.372158 23.784106,-8.721153 39.203895,-8.097159 17.95921,0.726757 31.69527,5.763239 45.50926,16.686489 14.54953,11.50486 24.51989,27.84512 28.42334,46.58253 1.93429,9.285 1.53992,26.8564 -0.78893,35.15178 -4.36456,15.54651 -11.36567,27.49188 -22.1535,37.79851 -17.58182,16.79757 -41.00903,24.57715 -64.725516,21.49368 z" style="fill:#000000;stroke-width:0.75595242" />',
+            '</g>',
+            '</svg>'
+        ].join('');
+        var start = new __WEBPACK_IMPORTED_MODULE_4_jointjs__["shapes"].basic.Image({
+            size: {
+                width: 100,
+                height: 100
+            },
+            position: {
+                x: 100,
+                y: 100
+            },
+            attrs: {
+                image: {
+                    width: 1024,
+                    height: 768,
+                    'xlink:href': 'data:image/svg+xml;utf8,' + encodeURIComponent(svgFile),
+                    preserveAspectRatio: 'none'
+                }
+            }
+        });
+    };
+    ToolbarComponent.prototype.addEnd = function () {
+        var svgFile = [
+            '<?xml version="1.0" encoding="UTF-8" standalone="no"?>',
+            '<svg xmlns:osb="http://www.openswatchbook.org/uri/2009/osb" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" id="svg8" version="1.1" viewBox="0 0 210 297" height="297mm"  width="210mm">',
+            '<defs id="defs2">',
+            '<linearGradient osb:paint="solid" id="linearGradient6207">',
+            '<stop id="stop6205" offset="0" style="stop-color:#000000;stop-opacity:1;" />',
+            '</linearGradient>',
+            '<linearGradient osb:paint="solid" id="linearGradient6165">',
+            '<stop id="stop6163" offset="0" style="stop-color:#000000;stop-opacity:1;" />',
+            '</linearGradient>',
+            '</defs>',
+            '<metadata id="metadata5">',
+            '<rdf:RDF>',
+            '<cc:Work rdf:about="">',
+            '<dc:format>image/svg+xml</dc:format>',
+            '<dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />',
+            '<dc:title></dc:title>',
+            '</cc:Work>',
+            '</rdf:RDF>',
+            '</metadata>',
+            '<g id="layer1">',
+            '<path id="path3894" d="m 97.101844,223.47134 c -13.058249,-1.69775 -28.777879,-8.47282 -39.272609,-16.92628 -11.86883,-9.56029 -22.85336,-26.2492 -26.64107,-40.47603 -9.83115,-36.92635 6.85343,-74.96661 40.44513,-92.21352 12.41101,-6.372158 23.784106,-8.721153 39.203895,-8.097159 17.95921,0.726757 31.69527,5.763239 45.50926,16.686489 14.54953,11.50486 24.51989,27.84512 28.42334,46.58253 1.93429,9.285 1.53992,26.8564 -0.78893,35.15178 -4.36456,15.54651 -11.36567,27.49188 -22.1535,37.79851 -17.58182,16.79757 -41.00903,24.57715 -64.725516,21.49368 z" style="fill:#000000;stroke-width:0.75595242;fill-opacity:1;stroke:none;stroke-opacity:1;paint-order:markers fill stroke" />',
+            '<ellipse ry="70.303574" rx="66.901787" cy="145.05357" cx="107.72321" id="path6212" style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.26458332;stroke-opacity:1;paint-order:markers fill stroke" />',
+            '<ellipse ry="57.452377" rx="56.69643" cy="145.05356" cx="107.34524" id="path6214" style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332;stroke-opacity:1;paint-order:markers fill stroke" />',
+            '</g>',
+            '</svg>'
+        ].join('');
+        var end = new __WEBPACK_IMPORTED_MODULE_4_jointjs__["shapes"].basic.Image({
+            size: {
+                width: 100,
+                height: 100
+            },
+            position: {
+                x: 100,
+                y: 100
+            },
+            attrs: {
+                image: {
+                    width: 1024,
+                    height: 768,
+                    'xlink:href': 'data:image/svg+xml;utf8,' + encodeURIComponent(svgFile),
+                    preserveAspectRatio: 'none'
+                }
+            }
+        });
+    };
+    ToolbarComponent.prototype.addActivityShape = function () {
+        var svgFile = [
+            '<?xml version="1.0" encoding="UTF-8" standalone="no"?>',
+            '<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" width="210mm" height="297mm" viewBox="0 0 210 297" version="1.1" id="svg6224" inkscape:version="0.92.1 r15371" sodipodi:docname="Rettangolo.svg">',
+            '<defs id="defs6218" />',
+            '<sodipodi:namedview id="base" pagecolor="#ffffff" bordercolor="#666666" borderopacity="1.0" inkscape:pageopacity="0.0" inkscape:pageshadow="2" inkscape:zoom="0.35" inkscape:cx="-78.571429" inkscape:cy="560" inkscape:document-units="mm" inkscape:current-layer="layer1" showgrid="false" inkscape:window-width="1366" inkscape:window-height="706" inkscape:window-x="-8" inkscape:window-y="-8" inkscape:window-maximized="1" />',
+            '<metadata id="metadata6221">',
+            '<rdf:RDF>',
+            '<cc:Work rdf:about="">',
+            '<dc:format>image/svg+xml</dc:format>',
+            '<dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />',
+            '<dc:title></dc:title>',
+            '</cc:Work>',
+            '</rdf:RDF>',
+            '</metadata>',
+            '<g inkscape:label="Livello 1" inkscape:groupmode="layer" id="layer1">',
+            '<rect style="fill:#000000;fill-opacity:0;stroke:#000000;stroke-width:5;stroke-opacity:1;paint-order:markers fill stroke;stroke-miterlimit:4;stroke-dasharray:none" id="rect6232" width="176.89285" height="108.1012" x="19.654762" y="60.386906" rx="35" />',
+            '</g>',
+            '</svg>'
+        ].join('');
+        var start = new __WEBPACK_IMPORTED_MODULE_4_jointjs__["shapes"].basic.Image({
+            size: {
+                width: 100,
+                height: 100
+            },
+            position: {
+                x: 100,
+                y: 100
+            },
+            attrs: {
+                image: {
+                    width: 1024,
+                    height: 768,
+                    'xlink:href': 'data:image/svg+xml;utf8,' + encodeURIComponent(svgFile),
+                    preserveAspectRatio: 'none'
+                }
+            }
+        });
+    };
+    ToolbarComponent.prototype.addActivityForShape = function () {
+        var svgFile = [
+            '<?xml version="1.0" encoding="UTF-8" standalone="no"?>',
+            '<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" id="svg6224" version="1.1" viewBox="0 0 210 297" height="297mm" width="210mm">',
+            '<defs id="defs6218" />',
+            '<metadata id="metadata6221">',
+            '<rdf:RDF>',
+            '<cc:Work rdf:about="">',
+            '<dc:format>image/svg+xml</dc:format>',
+            '<dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />',
+            '<dc:title></dc:title>',
+            '</cc:Work>',
+            '</rdf:RDF>',
+            '</metadata>',
+            '<g id="layer1">',
+            '<rect rx="35" y="60.386906" x="19.654762" height="108.1012" width="176.89285" id="rect6232" style="fill:#000000;fill-opacity:0;stroke:#000000;stroke-width:5;stroke-opacity:1;paint-order:markers fill stroke;stroke-miterlimit:4;stroke-dasharray:none" />',
+            '<rect y="117.83927" x="93.738098" height="0.7559582" width="80.130959" id="rect6813" style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke" />',
+            '<rect y="89.113091" x="134.55952" height="62.744045" width="0.75595242" id="rect6815" style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke" />',
+            '<rect y="118.61549" x="172.3774" height="34.733318" width="1.4714057" id="rect6817" style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:5.04049921;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke" />',
+            '<rect style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:5.04049921;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke" id="rect6821" width="1.4714057" height="34.733318" x="93.738098" y="117.83927" />',
+            '</g>',
+            '</svg>'
+        ].join('');
+        var start = new __WEBPACK_IMPORTED_MODULE_4_jointjs__["shapes"].basic.Image({
+            size: {
+                width: 100,
+                height: 100
+            },
+            position: {
+                x: 100,
+                y: 100
+            },
+            attrs: {
+                image: {
+                    width: 1024,
+                    height: 768,
+                    'xlink:href': 'data:image/svg+xml;utf8,' + encodeURIComponent(svgFile),
+                    preserveAspectRatio: 'none'
+                }
+            }
+        });
+    };
+    ToolbarComponent.prototype.addConnector = function () {
+        var svgFile = [
+            '<?xml version="1.0" encoding="UTF-8" standalone="no"?>',
+            '<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" id="svg6224" version="1.1" viewBox="0 0 210 297" height="297mm" width="210mm">',
+            '<defs id="defs6218" />',
+            '<metadata id="metadata6221">',
+            '<rdf:RDF>',
+            '<cc:Work rdf:about="">',
+            '<dc:format>image/svg+xml</dc:format>',
+            '<dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />',
+            '<dc:title></dc:title>',
+            '</cc:Work>',
+            '</rdf:RDF>',
+            '</metadata>',
+            '<g id="layer1">',
+            '<path transform="matrix(0.41042479,0,0,0.54956003,82.390625,50.23306)" d="m 123.22024,91.380948 41.59991,23.607282 41.59991,23.60729 -41.24446,24.22293 -41.24447,24.22294 -0.35544,-47.83022 z" id="path6226" style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332;stroke-opacity:1;paint-order:markers fill stroke" />',
+            '<rect y="125.80936" x="24.190477" height="3.1800721" width="109.40167" id="rect6228" style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.20907216;stroke-opacity:1;paint-order:markers fill stroke" />',
+            '</g>',
+            '</svg>'
+        ].join('');
+        var start = new __WEBPACK_IMPORTED_MODULE_4_jointjs__["shapes"].basic.Image({
+            size: {
+                width: 100,
+                height: 100
+            },
+            position: {
+                x: 100,
+                y: 100
+            },
+            attrs: {
+                image: {
+                    width: 1024,
+                    height: 768,
+                    'xlink:href': 'data:image/svg+xml;utf8,' + encodeURIComponent(svgFile),
+                    preserveAspectRatio: 'none'
+                }
+            }
+        });
+    };
+    ToolbarComponent.prototype.addDecision = function () {
+        var svgFile = [
+            '<?xml version="1.0" encoding="UTF-8" standalone="no"?>',
+            '<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" id="svg8" version="1.1" viewBox="0 0 210 297" height="297mm" width="210mm">',
+            '<defs id="defs2" />',
+            '<metadata id="metadata5">',
+            '<rdf:RDF>',
+            '<cc:Work rdf:about="">',
+            '<dc:format>image/svg+xml</dc:format>',
+            '<dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />',
+            '<dc:title></dc:title>',
+            '</cc:Work>',
+            '</rdf:RDF>',
+            '</metadata>',
+            '<g id="layer1">',
+            '<path transform="matrix(1.0498677,0,0,1.059157,-0.3736905,-2.5737459)" d="M 11.339291,132.20237 98.273817,46.779759 183.69643,133.71428 96.761904,219.1369 Z" id="path26" style="fill:#d45500;fill-opacity:0.00956938;stroke:#000000;stroke-width:5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke" />',
+            '</g>',
+            '</svg>'
+        ].join('');
+        var start = new __WEBPACK_IMPORTED_MODULE_4_jointjs__["shapes"].basic.Image({
+            size: {
+                width: 100,
+                height: 100
+            },
+            position: {
+                x: 100,
+                y: 100
+            },
+            attrs: {
+                image: {
+                    width: 1024,
+                    height: 768,
+                    'xlink:href': 'data:image/svg+xml;utf8,' + encodeURIComponent(svgFile),
+                    preserveAspectRatio: 'none'
+                }
+            }
+        });
+    };
     return ToolbarComponent;
 }());
 ToolbarComponent = __decorate([
@@ -721,7 +964,7 @@ var EditorComponent = (function () {
             position: { x: 120, y: 30 },
             size: { width: 300, height: 100 },
             name: ['Class1'],
-            attributes: ['+ attributeOne: String'],
+            attributes: ['+ attributeOne: String', '+ prova: String'],
             methods: ['+ setAttributeOne(att: String): Void', '+ getAttributeOne(): String'],
             attrs: {
                 '.uml-class-name-rect': {
@@ -2025,7 +2268,7 @@ module.exports = "<p>\n  activity-menu works!\n</p>\n"
 /***/ 265:
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container-fluid menu\">\n\n  <div class=\"row selezionato\">\n    <span class=\"glyphicon glyphicon-wrench iconaMirrow\" aria-hidden=\"true\"></span> {{name}}\n  </div>\n  <div class=\"row changeNome\">\n    Modifica nome:\n    <input #changeName id=\"changeName\"\n    (keyup.enter)=\"changeNome(changeName.value)\">\n    <button class=\"btn btn-default\" (click)=\"changeNome(changeName.value)\">\n      <span class=\"glyphicon glyphicon-floppy-disk\" aria-hidden=\"true\"></span>\n    </button>\n  </div>\n  <!-- div per aggiungere un attributo -->\n  <div class=\"aggiungiAttributo\">\n    <!-- <span [hidden]=\"!nomeAttributoUguale\">Il nome inserito per l'attributo è già esistente <br /></span> -->\n    <div class=\"row\">\n      <button href=\"#addAttr\" class=\"btn btn-default\" data-toggle=\"collapse\">\n        <span class=\"glyphicon glyphicon-plus\" aria-hidden=\"true\"></span>Aggiungi Attributo\n      </button>\n    </div>\n    <div id=\"addAttr\" class=\"campiAttributo collapse\">\n      <div class=\"aggiungiAttributo accessoAttr\">\n        <label>Seleziona Visibilità</label>\n        <select  [(ngModel)]=\"selectedAccAtt\">\n          <option *ngFor=\"let acc of accessoAttr\" [value]=\"acc\">{{ acc }}</option>\n        </select>\n      </div>\n      <div class=\"aggiungiAttributo .selezionaTipo\">\n        <label>Seleziona tipo</label>\n        <select #tipi [(ngModel)]=\"selectedTipoAtt\">\n          <option value=\"\"></option>\n          <option *ngFor=\"let type of types\" [value]=\"type\">{{type}}</option>\n        </select>\n      </div>\n      <div class=\"aggiungiAttributo nomeAttr\">\n        <label>Nome</label>\n        <input [disabled]=\"!selectedTipoAtt\" id=\"nome-attributo\" #nomeAtt\n        (keyup.enter)=\"addAttributo(nomeAtt.value)\">\n      </div>\n      <button class=\"btn btn-default\" [disabled]=\"!selectedTipoAtt\" (click)=\"addAttributo(nomeAtt.value)\">Aggiungi Attributo</button>\n    </div>\n\n  </div>\n  <button href=\"#listaAttr\" class=\"btn btn-default\" data-toggle=\"collapse\">\n    <span class=\"glyphicon glyphicon-triangle-left\" aria-hidden=\"true\"></span>Lista Attributi\n  </button>\n  <!-- lista attributi della classe -->\n  <div *ngIf=\"this.mainEditorService.selectedClasse\" class=\"container listaAttributi\">\n    <div id=\"listaAttr\" class=\"row collapse\" *ngIf=\"name\">\n      <h5>Lista Attributi</h5>\n      <ul class=\"list-group\">\n        <li class=\"list-group-item\" *ngFor=\"let attr of this.mainEditorService.selectedClasse.getAttributi()\">\n          <span>{{attr.name}}: {{attr.type}}\n            <button class=\"btn btn-default\" (click)=\"removeAttributo(attr.name)\">\n              <span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\" title=\"Rimuovi\"></span>\n            </button>\n            <button class=\"btn btn-default\" (click)=\"modAttribute(attr.name)\" title=\"Modifica\">\n              <span class=\"glyphicon glyphicon-pencil\" aria-hidden=\"true\" title=\"Modifica\"></span>\n            </button>\n          </span>\n        </li>\n      </ul>\n    </div>\n  </div>\n  <!-- blocco per aggiungere un metodo alla classe -->\n  <div class=\"aggiungiMetodo\">\n    <div class=\"row\">\n      <button href=\"#addMetodo\" class=\"btn btn-default\" data-toggle=\"collapse\">\n        <span class=\"glyphicon glyphicon-plus\" aria-hidden=\"true\"></span>Aggiungi Metodo\n      </button>\n    </div>\n    <div id=\"addMetodo\" class=\"campiMetodo collapse\">\n      <!-- lista metodi della classe -->\n      <div *ngIf=\"this.mainEditorService.selectedClasse\" class=\"container listaMetodi\">\n        <div  class=\"row\" *ngIf=\"name\">\n          <h5>Lista Metodi</h5>\n          <ul class=\"list-group\">\n            <li class=\"list-group-item\" *ngFor=\"let met of this.mainEditorService.selectedClasse.getMetodi()\">\n              <span>{{met.accesso}} &nbsp; {{met.nome}}(): {{met.tipoRitorno}}\n                <button class=\"btn btn-default\" (click)=\"removeMetodo(met.nome)\">\n                  <span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\" title=\"Rimuovi\"></span>\n                </button>\n                <button class=\"btn btn-default\" (click)=\"modifyMetodo(met.nome)\" title=\"Modifica\">\n                  <span class=\"glyphicon glyphicon-pencil\" aria-hidden=\"true\" title=\"Modifica\"></span>\n                </button>\n              </span>\n            </li>\n          </ul>\n        </div>\n      </div>\n      <!-- blocco per aggiunta parametri metodo -->\n      <div class=\"aggiungiMetodo .selezionaTipo\">\n        <div class=\"aggiungiMeotdo accessoMetodo\">\n          <label>Seleziona Visibilità</label>\n          <select #accMetodo [(ngModel)]=\"selectedAccMet\">\n            <option *ngFor=\"let acc of accessoAttr\" [value]=\"acc\">{{ acc }}</option>\n          </select>\n        </div>\n        <label>Seleziona tipo di ritorno</label>\n        <select #tipiMetodo [(ngModel)]=\"selectedTipoMet\">\n          <option value=\"void\"></option>\n          <option *ngFor=\"let type of types\" [value]=\"type\">{{type}}</option>\n        </select>\n      </div>\n      <div class=\"aggiungiMetodo nomeMet\">\n        <label>Nome</label>\n        <input [disabled]=\"!selectedTipoMet\" id=\"nome-metodo\" #nomeMetodo>\n      </div>\n      <div class=\"container-fluid\">\n        <div class=\"row clearfix\">\n          <div class=\"col-md-12 column\">\n            Parametri attuali\n            <table class=\"table table-bordered table-hover\" id=\"tab_logic\">\n              <thead>\n                <tr>\n                  <th class=\"text-center\">\n                    Tipo\n                  </th>\n                  <th class=\"text-center\">\n                    Nome\n                  </th>\n                  <th class=\"text-center\">\n                    \n                  </th>\n                </tr>\n              </thead>\n              <tbody>\n                <tr #parametro>\n                  <td>\n                    <select #tipi class=\"tipiMetodo\">\n                      <option value=\"\"></option>\n                      <option *ngFor=\"let type of types\" [value]=\"type\">{{type}}</option>\n                    </select>\n                  </td>\n                  <td>\n                    <input #nome type=\"text\" placeholder=\"Nome\" class=\"form-control\"/>\n                  </td>\n                  <td>\n                    <button class=\"btn btn-default\" title=\"Aggiungi Parmetro\" (click)=\"aggiungiParam()\">\n                      <span class=\"glyphicon glyphicon-plus\" aria-hidden=\"true\"></span>\n                    </button>\n                  </td>\n                </tr>\n              </tbody>\n            </table>\n          </div>\n        </div>\n\n\n      </div>\n      <button class=\"btn btn-default\" [disabled]=\"!selectedTipoMet\" (click)=\"addMetodo(nomeMetodo.value)\">Aggiungi Metodo</button>\n    </div>\n\n  </div>\n</div>\n"
+module.exports = "<div class=\"container-fluid menu\">\n\n  <div class=\"row selezionato\">\n    <span class=\"glyphicon glyphicon-wrench iconaMirrow\" aria-hidden=\"true\"></span> {{name}}\n  </div>\n  <div class=\"row changeNome\">\n    Modifica nome:\n    <input #changeName id=\"changeName\"\n    (keyup.enter)=\"changeNome(changeName.value)\">\n    <button class=\"btn btn-default\" (click)=\"changeNome(changeName.value)\">\n      <span class=\"glyphicon glyphicon-floppy-disk\" aria-hidden=\"true\"></span>\n    </button>\n  </div>\n  <!-- div per aggiungere un attributo -->\n  <div class=\"aggiungiAttributo\">\n    <!-- <span [hidden]=\"!nomeAttributoUguale\">Il nome inserito per l'attributo è già esistente <br /></span> -->\n    <div class=\"row\">\n      <button href=\"#addAttr\" class=\"btn btn-default\" data-toggle=\"collapse\">\n        <span class=\"glyphicon glyphicon-plus\" aria-hidden=\"true\"></span>Aggiungi Attributo\n      </button>\n    </div>\n    <div id=\"addAttr\" class=\"campiAttributo collapse\">\n      <div class=\"aggiungiAttributo accessoAttr\">\n        <label>Seleziona Visibilità</label>\n        <select  [(ngModel)]=\"selectedAccAtt\">\n          <option *ngFor=\"let acc of accessoAttr\" [value]=\"acc\">{{ acc }}</option>\n        </select>\n      </div>\n      <div class=\"aggiungiAttributo .selezionaTipo\">\n        <label>Seleziona tipo</label>\n        <select #tipi [(ngModel)]=\"selectedTipoAtt\">\n          <option value=\"\"></option>\n          <option *ngFor=\"let type of types\" [value]=\"type\">{{type}}</option>\n        </select>\n      </div>\n      <div class=\"aggiungiAttributo nomeAttr\">\n        <label>Nome</label>\n        <input [disabled]=\"!selectedTipoAtt\" id=\"nome-attributo\" #nomeAtt\n        (keyup.enter)=\"addAttributo(nomeAtt.value)\">\n      </div>\n      <button class=\"btn btn-default\" [disabled]=\"!selectedTipoAtt\" (click)=\"addAttributo(nomeAtt.value)\">Aggiungi Attributo</button>\n    </div>\n\n  </div>\n  <button href=\"#listaAttr\" class=\"btn btn-default\" data-toggle=\"collapse\">\n    <span class=\"glyphicon glyphicon-triangle-left\" aria-hidden=\"true\"></span>Lista Attributi\n  </button>\n  <!-- lista attributi della classe -->\n  <div *ngIf=\"this.mainEditorService.selectedClasse\" class=\"container listaAttributi\">\n    <div id=\"listaAttr\" class=\"row collapse\" *ngIf=\"name\">\n      <h5>Lista Attributi</h5>\n      <ul class=\"list-group\">\n        <li class=\"list-group-item\" *ngFor=\"let attr of this.mainEditorService.selectedClasse.getAttributi()\">\n          <span>{{attr.name}}: {{attr.type}}\n            <button class=\"btn btn-default\" (click)=\"removeAttributo(attr.name)\">\n              <span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\" title=\"Rimuovi\"></span>\n            </button>\n            <!-- menù a tendina di modifica attributo-->\n            <button class=\"btn btn-default\" data-toggle=\"collapse\" [attr.data-target]=\"'#'+attr.name\" (click)=\"modAttribute(attr.name)\" title=\"Modifica\">\n              <span class=\"glyphicon glyphicon-pencil\" aria-hidden=\"true\" title=\"Modifica\"></span>\n            </button>\n          </span>\n          <!--prova-->\n          <div class=\"campiAttributo collapse\" attr.id=\"{{attr.name}}\">\n            <div class=\"aggiungiAttributo accessoAttr\">\n              <label>Seleziona Visibilità</label>\n              <select  [(ngModel)]=\"selectedAccAtt\">\n                <option *ngFor=\"let acc of accessoAttr\" [value]=\"acc\">{{ acc }}</option>\n              </select>\n            </div>\n            <div class=\"aggiungiAttributo .selezionaTipo\">\n              <label>Seleziona tipo</label>\n              <select #tipi [(ngModel)]=\"selectedTipoAtt\">\n                <option value=\"\"></option>\n                <option *ngFor=\"let type of types\" [value]=\"type\">{{type}}</option>\n              </select>\n            </div>\n            <div class=\"aggiungiAttributo nomeAttr\">\n              <label>Nome</label>\n              <input [disabled]=\"!selectedTipoAtt\" id=\"nome-attributo\" #nomeAtt\n              (keyup.enter)=\"addAttributo(nomeAtt.value)\">\n            </div>\n            <button class=\"btn btn-default\" [disabled]=\"!selectedTipoAtt\" (click)=\"addAttributo(nomeAtt.value)\">Modifica Attributo</button>\n            </div>\n          <!--prova-->\n        </li>\n      </ul>\n    </div>\n  </div>\n  <!-- blocco per aggiungere un metodo alla classe -->\n  <div class=\"aggiungiMetodo\">\n    <div class=\"row\">\n      <button href=\"#addMetodo\" class=\"btn btn-default\" data-toggle=\"collapse\">\n        <span class=\"glyphicon glyphicon-plus\" aria-hidden=\"true\"></span>Aggiungi Metodo\n      </button>\n    </div>\n    <div id=\"addMetodo\" class=\"campiMetodo collapse\">\n      <!-- lista metodi della classe -->\n      <div *ngIf=\"this.mainEditorService.selectedClasse\" class=\"container listaMetodi\">\n        <div  class=\"row\" *ngIf=\"name\">\n          <h5>Lista Metodi</h5>\n          <ul class=\"list-group\">\n            <li class=\"list-group-item\" *ngFor=\"let met of this.mainEditorService.selectedClasse.getMetodi()\">\n              <span>{{met.accesso}} &nbsp; {{met.nome}}(): {{met.tipoRitorno}}\n                <button class=\"btn btn-default\" (click)=\"removeMetodo(met.nome)\">\n                  <span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\" title=\"Rimuovi\"></span>\n                </button>\n                <button class=\"btn btn-default\" (click)=\"modifyMetodo(met.nome)\" title=\"Modifica\">\n                  <span class=\"glyphicon glyphicon-pencil\" aria-hidden=\"true\" title=\"Modifica\"></span>\n                </button>\n              </span>\n            </li>\n          </ul>\n        </div>\n      </div>\n      <!-- blocco per aggiunta parametri metodo -->\n      <div class=\"aggiungiMetodo .selezionaTipo\">\n        <div class=\"aggiungiMeotdo accessoMetodo\">\n          <label>Seleziona Visibilità</label>\n          <select #accMetodo [(ngModel)]=\"selectedAccMet\">\n            <option *ngFor=\"let acc of accessoAttr\" [value]=\"acc\">{{ acc }}</option>\n          </select>\n        </div>\n        <label>Seleziona tipo di ritorno</label>\n        <select #tipiMetodo [(ngModel)]=\"selectedTipoMet\">\n          <option value=\"void\"></option>\n          <option *ngFor=\"let type of types\" [value]=\"type\">{{type}}</option>\n        </select>\n      </div>\n      <div class=\"aggiungiMetodo nomeMet\">\n        <label>Nome</label>\n        <input [disabled]=\"!selectedTipoMet\" id=\"nome-metodo\" #nomeMetodo>\n      </div>\n      <div class=\"container-fluid\">\n        <div class=\"row clearfix\">\n          <div class=\"col-md-12 column\">\n            Parametri attuali\n            <table class=\"table table-bordered table-hover\" id=\"tab_logic\">\n              <thead>\n                <tr>\n                  <th class=\"text-center\">\n                    Tipo\n                  </th>\n                  <th class=\"text-center\">\n                    Nome\n                  </th>\n                  <th class=\"text-center\">\n                    \n                  </th>\n                </tr>\n              </thead>\n              <tbody>\n                <tr #parametro>\n                  <td>\n                    <select #tipi class=\"tipiMetodo\">\n                      <option value=\"\"></option>\n                      <option *ngFor=\"let type of types\" [value]=\"type\">{{type}}</option>\n                    </select>\n                  </td>\n                  <td>\n                    <input #nome type=\"text\" placeholder=\"Nome\" class=\"form-control\"/>\n                  </td>\n                  <td>\n                    <button class=\"btn btn-default\" title=\"Aggiungi Parmetro\" (click)=\"aggiungiParam()\">\n                      <span class=\"glyphicon glyphicon-plus\" aria-hidden=\"true\"></span>\n                    </button>\n                  </td>\n                </tr>\n              </tbody>\n            </table>\n          </div>\n        </div>\n\n\n      </div>\n      <button class=\"btn btn-default\" [disabled]=\"!selectedTipoMet\" (click)=\"addMetodo(nomeMetodo.value)\">Aggiungi Metodo</button>\n    </div>\n\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -2349,32 +2592,65 @@ var MenuService = (function () {
             console.log('diobueo');
         }, function (error) { console.log(JSON.stringify(error)); });
     };
+    MenuService.prototype.readFile = function (file, onloadCallBack) {
+        var reader = new FileReader();
+        reader.readAsText(file, "UTF-8");
+        reader.onload = onloadCallBack;
+    };
     MenuService.prototype.import = function (event) {
-        var fileList = event.target.files;
-        console.log(fileList);
-        if (fileList.length > 0) {
-            var file = fileList[0];
-            var formData = new FormData();
-            var reader = new FileReader();
-            formData.append(file.name, file);
-            console.log(reader.readAsText(file));
-            var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* Headers */]();
-            headers.append('Content-Type', 'multipart/form-data');
-            headers.append('Accept', 'application/json');
-            var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["e" /* RequestOptions */]({ headers: headers });
-            this.http.post('/decrypt', formData, options)
-                .map(function (res) { return res.json(); })
-                .subscribe(function (data) { return console.log('banana' + data); }, function (error) { return console.log(error); });
+        var file = event.srcElement.files[0];
+        var readed;
+        if (file) {
+            this.readFile(file, function (e) {
+                var contents = e.target;
+                var readed = JSON.parse(contents.result);
+                console.log(readed);
+                this.http.post('/decrypt', readed.data, {
+                    method: __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* RequestMethod */].Post,
+                    headers: new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* Headers */]({ 'Content-Type': 'application/json' })
+                })
+                    .subscribe(function (data) {
+                    console.log(data);
+                }, function (error) { console.log(error); });
+            });
         }
     };
     return MenuService;
 }());
 MenuService = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["c" /* Injectable */])(),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["f" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["f" /* Http */]) === "function" && _a || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["e" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["e" /* Http */]) === "function" && _a || Object])
 ], MenuService);
 
 var _a;
+/*
+var file = event.target.files[0];
+var reader = new FileReader();
+reader.onload = file =>{
+  var contents: any = file.target;
+  this.contentProj = contents.result;
+};
+console.log("madonnamaiala" + this.contentProj);
+this.http.post('/decrypt', this.contentProj, {
+  method: RequestMethod.Post,
+  headers: new Headers({'Content-Type': 'application/json'})})
+  .subscribe((data)=>{
+    console.log(data);
+  },
+error => {console.log(error)})
+}*/
+/*
+if(file){
+  var reader = new FileReader();
+  reader.readAsText(file, "UTF-8");
+  reader.onload = function(e){
+    var contents: any = e.target;
+    readed = JSON.parse(contents.result);
+  }
+  reader.onerror = function(e){
+    console.log("non leggo dio cane");
+  }
+}*/ 
 //# sourceMappingURL=menu.service.js.map
 
 /***/ }),

@@ -101,15 +101,6 @@ app.listen(port, ()=>{
     //console.log(myBytes);
     encripted = encr.encrypt(myBytes, keyCrypt, ivCrypt);
     console.log("File cripted correctly");
-    // writeJson(JSON.stringify(encripted), function(err){
-    //     res.download(__dirname+'/files/encr.json', function(er) {
-    //     if(er) {
-    //       console.log('errore download encrypted file'+er);
-    //     } else {
-    //       console.log('download riuscito');
-    //     }
-    //   });
-    // });
     res.json(encripted);    
     
   })
