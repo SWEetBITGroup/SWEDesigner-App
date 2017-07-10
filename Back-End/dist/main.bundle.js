@@ -1045,7 +1045,10 @@ var EditorComponent = (function () {
      */
     EditorComponent.prototype.selectElementsToConnect = function (cell) {
         if (this.elementToConnect) {
-            this.mainEditorService.getClass(this.elementToConnect.attributes.name); // da finire!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            console.log(cell);
+            if (this.connettore === __WEBPACK_IMPORTED_MODULE_5_jointjs__["shapes"].uml.Generalization) {
+                this.mainEditorService.addSuperclass(this.elementToConnect.model.attributes.name, cell.model.attributes.name);
+            }
             var element1 = this.elementToConnect;
             var freccia = new this.connettore.constructor({
                 source: { id: element1.model.id },
@@ -2140,6 +2143,11 @@ var MainEditorService = (function () {
     MainEditorService.prototype.addConnettore = function (connettore) {
         this.editorComp.addConnettore(connettore);
     };
+    MainEditorService.prototype.addSuperclass = function (subclassName, superclassName) {
+        console.log(subclassName);
+        var subclass = this.getClass(subclassName);
+        subclass.addSuperclass(superclassName);
+    };
     MainEditorService.prototype.getClass = function (name) {
         return this.project.getClasse(name);
     };
@@ -2375,6 +2383,10 @@ var Classe = (function () {
          * Array of methods of the Java class
          */
         this.metodi = new Array();
+        /**
+         * The class extended by this class
+         */
+        this.classePadre = null;
         this.nome = nome;
     }
     // Metodo per aggiungere un attributo all'array di attributi della classe
@@ -2402,7 +2414,7 @@ var Classe = (function () {
      * Sets the name of the class which is extended by this class
      * @param superclass the name of the superclass
      */
-    Classe.prototype.addSottoclasse = function (superclass) {
+    Classe.prototype.addSuperclass = function (superclass) {
         this.classePadre = superclass;
     };
     /**
@@ -2582,7 +2594,7 @@ var MenuService = (function () {
         this.http.post('/encrypt', proj, {
             method: __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* RequestMethod */].Post,
             responseType: __WEBPACK_IMPORTED_MODULE_1__angular_http__["c" /* ResponseContentType */].Blob,
-            headers: new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* Headers */]({ 'Content-Type': 'application/json' })
+            headers: new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* Headers */]({ 'Content-Type': 'application/json; charset=UTF-8' })
         })
             .subscribe(function (data) {
             console.log(data);
@@ -2598,15 +2610,16 @@ var MenuService = (function () {
         reader.onload = onloadCallBack;
     };
     MenuService.prototype.import = function (event) {
+        var _this = this;
         var file = event.srcElement.files[0];
-        var readed;
         if (file) {
             this.readFile(file, function (e) {
                 var contents = e.target;
                 var readed = JSON.parse(contents.result);
                 console.log(readed);
-                this.http.post('/decrypt', readed.data, {
+                _this.http.post('/decrypt', readed, {
                     method: __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* RequestMethod */].Post,
+                    responseType: __WEBPACK_IMPORTED_MODULE_1__angular_http__["c" /* ResponseContentType */].Json,
                     headers: new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* Headers */]({ 'Content-Type': 'application/json' })
                 })
                     .subscribe(function (data) {

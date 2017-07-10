@@ -36,7 +36,7 @@ export class MenuService {
     this.http.post('/encrypt',proj,{
               method: RequestMethod.Post,
               responseType: ResponseContentType.Blob,
-              headers: new Headers({'Content-Type': 'application/json'})})
+              headers: new Headers({'Content-Type': 'application/json; charset=UTF-8'})})
              .subscribe((data) => {
                console.log(data);
                var blob = new Blob([data.blob()],{type: 'application/json'});
@@ -53,21 +53,22 @@ export class MenuService {
     reader.onload = onloadCallBack;
   }
 
+
   import(event) {
     var file = event.srcElement.files[0];
-    var readed;
     if(file){
-      this.readFile(file, function(e){
+      this.readFile(file, (e)=>{
         var contents: any = e.target;
         var readed = JSON.parse(contents.result);
         console.log(readed);
-        this.http.post('/decrypt', readed.data, {
+        this.http.post('/decrypt', readed, {
           method: RequestMethod.Post,
-          headers: new Headers({'Content-Type': 'application/json'})})
-          .subscribe((data)=>{
-            console.log(data);
-          },
-        error => {console.log(error)})
+          responseType: ResponseContentType.Json,
+          headers: new Headers({'Content-Type': 'application/json'}) 
+        })
+        .subscribe((data)=>{
+          console.log(data);
+        },error => {console.log(error)})
       })
     }
     

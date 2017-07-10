@@ -35,7 +35,8 @@
   //global var
   var keyCrypt;
   var ivCrypt;
-  var encripted;
+  var encrLenghtFile;
+  var encrRead;
   var errRead = "error loading request parameters";
 
   //globalFun
@@ -96,11 +97,15 @@ app.listen(port, ()=>{
     * @see module:encrypt
    */
   app.post("/encrypt", function(req,res){
-    console.log('bueo-bueo');
+    //console.log('bueo-bueo');
     var myBytes = JSON.stringify(req.body);
     //console.log(myBytes);
     encripted = encr.encrypt(myBytes, keyCrypt, ivCrypt);
     console.log("File cripted correctly");
+    //console.log(encripted);
+    encrLenghtFile = encripted._constructedStringLength;
+    encrRead = encripted.read;
+    //console.log("param: " + encrLenghtFile + ' ' + encrRead);
     res.json(encripted);    
     
   })
@@ -112,9 +117,14 @@ app.listen(port, ()=>{
     * @see module:encrypt
    */
   app.post("/decrypt", function(req,res){
-    console.log(req.body);
-    encripted = req.body.data;
-    var decripted = encr.decrypt(encripted, keyCrypt, ivCrypt);
+    //console.log(req.body.data);
+    var ByteStringBuffer = {
+      data: req.body.data,
+      read: encrRead,
+      _constructedStringLength: encrLenghtFile
+    }
+    console.log(ByteStringBuffer);
+    var decripted = encr.decrypt(ByteStringBuffer , keyCrypt, ivCrypt);
     console.log("File decripted correctly");
     res.json(JSON.stringify(decripted)); 
   })
