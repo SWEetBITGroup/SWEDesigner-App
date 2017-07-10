@@ -3,6 +3,9 @@
   //ErrorHandler
   //var error = require('./controller/middleware/errorHandler');
 
+  //FilseSystem init
+  var fs = require('fs');
+
   //moustache
   const mu = require('./controller/middleware/parse');
 
@@ -14,6 +17,7 @@
   var mongooseRequest = require('./model/mongooseRequest');
 
   //express
+  var path = require('path');
   const express = require('express');
   var bodyParser = require('body-parser');
   const app = express();
@@ -33,6 +37,11 @@
   var ivCrypt;
   var encripted;
   var errRead = "error loading request parameters";
+
+  //globalFun
+  function writeJson(json){
+    fs.writeFile("./files/encr.json", json);
+  }
 
 //Init Server
 const server = require('./serverLoader'); // function loading server
@@ -74,6 +83,9 @@ app.listen(port, ()=>{
  * @global
  */
 //Express routing
+  //Conn to Client
+    // Set static folder to public
+    //app.use(express.static(path.join(__dirname, 'dist')));
   //Encrypt/Decrypt
   /**
     * @function app/post/encrypt
@@ -87,6 +99,7 @@ app.listen(port, ()=>{
     //console.log(myBytes);
     encripted = encr.encrypt(myBytes, keyCrypt, ivCrypt);
     console.log("File cripted correctly");
+    writeJson(JSON.stringify(encripted));
     res.send(encripted.data);
   })
   /**
@@ -236,8 +249,3 @@ app.listen(port, ()=>{
         }
       })
     })
-
-    // Set static folder to public
-    var path = require('path');
-    app.use(express.static(path.join(__dirname, 'dist')));
-    
