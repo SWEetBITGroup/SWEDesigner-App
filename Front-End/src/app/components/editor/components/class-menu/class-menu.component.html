@@ -55,10 +55,34 @@
             <button class="btn btn-default" (click)="removeAttributo(attr.name)">
               <span class="glyphicon glyphicon-trash" aria-hidden="true" title="Rimuovi"></span>
             </button>
-            <button class="btn btn-default" (click)="modAttribute(attr.name)" title="Modifica">
+            <!-- menù a tendina di modifica attributo-->
+            <button class="btn btn-default" data-toggle="collapse" [attr.data-target]="'#'+attr.name" (click)="modAttribute(attr.name)" title="Modifica">
               <span class="glyphicon glyphicon-pencil" aria-hidden="true" title="Modifica"></span>
             </button>
           </span>
+          <!--prova-->
+          <div class="campiAttributo collapse" attr.id="{{attr.name}}">
+            <div class="aggiungiAttributo accessoAttr">
+              <label>Seleziona Visibilità</label>
+              <select  [(ngModel)]="selectedAccAtt">
+                <option *ngFor="let acc of accessoAttr" [value]="acc">{{ acc }}</option>
+              </select>
+            </div>
+            <div class="aggiungiAttributo .selezionaTipo">
+              <label>Seleziona tipo</label>
+              <select #tipi [(ngModel)]="selectedTipoAtt">
+                <option value=""></option>
+                <option *ngFor="let type of types" [value]="type">{{type}}</option>
+              </select>
+            </div>
+            <div class="aggiungiAttributo nomeAttr">
+              <label>Nome</label>
+              <input [disabled]="!selectedTipoAtt" id="nome-attributo" #nomeAtt
+              (keyup.enter)="addAttributo(nomeAtt.value)">
+            </div>
+            <button class="btn btn-default" [disabled]="!selectedTipoAtt" (click)="addAttributo(nomeAtt.value)">Modifica Attributo</button>
+            </div>
+          <!--prova-->
         </li>
       </ul>
     </div>
