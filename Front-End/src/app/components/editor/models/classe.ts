@@ -21,7 +21,7 @@ export class Classe {
     /**
      * The class extended by this class
      */
-    private classePadre: string;
+    private classePadre: string = null;
 
     /**
      * The constructor builds a new object of type Classe and sets it's name
@@ -57,7 +57,7 @@ export class Classe {
      * Sets the name of the class which is extended by this class
      * @param superclass the name of the superclass
      */
-    addSottoclasse(superclass: string) {
+    addSuperclass(superclass: string) {
         this.classePadre = superclass;
     }
 

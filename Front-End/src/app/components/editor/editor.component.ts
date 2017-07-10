@@ -188,7 +188,11 @@ export class EditorComponent implements OnInit {
    */
   selectElementsToConnect(cell: any) {
     if(this.elementToConnect) {
-      this.mainEditorService.getClass(this.elementToConnect.attributes.name);// da finire!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      console.log(cell);
+      if(this.connettore === joint.shapes.uml.Generalization) {
+        this.mainEditorService.addSuperclass(this.elementToConnect.model.attributes.name,
+                                            cell.model.attributes.name);
+      }
       let element1 = this.elementToConnect;
       let freccia = new this.connettore.constructor({
                       source: { id: element1.model.id },

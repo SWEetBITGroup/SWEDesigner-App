@@ -192,6 +192,12 @@ export class MainEditorService {
     this.editorComp.addConnettore(connettore);
   }
 
+  addSuperclass(subclassName: string, superclassName: string) {
+    console.log(subclassName);
+    let subclass = this.getClass(subclassName);
+    subclass.addSuperclass(superclassName);
+  }
+
   getClass(name: string) {
     return this.project.getClasse(name);
   }
