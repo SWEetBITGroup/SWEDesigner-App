@@ -4,6 +4,6 @@ export class Operazione {
     standandOperations = ['print()','println()','+','-','*'];
 
     constructor() {
-        t
+        
     }
 }
