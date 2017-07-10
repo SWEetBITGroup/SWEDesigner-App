@@ -200,4 +200,8 @@ export class MainEditorService {
     return this.project;
   }
 
+  retriveGraph() {
+    this.project.setDiagramma(this.editorComp.graph.toJSON());
+  }
+
 }

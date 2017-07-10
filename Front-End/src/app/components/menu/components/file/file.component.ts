@@ -17,6 +17,11 @@ export class FileComponent implements OnInit {
   }
   
   esporta() {
+    this.mainEditorService.retriveGraph();
     this.menuService.encrypt(JSON.parse(this.mainEditorService.getProject().toJSON()));
+  }
+
+  fileChange(event) {
+    this.menuService.import(event);
   }
 }

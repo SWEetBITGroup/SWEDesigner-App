@@ -39,8 +39,9 @@
   var errRead = "error loading request parameters";
 
   //globalFun
-  function writeJson(json){
+  function writeJson(json, cb){
     fs.writeFile("./files/encr.json", json);
+    cb(false);
   }
 
 //Init Server
@@ -85,7 +86,7 @@ app.listen(port, ()=>{
 //Express routing
   //Conn to Client
     // Set static folder to public
-    //app.use(express.static(path.join(__dirname, 'dist')));
+    app.use(express.static(path.join(__dirname, 'dist')));
   //Encrypt/Decrypt
   /**
     * @function app/post/encrypt
@@ -95,12 +96,22 @@ app.listen(port, ()=>{
     * @see module:encrypt
    */
   app.post("/encrypt", function(req,res){
+    console.log('bueo-bueo');
     var myBytes = JSON.stringify(req.body);
     //console.log(myBytes);
     encripted = encr.encrypt(myBytes, keyCrypt, ivCrypt);
     console.log("File cripted correctly");
-    writeJson(JSON.stringify(encripted));
-    res.send(encripted.data);
+    // writeJson(JSON.stringify(encripted), function(err){
+    //     res.download(__dirname+'/files/encr.json', function(er) {
+    //     if(er) {
+    //       console.log('errore download encrypted file'+er);
+    //     } else {
+    //       console.log('download riuscito');
+    //     }
+    //   });
+    // });
+    res.json(encripted);    
+    
   })
   /**
     * @function app/post/decrypt
@@ -110,10 +121,11 @@ app.listen(port, ()=>{
     * @see module:encrypt
    */
   app.post("/decrypt", function(req,res){
-    //console.log(encripted);
+    console.log(req.body);
+    encripted = req.body.data;
     var decripted = encr.decrypt(encripted, keyCrypt, ivCrypt);
     console.log("File decripted correctly");
-    res.send(decripted);
+    res.json(JSON.stringify(decripted)); 
   })
   //Parsing/Generate
   /**

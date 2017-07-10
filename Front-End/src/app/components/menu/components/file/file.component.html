@@ -5,7 +5,8 @@
   </button>
   <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
     <li><a href="#" >Salva</a></li>
-    <li><a href="#" >Esporta</a></li>
+    <li><a (click)="esporta()" href="#" >Esporta</a></li>
+    <li><input type="file" (change)="fileChange($event)" placeholder="Upload file" accept=".pdf,.doc,.docx"></li>
     <li><a href="#" >Genera codice</a></li>
     <li><a href="#" >Salva template</a></li>
     <li><a href="#" >Chiudi</a></li>
