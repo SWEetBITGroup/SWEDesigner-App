@@ -12,4 +12,7 @@ export class FileComponent implements OnInit {
   ngOnInit() {
   }
   
+  esporta() {
+    
+  }
 }

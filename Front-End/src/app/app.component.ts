@@ -1,18 +1,18 @@
 import { Component } from '@angular/core';
 
-import { EditServiceService } from './services/edit-service.service';
+import { MenuService } from './services/menu.service';
 import { MainEditorService } from './services/main-editor.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  providers: [EditServiceService, MainEditorService]
+  providers: [MenuService, MainEditorService]
 })
 export class AppComponent {
     selectedGrapg: any;
 
-    constructor(private myService: EditServiceService) {
+    constructor(private myService: MenuService) {
       this.selectedGrapg = null;
     }   
 
