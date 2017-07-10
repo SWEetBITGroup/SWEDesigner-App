@@ -188,8 +188,8 @@ export class EditorComponent implements OnInit {
    */
   selectElementsToConnect(cell: any) {
     if(this.elementToConnect) {
+      this.mainEditorService.getClass(this.elementToConnect.attributes.name);// da finire!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
       let element1 = this.elementToConnect;
-      console.log(this.connettore);
       let freccia = new this.connettore.constructor({
                       source: { id: element1.model.id },
                       target: { id: cell.model.id }

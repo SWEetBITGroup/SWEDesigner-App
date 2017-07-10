@@ -87,7 +87,7 @@ export class MainEditorService {
     });
     
     if(!this.selectedClasse)
-      console.log('Classe mancante'); // TODO: spend a moment and code it as a real warning
+      console.log('Classe mancante'); // TODO: spend a moment to code it as a real warning
   }
 
   /**
@@ -190,6 +190,10 @@ export class MainEditorService {
 
   addConnettore(connettore: any) {
     this.editorComp.addConnettore(connettore);
+  }
+
+  getClass(name: string) {
+    return this.project.getClasse(name);
   }
 
 }

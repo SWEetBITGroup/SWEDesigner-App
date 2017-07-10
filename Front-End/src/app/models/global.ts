@@ -39,6 +39,15 @@ export class Global {
     return this.classi;
   }
 
+  getClasse(name: string) {
+    let classe;
+    this.classi.forEach(c => {
+      if(c.getNome() == name)
+        classe = c;
+    });
+    return classe;
+  }
+
   // I campi devono ritornare come string
   toJSON(){
     let global = '{\"nome_progetto\":\"'+this.nome_progetto+
