@@ -236,4 +236,8 @@ app.listen(port, ()=>{
         }
       })
     })
+
+    // Set static folder to public
+    var path = require('path');
+    app.use(express.static(path.join(__dirname, 'dist')));
     

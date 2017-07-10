@@ -184,6 +184,7 @@ export class MainEditorService {
     if(!this.activityMode && metodo) {
       this.editorComp.replaceDiagram(metodo.getDiagram());
       this.activityMode = true;
+      this.editorComp.selectedCell = null;
     }
   }
 

@@ -42,8 +42,8 @@ export class ToolbarComponent implements OnInit {
       methods: [''],
       attrs: {
             '.uml-class-name-rect': {
-                fill: 'rgba(48,28,198,0.1)',
-                stroke: 'rgba(48,8,198,1)',
+                fill: 'rgba(255,255,255,1)',
+                stroke: 'rgba(48,28,198,1)',
                 'stroke-width': 1.5
             },
             '.uml-class-attrs-rect, .uml-class-methods-rect': {

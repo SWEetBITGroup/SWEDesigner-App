@@ -105,7 +105,7 @@ export class EditorComponent implements OnInit {
       methods: ['+ setAttributeOne(att: String): Void','+ getAttributeOne(): String'],
       attrs: {
             '.uml-class-name-rect': {
-                fill: 'rgba(48,28,198,0.1)',
+                fill: 'rgba(255,255,255,1)',
                 stroke: 'rgba(48,8,198,0.5)',
                 'stroke-width': 1.5
             },

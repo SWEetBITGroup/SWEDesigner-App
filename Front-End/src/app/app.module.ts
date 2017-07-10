@@ -15,6 +15,7 @@ import { ToolbarComponent } from './components/editor/components/toolbar/toolbar
 import { EditorComponent } from './components/editor/editor.component';
 import { ActivityFrameComponent } from './components/activity-frame/activity-frame.component';
 import { ClassMenuComponent } from './components/editor/components/class-menu/class-menu.component';
+import { ActivityMenuComponent } from './components/editor/components/activity-menu/activity-menu.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { ClassMenuComponent } from './components/editor/components/class-menu/cl
     ToolbarComponent,
     EditorComponent,
     ActivityFrameComponent,
-    ClassMenuComponent
+    ClassMenuComponent,
+    ActivityMenuComponent
   ],
   imports: [
     BrowserModule,
