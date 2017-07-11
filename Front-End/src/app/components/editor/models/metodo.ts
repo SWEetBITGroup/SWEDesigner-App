@@ -27,6 +27,9 @@ export class Metodo {
      */
     diagramma: JSON;
 
+    costruttore: boolean;
+    statico: boolean;
+
     /**
      * it make a Metodo object, listaArg is optional
      * @param nome
@@ -34,7 +37,9 @@ export class Metodo {
      * @param tipo
      * @param listaArg
      */
-    constructor(nome: string, acc: string, tipo: string, listaArg?: Param[]) {
+    constructor(stat: boolean, costr: boolean,nome: string, acc: string, tipo: string, listaArg?: Param[]) {
+        this.statico = stat;
+        this.costruttore = costr;
         this.nome = nome;
         this.accesso = acc;
         this.tipoRitorno = tipo;
@@ -126,6 +131,33 @@ export class Metodo {
      */
     getListaArgomenti() {
         return this.listaArgomenti;
+    }
+
+    isConstructor() {
+        return this.costruttore;
+    }
+    isStatic() {
+        return this.statico;
+    }
+    staticString() {
+        let sta = '';
+        if(this.statico){
+            sta = 'static';
+        }
+        return sta;
+    }
+
+    paramToString() {
+        let params = this.listaArgomenti;
+        if(this.listaArgomenti) {
+            var paramString: string = '';
+            for(let i = 0; i<params.length; i++){
+                paramString += params[i].getNome()+' : '+params[i].getTipo();
+                if(i!=params.length-1)
+                    paramString += ', ';
+            }
+        }
+        return paramString;
     }
 
     // toJSON() {

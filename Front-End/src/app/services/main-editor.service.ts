@@ -129,6 +129,10 @@ export class MainEditorService {
     this.selectedClasse.removeAttr(nome);
   }
 
+  changeAttributo(oldName: string, name: string, type: string, acc: string) {
+    this.selectedClasse.changeAttr(oldName,type,name,acc);
+  }
+
   /**
    * This method stores into the ´this.graph´ properties the graph given
    * @param graph Is a graph given in JSON format
@@ -156,8 +160,8 @@ export class MainEditorService {
    * @param listArgs this parameter is optional, 'listArgs' is the list of parameters which defines the 
    * signature of the function
    */
-  addMetodo(tipo: string, nome:string, acc: string, listArgs?: any) {
-    this.selectedClasse.addMetodo(new Metodo(nome,acc,tipo,listArgs));
+  addMetodo(staticMet: boolean, costr: boolean, tipo: string, nome:string, acc: string, listArgs?: any) {
+    this.selectedClasse.addMetodo(new Metodo(staticMet,costr,nome,acc,tipo,listArgs));
   }
 
   /**

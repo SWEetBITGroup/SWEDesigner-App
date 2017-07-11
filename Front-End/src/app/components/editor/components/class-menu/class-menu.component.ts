@@ -60,12 +60,11 @@ export class ClassMenuComponent implements OnDestroy{
    * Used to store the selected visibility to build a new method
    */
   selectedAccMet: string = 'public';
-
-  // Array per parametri di metodi
   /**
    * Used to store an array of parameters to build a new method
    */
-  parametriMetodo= new Array<Param>();
+  parametriMetodo = new Array<Param>();
+
 
   /**
    * Create an instantiation of ClassMenuComponent and sets the properties ´classe´ and ´name´
@@ -89,7 +88,8 @@ export class ClassMenuComponent implements OnDestroy{
    * a new attribute. If one or more parameter isn't present an error will be shown 
    * @param nome the neme of the new attribute
    */
-  addAttributo(nome: string) {
+  addAttributo(nome: string, staticAtt: boolean) {
+    console.log(staticAtt);
     let tipo = this.selectedTipoAtt;
     let acc = this.selectedAccAtt;
     console.log(nome+' '+tipo+' '+acc);
@@ -144,8 +144,12 @@ export class ClassMenuComponent implements OnDestroy{
   /**
    * Mododify the properties of an attribute
    */
-  changeAttributo() {
-
+  changeAttributo(name: string, oldName: string) {
+    let tipo = this.selectedTipoAtt;
+    let acc = this.selectedAccAtt;
+    if(name && tipo && acc) {
+      this.mainEditorService.changeAttributo(oldName,name,tipo,acc);
+    }
   }
 
   /**
@@ -172,9 +176,16 @@ export class ClassMenuComponent implements OnDestroy{
   /**
    * Adds a new parameter into the array parametriMetodo
    */
-  aggiungiParam() {
-    this.parametriMetodo.push(new Param("test","test"));
-    console.log("caodsa");
+  addParam(type: string, name: string) {
+    let sameName = false;
+    this.parametriMetodo.forEach(param => {
+      if(param.getNome() == name)
+        sameName = true;
+    });
+    if(!sameName)
+      this.parametriMetodo.push(new Param(type,name));
+    else  
+      alert("Nome paramentro già presente");
   }
 
   // Funzione per aggiungere un metodo alla classe selezionata
@@ -183,17 +194,21 @@ export class ClassMenuComponent implements OnDestroy{
    * a new method. If one or more parameter isn't present an error will be shown
    * @param nome 
    */
-  addMetodo(nome: string) {
+  addMetodo(nome: string, staticMet: boolean, constructor: boolean) {
     let tipo = this.selectedTipoMet;
     let acc = this.selectedAccMet;
+    let params = this.parametriMetodo;
     console.log(nome+' '+tipo+' '+acc);
-    if(nome && tipo && acc){
+    if((nome && tipo && acc) || (constructor && acc) ){
       try {
-        this.mainEditorService.addMetodo(tipo, nome, acc);
+        if(constructor == true){
+          nome = this.name;
+          tipo = this.name;
+        }          
+        this.mainEditorService.addMetodo(staticMet,constructor,tipo, nome, acc, params);
       } catch (error) {
         if(error.message == 'NomePresente')
-          // TODO: segnalare l'errore sul menu! Eliminare il console log
-          console.log('nome attributo già esistente');
+          alert('Nome metodo già esistente');
       }
       let metodi = this.classe.attributes.methods;
       let vis;
@@ -207,7 +222,17 @@ export class ClassMenuComponent implements OnDestroy{
         case 'private':
           vis = '-';
       }
-      metodi.push(vis+' '+nome+'(): '+ tipo);
+      let parametri: string = '';
+      for (let ind = 0; ind < params.length; ind++) {
+        parametri += params[ind].getNome() + ' : ' + params[ind].getTipo();
+        if(ind!=params.length-1)
+          parametri += ', ';
+      }
+      let st = '';
+      if(staticMet) {
+        st = 'static';
+      }
+      metodi.push(vis+' '+st+' '+nome+'('+ parametri +'): '+ tipo);
       this.classe.set('methods',null); // Hack per far funzionare l'event change:attrs
       this.classe.set('methods',metodi);
       this.selectedAccMet = 'public';
@@ -242,6 +267,10 @@ export class ClassMenuComponent implements OnDestroy{
    */
   modifyMetodo(nome: string) {
     this.mainEditorService.enterActivityMode(nome);
+  }
+
+  getMetodi() {
+    return this.mainEditorService.getSelectedClasse().getMetodi();
   }
 
 }

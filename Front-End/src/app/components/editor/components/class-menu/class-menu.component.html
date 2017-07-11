@@ -21,7 +21,7 @@
     </div>
     <div id="addAttr" class="campiAttributo collapse">
       <div class="aggiungiAttributo staticAttr">
-        <label>Static <input type="checkbox" name="static" classe="checkbox-circle" value="Stiatic"></label>
+        <label>Static <input #checkStaticAtt type="checkbox" name="static" classe="checkbox-circle" value="Stiatic" /></label>
       </div>
       <div class="aggiungiAttributo accessoAttr">
         <label>Seleziona Visibilità</label>
@@ -41,7 +41,7 @@
         <input [disabled]="!selectedTipoAtt" id="nome-attributo" #nomeAtt
         (keyup.enter)="addAttributo(nomeAtt.value)">
       </div>
-      <button class="btn btn-default" [disabled]="!selectedTipoAtt" (click)="addAttributo(nomeAtt.value)">Aggiungi Attributo</button>
+      <button class="btn btn-default" [disabled]="!selectedTipoAtt" (click)="addAttributo(nomeAtt.value, checkStaticAtt.checked)">Aggiungi Attributo</button>
     </div>
 
   </div>
@@ -71,7 +71,7 @@
                 <option *ngFor="let acc of accessoAttr" [value]="acc">{{ acc }}</option>
               </select>
             </div>
-            <div class="modificaAttributo .selezionaTipo">
+            <div class="modificaAttributo selezionaTipo">
               <label>Seleziona tipo</label>
               <select #tipi [(ngModel)]="selectedTipoAtt">
                 <option value=""></option>
@@ -83,7 +83,7 @@
               <input [disabled]="!selectedTipoAtt" id="nome-attributo" #nomeAtt
               (keyup.enter)="changeAttributo(nomeAtt.value)">
             </div>
-            <button class="btn btn-default" [disabled]="!selectedTipoAtt" (click)="changeAttributo(nomeAtt.value)">Modifica Attributo</button>
+            <button class="btn btn-default" [disabled]="!selectedTipoAtt" (click)="changeAttributo(nomeAtt.value, attr.name)">Modifica Attributo</button>
             </div>
         </li>
       </ul>
@@ -102,8 +102,8 @@
         <div  class="row" *ngIf="name">
           <h5>Lista Metodi</h5>
           <ul class="list-group">
-            <li class="list-group-item" *ngFor="let met of this.mainEditorService.selectedClasse.getMetodi()">
-              <span>{{met.accesso}} &nbsp; {{met.nome}}(): {{met.tipoRitorno}}
+            <li class="list-group-item" *ngFor="let met of getMetodi()">
+              <span>{{met.accesso}} {{met.staticString()}} {{met.nome}}({{met.paramToString()}}): {{met.tipoRitorno}}
                 <button class="btn btn-default" (click)="removeMetodo(met.nome)">
                   <span class="glyphicon glyphicon-trash" aria-hidden="true" title="Rimuovi"></span>
                 </button>
@@ -118,8 +118,8 @@
       <!-- blocco per aggiunta parametri metodo -->
       <div class="aggiungiMetodo .selezionaTipo">
         <div class="aggiungiAttributo staticAttr">
-          <label>Static <input type="checkbox" name="static" classe="checkbox-circle" value="Stiatic"></label>
-          <label>Costruttore <input type="checkbox" name="static" classe="checkbox-circle" value="Constructor"></label>
+          <label>Static <input #staticMet type="checkbox" name="static" classe="checkbox-circle" value="Stiatic"></label>
+          <label>Costruttore <input #constructor type="checkbox" name="constructor" classe="checkbox-circle" value="Constructor"></label>
         </div>
         <div class="aggiungiMeotdo accessoMetodo">
           <label>Seleziona Visibilità</label>
@@ -156,18 +156,22 @@
                 </tr>
               </thead>
               <tbody>
+                <tr *ngFor="let param of parametriMetodo" class="tipiMetodo">
+                  <td>{{param.getTipo()}}</td>
+                  <td>{{param.getNome()}}</td>
+                </tr>
                 <tr #parametro>
                   <td>
-                    <select #tipi class="tipiMetodo">
+                    <select #tipiParam class="tipiMetodo">
                       <option value=""></option>
                       <option *ngFor="let type of types" [value]="type">{{type}}</option>
                     </select>
                   </td>
                   <td>
-                    <input #nome type="text" placeholder="Nome" class="form-control"/>
+                    <input #nomeParam type="text" placeholder="Nome" class="form-control"/>
                   </td>
                   <td>
-                    <button class="btn btn-default" title="Aggiungi Parmetro" (click)="aggiungiParam()">
+                    <button class="btn btn-default" title="Aggiungi Parmetro" (click)="addParam(tipiParam.value, nomeParam.value)">
                       <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                     </button>
                   </td>
@@ -179,7 +183,7 @@
 
 
       </div>
-      <button class="btn btn-default" [disabled]="!selectedTipoMet" (click)="addMetodo(nomeMetodo.value)">Aggiungi Metodo</button>
+      <button class="btn btn-default" [disabled]="!selectedTipoMet" (click)="addMetodo(nomeMetodo.value, staticMet.checked, constructor.checked)">Aggiungi Metodo</button>
     </div>
 
   </div>
