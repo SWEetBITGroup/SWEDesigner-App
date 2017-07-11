@@ -7,9 +7,9 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 Class {{name}}{
-    {{#private}} private:
+    {{#private}}
         {{#attrP}}
-            {{typeP}} {{varP}} {{#defP}} = {{valueP}} {{/defP}};
+            private {{typeP}} {{varP}} {{#defP}} = {{valueP}} {{/defP}};
         {{/attrP}}
         {{#methodsP}}
             private {{typeMethodP}} {{nameMethodP}}({{#paramP}} {{#lastP}} {{tParPL}} {{nParPL}} {{/lastP}} {{#notLastP}} {{tParP}} {{nParP}}, {{/notLastP}} {{/paramP}}){
@@ -22,7 +22,7 @@ Class {{name}}{
             {{typePU}} {{varPU}} {{#defPU}} = {{valuePU}} {{/defPU}};
         {{/attrPU}}
         {{#methodsPU}}
-            {{#main}}public static void Main(String Args{}){
+            {{#main}}public static void main(String Args[]){
                 {{corpoM}}
             }
             {{/main}}

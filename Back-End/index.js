@@ -45,6 +45,23 @@
     cb(false);
   }
 
+  //baro demo
+  var myMU = {
+      "name": "persona",
+      "private" : true,
+      "attrP": [
+          {"typeP": "string", "varP": "nome"},
+          {"typeP": "string", "varP": "cognome"},
+          {"typeP": "int", "varP": "eta"}
+           ],
+      "public" : true,
+      "methodsPU": [
+        {"main": "true", "corpoM": "System.out.println(\'Hello World\')"}
+      ]
+    
+  }
+
+
 //Init Server
 const server = require('./serverLoader'); // function loading server
 
@@ -87,7 +104,7 @@ app.listen(port, ()=>{
 //Express routing
   //Conn to Client
     // Set static folder to public
-    app.use(express.static(path.join(__dirname, 'dist')));
+    //app.use(express.static(path.join(__dirname, 'dist')));
   //Encrypt/Decrypt
   /**
     * @function app/post/encrypt
@@ -137,9 +154,10 @@ app.listen(port, ()=>{
     * @see module:parse
    */
   app.post("/parsing", function(req,res) { 
-    var myMu = req.body;
+    //var myMu = req.body;
+    console.log(myMU);
     var template = mu.getTemplate();
-    mu.parse(template, myMu, function(parsed){
+    mu.parse(template, myMU, function(parsed){
       res.send(parsed);
     });
   })

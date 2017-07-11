@@ -4,15 +4,10 @@
   "attrP": [
       {"typeP": "string", "varP": "nome"},
       {"typeP": "string", "varP": "cognome"},
-      {"typeP": "int", "varP": "eta", "defP": true, "valueP": "3"}
+      {"typeP": "int", "varP": "eta", "defP": true, "valueP": "21"}
        ],
   "public" : true,
   "methodsPU": [
-    {"main": "true", "corpoM": "System.out.println(\"dio cane\")"},
-    {"notMain": [
-      {"typeMethodPU": "string", "nameMethodPU": "getNome", "corpoME": "return name;"},
-      {"typeMethodPU": "void", "nameMethodPU": "setNome", "paramPU":[
-        {"lastPU": true, "tParPUL": "string", "nParPUL": "n"}
-      ], "corpoME": "name = n;"}]}
+    {"main": "true", "corpoM": "System.out.println(\"Hello World\")"}
   ]
 }
