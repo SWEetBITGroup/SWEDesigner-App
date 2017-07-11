@@ -25,13 +25,13 @@
       </div>
       <div class="aggiungiAttributo accessoAttr">
         <label>Seleziona Visibilità</label>
-        <select  [(ngModel)]="selectedAccAtt">
+        <select #accAtt  [(ngModel)]="selectedAccAtt">
           <option *ngFor="let acc of accessoAttr" [value]="acc">{{ acc }}</option>
         </select>
       </div>
       <div class="aggiungiAttributo selezionaTipo">
         <label>Seleziona tipo</label>
-        <select #tipi [(ngModel)]="selectedTipoAtt">
+        <select #tipiAtt [(ngModel)]="selectedTipoAtt">
           <option value=""></option>
           <option *ngFor="let type of types" [value]="type">{{type}}</option>
         </select>
@@ -41,7 +41,7 @@
         <input [disabled]="!selectedTipoAtt" id="nome-attributo" #nomeAtt
         (keyup.enter)="addAttributo(nomeAtt.value)">
       </div>
-      <button class="btn btn-default" [disabled]="!selectedTipoAtt" (click)="addAttributo(nomeAtt.value, checkStaticAtt.checked)">Aggiungi Attributo</button>
+      <button class="btn btn-default" [disabled]="!selectedTipoAtt" (click)="addAttributo(nomeAtt.value, checkStaticAtt.checked, tipiAtt.value, accAtt.value)">Aggiungi Attributo</button>
     </div>
 
   </div>
@@ -59,7 +59,7 @@
               <span class="glyphicon glyphicon-trash" aria-hidden="true" title="Rimuovi"></span>
             </button>
             <!-- menù a tendina di modifica attributo-->
-            <button class="btn btn-default" data-toggle="collapse" [attr.data-target]="'#'+attr.name" (click)="modAttribute(attr.name)" title="Modifica">
+            <button class="btn btn-default" data-toggle="collapse" [attr.data-target]="'#'+attr.name" title="Modifica">
               <span class="glyphicon glyphicon-pencil" aria-hidden="true" title="Modifica"></span>
             </button>
           </span>
@@ -81,7 +81,7 @@
             <div class="modificaAttributo nomeAttr">
               <label>Nome</label>
               <input [disabled]="!selectedTipoAtt" id="nome-attributo" #nomeAtt
-              (keyup.enter)="changeAttributo(nomeAtt.value)">
+              (keyup.enter)="changeAttributo(nomeAtt.value, attr.name)">
             </div>
             <button class="btn btn-default" [disabled]="!selectedTipoAtt" (click)="changeAttributo(nomeAtt.value, attr.name)">Modifica Attributo</button>
             </div>
@@ -119,7 +119,7 @@
       <div class="aggiungiMetodo .selezionaTipo">
         <div class="aggiungiAttributo staticAttr">
           <label>Static <input #staticMet type="checkbox" name="static" classe="checkbox-circle" value="Stiatic"></label>
-          <label>Costruttore <input #constructor type="checkbox" name="constructor" classe="checkbox-circle" value="Constructor"></label>
+          <label> Costruttore <input #constructor [(ngModel)]="costruttore" type="checkbox" name="constructor" classe="checkbox-circle" value="Constructor"></label>
         </div>
         <div class="aggiungiMeotdo accessoMetodo">
           <label>Seleziona Visibilità</label>
@@ -127,13 +127,15 @@
             <option *ngFor="let acc of accessoAttr" [value]="acc">{{ acc }}</option>
           </select>
         </div>
-        <label>Seleziona tipo di ritorno</label>
-        <select #tipiMetodo [(ngModel)]="selectedTipoMet">
-          <option value="void"></option>
-          <option *ngFor="let type of types" [value]="type">{{type}}</option>
-        </select>
+        <div [hidden]="costruttore">
+          <label>Seleziona tipo di ritorno</label>
+          <select #tipiMetodo [(ngModel)]="selectedTipoMet">
+            <option value="void"></option>
+            <option *ngFor="let type of types" [value]="type">{{type}}</option>
+          </select>
+        </div>
       </div>
-      <div class="aggiungiMetodo nomeMet">
+      <div [hidden]="costruttore" class="aggiungiMetodo nomeMet">
         <label>Nome</label>
         <input [disabled]="!selectedTipoMet" id="nome-metodo" #nomeMetodo>
       </div>
@@ -183,7 +185,7 @@
 
 
       </div>
-      <button class="btn btn-default" [disabled]="!selectedTipoMet" (click)="addMetodo(nomeMetodo.value, staticMet.checked, constructor.checked)">Aggiungi Metodo</button>
+      <button class="btn btn-default" [disabled]="isAddableMethod()" (click)="addMetodo(nomeMetodo.value, staticMet.checked, constructor.checked, tipiMetodo.value, accMetodo.value)">Aggiungi Metodo</button>
     </div>
 
   </div>

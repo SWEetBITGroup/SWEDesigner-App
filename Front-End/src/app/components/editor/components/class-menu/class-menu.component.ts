@@ -65,6 +65,8 @@ export class ClassMenuComponent implements OnDestroy{
    */
   parametriMetodo = new Array<Param>();
 
+  costruttore: boolean;
+
 
   /**
    * Create an instantiation of ClassMenuComponent and sets the properties ´classe´ and ´name´
@@ -88,10 +90,7 @@ export class ClassMenuComponent implements OnDestroy{
    * a new attribute. If one or more parameter isn't present an error will be shown 
    * @param nome the neme of the new attribute
    */
-  addAttributo(nome: string, staticAtt: boolean) {
-    console.log(staticAtt);
-    let tipo = this.selectedTipoAtt;
-    let acc = this.selectedAccAtt;
+  addAttributo(nome: string, staticAtt: boolean, tipo: string, acc: string) {
     console.log(nome+' '+tipo+' '+acc);
     if(nome && tipo && acc){
       try {
@@ -99,7 +98,7 @@ export class ClassMenuComponent implements OnDestroy{
       } catch (error) {
         if(error.message == 'NomePresente')
           // TODO: segnalare l'errore sul menu! Eliminare il console log
-          console.log('nome attributo già esistente');
+          console.log('Non è possibile inserire due attributi con lo stesso nome');
       }
       let attributi = this.classe.attributes.attributes;
       let vis;
@@ -113,14 +112,16 @@ export class ClassMenuComponent implements OnDestroy{
         case 'private':
           vis = '-';
       }
-      attributi.push(vis+' '+nome+' : '+ tipo);
+      let stat = '';
+      if(staticAtt)
+        stat = 'static'
+      attributi.push(vis+' '+stat+' '+nome+' : '+ tipo);
       this.classe.set('attributes',null); // Hack per far funzionare l'event change:attrs
       this.classe.set('attributes',attributi);
       this.selectedAccAtt = 'public';
       this.selectedTipoAtt = null;
       } else {
-        // TODO: segnalare il mancato selezionamento dei campi
-        console.log('tette');
+        alert('Alcuni capi del form per la creazione del nuovo attributo non sono stati compilati');
     }
   }
 
@@ -131,9 +132,10 @@ export class ClassMenuComponent implements OnDestroy{
   removeAttributo(nome: string) {
     let attributi = this.classe.attributes.attributes;
     attributi.splice(attributi.findIndex(element => {
-      let att = element.split(': ');        // Tutto questo perché non sono riuscito ad
-      att = att[0].split(' ');              // implementare una regular expression S.B.
-      if(att[1] == nome) {return element;}
+      let att = element.split(' ');
+      for(let i=0; i<att.length; i++)
+        if(att[i] == nome) 
+          return element;
     }),1);
     this.classe.set('attributes',null);
     this.classe.set('attributes',attributi);
@@ -144,12 +146,11 @@ export class ClassMenuComponent implements OnDestroy{
   /**
    * Mododify the properties of an attribute
    */
-  changeAttributo(name: string, oldName: string) {
-    let tipo = this.selectedTipoAtt;
-    let acc = this.selectedAccAtt;
+  changeAttributo(name: string, oldName: string, tipo: string, acc: string) {
     if(name && tipo && acc) {
       this.mainEditorService.changeAttributo(oldName,name,tipo,acc);
     }
+    
   }
 
   /**
@@ -185,7 +186,7 @@ export class ClassMenuComponent implements OnDestroy{
     if(!sameName)
       this.parametriMetodo.push(new Param(type,name));
     else  
-      alert("Nome paramentro già presente");
+      alert("Non è possibile inserire due o più parametri con lo stesso nome");
   }
 
   // Funzione per aggiungere un metodo alla classe selezionata
@@ -194,9 +195,7 @@ export class ClassMenuComponent implements OnDestroy{
    * a new method. If one or more parameter isn't present an error will be shown
    * @param nome 
    */
-  addMetodo(nome: string, staticMet: boolean, constructor: boolean) {
-    let tipo = this.selectedTipoMet;
-    let acc = this.selectedAccMet;
+  addMetodo(nome: string, staticMet: boolean, constructor: boolean, tipo: string, acc: string) {
     let params = this.parametriMetodo;
     console.log(nome+' '+tipo+' '+acc);
     if((nome && tipo && acc) || (constructor && acc) ){
@@ -208,7 +207,7 @@ export class ClassMenuComponent implements OnDestroy{
         this.mainEditorService.addMetodo(staticMet,constructor,tipo, nome, acc, params);
       } catch (error) {
         if(error.message == 'NomePresente')
-          alert('Nome metodo già esistente');
+          alert('Non è possibile inserire due o più metodi con lo stesso nome');
       }
       let metodi = this.classe.attributes.methods;
       let vis;
@@ -232,14 +231,13 @@ export class ClassMenuComponent implements OnDestroy{
       if(staticMet) {
         st = 'static';
       }
-      metodi.push(vis+' '+st+' '+nome+'('+ parametri +'): '+ tipo);
+      metodi.push(vis+' '+st+' '+nome+' ( '+ parametri +' ) : '+ tipo);
       this.classe.set('methods',null); // Hack per far funzionare l'event change:attrs
       this.classe.set('methods',metodi);
       this.selectedAccMet = 'public';
       this.selectedTipoMet = null;
       } else {
-        // TODO: segnalare il mancato selezionamento dei campi
-        console.log('tette');
+        alert('Alcuni capi del form per la creazione del nuovo metodo non sono stati compilati');
     }
   }
 
@@ -251,13 +249,14 @@ export class ClassMenuComponent implements OnDestroy{
   removeMetodo(nome: string) {
     let metodi = this.classe.attributes.methods;
     metodi.splice(metodi.findIndex(element => {
-      let met = element.split(': ');        // Tutto questo perché non sono riuscito ad
-      met = met[0].split(' ');              // implementare una regular expression S.B.
-      if(met[1] == nome) {return element;}
+      let met = element.split(' ');        
+      for(let i=0; i<met.length; i++){
+        if(met[i] == nome) 
+          return element;
+      }
     }),1);
     this.classe.set('attributes',null);
     this.classe.set('attributes',metodi);
-    console.log('ora rimuovo metodo');
     this.mainEditorService.removeMetodo(nome);
   }
 
@@ -271,6 +270,11 @@ export class ClassMenuComponent implements OnDestroy{
 
   getMetodi() {
     return this.mainEditorService.getSelectedClasse().getMetodi();
+  }
+
+  isAddableMethod() {
+    if(!this.costruttore && !this.selectedTipoMet)
+      return true;
   }
 
 }

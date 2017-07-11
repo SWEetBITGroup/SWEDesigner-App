@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { MainEditorService } from '../../../../services/main-editor.service';
+
 @Component({
   selector: 'activity-menu',
   templateUrl: './activity-menu.component.html',
@@ -7,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ActivityMenuComponent implements OnInit {
 
-  constructor() { }
+  constructor(private mainEditorService : MainEditorService) { }
 
   ngOnInit() {
   }
