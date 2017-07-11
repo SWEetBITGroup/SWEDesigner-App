@@ -1,7 +1,9 @@
 <div class="container-fluid menu">
-
   <div class="row selezionato">
-    <span class="glyphicon glyphicon-wrench iconaMirrow" aria-hidden="true"></span> {{name}}
+    <span class="glyphicon glyphicon-wrench iconaMirrow" aria-hidden="true"></span>{{name}}
+    <button class="btn btn-default" (click)="removeClass(attr.name)" title="Rimuovi classe">
+      <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+    </button>
   </div>
   <div class="row changeNome">
     Modifica nome:
@@ -13,7 +15,6 @@
   </div>
   <!-- div per aggiungere un attributo -->
   <div class="aggiungiAttributo">
-    <!-- <span [hidden]="!nomeAttributoUguale">Il nome inserito per l'attributo è già esistente <br /></span> -->
     <div class="row">
       <button href="#addAttr" class="btn btn-default" data-toggle="collapse">
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Aggiungi Attributo
@@ -21,7 +22,7 @@
     </div>
     <div id="addAttr" class="campiAttributo collapse">
       <div class="aggiungiAttributo staticAttr">
-        <label>Static <input #checkStaticAtt type="checkbox" name="static" classe="checkbox-circle" value="Stiatic" /></label>
+        <label>Static <input #checkStaticAtt type="checkbox" name="static" class="checkbox-circle" value="Stiatic" /></label>
       </div>
       <div class="aggiungiAttributo accessoAttr">
         <label>Seleziona Visibilità</label>
@@ -45,20 +46,20 @@
     </div>
 
   </div>
-  <button href="#listaAttr" class="btn btn-default" data-toggle="collapse">
+  <button href="#listaAttr" #lista class="btn btn-default listaAttr" data-toggle="collapse" (click)="closeCollapsedList(lista)">
     <span class="glyphicon glyphicon-triangle-left" aria-hidden="true"></span>Lista Attributi
   </button>
   <!-- lista attributi della classe -->
   <div *ngIf="this.mainEditorService.selectedClasse" class="container listaAttributi">
     <div id="listaAttr" class="row collapse" *ngIf="name">
-      <h5>Lista Attributi</h5>
+      Lista attributi
       <ul class="list-group">
         <li class="list-group-item" *ngFor="let attr of this.mainEditorService.selectedClasse.getAttributi()">
           <span>{{attr.name}}: {{attr.type}}
             <button class="btn btn-default" (click)="removeAttributo(attr.name)">
               <span class="glyphicon glyphicon-trash" aria-hidden="true" title="Rimuovi"></span>
             </button>
-            <!-- menù a tendina di modifica attributo-->
+            <!-- icona di modifica che farà apparire un menù a tendina per la modifica attributo-->
             <button class="btn btn-default" data-toggle="collapse" [attr.data-target]="'#'+attr.name" title="Modifica">
               <span class="glyphicon glyphicon-pencil" aria-hidden="true" title="Modifica"></span>
             </button>
@@ -66,6 +67,9 @@
           <!-- menù a comparsa (collapse) per modificare un attributo-->
           <div class="campiAttributo collapse" attr.id="{{attr.name}}">
             <div class="modificaAttributo accessoAttr">
+              <div class="aggiungiAttributo staticAttr">
+                <label>Static <input #checkStaticAtt type="checkbox" name="static" class=".checkbox-circle" value="Stiatic" /></label>
+              </div>
               <label>Seleziona Visibilità</label>
               <select  [(ngModel)]="selectedAccAtt">
                 <option *ngFor="let acc of accessoAttr" [value]="acc">{{ acc }}</option>
@@ -97,29 +101,11 @@
       </button>
     </div>
     <div id="addMetodo" class="campiMetodo collapse">
-      <!-- lista metodi della classe -->
-      <div *ngIf="this.mainEditorService.selectedClasse" class="container listaMetodi">
-        <div  class="row" *ngIf="name">
-          <h5>Lista Metodi</h5>
-          <ul class="list-group">
-            <li class="list-group-item" *ngFor="let met of getMetodi()">
-              <span>{{met.accesso}} {{met.staticString()}} {{met.nome}}({{met.paramToString()}}): {{met.tipoRitorno}}
-                <button class="btn btn-default" (click)="removeMetodo(met.nome)">
-                  <span class="glyphicon glyphicon-trash" aria-hidden="true" title="Rimuovi"></span>
-                </button>
-                <button class="btn btn-default" (click)="modifyMetodo(met.nome)" title="Modifica">
-                  <span class="glyphicon glyphicon-pencil" aria-hidden="true" title="Modifica"></span>
-                </button>
-              </span>
-            </li>
-          </ul>
-        </div>
-      </div>
       <!-- blocco per aggiunta parametri metodo -->
       <div class="aggiungiMetodo .selezionaTipo">
         <div class="aggiungiAttributo staticAttr">
-          <label>Static <input #staticMet type="checkbox" name="static" classe="checkbox-circle" value="Stiatic"></label>
-          <label> Costruttore <input #constructor [(ngModel)]="costruttore" type="checkbox" name="constructor" classe="checkbox-circle" value="Constructor"></label>
+          <label>Static <input #staticMet type="checkbox" id="static" name="static" classe="checkbox-circle" value="Stiatic" (change)='updateCheckbox(staticMet.id)'></label>
+          <label> Costruttore <input #constructor [(ngModel)]="costruttore" type="checkbox" id="constructor" name="constructor" classe="checkbox-circle" value="Constructor" (change)='updateCheckbox(constructor.id)'></label>
         </div>
         <div class="aggiungiMeotdo accessoMetodo">
           <label>Seleziona Visibilità</label>
@@ -146,15 +132,9 @@
             <table class="table table-bordered table-hover" id="tab_logic">
               <thead>
                 <tr>
-                  <th class="text-center">
-                    Tipo
-                  </th>
-                  <th class="text-center">
-                    Nome
-                  </th>
-                  <th class="text-center">
-                    
-                  </th>
+                  <th class="text-center">Tipo</th>        
+                  <th class="text-center">Nome</th>          
+                  <th class="text-center"></th>                
                 </tr>
               </thead>
               <tbody>
@@ -182,11 +162,29 @@
             </table>
           </div>
         </div>
-
-
       </div>
       <button class="btn btn-default" [disabled]="isAddableMethod()" (click)="addMetodo(nomeMetodo.value, staticMet.checked, constructor.checked, tipiMetodo.value, accMetodo.value)">Aggiungi Metodo</button>
+    </div>   
+  </div>
+  <button href="#listaMet" #listac class="btn btn-default" data-toggle="collapse" (click)='closeCollapsedList(listac)'>
+    <span class="glyphicon glyphicon-triangle-left" aria-hidden="true"></span>Lista Metodi
+  </button>
+  <!-- lista metodi della classe -->
+  <div *ngIf="this.mainEditorService.selectedClasse" class="container listaAttributi">
+    <div id="listaMet" class="row collapse" *ngIf="name">
+      Lista metodi
+      <ul class="list-group">
+        <li class="list-group-item" *ngFor="let met of getMetodi()">
+          <span>{{met.accesso}} {{met.staticString()}} {{met.nome}}({{met.paramToString()}}): {{met.tipoRitorno}}
+            <button class="btn btn-default" (click)="removeMetodo(met.nome)">
+               <span class="glyphicon glyphicon-trash" aria-hidden="true" title="Rimuovi"></span>
+            </button>
+            <button class="btn btn-default" (click)="modifyMetodo(met.nome)" title="Modifica">
+              <span class="glyphicon glyphicon-pencil" aria-hidden="true" title="Modifica"></span>
+            </button>
+          </span>
+        </li>
+      </ul>
     </div>
-
   </div>
 </div>

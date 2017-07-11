@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy } from '@angular/core';
+import { Component, Input, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 
 import { ClassMenuService } from '../../services/class-menu.service';
 import { MainEditorService } from '../../../../services/main-editor.service';
@@ -66,7 +66,14 @@ export class ClassMenuComponent implements OnDestroy{
   parametriMetodo = new Array<Param>();
 
   costruttore: boolean;
-
+  /**
+   * Used to point to a HTML checkbox element 
+   */
+  @ViewChild('staticMet') staticMetCheckbox: ElementRef;
+  /**
+   * Used to point to a HTML checkbox element 
+   */
+  @ViewChild('constructor') constructorCheckbox: ElementRef;
 
   /**
    * Create an instantiation of ClassMenuComponent and sets the properties ´classe´ and ´name´
@@ -262,7 +269,7 @@ export class ClassMenuComponent implements OnDestroy{
 
   /**
    * Set the editor in activity mode to modify the behavior of the method of the given name
-   * @param nome name of metho to modify
+   * @param nome name of method to modify
    */
   modifyMetodo(nome: string) {
     this.mainEditorService.enterActivityMode(nome);
@@ -276,5 +283,30 @@ export class ClassMenuComponent implements OnDestroy{
     if(!this.costruttore && !this.selectedTipoMet)
       return true;
   }
-
+  /**
+   * This function allow to be check only one element
+   * @param event name of id element
+   */
+  updateCheckbox(event: any) {
+    if (this.staticMetCheckbox.nativeElement.checked && this.constructorCheckbox.nativeElement.checked && event == 'constructor')
+        this.staticMetCheckbox.nativeElement.checked = false;
+    if (this.staticMetCheckbox.nativeElement.checked && this.constructorCheckbox.nativeElement.checked && event == 'static')
+      {
+        this.constructorCheckbox.nativeElement.checked = false;
+        this.costruttore = false;
+      }  
+  }
+ /**
+  * This function close all the collapsed div except the selected
+  * @param event name of element reference
+  */
+  closeCollapsedList(event:any) {
+    if (!$(event).hasClass("listaAttr")) {
+      if ($('#listaAttr').attr("aria-expanded"))
+          $('#listaAttr').removeClass("in");
+    }
+    else 
+    if ($('#listaMet').attr("aria-expanded"))
+       $('#listaMet').removeClass("in");
+  }
 }

@@ -4,6 +4,7 @@
   font-weight: bold;
   font-size: 14px;
   text-align: center;
+  border-top: none;
 }
 
 .row {
@@ -11,7 +12,8 @@
   border-top: 1px solid black;
 }
 .selezionato {
-  font-size: 16px;
+  /*font-size: 16px;*/
+  border-top: none;
 }
 
 .campiAttributo {
@@ -37,6 +39,7 @@
 #listaAttr {
   padding-bottom: 2%;
   border-bottom: 1px solid black;
+  border-top: none;
 }
 
 .listaAttributi {
@@ -47,11 +50,16 @@
   z-index: 10;
   max-width: 100%;
   border-left: 1px solid black;
-  border-top: 0px solid transparent;
 }
 
 .listaAttributi ul {
   margin-bottom: 0;
+}
+
+#listaMet {
+  /*padding-bottom: 2%;*/
+  border-bottom: 1px solid black;
+  border-top: none;
 }
 
 /*velocità di animazione del menù della lista attributi*/
@@ -59,17 +67,6 @@
     transition: height 0.1s;
 }
 
-.listaMetodi {
-  position: absolute;
-  background-color: #EAEAF1;
-  left: -100%;
-  z-index: 10;
-  max-width: 100%;
-  top: 39.5%;
-  border-left: 1px solid black;
-  border-top: 0px solid transparent;
-  border-bottom: 1px solid black;
-}
 
 .tipiMetodo {
   vertical-align: -webkit-baseline-middle;

@@ -101,7 +101,7 @@ export class EditorComponent implements OnInit {
       position: { x: 120, y: 30 },
       size: { width: 300, height: 100 },
       name: ['Class1'],
-      attributes: ['+ attributeOne: String', '+ prova: String'],
+      attributes: ['+ attributeOne: String'],
       methods: ['+ setAttributeOne(att: String): Void','+ getAttributeOne(): String'],
       attrs: {
             '.uml-class-name-rect': {
