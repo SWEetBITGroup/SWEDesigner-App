@@ -67,7 +67,11 @@
     transition: height 0.1s;
 }
 
-
 .tipiMetodo {
   vertical-align: -webkit-baseline-middle;
+}
+
+#tabellaParametri {
+  max-height:200px;
+  overflow:auto;
 }
