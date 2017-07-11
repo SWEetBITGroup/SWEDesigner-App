@@ -43,7 +43,7 @@ module.exports = {
         //console.log("file" + " " + myEncr.toHex());
         var decipher = forge.cipher.createDecipher('AES-CBC', key);
         decipher.start({iv: iv});
-        decipher.update(myEncr);
+        decipher.update(forge.util.createBuffer(myEncr));
         decipher.finish();
         // outputs decrypted string
         var decrypted = decipher.output;
