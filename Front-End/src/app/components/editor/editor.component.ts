@@ -96,44 +96,6 @@ export class EditorComponent implements OnInit {
 
     this.paper.scale(this.xAx,this.xAx);
 
-    // DA RIMUOVERE: crea una shape classe UML
-    let class1 = new joint.shapes.uml.Class({
-      position: { x: 120, y: 30 },
-      size: { width: 300, height: 100 },
-      name: ['Class1'],
-      attributes: ['+ attributeOne: String'],
-      methods: ['+ setAttributeOne(att: String): Void','+ getAttributeOne(): String'],
-      attrs: {
-            '.uml-class-name-rect': {
-                fill: 'rgba(255,255,255,1)',
-                stroke: 'rgba(48,8,198,0.5)',
-                'stroke-width': 1.5
-            },
-            '.uml-class-attrs-rect, .uml-class-methods-rect': {
-                fill: 'rgba(48,28,198,0.1)',
-                stroke: 'rgba(48,8,198,0.5)',
-                'stroke-width': 1.5
-            },
-            '.uml-class-name-text': {
-              'font-family': 'monospace'
-            },
-            '.uml-class-attrs-text': {
-                ref: '.uml-class-attrs-rect',
-                'ref-y': 0.5,
-                'y-alignment': 'middle',
-                'font-family': 'monospace'
-            },
-            '.uml-class-methods-text': {
-                ref: '.uml-class-methods-rect',
-                'ref-y': 0.5,
-                'y-alignment': 'middle',
-                'font-family': 'monospace'
-            }
-        }
-    });
-    // DA RIMUOVERE: Inserisce l'elemento classe in graph
-    this.graph.addCell(class1);
-
     /**
      * This methods allows to the mouse's pointer to recognize when a class is clicked and select it
      */
@@ -160,11 +122,6 @@ export class EditorComponent implements OnInit {
 
     this.mainEditorService.storeGraph(this.graph.toJSON()); // ELIMINARE
     this.mainEditorService.setEditorComp(this);
-
-    // TODO: da eliminare solo per testing
-    this.mainEditorService.addClass(new Classe('Class1'), class1);
-    this.mainEditorService.getClassList()[0].addAttributo('String', 'attributeOne', 'public');
-    console.log(this.graph);
   }
 
   /* Salva il graph corrente utilizzando il metodo storeGraph di mainEditor service,

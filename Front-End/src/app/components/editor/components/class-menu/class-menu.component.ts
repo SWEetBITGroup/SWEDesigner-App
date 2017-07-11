@@ -101,7 +101,7 @@ export class ClassMenuComponent implements OnDestroy{
     console.log(nome+' '+tipo+' '+acc);
     if(nome && tipo && acc){
       try {
-        this.mainEditorService.addAttributo(tipo, nome, acc);
+        this.mainEditorService.addAttributo(tipo, nome, acc, staticAtt);
       } catch (error) {
         if(error.message == 'NomePresente')
           // TODO: segnalare l'errore sul menu! Eliminare il console log
@@ -279,12 +279,16 @@ export class ClassMenuComponent implements OnDestroy{
     return this.mainEditorService.getSelectedClasse().getMetodi();
   }
 
+  removeClass(name: string) {
+    this.mainEditorService.removeClass(name, this.classe);
+  }
+
   isAddableMethod() {
     if(!this.costruttore && !this.selectedTipoMet)
       return true;
   }
   /**
-   * This function allow to be check only one element
+   * This function allows to be check only one element
    * @param event name of id element
    */
   updateCheckbox(event: any) {
@@ -297,7 +301,7 @@ export class ClassMenuComponent implements OnDestroy{
       }  
   }
  /**
-  * This function close all the collapsed div except the selected
+  * This function closes all the collapsed div except the selected one
   * @param event name of element reference
   */
   closeCollapsedList(event:any) {

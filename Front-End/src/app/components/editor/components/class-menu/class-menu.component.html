@@ -1,7 +1,7 @@
 <div class="container-fluid menu">
   <div class="row selezionato">
     <span class="glyphicon glyphicon-wrench iconaMirrow" aria-hidden="true"></span>{{name}}
-    <button class="btn btn-default" (click)="removeClass(attr.name)" title="Rimuovi classe">
+    <button class="btn btn-default" (click)="removeClass(name)" title="Rimuovi classe">
       <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
     </button>
   </div>
@@ -46,11 +46,9 @@
     </div>
 
   </div>
-  <div class="row">
-    <button href="#listaAttr" #lista class="btn btn-default listaAttr" data-toggle="collapse" (click)="closeCollapsedList(lista)">
-      <span class="glyphicon glyphicon-triangle-left" aria-hidden="true"></span>Lista Attributi
-    </button>
-  </div>
+  <button href="#listaAttr" #lista class="btn btn-default listaAttr" data-toggle="collapse" (click)="closeCollapsedList(lista)">
+    <span class="glyphicon glyphicon-triangle-left" aria-hidden="true"></span>Lista Attributi
+  </button>
   <!-- lista attributi della classe -->
   <div *ngIf="this.mainEditorService.selectedClasse" class="container listaAttributi">
     <div id="listaAttr" class="row collapse" *ngIf="name">
@@ -168,11 +166,9 @@
       <button class="btn btn-default" [disabled]="isAddableMethod()" (click)="addMetodo(nomeMetodo.value, staticMet.checked, constructor.checked, tipiMetodo.value, accMetodo.value)">Aggiungi Metodo</button>
     </div>   
   </div>
-  <div class="row">
-    <button href="#listaMet" #listac class="btn btn-default" data-toggle="collapse" (click)='closeCollapsedList(listac)'>
-      <span class="glyphicon glyphicon-triangle-left" aria-hidden="true"></span>Lista Metodi
-    </button>
-  </div>
+  <button href="#listaMet" #listac class="btn btn-default" data-toggle="collapse" (click)='closeCollapsedList(listac)'>
+    <span class="glyphicon glyphicon-triangle-left" aria-hidden="true"></span>Lista Metodi
+  </button>
   <!-- lista metodi della classe -->
   <div *ngIf="this.mainEditorService.selectedClasse" class="container listaAttributi">
     <div id="listaMet" class="row collapse" *ngIf="name">

@@ -40,16 +40,13 @@ export class Classe {
      * @param acc the visibility of the new attribute, it's passed as parameter to the constructor of Attributo
      * @throws an error of type Error anche custom message 'NomePresente'
      */
-    addAttributo(tipo: string, nome: string, acc?: string) {
+    addAttributo(tipo: string, nome: string, acc: string, stat: boolean) {
         this.attributi.forEach(attr => {
             if(attr.getNome() == nome) 
                 throw new Error('NomePresente');
         });
         let attr;
-        if(acc)
-            attr = new Attributo(tipo,nome,acc);
-        else
-            attr = new Attributo(tipo,nome,'public');
+        attr = new Attributo(tipo,nome,acc,stat);
         this.attributi.push(attr);
     }
 

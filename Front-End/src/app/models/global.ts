@@ -1,4 +1,7 @@
-import { Classe } from '../components/editor/models/classe';
+import { Classe }     from '../components/editor/models/classe';
+import { Metodo }     from '../components/editor/models/metodo';
+import { Param }      from '../components/editor/models/param';
+
 
 /**
  * It stores the data of the project and povides the methods
@@ -52,9 +55,50 @@ export class Global {
     return classe;
   }
 
+  removeClass(name: string) {
+    for(let i=0;i<this.classi.length;i++){
+      if(this.classi[i].getNome() == name)
+        this.classi.splice(i,1); 
+    }
+  }
+
   import(proj: any) {
-    this.setName(proj.nome_project);
+    console.log(proj);
+    this.setName(proj.nome_progetto);
     this.setDiagramma(JSON.stringify(proj.project.graph));
+    this.generateClassArray(proj.project.classi);
+  }
+
+  generateClassArray(classArray) {
+    classArray.forEach(classe => {
+      let c = new Classe(classe.name);
+      this.generateMethods(c,classe.methods);
+      this.generateAttributes(c,classe.attributes);
+      c.addSuperclass(classe.superclass);
+      this.classi.push(c);
+    });
+  }
+
+  generateMethods(classe: Classe, methods) {
+    methods.forEach(met => {
+      let m = new Metodo(met.statico,met.costruttore,met.nome,
+                         met.accesso,met.tipo,this.generateParams(met.listaArgomenti));
+      classe.addMetodo(m);
+    });
+  }
+
+  generateParams(params) {
+    let parametri = new Array<Param>();
+    params.forEach(param => {
+      parametri.push(new Param(param.name,param.type));
+    });
+    return parametri;
+  }
+
+  generateAttributes(classe: Classe, attributi) {
+    attributi.forEach(att => {
+      classe.addAttributo(att.type,att.name,att.visibility,att.staticAtt);
+    });
   }
 
   // I campi devono ritornare come string

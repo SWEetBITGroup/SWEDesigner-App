@@ -71,7 +71,6 @@ export class MainEditorService {
   addClass(classe: Classe, graphElement: any) {
     this.project.getClassi().push(classe);
     this.editorComp.addElement(graphElement);
-    console.log(this.getClassList());
   }
 
   /**
@@ -117,8 +116,8 @@ export class MainEditorService {
    * @param nome is the name of the attribute to add as parameter to addAttributo
    * @param acc is the visibility of the attribute to add as parameter to addAttributo
    */
-  addAttributo(tipo: string, nome:string, acc: string) {
-    this.selectedClasse.addAttributo(tipo,nome,acc);
+  addAttributo(tipo: string, nome:string, acc: string, stat: boolean) {
+    this.selectedClasse.addAttributo(tipo,nome,acc,stat);
   }
 
   /**
@@ -220,6 +219,11 @@ export class MainEditorService {
     newProj.import(JSON.parse(proj));
     this.project = newProj;
     this.editorComp.replaceDiagram(JSON.parse(newProj.getDiagramma()));
+  }
+
+  removeClass(name: string, classe) {
+    this.project.removeClass(name);
+    this.editorComp.graph.removeCells(classe);
   }
 
 }
