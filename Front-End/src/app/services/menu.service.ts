@@ -6,12 +6,16 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import * as FileSaver from 'file-saver';
 
+import { MainEditorService } from './main-editor.service';
+
 @Injectable()
 export class MenuService {
 
   private selectedGraphService = new Subject<any>();
 
-  constructor(private http: Http) { }
+  private importData: any;
+
+  constructor(private http: Http, private mainEditorService : MainEditorService) { }
 
   selectedGrapg$ = this.selectedGraphService.asObservable();
   /**
@@ -38,11 +42,9 @@ export class MenuService {
               responseType: ResponseContentType.Blob,
               headers: new Headers({'Content-Type': 'application/json; charset=UTF-8'})})
              .subscribe((data) => {
-               console.log(data);
                var blob = new Blob([data.blob()],{type: 'application/json'});
                var filename = 'proj.json';
                FileSaver.saveAs(blob,filename);
-               console.log('diobueo');
               },
               error => {console.log(JSON.stringify(error));});
             }
@@ -60,18 +62,21 @@ export class MenuService {
       this.readFile(file, (e)=>{
         var contents: any = e.target;
         var readed = JSON.parse(contents.result);
-        console.log(readed);
         this.http.post('/decrypt', readed, {
           method: RequestMethod.Post,
           responseType: ResponseContentType.Json,
           headers: new Headers({'Content-Type': 'application/json'}) 
         })
         .subscribe((data)=>{
-          console.log(data);
+          this.mainEditorService.importProject(data);
         },error => {console.log(error)})
       })
     }
     
+  }
+
+  getImportData() {
+    return this.importData;
   }
 }
 

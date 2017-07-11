@@ -48,10 +48,10 @@ module.exports = {
         // outputs decrypted string
         var decrypted = decipher.output;
         //console.log(decrypted);
-        var jsonDecr = JSON.stringify(decrypted.toString());
-        var str = jsonDecr.split('\\').join('\r');
+        // var jsonDecr = JSON.stringify(decrypted.toString());
+        // var str = jsonDecr.split('\\').join('');
         //console.log("file decrittato" + " " + jsonDecr);
-        return str;
+        return decrypted;
     },
     /**
     * @function getKey

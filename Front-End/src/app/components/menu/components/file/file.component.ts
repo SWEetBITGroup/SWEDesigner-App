@@ -21,7 +21,7 @@ export class FileComponent implements OnInit {
     this.menuService.encrypt(JSON.parse(this.mainEditorService.getProject().toJSON()));
   }
 
-  fileChange(event) {
+  importa(event) {
     this.menuService.import(event);
   }
 }
