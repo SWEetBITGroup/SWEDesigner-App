@@ -65,10 +65,6 @@
           </span>
           <!-- menù a comparsa (collapse) per modificare un attributo-->
           <div class="campiAttributo collapse" attr.id="{{attr.name}}">
-            <div class="aggiungiAttributo staticAttr">
-              <label>Static <input type="checkbox" name="static" classe="checkbox-circle" value="Stiatic"></label>
-              <label>Costruttore <input type="checkbox" name="static" classe="checkbox-circle" value="Constructor"></label>
-            </div>
             <div class="modificaAttributo accessoAttr">
               <label>Seleziona Visibilità</label>
               <select  [(ngModel)]="selectedAccAtt">
@@ -121,6 +117,10 @@
       </div>
       <!-- blocco per aggiunta parametri metodo -->
       <div class="aggiungiMetodo .selezionaTipo">
+        <div class="aggiungiAttributo staticAttr">
+          <label>Static <input type="checkbox" name="static" classe="checkbox-circle" value="Stiatic"></label>
+          <label>Costruttore <input type="checkbox" name="static" classe="checkbox-circle" value="Constructor"></label>
+        </div>
         <div class="aggiungiMeotdo accessoMetodo">
           <label>Seleziona Visibilità</label>
           <select #accMetodo [(ngModel)]="selectedAccMet">
