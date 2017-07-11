@@ -66,6 +66,10 @@ export class Classe {
      * @param metodo it takes a pre-built method and adds it into the array of methods
      */
     addMetodo(metodo: Metodo) {
+        this.metodi.forEach(met => {
+            if(met.getNome() == metodo.getNome()) 
+                throw new Error('NomePresente');
+        });
         this.metodi.push(metodo);
     }
 

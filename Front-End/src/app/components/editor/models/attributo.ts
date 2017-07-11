@@ -20,7 +20,7 @@ export class Attributo extends Param {
     /**
      * This method return the attribute's visibility
      */
-    changeAccesso(acc: string) {
+    changeAcc(acc: string) {
         this.visibility = acc;
     }
 }

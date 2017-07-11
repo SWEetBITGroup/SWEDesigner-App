@@ -5,5 +5,7 @@
 </div>
 <div [hidden]="!selectedCell" class="editClass">
     <class-menu [hidden]="mainEditorService.getActivityModeStatus()"></class-menu>
-    <activity-menu [hidden]="!mainEditorService.getActivityModeStatus()"></activity-menu>
+</div>
+<div class="editClass">
+  <activity-menu [hidden]="!mainEditorService.getActivityModeStatus()"></activity-menu>
 </div>
