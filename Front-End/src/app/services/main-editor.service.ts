@@ -214,4 +214,12 @@ export class MainEditorService {
     this.project.setDiagramma(this.editorComp.graph.toJSON());
   }
 
+  importProject(importData) {
+    let proj = JSON.parse(importData._body).data;
+    let newProj = new Global();
+    newProj.import(JSON.parse(proj));
+    this.project = newProj;
+    this.editorComp.replaceDiagram(JSON.parse(newProj.getDiagramma()));
+  }
+
 }

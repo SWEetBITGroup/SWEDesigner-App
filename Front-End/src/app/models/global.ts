@@ -27,6 +27,10 @@ export class Global {
     this.diagramma = diagramma;
   }
 
+  setName(name: string) {
+    this.nome_progetto = name;
+  }
+
   getDiagramma(){
     return this.diagramma;
   }
@@ -46,6 +50,11 @@ export class Global {
         classe = c;
     });
     return classe;
+  }
+
+  import(proj: any) {
+    this.setName(proj.nome_project);
+    this.setDiagramma(JSON.stringify(proj.project.graph));
   }
 
   // I campi devono ritornare come string

@@ -120,8 +120,8 @@ app.listen(port, ()=>{
     //console.log(req.body.data);
     var ByteStringBuffer = {
       data: req.body.data,
-      read: encrRead,
-      _constructedStringLength: encrLenghtFile
+      read: req.body.read,
+      _constructedStringLength: req.body._constructedStringLength
     }
     console.log(ByteStringBuffer);
     var decripted = encr.decrypt(ByteStringBuffer , keyCrypt, ivCrypt);

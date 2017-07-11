@@ -164,6 +164,7 @@ export class EditorComponent implements OnInit {
     // TODO: da eliminare solo per testing
     this.mainEditorService.addClass(new Classe('Class1'), class1);
     this.mainEditorService.getClassList()[0].addAttributo('String', 'attributeOne', 'public');
+    console.log(this.graph);
   }
 
   /* Salva il graph corrente utilizzando il metodo storeGraph di mainEditor service,

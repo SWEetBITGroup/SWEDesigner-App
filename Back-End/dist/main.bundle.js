@@ -1,12 +1,768 @@
-webpackJsonp([1,5],{
+webpackJsonp([1,5],[
+/* 0 */,
+/* 1 */,
+/* 2 */,
+/* 3 */,
+/* 4 */,
+/* 5 */,
+/* 6 */,
+/* 7 */,
+/* 8 */,
+/* 9 */,
+/* 10 */,
+/* 11 */,
+/* 12 */,
+/* 13 */,
+/* 14 */,
+/* 15 */,
+/* 16 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-/***/ 114:
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__models_global__ = __webpack_require__(131);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_editor_models_metodo__ = __webpack_require__(123);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MainEditorService; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+/**
+ * 'MainEditorservice' stores information about the editor's canvas, the project
+ * and stores a direct access to the EditorComponent.
+ * 'MainEditorservice' provides methods to interact with the EditorComponent and
+ * to modify a selected class which is present in the editor's canvas.
+ */
+var MainEditorService = (function () {
+    function MainEditorService() {
+        /**
+         * 'project' is used to store and retrive information about the current project
+         */
+        this.project = new __WEBPACK_IMPORTED_MODULE_1__models_global__["a" /* Global */]();
+        /**
+         * 'activityMode' is a flag which indicates if the activity diagram is in use
+         */
+        this.activityMode = false;
+    }
+    /**
+     * This method is used to set the instantiation of the EditorComponent as
+     * internal property of this class
+     * @param editCmp the EditorComponent instance
+     */
+    MainEditorService.prototype.setEditorComp = function (editCmp) {
+        this.editorComp = editCmp;
+    };
+    /**
+     * This method is used to retrive the array of classes present in the project
+     */
+    MainEditorService.prototype.getClassList = function () {
+        return this.project.getClassi();
+    };
+    /**
+     * This method returns the selected class of type ´Classe´
+     */
+    MainEditorService.prototype.getSelectedClasse = function () {
+        return this.selectedClasse;
+    };
+    /**
+     * Add an object of type Classe into the project's collection
+     * @param classe this object is a representation, of type ´Classe´ or ´ClasseAstratta´,
+     * of the parameter graphelement.
+     * @param graphElement this is an element of the graphical library JointJS
+     */
+    MainEditorService.prototype.addClass = function (classe, graphElement) {
+        this.project.getClassi().push(classe);
+        this.editorComp.addElement(graphElement);
+        console.log(this.getClassList());
+    };
+    /**
+     * Search for a class, in the project's collection of classes,
+     * which have the same name as the one given as parameter.
+     * @param nome name of the class to search
+     */
+    MainEditorService.prototype.selectClasse = function (nome) {
+        var _this = this;
+        this.project.getClassi().forEach(function (classe) {
+            if (classe.getNome() == nome) {
+                _this.selectedClasse = classe;
+            }
+        });
+        if (!this.selectedClasse)
+            console.log('Classe mancante'); // TODO: spend a moment to code it as a real warning
+    };
+    /**
+     * Sets the flag activityMode to true
+     */
+    MainEditorService.prototype.setActivityMode = function () {
+        this.activityMode = true;
+    };
+    /**
+     * Sets the flas activityMode to false
+     */
+    MainEditorService.prototype.setClassMode = function () {
+        this.activityMode = false;
+    };
+    /**
+     * Returns the current value of the flag activityMode
+     * @returns if the status is true the activity mode is activated,
+     * if it's false the class mode is active.
+     */
+    MainEditorService.prototype.getActivityModeStatus = function () {
+        return this.activityMode;
+    };
+    /**
+     * Calls the addAttribute method of the ´selectedClasse´
+     * @param tipo is the type of the attribute to add as parameter to addAttributo
+     * @param nome is the name of the attribute to add as parameter to addAttributo
+     * @param acc is the visibility of the attribute to add as parameter to addAttributo
+     */
+    MainEditorService.prototype.addAttributo = function (tipo, nome, acc) {
+        this.selectedClasse.addAttributo(tipo, nome, acc);
+    };
+    /**
+     * Calls the removeAttr method of the ´selectedClasse´
+     * @param nome is the name of the attribute to remove which is passed to the removeAttr method
+     */
+    MainEditorService.prototype.removeAttributo = function (nome) {
+        this.selectedClasse.removeAttr(nome);
+    };
+    MainEditorService.prototype.changeAttributo = function (oldName, name, type, acc) {
+        this.selectedClasse.changeAttr(oldName, type, name, acc);
+    };
+    /**
+     * This method stores into the ´this.graph´ properties the graph given
+     * @param graph Is a graph given in JSON format
+     */
+    MainEditorService.prototype.storeGraph = function (graph) {
+        this.graph = graph;
+    };
+    /**
+     * Is used to restore the class diagram from the store graph, it calls
+     * the replaceDiagram method of the EditorComponent and then sets
+     * ´this.activityMode´ to false
+     */
+    MainEditorService.prototype.enterClassMode = function () {
+        this.editorComp.replaceDiagram(this.graph);
+        this.activityMode = false;
+    };
+    /**
+     * Calls the methods addMetodo of ´this.selectedClasse´ to add a new method into
+     * the selectedClasse
+     * @param tipo type returned by the method, ´tipo´ is passed as parameter to ´selectedClasse.addMetodo´
+     * @param nome is the name of the method, ´nome´ is passed as parameter to ´selectedClasse.addMetodo´
+     * @param acc the visibility of the method, ´acc´ is passed as parameter to ´selectedClasse.addMetodo´
+     * @param listArgs this parameter is optional, 'listArgs' is the list of parameters which defines the
+     * signature of the function
+     */
+    MainEditorService.prototype.addMetodo = function (staticMet, costr, tipo, nome, acc, listArgs) {
+        this.selectedClasse.addMetodo(new __WEBPACK_IMPORTED_MODULE_2__components_editor_models_metodo__["a" /* Metodo */](staticMet, costr, nome, acc, tipo, listArgs));
+    };
+    /**
+     * Calls removeMetodo of ´selectedClasse´
+     * @param nome is the name of the method to eliminate, is passed as parameter to selectedClasse.removeMetodo
+     */
+    MainEditorService.prototype.removeMetodo = function (nome) {
+        this.selectedClasse.removeMetodo(nome);
+    };
+    /**
+     * This method search for a method into the selectedClasse and retrives it's diagram
+     * to call editorComp's replaceDiagram which loads the method's diagram into the canvas.
+     * Then sets the flag ´this.activityMode´ to true
+     * @param name name of the method to find
+     */
+    MainEditorService.prototype.enterActivityMode = function (name) {
+        try {
+            var metodo = this.selectedClasse.retriveMethod(name);
+        }
+        catch (e) {
+            if (e.message == 'Metodo non presente')
+                console.log('Il metodo non è presente nella classe');
+        }
+        if (!this.activityMode && metodo) {
+            this.editorComp.replaceDiagram(metodo.getDiagram());
+            this.activityMode = true;
+            this.editorComp.selectedCell = null;
+        }
+    };
+    MainEditorService.prototype.addConnettore = function (connettore) {
+        this.editorComp.addConnettore(connettore);
+    };
+    MainEditorService.prototype.addSuperclass = function (subclassName, superclassName) {
+        console.log(subclassName);
+        var subclass = this.getClass(subclassName);
+        subclass.addSuperclass(superclassName);
+    };
+    MainEditorService.prototype.getClass = function (name) {
+        return this.project.getClasse(name);
+    };
+    MainEditorService.prototype.getProject = function () {
+        return this.project;
+    };
+    MainEditorService.prototype.retriveGraph = function () {
+        this.project.setDiagramma(this.editorComp.graph.toJSON());
+    };
+    MainEditorService.prototype.importProject = function (importData) {
+        var proj = JSON.parse(importData._body).data;
+        var newProj = new __WEBPACK_IMPORTED_MODULE_1__models_global__["a" /* Global */]();
+        newProj.import(JSON.parse(proj));
+        this.project = newProj;
+        console.log(JSON.parse(newProj.getDiagramma()));
+        this.editorComp.replaceDiagram(JSON.parse(newProj.getDiagramma()));
+    };
+    return MainEditorService;
+}());
+MainEditorService = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["c" /* Injectable */])(),
+    __metadata("design:paramtypes", [])
+], MainEditorService);
+
+//# sourceMappingURL=main-editor.service.js.map
+
+/***/ }),
+/* 17 */,
+/* 18 */,
+/* 19 */,
+/* 20 */,
+/* 21 */,
+/* 22 */,
+/* 23 */,
+/* 24 */,
+/* 25 */,
+/* 26 */,
+/* 27 */,
+/* 28 */,
+/* 29 */,
+/* 30 */,
+/* 31 */,
+/* 32 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__attributo__ = __webpack_require__(121);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Classe; });
+
+/**
+ * Use to model a Java class it contains the name of the class, an array of attributes,
+ * an array of methods, and the class exdended by this class.
+ */
+var Classe = (function () {
+    /**
+     * The constructor builds a new object of type Classe and sets it's name
+     * @param nome the only parmeter used to build an object of type Classe
+     */
+    function Classe(nome) {
+        /**
+         * Array of attributes of the Java class
+         */
+        this.attributi = new Array();
+        /**
+         * Array of methods of the Java class
+         */
+        this.metodi = new Array();
+        /**
+         * The class extended by this class
+         */
+        this.classePadre = null;
+        this.nome = nome;
+    }
+    // Metodo per aggiungere un attributo all'array di attributi della classe
+    /**
+     * This method adds a new attribute into the array of attributes ´this.attributi´,
+     * but first it'll controll if there is not an attribute with the same name.
+     * @param tipo type of the new attribute, it's passed as parameter to the constructor of Attributo
+     * @param nome the name of the new attribute, it's passed as parameter to the constructor of Attributo
+     * @param acc the visibility of the new attribute, it's passed as parameter to the constructor of Attributo
+     * @throws an error of type Error anche custom message 'NomePresente'
+     */
+    Classe.prototype.addAttributo = function (tipo, nome, acc) {
+        this.attributi.forEach(function (attr) {
+            if (attr.getNome() == nome)
+                throw new Error('NomePresente');
+        });
+        var attr;
+        if (acc)
+            attr = new __WEBPACK_IMPORTED_MODULE_0__attributo__["a" /* Attributo */](tipo, nome, acc);
+        else
+            attr = new __WEBPACK_IMPORTED_MODULE_0__attributo__["a" /* Attributo */](tipo, nome, 'public');
+        this.attributi.push(attr);
+    };
+    /**
+     * Sets the name of the class which is extended by this class
+     * @param superclass the name of the superclass
+     */
+    Classe.prototype.addSuperclass = function (superclass) {
+        this.classePadre = superclass;
+    };
+    /**
+     * Adds a new method for this Java class
+     * @param metodo it takes a pre-built method and adds it into the array of methods
+     */
+    Classe.prototype.addMetodo = function (metodo) {
+        this.metodi.forEach(function (met) {
+            if (met.getNome() == metodo.getNome())
+                throw new Error('NomePresente');
+        });
+        this.metodi.push(metodo);
+    };
+    // Metodo per cambiare il nome alla classe
+    /**
+     * Change the name of the class
+     * @param name the new name of the class
+     */
+    Classe.prototype.changeNome = function (name) {
+        this.nome = name;
+    };
+    /**
+     * Modify an attribute of this class if the attribute is present in the array of attributes.
+     * It changes only the parameter given
+     * @param nomeAttr the name of the attribute to modify
+     * @param tipo the new type for the selected attribute. This parameter is optional
+     * @param nuovoNome the new name for the selected attribute. This parameter is optional
+     * @param acc the new visibility for the selected attribute. This parameter is optional
+     */
+    Classe.prototype.changeAttr = function (nomeAttr, tipo, nuovoNome, acc) {
+        var attributo;
+        this.attributi.forEach(function (attr) {
+            if (attr.getNome() == nomeAttr)
+                attributo = attr;
+        });
+        if (attributo) {
+            if (tipo)
+                attributo.changeTipo(tipo);
+            if (nuovoNome)
+                attributo.changeNome(nuovoNome);
+            if (acc)
+                attributo.changeAcc(acc);
+        }
+    };
+    /**
+     * Removes an attribute from the array of attributes if the given name matches
+     * @param nomeAttr the name of the attribute to remove
+     */
+    Classe.prototype.removeAttr = function (nomeAttr) {
+        var ind;
+        this.attributi.forEach(function (attr, index) {
+            if (attr.getNome() == nomeAttr)
+                ind = index;
+        });
+        if (ind >= 0)
+            this.attributi.splice(ind, 1);
+        console.log(this);
+    };
+    /**
+     * Removes a method from the array of method if the given name matches
+     * @param nomeMetodo the name of the method to remove
+     */
+    Classe.prototype.removeMetodo = function (nomeMetodo) {
+        var ind;
+        this.metodi.forEach(function (metodo, index) {
+            if (metodo.getNome() == nomeMetodo)
+                ind = index;
+        });
+        if (ind >= 0)
+            this.metodi.splice(ind, 1);
+    };
+    /**
+     * Returns the name of this class
+     */
+    Classe.prototype.getNome = function () {
+        return this.nome;
+    };
+    /**
+     * Returns the array of attributes
+     */
+    Classe.prototype.getAttributi = function () {
+        return this.attributi;
+    };
+    /**
+     * Returns the array of methods
+     */
+    Classe.prototype.getMetodi = function () {
+        return this.metodi;
+    };
+    /**
+     * Returns a method from the array of method if the given name matches
+     * @param name the name of the method to retrive
+     * @throws an error of type Error with message 'Metodo non presente' if
+     * the given name does not match
+     */
+    Classe.prototype.retriveMethod = function (name) {
+        var met;
+        this.metodi.forEach(function (metodo) {
+            if (metodo.getNome() == name)
+                met = metodo;
+            else
+                throw new Error('Metodo non presente');
+        });
+        return met;
+    };
+    /**
+     * Returns the name of the superclass
+     */
+    Classe.prototype.getSottoclasse = function () {
+        return this.classePadre;
+    };
+    /**
+     * Override of the toJSON function
+     */
+    Classe.prototype.toJSON = function () {
+        var classe = '{\"name\":\"' + this.nome + '\",\"attributes\":' +
+            JSON.stringify(this.attributi) + ',\"methods\":' +
+            JSON.stringify(this.metodi) + ',\"superclass\":"' +
+            this.classePadre + '\"}';
+        return JSON.parse(classe);
+    };
+    return Classe;
+}());
+
+//# sourceMappingURL=classe.js.map
+
+/***/ }),
+/* 33 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(41);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Subject__ = __webpack_require__(29);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Subject___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_Subject__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(278);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_catch__ = __webpack_require__(277);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_catch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_catch__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_file_saver__ = __webpack_require__(242);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_file_saver___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_file_saver__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__main_editor_service__ = __webpack_require__(16);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MenuService; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+
+var MenuService = (function () {
+    function MenuService(http, mainEditorService) {
+        this.http = http;
+        this.mainEditorService = mainEditorService;
+        this.selectedGraphService = new __WEBPACK_IMPORTED_MODULE_2_rxjs_Subject__["Subject"]();
+        this.selectedGrapg$ = this.selectedGraphService.asObservable();
+    }
+    /**
+    *This method increase the size of the shapes in the editor.
+    */
+    MenuService.prototype.zoomIn = function () {
+        this.selectedGraphService.next('+');
+    };
+    /**
+    *This method decrease the size of the shapes in the editor.
+    */
+    MenuService.prototype.zoomOut = function () {
+        this.selectedGraphService.next('-');
+    };
+    MenuService.prototype.encrypt = function (proj) {
+        // let headers = new Headers({ 'Content-Type': 'application/json' });
+        // let options = new RequestOptions({ headers: headers });
+        this.http.post('/encrypt', proj, {
+            method: __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* RequestMethod */].Post,
+            responseType: __WEBPACK_IMPORTED_MODULE_1__angular_http__["c" /* ResponseContentType */].Blob,
+            headers: new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* Headers */]({ 'Content-Type': 'application/json; charset=UTF-8' })
+        })
+            .subscribe(function (data) {
+            var blob = new Blob([data.blob()], { type: 'application/json' });
+            var filename = 'proj.json';
+            __WEBPACK_IMPORTED_MODULE_5_file_saver__["saveAs"](blob, filename);
+        }, function (error) { console.log(JSON.stringify(error)); });
+    };
+    MenuService.prototype.readFile = function (file, onloadCallBack) {
+        var reader = new FileReader();
+        reader.readAsText(file, "UTF-8");
+        reader.onload = onloadCallBack;
+    };
+    MenuService.prototype.import = function (event) {
+        var _this = this;
+        var file = event.srcElement.files[0];
+        if (file) {
+            this.readFile(file, function (e) {
+                var contents = e.target;
+                var readed = JSON.parse(contents.result);
+                _this.http.post('/decrypt', readed, {
+                    method: __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* RequestMethod */].Post,
+                    responseType: __WEBPACK_IMPORTED_MODULE_1__angular_http__["c" /* ResponseContentType */].Json,
+                    headers: new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* Headers */]({ 'Content-Type': 'application/json' })
+                })
+                    .subscribe(function (data) {
+                    _this.mainEditorService.importProject(data);
+                }, function (error) { console.log(error); });
+            });
+        }
+    };
+    MenuService.prototype.getImportData = function () {
+        return this.importData;
+    };
+    return MenuService;
+}());
+MenuService = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["c" /* Injectable */])(),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["e" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["e" /* Http */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_6__main_editor_service__["a" /* MainEditorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__main_editor_service__["a" /* MainEditorService */]) === "function" && _b || Object])
+], MenuService);
+
+var _a, _b;
+/*
+var file = event.target.files[0];
+var reader = new FileReader();
+reader.onload = file =>{
+  var contents: any = file.target;
+  this.contentProj = contents.result;
+};
+console.log("madonnamaiala" + this.contentProj);
+this.http.post('/decrypt', this.contentProj, {
+  method: RequestMethod.Post,
+  headers: new Headers({'Content-Type': 'application/json'})})
+  .subscribe((data)=>{
+    console.log(data);
+  },
+error => {console.log(error)})
+}*/
+/*
+if(file){
+  var reader = new FileReader();
+  reader.readAsText(file, "UTF-8");
+  reader.onload = function(e){
+    var contents: any = e.target;
+    readed = JSON.parse(contents.result);
+  }
+  reader.onerror = function(e){
+    console.log("non leggo dio cane");
+  }
+}*/ 
+//# sourceMappingURL=menu.service.js.map
+
+/***/ }),
+/* 34 */,
+/* 35 */,
+/* 36 */,
+/* 37 */,
+/* 38 */,
+/* 39 */,
+/* 40 */,
+/* 41 */,
+/* 42 */,
+/* 43 */,
+/* 44 */,
+/* 45 */,
+/* 46 */,
+/* 47 */,
+/* 48 */,
+/* 49 */,
+/* 50 */,
+/* 51 */,
+/* 52 */,
+/* 53 */,
+/* 54 */,
+/* 55 */,
+/* 56 */,
+/* 57 */,
+/* 58 */,
+/* 59 */,
+/* 60 */,
+/* 61 */,
+/* 62 */,
+/* 63 */,
+/* 64 */,
+/* 65 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Param; });
+/**
+ * it rappresents the a method's parameter
+ */
+var Param = (function () {
+    /**
+     * Use to model a method class it contains the parameter definition.
+     * @param tipo
+     * @param nome
+     */
+    function Param(tipo, nome) {
+        this.type = tipo;
+        this.name = nome;
+    }
+    /**
+     * it returns the parameter's type
+     */
+    Param.prototype.getTipo = function () {
+        return this.type;
+    };
+    /**
+     * it returns the parameter's name
+     */
+    Param.prototype.getNome = function () {
+        return this.name;
+    };
+    /**
+     * it change the parameter's type
+     * @param tipo
+     */
+    Param.prototype.changeTipo = function (tipo) {
+        this.type = tipo;
+    };
+    /**
+     * it change the parameter's name
+     * @param nome
+     */
+    Param.prototype.changeNome = function (nome) {
+        this.name = nome;
+    };
+    return Param;
+}());
+
+//# sourceMappingURL=param.js.map
+
+/***/ }),
+/* 66 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Subject__ = __webpack_require__(29);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Subject___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_rxjs_Subject__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ClassMenuService; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var ClassMenuService = (function () {
+    function ClassMenuService() {
+        // Observable object-class source
+        this.selectedClassSource = new __WEBPACK_IMPORTED_MODULE_1_rxjs_Subject__["Subject"]();
+        // Observable object-class stream
+        this.selectedClass$ = this.selectedClassSource.asObservable();
+    }
+    // Service message commands
+    ClassMenuService.prototype.classSelection = function (classe) {
+        this.selectedClassSource.next(classe);
+    };
+    return ClassMenuService;
+}());
+ClassMenuService = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["c" /* Injectable */])(),
+    __metadata("design:paramtypes", [])
+], ClassMenuService);
+
+//# sourceMappingURL=class-menu.service.js.map
+
+/***/ }),
+/* 67 */,
+/* 68 */,
+/* 69 */,
+/* 70 */,
+/* 71 */,
+/* 72 */,
+/* 73 */,
+/* 74 */,
+/* 75 */,
+/* 76 */,
+/* 77 */,
+/* 78 */,
+/* 79 */,
+/* 80 */,
+/* 81 */,
+/* 82 */,
+/* 83 */,
+/* 84 */,
+/* 85 */,
+/* 86 */,
+/* 87 */,
+/* 88 */,
+/* 89 */,
+/* 90 */,
+/* 91 */,
+/* 92 */,
+/* 93 */,
+/* 94 */,
+/* 95 */,
+/* 96 */
+/***/ (function(module, exports) {
+
+function webpackEmptyContext(req) {
+	throw new Error("Cannot find module '" + req + "'.");
+}
+webpackEmptyContext.keys = function() { return []; };
+webpackEmptyContext.resolve = webpackEmptyContext;
+module.exports = webpackEmptyContext;
+webpackEmptyContext.id = 96;
+
+
+/***/ }),
+/* 97 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dynamic__ = __webpack_require__(113);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_module__ = __webpack_require__(115);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__environments_environment__ = __webpack_require__(132);
+
+
+
+
+if (__WEBPACK_IMPORTED_MODULE_3__environments_environment__["a" /* environment */].production) {
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["a" /* enableProdMode */])();
+}
+__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_2__app_app_module__["a" /* AppModule */]);
+//# sourceMappingURL=main.js.map
+
+/***/ }),
+/* 98 */,
+/* 99 */,
+/* 100 */,
+/* 101 */,
+/* 102 */,
+/* 103 */,
+/* 104 */,
+/* 105 */,
+/* 106 */,
+/* 107 */,
+/* 108 */,
+/* 109 */,
+/* 110 */,
+/* 111 */,
+/* 112 */,
+/* 113 */,
+/* 114 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_menu_service__ = __webpack_require__(33);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_main_editor_service__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_main_editor_service__ = __webpack_require__(16);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -41,8 +797,7 @@ var _a;
 //# sourceMappingURL=app.component.js.map
 
 /***/ }),
-
-/***/ 115:
+/* 115 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -122,8 +877,7 @@ AppModule = __decorate([
 //# sourceMappingURL=app.module.js.map
 
 /***/ }),
-
-/***/ 116:
+/* 116 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -158,12 +912,12 @@ ActivityFrameComponent = __decorate([
 //# sourceMappingURL=activity-frame.component.js.map
 
 /***/ }),
-
-/***/ 117:
+/* 117 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_main_editor_service__ = __webpack_require__(16);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ActivityMenuComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -175,8 +929,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
 var ActivityMenuComponent = (function () {
-    function ActivityMenuComponent() {
+    function ActivityMenuComponent(mainEditorService) {
+        this.mainEditorService = mainEditorService;
     }
     ActivityMenuComponent.prototype.ngOnInit = function () {
     };
@@ -188,20 +944,20 @@ ActivityMenuComponent = __decorate([
         template: __webpack_require__(264),
         styles: [__webpack_require__(218)]
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_main_editor_service__["a" /* MainEditorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_main_editor_service__["a" /* MainEditorService */]) === "function" && _a || Object])
 ], ActivityMenuComponent);
 
+var _a;
 //# sourceMappingURL=activity-menu.component.js.map
 
 /***/ }),
-
-/***/ 118:
+/* 118 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_class_menu_service__ = __webpack_require__(66);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_main_editor_service__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_main_editor_service__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_param__ = __webpack_require__(65);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ClassMenuComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -248,7 +1004,6 @@ var ClassMenuComponent = (function () {
          * Used to store the selected visibility to build a new method
          */
         this.selectedAccMet = 'public';
-        // Array per parametri di metodi
         /**
          * Used to store an array of parameters to build a new method
          */
@@ -265,9 +1020,7 @@ var ClassMenuComponent = (function () {
      * a new attribute. If one or more parameter isn't present an error will be shown
      * @param nome the neme of the new attribute
      */
-    ClassMenuComponent.prototype.addAttributo = function (nome) {
-        var tipo = this.selectedTipoAtt;
-        var acc = this.selectedAccAtt;
+    ClassMenuComponent.prototype.addAttributo = function (nome, staticAtt, tipo, acc) {
         console.log(nome + ' ' + tipo + ' ' + acc);
         if (nome && tipo && acc) {
             try {
@@ -276,7 +1029,7 @@ var ClassMenuComponent = (function () {
             catch (error) {
                 if (error.message == 'NomePresente')
                     // TODO: segnalare l'errore sul menu! Eliminare il console log
-                    console.log('nome attributo già esistente');
+                    console.log('Non è possibile inserire due attributi con lo stesso nome');
             }
             var attributi = this.classe.attributes.attributes;
             var vis = void 0;
@@ -290,15 +1043,17 @@ var ClassMenuComponent = (function () {
                 case 'private':
                     vis = '-';
             }
-            attributi.push(vis + ' ' + nome + ' : ' + tipo);
+            var stat = '';
+            if (staticAtt)
+                stat = 'static';
+            attributi.push(vis + ' ' + stat + ' ' + nome + ' : ' + tipo);
             this.classe.set('attributes', null); // Hack per far funzionare l'event change:attrs
             this.classe.set('attributes', attributi);
             this.selectedAccAtt = 'public';
             this.selectedTipoAtt = null;
         }
         else {
-            // TODO: segnalare il mancato selezionamento dei campi
-            console.log('tette');
+            alert('Alcuni capi del form per la creazione del nuovo attributo non sono stati compilati');
         }
     };
     /**
@@ -308,11 +1063,10 @@ var ClassMenuComponent = (function () {
     ClassMenuComponent.prototype.removeAttributo = function (nome) {
         var attributi = this.classe.attributes.attributes;
         attributi.splice(attributi.findIndex(function (element) {
-            var att = element.split(': '); // Tutto questo perché non sono riuscito ad
-            att = att[0].split(' '); // implementare una regular expression S.B.
-            if (att[1] == nome) {
-                return element;
-            }
+            var att = element.split(' ');
+            for (var i = 0; i < att.length; i++)
+                if (att[i] == nome)
+                    return element;
         }), 1);
         this.classe.set('attributes', null);
         this.classe.set('attributes', attributi);
@@ -322,7 +1076,10 @@ var ClassMenuComponent = (function () {
     /**
      * Mododify the properties of an attribute
      */
-    ClassMenuComponent.prototype.changeAttributo = function () {
+    ClassMenuComponent.prototype.changeAttributo = function (name, oldName, tipo, acc) {
+        if (name && tipo && acc) {
+            this.mainEditorService.changeAttributo(oldName, name, tipo, acc);
+        }
     };
     /**
      * Change the name of the selected class and resets the input value into the HTML template
@@ -346,9 +1103,16 @@ var ClassMenuComponent = (function () {
     /**
      * Adds a new parameter into the array parametriMetodo
      */
-    ClassMenuComponent.prototype.aggiungiParam = function () {
-        this.parametriMetodo.push(new __WEBPACK_IMPORTED_MODULE_3__models_param__["a" /* Param */]("test", "test"));
-        console.log("caodsa");
+    ClassMenuComponent.prototype.addParam = function (type, name) {
+        var sameName = false;
+        this.parametriMetodo.forEach(function (param) {
+            if (param.getNome() == name)
+                sameName = true;
+        });
+        if (!sameName)
+            this.parametriMetodo.push(new __WEBPACK_IMPORTED_MODULE_3__models_param__["a" /* Param */](type, name));
+        else
+            alert("Non è possibile inserire due o più parametri con lo stesso nome");
     };
     // Funzione per aggiungere un metodo alla classe selezionata
     /**
@@ -356,18 +1120,20 @@ var ClassMenuComponent = (function () {
      * a new method. If one or more parameter isn't present an error will be shown
      * @param nome
      */
-    ClassMenuComponent.prototype.addMetodo = function (nome) {
-        var tipo = this.selectedTipoMet;
-        var acc = this.selectedAccMet;
+    ClassMenuComponent.prototype.addMetodo = function (nome, staticMet, constructor, tipo, acc) {
+        var params = this.parametriMetodo;
         console.log(nome + ' ' + tipo + ' ' + acc);
-        if (nome && tipo && acc) {
+        if ((nome && tipo && acc) || (constructor && acc)) {
             try {
-                this.mainEditorService.addMetodo(tipo, nome, acc);
+                if (constructor == true) {
+                    nome = this.name;
+                    tipo = this.name;
+                }
+                this.mainEditorService.addMetodo(staticMet, constructor, tipo, nome, acc, params);
             }
             catch (error) {
                 if (error.message == 'NomePresente')
-                    // TODO: segnalare l'errore sul menu! Eliminare il console log
-                    console.log('nome attributo già esistente');
+                    alert('Non è possibile inserire due o più metodi con lo stesso nome');
             }
             var metodi = this.classe.attributes.methods;
             var vis = void 0;
@@ -381,15 +1147,24 @@ var ClassMenuComponent = (function () {
                 case 'private':
                     vis = '-';
             }
-            metodi.push(vis + ' ' + nome + '(): ' + tipo);
+            var parametri = '';
+            for (var ind = 0; ind < params.length; ind++) {
+                parametri += params[ind].getNome() + ' : ' + params[ind].getTipo();
+                if (ind != params.length - 1)
+                    parametri += ', ';
+            }
+            var st = '';
+            if (staticMet) {
+                st = 'static';
+            }
+            metodi.push(vis + ' ' + st + ' ' + nome + ' ( ' + parametri + ' ) : ' + tipo);
             this.classe.set('methods', null); // Hack per far funzionare l'event change:attrs
             this.classe.set('methods', metodi);
             this.selectedAccMet = 'public';
             this.selectedTipoMet = null;
         }
         else {
-            // TODO: segnalare il mancato selezionamento dei campi
-            console.log('tette');
+            alert('Alcuni capi del form per la creazione del nuovo metodo non sono stati compilati');
         }
     };
     //Rimuove il metodo
@@ -400,15 +1175,14 @@ var ClassMenuComponent = (function () {
     ClassMenuComponent.prototype.removeMetodo = function (nome) {
         var metodi = this.classe.attributes.methods;
         metodi.splice(metodi.findIndex(function (element) {
-            var met = element.split(': '); // Tutto questo perché non sono riuscito ad
-            met = met[0].split(' '); // implementare una regular expression S.B.
-            if (met[1] == nome) {
-                return element;
+            var met = element.split(' ');
+            for (var i = 0; i < met.length; i++) {
+                if (met[i] == nome)
+                    return element;
             }
         }), 1);
         this.classe.set('attributes', null);
         this.classe.set('attributes', metodi);
-        console.log('ora rimuovo metodo');
         this.mainEditorService.removeMetodo(nome);
     };
     /**
@@ -417,6 +1191,13 @@ var ClassMenuComponent = (function () {
      */
     ClassMenuComponent.prototype.modifyMetodo = function (nome) {
         this.mainEditorService.enterActivityMode(nome);
+    };
+    ClassMenuComponent.prototype.getMetodi = function () {
+        return this.mainEditorService.getSelectedClasse().getMetodi();
+    };
+    ClassMenuComponent.prototype.isAddableMethod = function () {
+        if (!this.costruttore && !this.selectedTipoMet)
+            return true;
     };
     return ClassMenuComponent;
 }());
@@ -438,13 +1219,12 @@ var _a, _b;
 //# sourceMappingURL=class-menu.component.js.map
 
 /***/ }),
-
-/***/ 119:
+/* 119 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_main_editor_service__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_main_editor_service__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__models_classe__ = __webpack_require__(32);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_classe_astratta__ = __webpack_require__(122);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_jointjs__ = __webpack_require__(59);
@@ -894,15 +1674,14 @@ var _a;
 //# sourceMappingURL=toolbar.component.js.map
 
 /***/ }),
-
-/***/ 120:
+/* 120 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_class_menu_service__ = __webpack_require__(66);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_menu_service__ = __webpack_require__(33);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_main_editor_service__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_main_editor_service__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__models_classe__ = __webpack_require__(32);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_jointjs__ = __webpack_require__(59);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_jointjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_jointjs__);
@@ -1023,6 +1802,7 @@ var EditorComponent = (function () {
         // TODO: da eliminare solo per testing
         this.mainEditorService.addClass(new __WEBPACK_IMPORTED_MODULE_4__models_classe__["a" /* Classe */]('Class1'), class1);
         this.mainEditorService.getClassList()[0].addAttributo('String', 'attributeOne', 'public');
+        console.log(this.graph);
     };
     /* Salva il graph corrente utilizzando il metodo storeGraph di mainEditor service,
       pulisce this.graph e lo ripopola tramite il JSON fornito in ingresso
@@ -1159,8 +1939,7 @@ var _a, _b, _c;
 //# sourceMappingURL=editor.component.js.map
 
 /***/ }),
-
-/***/ 121:
+/* 121 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1179,9 +1958,10 @@ var __extends = (this && this.__extends) || (function () {
 
 var Attributo = (function (_super) {
     __extends(Attributo, _super);
-    function Attributo(tipo, nome, acc) {
+    function Attributo(tipo, nome, acc, sta) {
         var _this = _super.call(this, tipo, nome) || this;
         _this.visibility = acc;
+        _this.staticAtt = sta;
         return _this;
     }
     /**
@@ -1193,7 +1973,7 @@ var Attributo = (function (_super) {
     /**
      * This method return the attribute's visibility
      */
-    Attributo.prototype.changeAccesso = function (acc) {
+    Attributo.prototype.changeAcc = function (acc) {
         this.visibility = acc;
     };
     return Attributo;
@@ -1202,8 +1982,7 @@ var Attributo = (function (_super) {
 //# sourceMappingURL=attributo.js.map
 
 /***/ }),
-
-/***/ 122:
+/* 122 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1267,8 +2046,7 @@ var ClasseAstratta = (function (_super) {
 //# sourceMappingURL=classe-astratta.js.map
 
 /***/ }),
-
-/***/ 123:
+/* 123 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1287,7 +2065,9 @@ var Metodo = (function () {
      * @param tipo
      * @param listaArg
      */
-    function Metodo(nome, acc, tipo, listaArg) {
+    function Metodo(stat, costr, nome, acc, tipo, listaArg) {
+        this.statico = stat;
+        this.costruttore = costr;
         this.nome = nome;
         this.accesso = acc;
         this.tipoRitorno = tipo;
@@ -1369,20 +2149,44 @@ var Metodo = (function () {
     Metodo.prototype.getListaArgomenti = function () {
         return this.listaArgomenti;
     };
+    Metodo.prototype.isConstructor = function () {
+        return this.costruttore;
+    };
+    Metodo.prototype.isStatic = function () {
+        return this.statico;
+    };
+    Metodo.prototype.staticString = function () {
+        var sta = '';
+        if (this.statico) {
+            sta = 'static';
+        }
+        return sta;
+    };
+    Metodo.prototype.paramToString = function () {
+        var params = this.listaArgomenti;
+        if (this.listaArgomenti) {
+            var paramString = '';
+            for (var i = 0; i < params.length; i++) {
+                paramString += params[i].getNome() + ' : ' + params[i].getTipo();
+                if (i != params.length - 1)
+                    paramString += ', ';
+            }
+        }
+        return paramString;
+    };
     return Metodo;
 }());
 
 //# sourceMappingURL=metodo.js.map
 
 /***/ }),
-
-/***/ 124:
+/* 124 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_menu_service__ = __webpack_require__(33);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_main_editor_service__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_main_editor_service__ = __webpack_require__(16);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FileComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1407,7 +2211,7 @@ var FileComponent = (function () {
         this.mainEditorService.retriveGraph();
         this.menuService.encrypt(JSON.parse(this.mainEditorService.getProject().toJSON()));
     };
-    FileComponent.prototype.fileChange = function (event) {
+    FileComponent.prototype.importa = function (event) {
         this.menuService.import(event);
     };
     return FileComponent;
@@ -1425,8 +2229,7 @@ var _a, _b;
 //# sourceMappingURL=file.component.js.map
 
 /***/ }),
-
-/***/ 125:
+/* 125 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1461,8 +2264,7 @@ LayerComponent = __decorate([
 //# sourceMappingURL=layer.component.js.map
 
 /***/ }),
-
-/***/ 126:
+/* 126 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1507,8 +2309,7 @@ var _a;
 //# sourceMappingURL=modifica.component.js.map
 
 /***/ }),
-
-/***/ 127:
+/* 127 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1543,8 +2344,7 @@ ProfiloComponent = __decorate([
 //# sourceMappingURL=profilo.component.js.map
 
 /***/ }),
-
-/***/ 128:
+/* 128 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1579,8 +2379,7 @@ ProgettoComponent = __decorate([
 //# sourceMappingURL=progetto.component.js.map
 
 /***/ }),
-
-/***/ 129:
+/* 129 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1615,8 +2414,7 @@ TemplateComponent = __decorate([
 //# sourceMappingURL=template.component.js.map
 
 /***/ }),
-
-/***/ 130:
+/* 130 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1651,8 +2449,7 @@ MenuComponent = __decorate([
 //# sourceMappingURL=menu.component.js.map
 
 /***/ }),
-
-/***/ 131:
+/* 131 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1683,6 +2480,9 @@ var Global = (function () {
     Global.prototype.setDiagramma = function (diagramma) {
         this.diagramma = diagramma;
     };
+    Global.prototype.setName = function (name) {
+        this.nome_progetto = name;
+    };
     Global.prototype.getDiagramma = function () {
         return this.diagramma;
     };
@@ -1700,6 +2500,11 @@ var Global = (function () {
         });
         return classe;
     };
+    Global.prototype.import = function (proj) {
+        this.setName(proj.nome_project);
+        this.setDiagramma(JSON.stringify(proj.project.graph));
+        console.log(proj);
+    };
     // I campi devono ritornare come string
     Global.prototype.toJSON = function () {
         var global = '{\"nome_progetto\":\"' + this.nome_progetto +
@@ -1714,8 +2519,7 @@ var Global = (function () {
 //# sourceMappingURL=global.js.map
 
 /***/ }),
-
-/***/ 132:
+/* 132 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1731,8 +2535,90 @@ var environment = {
 //# sourceMappingURL=environment.js.map
 
 /***/ }),
-
-/***/ 216:
+/* 133 */,
+/* 134 */,
+/* 135 */,
+/* 136 */,
+/* 137 */,
+/* 138 */,
+/* 139 */,
+/* 140 */,
+/* 141 */,
+/* 142 */,
+/* 143 */,
+/* 144 */,
+/* 145 */,
+/* 146 */,
+/* 147 */,
+/* 148 */,
+/* 149 */,
+/* 150 */,
+/* 151 */,
+/* 152 */,
+/* 153 */,
+/* 154 */,
+/* 155 */,
+/* 156 */,
+/* 157 */,
+/* 158 */,
+/* 159 */,
+/* 160 */,
+/* 161 */,
+/* 162 */,
+/* 163 */,
+/* 164 */,
+/* 165 */,
+/* 166 */,
+/* 167 */,
+/* 168 */,
+/* 169 */,
+/* 170 */,
+/* 171 */,
+/* 172 */,
+/* 173 */,
+/* 174 */,
+/* 175 */,
+/* 176 */,
+/* 177 */,
+/* 178 */,
+/* 179 */,
+/* 180 */,
+/* 181 */,
+/* 182 */,
+/* 183 */,
+/* 184 */,
+/* 185 */,
+/* 186 */,
+/* 187 */,
+/* 188 */,
+/* 189 */,
+/* 190 */,
+/* 191 */,
+/* 192 */,
+/* 193 */,
+/* 194 */,
+/* 195 */,
+/* 196 */,
+/* 197 */,
+/* 198 */,
+/* 199 */,
+/* 200 */,
+/* 201 */,
+/* 202 */,
+/* 203 */,
+/* 204 */,
+/* 205 */,
+/* 206 */,
+/* 207 */,
+/* 208 */,
+/* 209 */,
+/* 210 */,
+/* 211 */,
+/* 212 */,
+/* 213 */,
+/* 214 */,
+/* 215 */,
+/* 216 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)(false);
@@ -1740,7 +2626,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, ".row {\n  margin: 0;\n  padding: 0;\n  height: 94vh;\n}\n.editor {\n  padding: 0;\n  border-left: 1px solid black;\n  height: 100%;\n}\n\n.activityframe {\n  padding: 0;\n  border-left: 1px solid black;\n  height: 100%;\n  background-color: #03A9F4;\n\n}\n", ""]);
+exports.push([module.i, ".row {\r\n  margin: 0;\r\n  padding: 0;\r\n  height: 94vh;\r\n}\r\n.editor {\r\n  padding: 0;\r\n  border-left: 1px solid black;\r\n  height: 100%;\r\n}\r\n\r\n.activityframe {\r\n  padding: 0;\r\n  border-left: 1px solid black;\r\n  height: 100%;\r\n  background-color: #03A9F4;\r\n\r\n}\r\n", ""]);
 
 // exports
 
@@ -1749,8 +2635,7 @@ exports.push([module.i, ".row {\n  margin: 0;\n  padding: 0;\n  height: 94vh;\n}
 module.exports = module.exports.toString();
 
 /***/ }),
-
-/***/ 217:
+/* 217 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)(false);
@@ -1767,8 +2652,7 @@ exports.push([module.i, "", ""]);
 module.exports = module.exports.toString();
 
 /***/ }),
-
-/***/ 218:
+/* 218 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)(false);
@@ -1785,8 +2669,7 @@ exports.push([module.i, "", ""]);
 module.exports = module.exports.toString();
 
 /***/ }),
-
-/***/ 219:
+/* 219 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)(false);
@@ -1794,7 +2677,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, ".menu {\n  background-color: #EAEAF1;\n  border-left: 1px solid black;\n  font-weight: bold;\n  font-size: 14px;\n  text-align: center;\n}\n\n.row {\n  padding: 3% 0;\n  border-top: 1px solid black;\n}\n.selezionato {\n  font-size: 16px;\n}\n\n.campiAttributo {\n  padding-bottom: 3%;\n}\n\n/*.changeNome {\n  padding-top: 4%;\n}*/\n\n.iconaMirrow {\n  -webkit-transform: scale(-1, 1);\n  transform: scale(-1, 1);\n}\n\n.aggiungiAttributo {\n  display: block;\n}\n\n#listaAttr {\n  padding-bottom: 2%;\n  border-bottom: 1px solid black;\n}\n\n.listaAttributi {\n  position: absolute;\n  background-color: #EAEAF1;\n  top: 0;\n  left: -100%;\n  z-index: 10;\n  max-width: 100%;\n  border-left: 1px solid black;\n  border-top: 0px solid transparent;\n}\n\n.listaAttributi ul {\n  margin-bottom: 0;\n}\n\n/*velocità di animazione del menù della lista attributi*/\n.collapsing {\n    transition: height 0.1s;\n}\n\n.listaMetodi {\n  position: absolute;\n  background-color: #EAEAF1;\n  left: -100%;\n  z-index: 10;\n  max-width: 100%;\n  top: 39.5%;\n  border-left: 1px solid black;\n  border-top: 0px solid transparent;\n  border-bottom: 1px solid black;\n}\n\n.tipiMetodo {\n  vertical-align: -webkit-baseline-middle;\n}\n", ""]);
+exports.push([module.i, ".menu {\r\n  background-color: #EAEAF1;\r\n  border-left: 1px solid black;\r\n  font-weight: bold;\r\n  font-size: 14px;\r\n  text-align: center;\r\n}\r\n\r\n.row {\r\n  padding: 3% 0;\r\n  border-top: 1px solid black;\r\n}\r\n.selezionato {\r\n  font-size: 16px;\r\n}\r\n\r\n.campiAttributo {\r\n  padding-bottom: 3%;\r\n}\r\n\r\n/*.changeNome {\r\n  padding-top: 4%;\r\n}*/\r\n\r\n.iconaMirrow {\r\n  -webkit-transform: scale(-1, 1);\r\n  transform: scale(-1, 1);\r\n}\r\n\r\n.aggiungiAttributo {\r\n  display: block;\r\n}\r\n\r\n#listaAttr {\r\n  padding-bottom: 2%;\r\n  border-bottom: 1px solid black;\r\n}\r\n\r\n.listaAttributi {\r\n  position: absolute;\r\n  background-color: #EAEAF1;\r\n  top: 0;\r\n  left: -100%;\r\n  z-index: 10;\r\n  max-width: 100%;\r\n  border-left: 1px solid black;\r\n  border-top: 0px solid transparent;\r\n}\r\n\r\n.listaAttributi ul {\r\n  margin-bottom: 0;\r\n}\r\n\r\n/*velocità di animazione del menù della lista attributi*/\r\n.collapsing {\r\n    transition: height 0.1s;\r\n}\r\n\r\n.listaMetodi {\r\n  position: absolute;\r\n  background-color: #EAEAF1;\r\n  left: -100%;\r\n  z-index: 10;\r\n  max-width: 100%;\r\n  top: 39.5%;\r\n  border-left: 1px solid black;\r\n  border-top: 0px solid transparent;\r\n  border-bottom: 1px solid black;\r\n}\r\n\r\n.tipiMetodo {\r\n  vertical-align: -webkit-baseline-middle;\r\n}\r\n", ""]);
 
 // exports
 
@@ -1803,8 +2686,7 @@ exports.push([module.i, ".menu {\n  background-color: #EAEAF1;\n  border-left: 1
 module.exports = module.exports.toString();
 
 /***/ }),
-
-/***/ 220:
+/* 220 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)(false);
@@ -1812,7 +2694,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, ".toolbar {\n  height: 100%;\n  background-color: #F1EDEA;\n  overflow: hidden;\n}\n\n.classi {\n  /*display: none;*/\n}\n\n.tipo {\n  text-align: center;\n  font-weight: bold;\n  vertical-align: middle;\n}\n\n.icona {\n  margin:0 auto;\n  display: block;\n  height: 40px;\n  width: 40px;\n}\n\n.add {\n  cursor: pointer;\n  height: 40px;\n  width: 40px;\n  outline:none;\n  vertical-align: middle;\n  padding: 0;\n\n}\n\n.add:hover {\n  opacity: 0.4;\n}\n\n.addClasse {\n    background: url(" + __webpack_require__(237) + ") no-repeat top left;\n    background-size: contain;\n\n}\n\n.addInterfaccia {\n    background: url(" + __webpack_require__(238) + ") no-repeat top left;\n    background-size: contain;\n}\n\n.addAstratta {\n    background: url(" + __webpack_require__(236) + ") no-repeat top left;\n    background-size: contain;\n}\n\n.addCommento {\n    background: url(" + __webpack_require__(303) + ") no-repeat top left;\n    background-size: contain;\n}\n\n.addAssociazione {\n    background: url(" + __webpack_require__(239) + ") no-repeat top left;\n    background-size: contain;\n}\n\n.addGeneralizzazione {\n    background: url(" + __webpack_require__(240) + ") no-repeat top left;\n    background-size: contain;\n}\n\n.addImplementazione {\n    background: url(" + __webpack_require__(241) + ") no-repeat top left;\n    background-size: contain;\n}\n\n.addStart {\n  background: url(" + __webpack_require__(230) + ") no-repeat top left;\n  background-size:100%;\n}\n\n.addEnd {\n  background: url(" + __webpack_require__(231) + ") no-repeat;\n  background-size:100%;\n}\n\n.addAttivita {\n  background: url(" + __webpack_require__(233) + ") no-repeat top left;\n  background-size:100%;\n}\n\n.addAttivitaFor {\n  background: url(" + __webpack_require__(234) + ") no-repeat top left;\n  background-size:100%;\n}\n\n.addConnettore {\n  background: url(" + __webpack_require__(232) + ") no-repeat;\n  background-size:100%;\n}\n\n.addDecision {\n  background: url(" + __webpack_require__(235) + ") no-repeat;\n  background-size:100%;\n}\n\n/*Blocco di icone inizialmente settato a false*/\n.activity {\n  /*display: none;*/\n}\n", ""]);
+exports.push([module.i, ".toolbar {\r\n  height: 100%;\r\n  background-color: #F1EDEA;\r\n  overflow: hidden;\r\n}\r\n\r\n.classi {\r\n  /*display: none;*/\r\n}\r\n\r\n.tipo {\r\n  text-align: center;\r\n  font-weight: bold;\r\n  vertical-align: middle;\r\n}\r\n\r\n.icona {\r\n  margin:0 auto;\r\n  display: block;\r\n  height: 40px;\r\n  width: 40px;\r\n}\r\n\r\n.add {\r\n  cursor: pointer;\r\n  height: 40px;\r\n  width: 40px;\r\n  outline:none;\r\n  vertical-align: middle;\r\n  padding: 0;\r\n\r\n}\r\n\r\n.add:hover {\r\n  opacity: 0.4;\r\n}\r\n\r\n.addClasse {\r\n    background: url(" + __webpack_require__(237) + ") no-repeat top left;\r\n    background-size: contain;\r\n\r\n}\r\n\r\n.addInterfaccia {\r\n    background: url(" + __webpack_require__(238) + ") no-repeat top left;\r\n    background-size: contain;\r\n}\r\n\r\n.addAstratta {\r\n    background: url(" + __webpack_require__(236) + ") no-repeat top left;\r\n    background-size: contain;\r\n}\r\n\r\n.addCommento {\r\n    background: url(" + __webpack_require__(303) + ") no-repeat top left;\r\n    background-size: contain;\r\n}\r\n\r\n.addAssociazione {\r\n    background: url(" + __webpack_require__(239) + ") no-repeat top left;\r\n    background-size: contain;\r\n}\r\n\r\n.addGeneralizzazione {\r\n    background: url(" + __webpack_require__(240) + ") no-repeat top left;\r\n    background-size: contain;\r\n}\r\n\r\n.addImplementazione {\r\n    background: url(" + __webpack_require__(241) + ") no-repeat top left;\r\n    background-size: contain;\r\n}\r\n\r\n.addStart {\r\n  background: url(" + __webpack_require__(230) + ") no-repeat top left;\r\n  background-size:100%;\r\n}\r\n\r\n.addEnd {\r\n  background: url(" + __webpack_require__(231) + ") no-repeat;\r\n  background-size:100%;\r\n}\r\n\r\n.addAttivita {\r\n  background: url(" + __webpack_require__(233) + ") no-repeat top left;\r\n  background-size:100%;\r\n}\r\n\r\n.addAttivitaFor {\r\n  background: url(" + __webpack_require__(234) + ") no-repeat top left;\r\n  background-size:100%;\r\n}\r\n\r\n.addConnettore {\r\n  background: url(" + __webpack_require__(232) + ") no-repeat;\r\n  background-size:100%;\r\n}\r\n\r\n.addDecision {\r\n  background: url(" + __webpack_require__(235) + ") no-repeat;\r\n  background-size:100%;\r\n}\r\n\r\n/*Blocco di icone inizialmente settato a false*/\r\n.activity {\r\n  /*display: none;*/\r\n}\r\n", ""]);
 
 // exports
 
@@ -1821,8 +2703,7 @@ exports.push([module.i, ".toolbar {\n  height: 100%;\n  background-color: #F1EDE
 module.exports = module.exports.toString();
 
 /***/ }),
-
-/***/ 221:
+/* 221 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)(false);
@@ -1830,7 +2711,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, "#paper {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  margin: 0;\n  padding: 0;\n}\n\n.editClass {\n  z-index: 10;\n  position: absolute;\n  width: 33.4%;\n  margin: 0;\n  padding: 0;\n  top: 0;\n  left: 100%;\n}\n\n.toolbar {\n  position: absolute;\n  width: 95px;\n  height: 100%;\n  margin: 0;\n  padding: 0;\n  top: 0;\n  left: 0;\n  border-right: 1px solid black;\n}\n", ""]);
+exports.push([module.i, "#paper {\r\n  position: absolute;\r\n  width: 100%;\r\n  height: 100%;\r\n  margin: 0;\r\n  padding: 0;\r\n}\r\n\r\n.editClass {\r\n  z-index: 10;\r\n  position: absolute;\r\n  width: 33.4%;\r\n  margin: 0;\r\n  padding: 0;\r\n  top: 0;\r\n  left: 100%;\r\n}\r\n\r\n.toolbar {\r\n  position: absolute;\r\n  width: 95px;\r\n  height: 100%;\r\n  margin: 0;\r\n  padding: 0;\r\n  top: 0;\r\n  left: 0;\r\n  border-right: 1px solid black;\r\n}\r\n", ""]);
 
 // exports
 
@@ -1839,8 +2720,7 @@ exports.push([module.i, "#paper {\n  position: absolute;\n  width: 100%;\n  heig
 module.exports = module.exports.toString();
 
 /***/ }),
-
-/***/ 222:
+/* 222 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)(false);
@@ -1848,7 +2728,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, ".btn {\n  border: none;\n  border-radius: 0;\n  background-color: #42413D;\n  color: #FFCE2B;\n}\n\n.btn:hover {\n  background-color: none;\n  border-color: #FFCE2B;\n}\n\n.btn:active {\n  box-shadow: 0 5px #666;\n  -webkit-transform: translateY(4px);\n          transform: translateY(4px);\n}\n\nul {\n  background-color: #42413D;\n}\n\n.dropdown-toggle {\n background-color: transparent;\n border-color: #42413D;\n border-style: solid;\n border-top: none;\n border-right: none;\n border-left: none;\n}\n\n.dropdown-toggle:active, .open .dropdown-toggle {\n      background: #FFCE2B !important;\n      color:#42413D !important;\n      border-style: none;\n  }\n\n.dropdown-menu{\n  background-color: #42413D;\n}\n\n.dropdown-menu>li>a{\n  color: #FFCE2B;\n}\n\n.dropdown-menu>li>a:hover{\n  background-color: #636363;\n}\n", ""]);
+exports.push([module.i, ".btn {\r\n  border: none;\r\n  border-radius: 0;\r\n  background-color: #42413D;\r\n  color: #FFCE2B;\r\n}\r\n\r\n.btn:hover {\r\n  background-color: none;\r\n  border-color: #FFCE2B;\r\n}\r\n\r\n.btn:active {\r\n  box-shadow: 0 5px #666;\r\n  -webkit-transform: translateY(4px);\r\n          transform: translateY(4px);\r\n}\r\n\r\nul {\r\n  background-color: #42413D;\r\n}\r\n\r\n.dropdown-toggle {\r\n background-color: transparent;\r\n border-color: #42413D;\r\n border-style: solid;\r\n border-top: none;\r\n border-right: none;\r\n border-left: none;\r\n}\r\n\r\n.dropdown-toggle:active, .open .dropdown-toggle {\r\n      background: #FFCE2B !important;\r\n      color:#42413D !important;\r\n      border-style: none;\r\n  }\r\n\r\n.dropdown-menu{\r\n  background-color: #42413D;\r\n}\r\n\r\n.dropdown-menu>li>a{\r\n  color: #FFCE2B;\r\n}\r\n\r\n.dropdown-menu>li>a:hover{\r\n  background-color: #636363;\r\n}\r\n\r\n#upload {\r\n  display: none;\r\n}", ""]);
 
 // exports
 
@@ -1857,8 +2737,7 @@ exports.push([module.i, ".btn {\n  border: none;\n  border-radius: 0;\n  backgro
 module.exports = module.exports.toString();
 
 /***/ }),
-
-/***/ 223:
+/* 223 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)(false);
@@ -1866,7 +2745,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, ".btn {\n  border: none;\n  border-radius: 0;\n  background-color: #42413D;\n  color: #FFCE2B;\n}\n\n.btn:hover {\n  background-color: none;\n  border-color: #FFCE2B;\n}\n\n.btn:active {\n  box-shadow: 0 5px #666;\n  -webkit-transform: translateY(4px);\n          transform: translateY(4px);\n}\n\nul {\n  background-color: #42413D;\n}\n\n.dropdown-toggle {\n background-color: transparent;\n border-color: #42413D;\n border-style: solid;\n border-top: none;\n border-right: none;\n border-left: none;\n}\n\n.dropdown-toggle:active, .open .dropdown-toggle {\n      background: #FFCE2B !important;\n      color:#42413D !important;\n      border-style: none;\n  }\n\n.dropdown-menu{\n  background-color: #42413D;\n}\n\n.dropdown-menu>li>a{\n  color: #FFCE2B;\n}\n\n.dropdown-menu>li>a:hover{\n  background-color: #636363;\n}\n", ""]);
+exports.push([module.i, ".btn {\r\n  border: none;\r\n  border-radius: 0;\r\n  background-color: #42413D;\r\n  color: #FFCE2B;\r\n}\r\n\r\n.btn:hover {\r\n  background-color: none;\r\n  border-color: #FFCE2B;\r\n}\r\n\r\n.btn:active {\r\n  box-shadow: 0 5px #666;\r\n  -webkit-transform: translateY(4px);\r\n          transform: translateY(4px);\r\n}\r\n\r\nul {\r\n  background-color: #42413D;\r\n}\r\n\r\n.dropdown-toggle {\r\n background-color: transparent;\r\n border-color: #42413D;\r\n border-style: solid;\r\n border-top: none;\r\n border-right: none;\r\n border-left: none;\r\n}\r\n\r\n.dropdown-toggle:active, .open .dropdown-toggle {\r\n      background: #FFCE2B !important;\r\n      color:#42413D !important;\r\n      border-style: none;\r\n  }\r\n\r\n.dropdown-menu{\r\n  background-color: #42413D;\r\n}\r\n\r\n.dropdown-menu>li>a{\r\n  color: #FFCE2B;\r\n}\r\n\r\n.dropdown-menu>li>a:hover{\r\n  background-color: #636363;\r\n}\r\n", ""]);
 
 // exports
 
@@ -1875,8 +2754,7 @@ exports.push([module.i, ".btn {\n  border: none;\n  border-radius: 0;\n  backgro
 module.exports = module.exports.toString();
 
 /***/ }),
-
-/***/ 224:
+/* 224 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)(false);
@@ -1884,7 +2762,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, ".btn {\n  border: none;\n  border-radius: 0;\n  background-color: #42413D;\n  color: #FFCE2B;\n}\n\n.btn:hover {\n  background-color: none;\n  border-color: #FFCE2B;\n}\n\n.btn:active {\n  box-shadow: 0 5px #666;\n  -webkit-transform: translateY(4px);\n          transform: translateY(4px);\n}\n\nul {\n  background-color: #42413D;\n}\n\n.dropdown-toggle {\n background-color: transparent;\n border-color: #42413D;\n border-style: solid;\n border-top: none;\n border-right: none;\n border-left: none;\n}\n\n.dropdown-toggle:active, .open .dropdown-toggle {\n      background: #FFCE2B !important;\n      color:#42413D !important;\n      border-style: none;\n  }\n\n.dropdown-menu{\n  background-color: #42413D;\n}\n\n.dropdown-menu>li>a{\n  color: #FFCE2B;\n}\n\n.dropdown-menu>li>a:hover{\n  background-color: #636363;\n}\n", ""]);
+exports.push([module.i, ".btn {\r\n  border: none;\r\n  border-radius: 0;\r\n  background-color: #42413D;\r\n  color: #FFCE2B;\r\n}\r\n\r\n.btn:hover {\r\n  background-color: none;\r\n  border-color: #FFCE2B;\r\n}\r\n\r\n.btn:active {\r\n  box-shadow: 0 5px #666;\r\n  -webkit-transform: translateY(4px);\r\n          transform: translateY(4px);\r\n}\r\n\r\nul {\r\n  background-color: #42413D;\r\n}\r\n\r\n.dropdown-toggle {\r\n background-color: transparent;\r\n border-color: #42413D;\r\n border-style: solid;\r\n border-top: none;\r\n border-right: none;\r\n border-left: none;\r\n}\r\n\r\n.dropdown-toggle:active, .open .dropdown-toggle {\r\n      background: #FFCE2B !important;\r\n      color:#42413D !important;\r\n      border-style: none;\r\n  }\r\n\r\n.dropdown-menu{\r\n  background-color: #42413D;\r\n}\r\n\r\n.dropdown-menu>li>a{\r\n  color: #FFCE2B;\r\n}\r\n\r\n.dropdown-menu>li>a:hover{\r\n  background-color: #636363;\r\n}\r\n", ""]);
 
 // exports
 
@@ -1893,8 +2771,7 @@ exports.push([module.i, ".btn {\n  border: none;\n  border-radius: 0;\n  backgro
 module.exports = module.exports.toString();
 
 /***/ }),
-
-/***/ 225:
+/* 225 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)(false);
@@ -1902,7 +2779,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, ".btn {\n  border: none;\n  border-radius: 0;\n  background-color: #42413D;\n  color: #FFCE2B;\n}\n\n.btn:hover {\n  background-color: none;\n  border-color: #FFCE2B;\n}\n\n.btn:active {\n  box-shadow: 0 5px #666;\n  -webkit-transform: translateY(4px);\n          transform: translateY(4px);\n}\n\nul {\n  background-color: #42413D;\n}\n\n.dropdown-toggle {\n background-color: transparent;\n border-color: #42413D;\n border-style: solid;\n border-top: none;\n border-right: none;\n border-left: none;\n}\n\n.dropdown-toggle:active, .open .dropdown-toggle {\n      background: #FFCE2B !important;\n      color:#42413D !important;\n      border-style: none;\n  }\n\n.dropdown-menu{\n  background-color: #42413D;\n}\n\n.dropdown-menu>li>a{\n  color: #FFCE2B;\n}\n\n.dropdown-menu>li>a:hover{\n  background-color: #636363;\n}\n", ""]);
+exports.push([module.i, ".btn {\r\n  border: none;\r\n  border-radius: 0;\r\n  background-color: #42413D;\r\n  color: #FFCE2B;\r\n}\r\n\r\n.btn:hover {\r\n  background-color: none;\r\n  border-color: #FFCE2B;\r\n}\r\n\r\n.btn:active {\r\n  box-shadow: 0 5px #666;\r\n  -webkit-transform: translateY(4px);\r\n          transform: translateY(4px);\r\n}\r\n\r\nul {\r\n  background-color: #42413D;\r\n}\r\n\r\n.dropdown-toggle {\r\n background-color: transparent;\r\n border-color: #42413D;\r\n border-style: solid;\r\n border-top: none;\r\n border-right: none;\r\n border-left: none;\r\n}\r\n\r\n.dropdown-toggle:active, .open .dropdown-toggle {\r\n      background: #FFCE2B !important;\r\n      color:#42413D !important;\r\n      border-style: none;\r\n  }\r\n\r\n.dropdown-menu{\r\n  background-color: #42413D;\r\n}\r\n\r\n.dropdown-menu>li>a{\r\n  color: #FFCE2B;\r\n}\r\n\r\n.dropdown-menu>li>a:hover{\r\n  background-color: #636363;\r\n}\r\n", ""]);
 
 // exports
 
@@ -1911,8 +2788,7 @@ exports.push([module.i, ".btn {\n  border: none;\n  border-radius: 0;\n  backgro
 module.exports = module.exports.toString();
 
 /***/ }),
-
-/***/ 226:
+/* 226 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)(false);
@@ -1920,7 +2796,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, ".btn {\n  border: none;\n  border-radius: 0;\n  background-color: #42413D;\n  color: #FFCE2B;\n}\n\n.btn:hover {\n  background-color: none;\n  border-color: #FFCE2B;\n}\n\nul {\n  background-color: #42413D;\n}\n\n.btn:active {\n  box-shadow: 0 5px #666;\n  -webkit-transform: translateY(4px);\n          transform: translateY(4px);\n}\n\n.dropdown-toggle {\n background-color: transparent;\n border-color: #42413D;\n border-style: solid;\n border-top: none;\n border-right: none;\n border-left: none;\n}\n\n.dropdown-toggle:active, .open .dropdown-toggle {\n      background: #FFCE2B !important;\n      color:#42413D !important;\n      border-style: none;\n  }\n\n.dropdown-menu{\n  background-color: #42413D;\n}\n\n.dropdown-menu>li>a{\n  color: #FFCE2B;\n}\n\n.dropdown-menu>li>a:hover{\n  background-color: #636363;\n}\n", ""]);
+exports.push([module.i, ".btn {\r\n  border: none;\r\n  border-radius: 0;\r\n  background-color: #42413D;\r\n  color: #FFCE2B;\r\n}\r\n\r\n.btn:hover {\r\n  background-color: none;\r\n  border-color: #FFCE2B;\r\n}\r\n\r\nul {\r\n  background-color: #42413D;\r\n}\r\n\r\n.btn:active {\r\n  box-shadow: 0 5px #666;\r\n  -webkit-transform: translateY(4px);\r\n          transform: translateY(4px);\r\n}\r\n\r\n.dropdown-toggle {\r\n background-color: transparent;\r\n border-color: #42413D;\r\n border-style: solid;\r\n border-top: none;\r\n border-right: none;\r\n border-left: none;\r\n}\r\n\r\n.dropdown-toggle:active, .open .dropdown-toggle {\r\n      background: #FFCE2B !important;\r\n      color:#42413D !important;\r\n      border-style: none;\r\n  }\r\n\r\n.dropdown-menu{\r\n  background-color: #42413D;\r\n}\r\n\r\n.dropdown-menu>li>a{\r\n  color: #FFCE2B;\r\n}\r\n\r\n.dropdown-menu>li>a:hover{\r\n  background-color: #636363;\r\n}\r\n", ""]);
 
 // exports
 
@@ -1929,8 +2805,7 @@ exports.push([module.i, ".btn {\n  border: none;\n  border-radius: 0;\n  backgro
 module.exports = module.exports.toString();
 
 /***/ }),
-
-/***/ 227:
+/* 227 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)(false);
@@ -1938,7 +2813,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, ".btn {\n  border: none;\n  border-radius: 0;\n  background-color: #42413D;\n  color: #FFCE2B;\n}\n\n.btn:hover {\n  background-color: none;\n  border-color: #FFCE2B;\n}\n\nul {\n  background-color: #42413D;\n}\n\n.btn:active {\n  box-shadow: 0 5px #666;\n  -webkit-transform: translateY(4px);\n          transform: translateY(4px);\n}\n\n.dropdown-toggle {\n background-color: transparent;\n border-color: #42413D;\n border-style: solid;\n border-top: none;\n border-right: none;\n border-left: none;\n}\n\n.dropdown-toggle:active, .open .dropdown-toggle {\n      background: #FFCE2B !important;\n      color:#42413D !important;\n      border-style: none;\n  }\n\n.dropdown-menu{\n  background-color: #42413D;\n}\n\n.dropdown-menu>li>a{\n  color: #FFCE2B;\n}\n\n.dropdown-menu>li>a:hover{\n  background-color: #636363;\n}\n", ""]);
+exports.push([module.i, ".btn {\r\n  border: none;\r\n  border-radius: 0;\r\n  background-color: #42413D;\r\n  color: #FFCE2B;\r\n}\r\n\r\n.btn:hover {\r\n  background-color: none;\r\n  border-color: #FFCE2B;\r\n}\r\n\r\nul {\r\n  background-color: #42413D;\r\n}\r\n\r\n.btn:active {\r\n  box-shadow: 0 5px #666;\r\n  -webkit-transform: translateY(4px);\r\n          transform: translateY(4px);\r\n}\r\n\r\n.dropdown-toggle {\r\n background-color: transparent;\r\n border-color: #42413D;\r\n border-style: solid;\r\n border-top: none;\r\n border-right: none;\r\n border-left: none;\r\n}\r\n\r\n.dropdown-toggle:active, .open .dropdown-toggle {\r\n      background: #FFCE2B !important;\r\n      color:#42413D !important;\r\n      border-style: none;\r\n  }\r\n\r\n.dropdown-menu{\r\n  background-color: #42413D;\r\n}\r\n\r\n.dropdown-menu>li>a{\r\n  color: #FFCE2B;\r\n}\r\n\r\n.dropdown-menu>li>a:hover{\r\n  background-color: #636363;\r\n}\r\n", ""]);
 
 // exports
 
@@ -1947,8 +2822,7 @@ exports.push([module.i, ".btn {\n  border: none;\n  border-radius: 0;\n  backgro
 module.exports = module.exports.toString();
 
 /***/ }),
-
-/***/ 228:
+/* 228 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)(false);
@@ -1956,7 +2830,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, ".barra-menu {\n  background: #42413D;\n  height: 6vh;\n}\n\n.row {\n  padding: 0;\n  margin: 0;\n}\n.logo {\n    display: inline-block;\n    color: #EE7500;\n    margin-left: 1%;\n  }\n\n.logo img{\n  display: inline-block;\n  width: 30px;\n}\n\n.logoText {\n  display: inline-block;\n}\n", ""]);
+exports.push([module.i, ".barra-menu {\r\n  background: #42413D;\r\n  height: 6vh;\r\n}\r\n\r\n.row {\r\n  padding: 0;\r\n  margin: 0;\r\n}\r\n.logo {\r\n    display: inline-block;\r\n    color: #EE7500;\r\n    margin-left: 1%;\r\n  }\r\n\r\n.logo img{\r\n  display: inline-block;\r\n  width: 30px;\r\n}\r\n\r\n.logoText {\r\n  display: inline-block;\r\n}\r\n", ""]);
 
 // exports
 
@@ -1965,835 +2839,222 @@ exports.push([module.i, ".barra-menu {\n  background: #42413D;\n  height: 6vh;\n
 module.exports = module.exports.toString();
 
 /***/ }),
-
-/***/ 23:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__models_global__ = __webpack_require__(131);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_editor_models_metodo__ = __webpack_require__(123);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MainEditorService; });
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-/**
- * 'MainEditorservice' stores information about the editor's canvas, the project
- * and stores a direct access to the EditorComponent.
- * 'MainEditorservice' provides methods to interact with the EditorComponent and
- * to modify a selected class which is present in the editor's canvas.
- */
-var MainEditorService = (function () {
-    function MainEditorService() {
-        /**
-         * 'project' is used to store and retrive information about the current project
-         */
-        this.project = new __WEBPACK_IMPORTED_MODULE_1__models_global__["a" /* Global */]();
-        /**
-         * 'activityMode' is a flag which indicates if the activity diagram is in use
-         */
-        this.activityMode = false;
-    }
-    /**
-     * This method is used to set the instantiation of the EditorComponent as
-     * internal property of this class
-     * @param editCmp the EditorComponent instance
-     */
-    MainEditorService.prototype.setEditorComp = function (editCmp) {
-        this.editorComp = editCmp;
-    };
-    /**
-     * This method is used to retrive the array of classes present in the project
-     */
-    MainEditorService.prototype.getClassList = function () {
-        return this.project.getClassi();
-    };
-    /**
-     * This method returns the selected class of type ´Classe´
-     */
-    MainEditorService.prototype.getSelectedClasse = function () {
-        return this.selectedClasse;
-    };
-    /**
-     * Add an object of type Classe into the project's collection
-     * @param classe this object is a representation, of type ´Classe´ or ´ClasseAstratta´,
-     * of the parameter graphelement.
-     * @param graphElement this is an element of the graphical library JointJS
-     */
-    MainEditorService.prototype.addClass = function (classe, graphElement) {
-        this.project.getClassi().push(classe);
-        this.editorComp.addElement(graphElement);
-        console.log(this.getClassList());
-    };
-    /**
-     * Search for a class, in the project's collection of classes,
-     * which have the same name as the one given as parameter.
-     * @param nome name of the class to search
-     */
-    MainEditorService.prototype.selectClasse = function (nome) {
-        var _this = this;
-        this.project.getClassi().forEach(function (classe) {
-            if (classe.getNome() == nome) {
-                _this.selectedClasse = classe;
-            }
-        });
-        if (!this.selectedClasse)
-            console.log('Classe mancante'); // TODO: spend a moment to code it as a real warning
-    };
-    /**
-     * Sets the flag activityMode to true
-     */
-    MainEditorService.prototype.setActivityMode = function () {
-        this.activityMode = true;
-    };
-    /**
-     * Sets the flas activityMode to false
-     */
-    MainEditorService.prototype.setClassMode = function () {
-        this.activityMode = false;
-    };
-    /**
-     * Returns the current value of the flag activityMode
-     * @returns if the status is true the activity mode is activated,
-     * if it's false the class mode is active.
-     */
-    MainEditorService.prototype.getActivityModeStatus = function () {
-        return this.activityMode;
-    };
-    /**
-     * Calls the addAttribute method of the ´selectedClasse´
-     * @param tipo is the type of the attribute to add as parameter to addAttributo
-     * @param nome is the name of the attribute to add as parameter to addAttributo
-     * @param acc is the visibility of the attribute to add as parameter to addAttributo
-     */
-    MainEditorService.prototype.addAttributo = function (tipo, nome, acc) {
-        this.selectedClasse.addAttributo(tipo, nome, acc);
-    };
-    /**
-     * Calls the removeAttr method of the ´selectedClasse´
-     * @param nome is the name of the attribute to remove which is passed to the removeAttr method
-     */
-    MainEditorService.prototype.removeAttributo = function (nome) {
-        this.selectedClasse.removeAttr(nome);
-    };
-    /**
-     * This method stores into the ´this.graph´ properties the graph given
-     * @param graph Is a graph given in JSON format
-     */
-    MainEditorService.prototype.storeGraph = function (graph) {
-        this.graph = graph;
-    };
-    /**
-     * Is used to restore the class diagram from the store graph, it calls
-     * the replaceDiagram method of the EditorComponent and then sets
-     * ´this.activityMode´ to false
-     */
-    MainEditorService.prototype.enterClassMode = function () {
-        this.editorComp.replaceDiagram(this.graph);
-        this.activityMode = false;
-    };
-    /**
-     * Calls the methods addMetodo of ´this.selectedClasse´ to add a new method into
-     * the selectedClasse
-     * @param tipo type returned by the method, ´tipo´ is passed as parameter to ´selectedClasse.addMetodo´
-     * @param nome is the name of the method, ´nome´ is passed as parameter to ´selectedClasse.addMetodo´
-     * @param acc the visibility of the method, ´acc´ is passed as parameter to ´selectedClasse.addMetodo´
-     * @param listArgs this parameter is optional, 'listArgs' is the list of parameters which defines the
-     * signature of the function
-     */
-    MainEditorService.prototype.addMetodo = function (tipo, nome, acc, listArgs) {
-        this.selectedClasse.addMetodo(new __WEBPACK_IMPORTED_MODULE_2__components_editor_models_metodo__["a" /* Metodo */](nome, acc, tipo, listArgs));
-    };
-    /**
-     * Calls removeMetodo of ´selectedClasse´
-     * @param nome is the name of the method to eliminate, is passed as parameter to selectedClasse.removeMetodo
-     */
-    MainEditorService.prototype.removeMetodo = function (nome) {
-        this.selectedClasse.removeMetodo(nome);
-    };
-    /**
-     * This method search for a method into the selectedClasse and retrives it's diagram
-     * to call editorComp's replaceDiagram which loads the method's diagram into the canvas.
-     * Then sets the flag ´this.activityMode´ to true
-     * @param name name of the method to find
-     */
-    MainEditorService.prototype.enterActivityMode = function (name) {
-        try {
-            var metodo = this.selectedClasse.retriveMethod(name);
-        }
-        catch (e) {
-            if (e.message == 'Metodo non presente')
-                console.log('Il metodo non è presente nella classe');
-        }
-        if (!this.activityMode && metodo) {
-            this.editorComp.replaceDiagram(metodo.getDiagram());
-            this.activityMode = true;
-            this.editorComp.selectedCell = null;
-        }
-    };
-    MainEditorService.prototype.addConnettore = function (connettore) {
-        this.editorComp.addConnettore(connettore);
-    };
-    MainEditorService.prototype.addSuperclass = function (subclassName, superclassName) {
-        console.log(subclassName);
-        var subclass = this.getClass(subclassName);
-        subclass.addSuperclass(superclassName);
-    };
-    MainEditorService.prototype.getClass = function (name) {
-        return this.project.getClasse(name);
-    };
-    MainEditorService.prototype.getProject = function () {
-        return this.project;
-    };
-    MainEditorService.prototype.retriveGraph = function () {
-        this.project.setDiagramma(this.editorComp.graph.toJSON());
-    };
-    return MainEditorService;
-}());
-MainEditorService = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["c" /* Injectable */])(),
-    __metadata("design:paramtypes", [])
-], MainEditorService);
-
-//# sourceMappingURL=main-editor.service.js.map
-
-/***/ }),
-
-/***/ 230:
+/* 229 */,
+/* 230 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "Cerchio.39ee067438843db9e6fa.svg";
+module.exports = __webpack_require__.p + "Cerchio.3c37602c756b4336e229.svg";
 
 /***/ }),
-
-/***/ 231:
+/* 231 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "CerchioCerchio.8b1850c7e37c766e8dbb.svg";
+module.exports = __webpack_require__.p + "CerchioCerchio.330d74e1bb6750bab4b1.svg";
 
 /***/ }),
-
-/***/ 232:
+/* 232 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "Freccia.a4c499fd315ae52afecc.svg";
+module.exports = __webpack_require__.p + "Freccia.bc52d9a77119d56ba08e.svg";
 
 /***/ }),
-
-/***/ 233:
+/* 233 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "Rettangolo.70ad5344a1a2ba3b5c29.svg";
+module.exports = __webpack_require__.p + "Rettangolo.254c42294a508424df19.svg";
 
 /***/ }),
-
-/***/ 234:
+/* 234 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "RettangoloForchetta.18beb1c6c069027e2f37.svg";
+module.exports = __webpack_require__.p + "RettangoloForchetta.c317e1a15ed87cd028da.svg";
 
 /***/ }),
-
-/***/ 235:
+/* 235 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "Rombo.f40f0455691a69a821ad.svg";
+module.exports = __webpack_require__.p + "Rombo.03fc4172ed30e1078f46.svg";
 
 /***/ }),
-
-/***/ 236:
+/* 236 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "Abstract.c6e97eeb61e215b9db88.svg";
+module.exports = __webpack_require__.p + "Abstract.3d5f6caa23de207508be.svg";
 
 /***/ }),
-
-/***/ 237:
+/* 237 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "Class.16df5b7229f5c33c2af5.svg";
+module.exports = __webpack_require__.p + "Class.9875d376eb36c52da712.svg";
 
 /***/ }),
-
-/***/ 238:
+/* 238 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "Interface.3a9ef1baee68153d68e1.svg";
+module.exports = __webpack_require__.p + "Interface.dc505ca32d8d2c049385.svg";
 
 /***/ }),
-
-/***/ 239:
+/* 239 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "Association.92977cfedaee16baf9b0.svg";
+module.exports = __webpack_require__.p + "Association.2b11edeebf9ffcb1c355.svg";
 
 /***/ }),
-
-/***/ 240:
+/* 240 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "Generalization.e97844f3e5a27c0f9c2c.svg";
+module.exports = __webpack_require__.p + "Generalization.f296809f9bfe8b8e0b94.svg";
 
 /***/ }),
-
-/***/ 241:
+/* 241 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "Implementation.03e2d3a8adc68c375556.svg";
+module.exports = __webpack_require__.p + "Implementation.fdfb4a02d46435f04510.svg";
 
 /***/ }),
-
-/***/ 262:
+/* 242 */,
+/* 243 */,
+/* 244 */,
+/* 245 */,
+/* 246 */,
+/* 247 */,
+/* 248 */,
+/* 249 */,
+/* 250 */,
+/* 251 */,
+/* 252 */,
+/* 253 */,
+/* 254 */,
+/* 255 */,
+/* 256 */,
+/* 257 */,
+/* 258 */,
+/* 259 */,
+/* 260 */,
+/* 261 */,
+/* 262 */
 /***/ (function(module, exports) {
 
-module.exports = "<!-- component padre che racchiude gli elementi del menù -->\n<div class=\".container-fluid\">\n<app-menu></app-menu>\n<div class=\"row\">\n  <!-- component padre che racchiude gli elementi dell'editor -->\n  <div class=\"col-md-9 editor\">\n    <app-editor></app-editor>\n  </div>\n  <!-- component  che racchiude gli elementi del acrivity frame, la quale rappresenta il flusso del programma -->\n  <div class=\"col-md-3 activityframe\">\n    <app-activity-frame></app-activity-frame>\n  </div>\n</div>\n"
+module.exports = "<!-- component padre che racchiude gli elementi del menù -->\r\n<div class=\".container-fluid\">\r\n<app-menu></app-menu>\r\n<div class=\"row\">\r\n  <!-- component padre che racchiude gli elementi dell'editor -->\r\n  <div class=\"col-md-9 editor\">\r\n    <app-editor></app-editor>\r\n  </div>\r\n  <!-- component  che racchiude gli elementi del acrivity frame, la quale rappresenta il flusso del programma -->\r\n  <div class=\"col-md-3 activityframe\">\r\n    <app-activity-frame></app-activity-frame>\r\n  </div>\r\n</div>\r\n"
 
 /***/ }),
-
-/***/ 263:
+/* 263 */
 /***/ (function(module, exports) {
 
-module.exports = "Activity frame\n"
+module.exports = "Activity frame\r\n"
 
 /***/ }),
-
-/***/ 264:
+/* 264 */
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  activity-menu works!\n</p>\n"
+module.exports = "<div>\r\n  <button class=\"btn btn-default\" (click)=\"this.mainEditorService.enterClassMode()\">Diagramma delle Classi</button>\r\n</div>"
 
 /***/ }),
-
-/***/ 265:
+/* 265 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container-fluid menu\">\n\n  <div class=\"row selezionato\">\n    <span class=\"glyphicon glyphicon-wrench iconaMirrow\" aria-hidden=\"true\"></span> {{name}}\n  </div>\n  <div class=\"row changeNome\">\n    Modifica nome:\n    <input #changeName id=\"changeName\"\n    (keyup.enter)=\"changeNome(changeName.value)\">\n    <button class=\"btn btn-default\" (click)=\"changeNome(changeName.value)\">\n      <span class=\"glyphicon glyphicon-floppy-disk\" aria-hidden=\"true\"></span>\n    </button>\n  </div>\n  <!-- div per aggiungere un attributo -->\n  <div class=\"aggiungiAttributo\">\n    <!-- <span [hidden]=\"!nomeAttributoUguale\">Il nome inserito per l'attributo è già esistente <br /></span> -->\n    <div class=\"row\">\n      <button href=\"#addAttr\" class=\"btn btn-default\" data-toggle=\"collapse\">\n        <span class=\"glyphicon glyphicon-plus\" aria-hidden=\"true\"></span>Aggiungi Attributo\n      </button>\n    </div>\n    <div id=\"addAttr\" class=\"campiAttributo collapse\">\n      <div class=\"aggiungiAttributo accessoAttr\">\n        <label>Seleziona Visibilità</label>\n        <select  [(ngModel)]=\"selectedAccAtt\">\n          <option *ngFor=\"let acc of accessoAttr\" [value]=\"acc\">{{ acc }}</option>\n        </select>\n      </div>\n      <div class=\"aggiungiAttributo .selezionaTipo\">\n        <label>Seleziona tipo</label>\n        <select #tipi [(ngModel)]=\"selectedTipoAtt\">\n          <option value=\"\"></option>\n          <option *ngFor=\"let type of types\" [value]=\"type\">{{type}}</option>\n        </select>\n      </div>\n      <div class=\"aggiungiAttributo nomeAttr\">\n        <label>Nome</label>\n        <input [disabled]=\"!selectedTipoAtt\" id=\"nome-attributo\" #nomeAtt\n        (keyup.enter)=\"addAttributo(nomeAtt.value)\">\n      </div>\n      <button class=\"btn btn-default\" [disabled]=\"!selectedTipoAtt\" (click)=\"addAttributo(nomeAtt.value)\">Aggiungi Attributo</button>\n    </div>\n\n  </div>\n  <button href=\"#listaAttr\" class=\"btn btn-default\" data-toggle=\"collapse\">\n    <span class=\"glyphicon glyphicon-triangle-left\" aria-hidden=\"true\"></span>Lista Attributi\n  </button>\n  <!-- lista attributi della classe -->\n  <div *ngIf=\"this.mainEditorService.selectedClasse\" class=\"container listaAttributi\">\n    <div id=\"listaAttr\" class=\"row collapse\" *ngIf=\"name\">\n      <h5>Lista Attributi</h5>\n      <ul class=\"list-group\">\n        <li class=\"list-group-item\" *ngFor=\"let attr of this.mainEditorService.selectedClasse.getAttributi()\">\n          <span>{{attr.name}}: {{attr.type}}\n            <button class=\"btn btn-default\" (click)=\"removeAttributo(attr.name)\">\n              <span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\" title=\"Rimuovi\"></span>\n            </button>\n            <!-- menù a tendina di modifica attributo-->\n            <button class=\"btn btn-default\" data-toggle=\"collapse\" [attr.data-target]=\"'#'+attr.name\" (click)=\"modAttribute(attr.name)\" title=\"Modifica\">\n              <span class=\"glyphicon glyphicon-pencil\" aria-hidden=\"true\" title=\"Modifica\"></span>\n            </button>\n          </span>\n          <!--prova-->\n          <div class=\"campiAttributo collapse\" attr.id=\"{{attr.name}}\">\n            <div class=\"aggiungiAttributo accessoAttr\">\n              <label>Seleziona Visibilità</label>\n              <select  [(ngModel)]=\"selectedAccAtt\">\n                <option *ngFor=\"let acc of accessoAttr\" [value]=\"acc\">{{ acc }}</option>\n              </select>\n            </div>\n            <div class=\"aggiungiAttributo .selezionaTipo\">\n              <label>Seleziona tipo</label>\n              <select #tipi [(ngModel)]=\"selectedTipoAtt\">\n                <option value=\"\"></option>\n                <option *ngFor=\"let type of types\" [value]=\"type\">{{type}}</option>\n              </select>\n            </div>\n            <div class=\"aggiungiAttributo nomeAttr\">\n              <label>Nome</label>\n              <input [disabled]=\"!selectedTipoAtt\" id=\"nome-attributo\" #nomeAtt\n              (keyup.enter)=\"addAttributo(nomeAtt.value)\">\n            </div>\n            <button class=\"btn btn-default\" [disabled]=\"!selectedTipoAtt\" (click)=\"addAttributo(nomeAtt.value)\">Modifica Attributo</button>\n            </div>\n          <!--prova-->\n        </li>\n      </ul>\n    </div>\n  </div>\n  <!-- blocco per aggiungere un metodo alla classe -->\n  <div class=\"aggiungiMetodo\">\n    <div class=\"row\">\n      <button href=\"#addMetodo\" class=\"btn btn-default\" data-toggle=\"collapse\">\n        <span class=\"glyphicon glyphicon-plus\" aria-hidden=\"true\"></span>Aggiungi Metodo\n      </button>\n    </div>\n    <div id=\"addMetodo\" class=\"campiMetodo collapse\">\n      <!-- lista metodi della classe -->\n      <div *ngIf=\"this.mainEditorService.selectedClasse\" class=\"container listaMetodi\">\n        <div  class=\"row\" *ngIf=\"name\">\n          <h5>Lista Metodi</h5>\n          <ul class=\"list-group\">\n            <li class=\"list-group-item\" *ngFor=\"let met of this.mainEditorService.selectedClasse.getMetodi()\">\n              <span>{{met.accesso}} &nbsp; {{met.nome}}(): {{met.tipoRitorno}}\n                <button class=\"btn btn-default\" (click)=\"removeMetodo(met.nome)\">\n                  <span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\" title=\"Rimuovi\"></span>\n                </button>\n                <button class=\"btn btn-default\" (click)=\"modifyMetodo(met.nome)\" title=\"Modifica\">\n                  <span class=\"glyphicon glyphicon-pencil\" aria-hidden=\"true\" title=\"Modifica\"></span>\n                </button>\n              </span>\n            </li>\n          </ul>\n        </div>\n      </div>\n      <!-- blocco per aggiunta parametri metodo -->\n      <div class=\"aggiungiMetodo .selezionaTipo\">\n        <div class=\"aggiungiMeotdo accessoMetodo\">\n          <label>Seleziona Visibilità</label>\n          <select #accMetodo [(ngModel)]=\"selectedAccMet\">\n            <option *ngFor=\"let acc of accessoAttr\" [value]=\"acc\">{{ acc }}</option>\n          </select>\n        </div>\n        <label>Seleziona tipo di ritorno</label>\n        <select #tipiMetodo [(ngModel)]=\"selectedTipoMet\">\n          <option value=\"void\"></option>\n          <option *ngFor=\"let type of types\" [value]=\"type\">{{type}}</option>\n        </select>\n      </div>\n      <div class=\"aggiungiMetodo nomeMet\">\n        <label>Nome</label>\n        <input [disabled]=\"!selectedTipoMet\" id=\"nome-metodo\" #nomeMetodo>\n      </div>\n      <div class=\"container-fluid\">\n        <div class=\"row clearfix\">\n          <div class=\"col-md-12 column\">\n            Parametri attuali\n            <table class=\"table table-bordered table-hover\" id=\"tab_logic\">\n              <thead>\n                <tr>\n                  <th class=\"text-center\">\n                    Tipo\n                  </th>\n                  <th class=\"text-center\">\n                    Nome\n                  </th>\n                  <th class=\"text-center\">\n                    \n                  </th>\n                </tr>\n              </thead>\n              <tbody>\n                <tr #parametro>\n                  <td>\n                    <select #tipi class=\"tipiMetodo\">\n                      <option value=\"\"></option>\n                      <option *ngFor=\"let type of types\" [value]=\"type\">{{type}}</option>\n                    </select>\n                  </td>\n                  <td>\n                    <input #nome type=\"text\" placeholder=\"Nome\" class=\"form-control\"/>\n                  </td>\n                  <td>\n                    <button class=\"btn btn-default\" title=\"Aggiungi Parmetro\" (click)=\"aggiungiParam()\">\n                      <span class=\"glyphicon glyphicon-plus\" aria-hidden=\"true\"></span>\n                    </button>\n                  </td>\n                </tr>\n              </tbody>\n            </table>\n          </div>\n        </div>\n\n\n      </div>\n      <button class=\"btn btn-default\" [disabled]=\"!selectedTipoMet\" (click)=\"addMetodo(nomeMetodo.value)\">Aggiungi Metodo</button>\n    </div>\n\n  </div>\n</div>\n"
+module.exports = "<div class=\"container-fluid menu\">\r\n\r\n  <div class=\"row selezionato\">\r\n    <span class=\"glyphicon glyphicon-wrench iconaMirrow\" aria-hidden=\"true\"></span> {{name}}\r\n  </div>\r\n  <div class=\"row changeNome\">\r\n    Modifica nome:\r\n    <input #changeName id=\"changeName\"\r\n    (keyup.enter)=\"changeNome(changeName.value)\">\r\n    <button class=\"btn btn-default\" (click)=\"changeNome(changeName.value)\">\r\n      <span class=\"glyphicon glyphicon-floppy-disk\" aria-hidden=\"true\"></span>\r\n    </button>\r\n  </div>\r\n  <!-- div per aggiungere un attributo -->\r\n  <div class=\"aggiungiAttributo\">\r\n    <!-- <span [hidden]=\"!nomeAttributoUguale\">Il nome inserito per l'attributo è già esistente <br /></span> -->\r\n    <div class=\"row\">\r\n      <button href=\"#addAttr\" class=\"btn btn-default\" data-toggle=\"collapse\">\r\n        <span class=\"glyphicon glyphicon-plus\" aria-hidden=\"true\"></span>Aggiungi Attributo\r\n      </button>\r\n    </div>\r\n    <div id=\"addAttr\" class=\"campiAttributo collapse\">\r\n      <div class=\"aggiungiAttributo staticAttr\">\r\n        <label>Static <input #checkStaticAtt type=\"checkbox\" name=\"static\" classe=\"checkbox-circle\" value=\"Stiatic\" /></label>\r\n      </div>\r\n      <div class=\"aggiungiAttributo accessoAttr\">\r\n        <label>Seleziona Visibilità</label>\r\n        <select #accAtt  [(ngModel)]=\"selectedAccAtt\">\r\n          <option *ngFor=\"let acc of accessoAttr\" [value]=\"acc\">{{ acc }}</option>\r\n        </select>\r\n      </div>\r\n      <div class=\"aggiungiAttributo selezionaTipo\">\r\n        <label>Seleziona tipo</label>\r\n        <select #tipiAtt [(ngModel)]=\"selectedTipoAtt\">\r\n          <option value=\"\"></option>\r\n          <option *ngFor=\"let type of types\" [value]=\"type\">{{type}}</option>\r\n        </select>\r\n      </div>\r\n      <div class=\"aggiungiAttributo nomeAttr\">\r\n        <label>Nome</label>\r\n        <input [disabled]=\"!selectedTipoAtt\" id=\"nome-attributo\" #nomeAtt\r\n        (keyup.enter)=\"addAttributo(nomeAtt.value)\">\r\n      </div>\r\n      <button class=\"btn btn-default\" [disabled]=\"!selectedTipoAtt\" (click)=\"addAttributo(nomeAtt.value, checkStaticAtt.checked, tipiAtt.value, accAtt.value)\">Aggiungi Attributo</button>\r\n    </div>\r\n\r\n  </div>\r\n  <button href=\"#listaAttr\" class=\"btn btn-default\" data-toggle=\"collapse\">\r\n    <span class=\"glyphicon glyphicon-triangle-left\" aria-hidden=\"true\"></span>Lista Attributi\r\n  </button>\r\n  <!-- lista attributi della classe -->\r\n  <div *ngIf=\"this.mainEditorService.selectedClasse\" class=\"container listaAttributi\">\r\n    <div id=\"listaAttr\" class=\"row collapse\" *ngIf=\"name\">\r\n      <h5>Lista Attributi</h5>\r\n      <ul class=\"list-group\">\r\n        <li class=\"list-group-item\" *ngFor=\"let attr of this.mainEditorService.selectedClasse.getAttributi()\">\r\n          <span>{{attr.name}}: {{attr.type}}\r\n            <button class=\"btn btn-default\" (click)=\"removeAttributo(attr.name)\">\r\n              <span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\" title=\"Rimuovi\"></span>\r\n            </button>\r\n            <!-- menù a tendina di modifica attributo-->\r\n            <button class=\"btn btn-default\" data-toggle=\"collapse\" [attr.data-target]=\"'#'+attr.name\" title=\"Modifica\">\r\n              <span class=\"glyphicon glyphicon-pencil\" aria-hidden=\"true\" title=\"Modifica\"></span>\r\n            </button>\r\n          </span>\r\n          <!-- menù a comparsa (collapse) per modificare un attributo-->\r\n          <div class=\"campiAttributo collapse\" attr.id=\"{{attr.name}}\">\r\n            <div class=\"modificaAttributo accessoAttr\">\r\n              <label>Seleziona Visibilità</label>\r\n              <select  [(ngModel)]=\"selectedAccAtt\">\r\n                <option *ngFor=\"let acc of accessoAttr\" [value]=\"acc\">{{ acc }}</option>\r\n              </select>\r\n            </div>\r\n            <div class=\"modificaAttributo selezionaTipo\">\r\n              <label>Seleziona tipo</label>\r\n              <select #tipi [(ngModel)]=\"selectedTipoAtt\">\r\n                <option value=\"\"></option>\r\n                <option *ngFor=\"let type of types\" [value]=\"type\">{{type}}</option>\r\n              </select>\r\n            </div>\r\n            <div class=\"modificaAttributo nomeAttr\">\r\n              <label>Nome</label>\r\n              <input [disabled]=\"!selectedTipoAtt\" id=\"nome-attributo\" #nomeAtt\r\n              (keyup.enter)=\"changeAttributo(nomeAtt.value, attr.name)\">\r\n            </div>\r\n            <button class=\"btn btn-default\" [disabled]=\"!selectedTipoAtt\" (click)=\"changeAttributo(nomeAtt.value, attr.name)\">Modifica Attributo</button>\r\n            </div>\r\n        </li>\r\n      </ul>\r\n    </div>\r\n  </div>\r\n  <!-- blocco per aggiungere un metodo alla classe -->\r\n  <div class=\"aggiungiMetodo\">\r\n    <div class=\"row\">\r\n      <button href=\"#addMetodo\" class=\"btn btn-default\" data-toggle=\"collapse\">\r\n        <span class=\"glyphicon glyphicon-plus\" aria-hidden=\"true\"></span>Aggiungi Metodo\r\n      </button>\r\n    </div>\r\n    <div id=\"addMetodo\" class=\"campiMetodo collapse\">\r\n      <!-- lista metodi della classe -->\r\n      <div *ngIf=\"this.mainEditorService.selectedClasse\" class=\"container listaMetodi\">\r\n        <div  class=\"row\" *ngIf=\"name\">\r\n          <h5>Lista Metodi</h5>\r\n          <ul class=\"list-group\">\r\n            <li class=\"list-group-item\" *ngFor=\"let met of getMetodi()\">\r\n              <span>{{met.accesso}} {{met.staticString()}} {{met.nome}}({{met.paramToString()}}): {{met.tipoRitorno}}\r\n                <button class=\"btn btn-default\" (click)=\"removeMetodo(met.nome)\">\r\n                  <span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\" title=\"Rimuovi\"></span>\r\n                </button>\r\n                <button class=\"btn btn-default\" (click)=\"modifyMetodo(met.nome)\" title=\"Modifica\">\r\n                  <span class=\"glyphicon glyphicon-pencil\" aria-hidden=\"true\" title=\"Modifica\"></span>\r\n                </button>\r\n              </span>\r\n            </li>\r\n          </ul>\r\n        </div>\r\n      </div>\r\n      <!-- blocco per aggiunta parametri metodo -->\r\n      <div class=\"aggiungiMetodo .selezionaTipo\">\r\n        <div class=\"aggiungiAttributo staticAttr\">\r\n          <label>Static <input #staticMet type=\"checkbox\" name=\"static\" classe=\"checkbox-circle\" value=\"Stiatic\"></label>\r\n          <label> Costruttore <input #constructor [(ngModel)]=\"costruttore\" type=\"checkbox\" name=\"constructor\" classe=\"checkbox-circle\" value=\"Constructor\"></label>\r\n        </div>\r\n        <div class=\"aggiungiMeotdo accessoMetodo\">\r\n          <label>Seleziona Visibilità</label>\r\n          <select #accMetodo [(ngModel)]=\"selectedAccMet\">\r\n            <option *ngFor=\"let acc of accessoAttr\" [value]=\"acc\">{{ acc }}</option>\r\n          </select>\r\n        </div>\r\n        <div [hidden]=\"costruttore\">\r\n          <label>Seleziona tipo di ritorno</label>\r\n          <select #tipiMetodo [(ngModel)]=\"selectedTipoMet\">\r\n            <option value=\"void\"></option>\r\n            <option *ngFor=\"let type of types\" [value]=\"type\">{{type}}</option>\r\n          </select>\r\n        </div>\r\n      </div>\r\n      <div [hidden]=\"costruttore\" class=\"aggiungiMetodo nomeMet\">\r\n        <label>Nome</label>\r\n        <input [disabled]=\"!selectedTipoMet\" id=\"nome-metodo\" #nomeMetodo>\r\n      </div>\r\n      <div class=\"container-fluid\">\r\n        <div class=\"row clearfix\">\r\n          <div class=\"col-md-12 column\">\r\n            Parametri attuali\r\n            <table class=\"table table-bordered table-hover\" id=\"tab_logic\">\r\n              <thead>\r\n                <tr>\r\n                  <th class=\"text-center\">\r\n                    Tipo\r\n                  </th>\r\n                  <th class=\"text-center\">\r\n                    Nome\r\n                  </th>\r\n                  <th class=\"text-center\">\r\n                    \r\n                  </th>\r\n                </tr>\r\n              </thead>\r\n              <tbody>\r\n                <tr *ngFor=\"let param of parametriMetodo\" class=\"tipiMetodo\">\r\n                  <td>{{param.getTipo()}}</td>\r\n                  <td>{{param.getNome()}}</td>\r\n                </tr>\r\n                <tr #parametro>\r\n                  <td>\r\n                    <select #tipiParam class=\"tipiMetodo\">\r\n                      <option value=\"\"></option>\r\n                      <option *ngFor=\"let type of types\" [value]=\"type\">{{type}}</option>\r\n                    </select>\r\n                  </td>\r\n                  <td>\r\n                    <input #nomeParam type=\"text\" placeholder=\"Nome\" class=\"form-control\"/>\r\n                  </td>\r\n                  <td>\r\n                    <button class=\"btn btn-default\" title=\"Aggiungi Parmetro\" (click)=\"addParam(tipiParam.value, nomeParam.value)\">\r\n                      <span class=\"glyphicon glyphicon-plus\" aria-hidden=\"true\"></span>\r\n                    </button>\r\n                  </td>\r\n                </tr>\r\n              </tbody>\r\n            </table>\r\n          </div>\r\n        </div>\r\n\r\n\r\n      </div>\r\n      <button class=\"btn btn-default\" [disabled]=\"isAddableMethod()\" (click)=\"addMetodo(nomeMetodo.value, staticMet.checked, constructor.checked, tipiMetodo.value, accMetodo.value)\">Aggiungi Metodo</button>\r\n    </div>\r\n\r\n  </div>\r\n</div>\r\n"
 
 /***/ }),
-
-/***/ 266:
+/* 266 */
 /***/ (function(module, exports) {
 
-module.exports = "<div [hidden]=\"mainEditorService.getActivityModeStatus()\" class=\"container-fluid toolbar classi\">\n  <div class=\"tipo\"> Classi </div>\n    <div class=\"icona\"><button (click)=\"addClasse()\" class=\"add addClasse\" title=\"Aggiungi classe\"></button></div>\n    <div class=\"icona\"><button (click)=\"addInterfaccia()\" class=\"add addInterfaccia\" title=\"Aggiungi interfaccia\"></button></div>\n    <div class=\"icona\"><button (click)=\"addAstratta()\" class=\"add addAstratta\" title=\"Aggiungi classe astratta\"></button></div>\n\n  <div class=\"tipo\"> Connettori </div>\n    <div class=\"icona\"><button (click)=\"addImplementazione()\" class=\"add addImplementazione\" title=\"Aggiungi implementazione\"></button></div>\n    <div class=\"icona\"><button (click)=\"addGeneralizzazione()\" class=\"add addGeneralizzazione\" title=\"Aggiungi generalizzazione\"></button></div>\n\n  <div class=\"tipo\"> Commenti </div>\n    <div class=\"icona\"><button (click)=\"addCommento()\" class=\"add addCommento\" title=\"Agiungi commento\"></button></div>\n    <div class=\"icona\"><button (click)=\"addAssociazione()\" class=\"add addAssociazione\" title=\"Aggiungi associazione\"></button></div>\n</div>\n<div [hidden]=\"!mainEditorService.getActivityModeStatus()\" class=\"container-fluid toolbar activity\">\n  <div class=\"tipo\"> Activity </div>\n    <div class=\"icona\"><button (click)=\"addStart()\" class=\"add addStart\" title=\"Aggiungi start\"></button></div>\n    <div class=\"icona\"><button (click)=\"addEnd()\" class=\"add addEnd\" title=\"Aggiungi End\"></button></div>\n    <div class=\"icona\"><button (click)=\"addActivityShape()\" class=\"add addAttivita\" title=\"Aggiungi l'attività\"></button></div>\n    <div class=\"icona\"><button (click)=\"addActivityForShape()\" class=\"add addAttivitaFor\" title=\"Aggiungi l'attività \"></button></div>\n    <div class=\"icona\"><button (click)=\"addConnector()\" class=\"add addConnettore\" title=\"Aggiungi connettore\"></button></div>\n    <div class=\"icona\"><button (click)=\"addDecision()\" class=\"add addDecision\" title=\"Aggiungi decisione\"></button></div>\n</div>\n"
+module.exports = "<div [hidden]=\"mainEditorService.getActivityModeStatus()\" class=\"container-fluid toolbar classi\">\r\n  <div class=\"tipo\"> Classi </div>\r\n    <div class=\"icona\"><button (click)=\"addClasse()\" class=\"add addClasse\" title=\"Aggiungi classe\"></button></div>\r\n    <div class=\"icona\"><button (click)=\"addInterfaccia()\" class=\"add addInterfaccia\" title=\"Aggiungi interfaccia\"></button></div>\r\n    <div class=\"icona\"><button (click)=\"addAstratta()\" class=\"add addAstratta\" title=\"Aggiungi classe astratta\"></button></div>\r\n\r\n  <div class=\"tipo\"> Connettori </div>\r\n    <div class=\"icona\"><button (click)=\"addImplementazione()\" class=\"add addImplementazione\" title=\"Aggiungi implementazione\"></button></div>\r\n    <div class=\"icona\"><button (click)=\"addGeneralizzazione()\" class=\"add addGeneralizzazione\" title=\"Aggiungi generalizzazione\"></button></div>\r\n\r\n  <div class=\"tipo\"> Commenti </div>\r\n    <div class=\"icona\"><button (click)=\"addCommento()\" class=\"add addCommento\" title=\"Agiungi commento\"></button></div>\r\n    <div class=\"icona\"><button (click)=\"addAssociazione()\" class=\"add addAssociazione\" title=\"Aggiungi associazione\"></button></div>\r\n</div>\r\n<div [hidden]=\"!mainEditorService.getActivityModeStatus()\" class=\"container-fluid toolbar activity\">\r\n  <div class=\"tipo\"> Activity </div>\r\n    <div class=\"icona\"><button (click)=\"addStart()\" class=\"add addStart\" title=\"Aggiungi start\"></button></div>\r\n    <div class=\"icona\"><button (click)=\"addEnd()\" class=\"add addEnd\" title=\"Aggiungi End\"></button></div>\r\n    <div class=\"icona\"><button (click)=\"addActivityShape()\" class=\"add addAttivita\" title=\"Aggiungi l'attività\"></button></div>\r\n    <div class=\"icona\"><button (click)=\"addActivityForShape()\" class=\"add addAttivitaFor\" title=\"Aggiungi l'attività \"></button></div>\r\n    <div class=\"icona\"><button (click)=\"addConnector()\" class=\"add addConnettore\" title=\"Aggiungi connettore\"></button></div>\r\n    <div class=\"icona\"><button (click)=\"addDecision()\" class=\"add addDecision\" title=\"Aggiungi decisione\"></button></div>\r\n</div>\r\n"
 
 /***/ }),
-
-/***/ 267:
+/* 267 */
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"paper\"></div>\n<div class=\"toolbar\">\n  <app-toolbar></app-toolbar>\n\n</div>\n<div [hidden]=\"!selectedCell\" class=\"editClass\">\n    <class-menu [hidden]=\"mainEditorService.getActivityModeStatus()\"></class-menu>\n    <activity-menu [hidden]=\"!mainEditorService.getActivityModeStatus()\"></activity-menu>\n</div>\n"
+module.exports = "<div id=\"paper\"></div>\r\n<div class=\"toolbar\">\r\n  <app-toolbar></app-toolbar>\r\n\r\n</div>\r\n<div [hidden]=\"!selectedCell\" class=\"editClass\">\r\n    <class-menu [hidden]=\"mainEditorService.getActivityModeStatus()\"></class-menu>\r\n</div>\r\n<div class=\"editClass\">\r\n  <activity-menu [hidden]=\"!mainEditorService.getActivityModeStatus()\"></activity-menu>\r\n</div>\r\n"
 
 /***/ }),
-
-/***/ 268:
+/* 268 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"dropdown\" #menuFile>\n  <button class=\"btn btn-default dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">\n    File\n    <span class=\"caret\"></span>\n  </button>\n  <ul class=\"dropdown-menu\" aria-labelledby=\"dropdownMenu1\">\n    <li><a href=\"#\" >Salva</a></li>\n    <li><a (click)=\"esporta()\" href=\"#\" >Esporta</a></li>\n    <li><input type=\"file\" (change)=\"fileChange($event)\" placeholder=\"Upload file\" accept=\".pdf,.doc,.docx\"></li>\n    <li><a href=\"#\" >Genera codice</a></li>\n    <li><a href=\"#\" >Salva template</a></li>\n    <li><a href=\"#\" >Chiudi</a></li>\n  </ul>\n</div>\n"
+module.exports = "<div class=\"dropdown\" #menuFile>\r\n  <button class=\"btn btn-default dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">\r\n    File\r\n    <span class=\"caret\"></span>\r\n  </button>\r\n  <ul class=\"dropdown-menu\" aria-labelledby=\"dropdownMenu1\">\r\n    <li><a href=\"#\" >Salva</a></li>\r\n    <li><a (click)=\"esporta()\" href=\"#\" >Esporta</a></li>\r\n    <li>\r\n      <input id=\"upload\" type=\"file\" class=\"custom-file-input\" (change)=\"importa($event)\" placeholder=\"Upload file\" accept=\".json\">\r\n      <a href=\"#\" onclick=\"$('input[id=upload]').click();\">Importa progetto </a>\r\n    </li>\r\n    <li><a href=\"#\" >Genera codice</a></li>\r\n    <li><a href=\"#\" >Salva template</a></li>\r\n    <li><a href=\"#\" >Chiudi</a></li>\r\n  </ul>\r\n</div>\r\n\r\n"
 
 /***/ }),
-
-/***/ 269:
+/* 269 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"dropdown\" #menuLayer>\n  <button class=\"btn btn-default dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">\n    Layer\n    <span class=\"caret\"></span>\n  </button>\n  <ul class=\"dropdown-menu\" aria-labelledby=\"dropdownMenu1\">\n    <li><a href=\"#\" >Aggiungi laver</a></li>\n    <li><a href=\"#\" >Lista layer</a></li>\n    <li><a href=\"#\" >Rinomina laver</a></li>\n    <li><a href=\"#\" >Elimina layer</a></li>\n  </ul>\n</div>\n"
+module.exports = "<div class=\"dropdown\" #menuLayer>\r\n  <button class=\"btn btn-default dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">\r\n    Layer\r\n    <span class=\"caret\"></span>\r\n  </button>\r\n  <ul class=\"dropdown-menu\" aria-labelledby=\"dropdownMenu1\">\r\n    <li><a href=\"#\" >Aggiungi laver</a></li>\r\n    <li><a href=\"#\" >Lista layer</a></li>\r\n    <li><a href=\"#\" >Rinomina laver</a></li>\r\n    <li><a href=\"#\" >Elimina layer</a></li>\r\n  </ul>\r\n</div>\r\n"
 
 /***/ }),
-
-/***/ 270:
+/* 270 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"dropdown\" #menuModifica>\n  <button class=\"btn btn-default dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">\n    Modifica\n    <span class=\"caret\"></span>\n  </button>\n  <ul class=\"dropdown-menu\" aria-labelledby=\"dropdownMenu1\">\n    <li><a href=\"#\" >Annulla</a></li>\n    <li><a href=\"#\" >Ripristina</a></li>\n    <li><a href=\"#\" >Taglia</a></li>\n    <li><a href=\"#\" >Copia</a></li>\n    <li><a href=\"#\">Incolla</a></li>\n    <li><a href=\"#\">Elimina</a></li>\n    <li><a href=\"#\"  (click)=\"doZoomIn()\" >Zoom In</a></li>\n    <li><a href=\"#\"  (click)=\"doZoomOut()\" >Zoom Out</a></li>\n  </ul>\n</div>\n"
+module.exports = "<div class=\"dropdown\" #menuModifica>\r\n  <button class=\"btn btn-default dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">\r\n    Modifica\r\n    <span class=\"caret\"></span>\r\n  </button>\r\n  <ul class=\"dropdown-menu\" aria-labelledby=\"dropdownMenu1\">\r\n    <li><a href=\"#\" >Annulla</a></li>\r\n    <li><a href=\"#\" >Ripristina</a></li>\r\n    <li><a href=\"#\" >Taglia</a></li>\r\n    <li><a href=\"#\" >Copia</a></li>\r\n    <li><a href=\"#\">Incolla</a></li>\r\n    <li><a href=\"#\">Elimina</a></li>\r\n    <li><a href=\"#\"  (click)=\"doZoomIn()\" >Zoom In</a></li>\r\n    <li><a href=\"#\"  (click)=\"doZoomOut()\" >Zoom Out</a></li>\r\n  </ul>\r\n</div>\r\n"
 
 /***/ }),
-
-/***/ 271:
+/* 271 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"dropdown\" #menuProfilo>\n  <button class=\"btn btn-default dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">\n    Profilo\n    <span class=\"caret\"></span>\n  </button>\n  <ul class=\"dropdown-menu\" aria-labelledby=\"dropdownMenu1\">\n    <li><a href=\"#\" >Modifica password</a></li>\n    <li><a href=\"#\" >Modifica email</a></li>\n    <li><a href=\"#\" >Elimina profilo</a></li>\n  </ul>\n</div>\n"
+module.exports = "<div class=\"dropdown\" #menuProfilo>\r\n  <button class=\"btn btn-default dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">\r\n    Profilo\r\n    <span class=\"caret\"></span>\r\n  </button>\r\n  <ul class=\"dropdown-menu\" aria-labelledby=\"dropdownMenu1\">\r\n    <li><a href=\"#\" >Modifica password</a></li>\r\n    <li><a href=\"#\" >Modifica email</a></li>\r\n    <li><a href=\"#\" >Elimina profilo</a></li>\r\n  </ul>\r\n</div>\r\n"
 
 /***/ }),
-
-/***/ 272:
+/* 272 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"dropdown\" #menuProgetto>\n  <button class=\"btn btn-default dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">\n    Progetto\n    <span class=\"caret\"></span>\n  </button>\n  <ul class=\"dropdown-menu\" aria-labelledby=\"dropdownMenu1\">\n    <li><a href=\"#\" >Nuovo</a></li>\n    <li><a href=\"#\" >Apri progetto</a></li>\n    <li><a href=\"#\" >Importa progetto</a></li>\n    <li><a href=\"#\" >Elimina progetto</a></li>\n  </ul>\n</div>\n"
+module.exports = "<div class=\"dropdown\" #menuProgetto>\r\n  <button class=\"btn btn-default dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">\r\n    Progetto\r\n    <span class=\"caret\"></span>\r\n  </button>\r\n  <ul class=\"dropdown-menu\" aria-labelledby=\"dropdownMenu1\">\r\n    <li><a href=\"#\" >Nuovo</a></li>\r\n    <li><a href=\"#\" >Apri progetto</a></li>\r\n    <li><a href=\"#\" >Importa progetto</a></li>\r\n    <li><a href=\"#\" >Elimina progetto</a></li>\r\n  </ul>\r\n</div>\r\n"
 
 /***/ }),
-
-/***/ 273:
+/* 273 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"dropdown\" #menuTemplate>\n  <button class=\"btn btn-default dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">\n    Template\n    <span class=\"caret\"></span>\n  </button>\n  <ul class=\"dropdown-menu\" aria-labelledby=\"dropdownMenu1\">\n    <li><a href=\"#\" >Aggiungi template</a></li>\n    <li><a href=\"#\" >Elimina template</a></li>\n  </ul>\n</div>\n"
+module.exports = "<div class=\"dropdown\" #menuTemplate>\r\n  <button class=\"btn btn-default dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">\r\n    Template\r\n    <span class=\"caret\"></span>\r\n  </button>\r\n  <ul class=\"dropdown-menu\" aria-labelledby=\"dropdownMenu1\">\r\n    <li><a href=\"#\" >Aggiungi template</a></li>\r\n    <li><a href=\"#\" >Elimina template</a></li>\r\n  </ul>\r\n</div>\r\n"
 
 /***/ }),
-
-/***/ 274:
+/* 274 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\".container-fluid barra-menu\">\n  <div class=\"row\">\n    <div class=\"logo\">\n      <img src=\"assets/images/logo.png\" alt=\"logo\">\n      <div class=\"logoText\">SWEDesigner</div>\n    </div>\n    <div class=\"menu btn\">  <app-file></app-file>  </div>\n    <div class=\"menu btn\">  <app-progetto></app-progetto>  </div>\n    <div class=\"menu btn\">  <app-modifica></app-modifica>  </div>\n    <div class=\"menu btn\">  <app-template></app-template>  </div>\n    <div class=\"menu btn\">  <app-layer></app-layer>  </div>\n    <div class=\"menu btn\">  <app-profilo></app-profilo>  </div>\n\n  </div>\n</div>\n"
+module.exports = "<div class=\".container-fluid barra-menu\">\r\n  <div class=\"row\">\r\n    <div class=\"logo\">\r\n      <img src=\"assets/images/logo.png\" alt=\"logo\">\r\n      <div class=\"logoText\">SWEDesigner</div>\r\n    </div>\r\n    <div class=\"menu btn\">  <app-file></app-file>  </div>\r\n    <div class=\"menu btn\">  <app-progetto></app-progetto>  </div>\r\n    <div class=\"menu btn\">  <app-modifica></app-modifica>  </div>\r\n    <div class=\"menu btn\">  <app-template></app-template>  </div>\r\n    <div class=\"menu btn\">  <app-layer></app-layer>  </div>\r\n    <div class=\"menu btn\">  <app-profilo></app-profilo>  </div>\r\n\r\n  </div>\r\n</div>\r\n"
 
 /***/ }),
-
-/***/ 303:
+/* 275 */,
+/* 276 */,
+/* 277 */,
+/* 278 */,
+/* 279 */,
+/* 280 */,
+/* 281 */,
+/* 282 */,
+/* 283 */,
+/* 284 */,
+/* 285 */,
+/* 286 */,
+/* 287 */,
+/* 288 */,
+/* 289 */,
+/* 290 */,
+/* 291 */,
+/* 292 */,
+/* 293 */,
+/* 294 */,
+/* 295 */,
+/* 296 */,
+/* 297 */,
+/* 298 */,
+/* 299 */,
+/* 300 */,
+/* 301 */,
+/* 302 */,
+/* 303 */
 /***/ (function(module, exports) {
 
 module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMwAAADMCAIAAACwQNulAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAVHSURBVHhe7dYxbhRWFIbR2VmykaRLxCocGm8AN6G1vAGX9KyA1mkgCpHTUKeavAhLEanvV1zpoDGI5urp4/BrLle/FIgLXM799+++PN4/+ygwXuDQOsD+RXZOv7n5+HD32UeBwQIH1aH1H7KHuz/++vNvHwUGCxxUkPlP1RaArO07uAd7T0EGWV4Asjzx3gWaejlkkOUFIMsTT+3B3juQQZYXgCxPvHeBpl4OGWR5AcjyxFN7sPcOZJDlBSDLE+9doKmXQwZZXgCyPPHUHuy9AxlkeQHI8sR7F2jq5ZBBlheALE88tQd770AGWV4Asjzx3gWaejlkkOUFIMsTT+3B3juQQZYXgCxPvHeBpl4OGWR5AcjyxFN7sPcOZJDlBSDLE+9doKmXQwZZXgCyPPHUHuy9AxlkeQHI8sR7F2jq5ZBBlheALE88tQd770AGWV4Asjzx3gWaejlkkOUFIMsTT+3B3juQQZYXgCxPvHeBpl4OGWR5AcjyxFN7sPcOZJDlBSDLE+9doKmXQwZZXgCyPPHUHuy9AxlkeQHI8sR7F2jq5ZBBlheALE88tQd770AGWV4Asjzx3gWaejlkkOUFIMsTT+3B3juQQZYXgCxPvHeBpl4OGWR5AcjyxFN7sPcOZJDlBSDLE+9doKmXQwZZXgCyPPHUHuy9AxlkeQHI8sR7F2jq5d8ge/3q6cfvPvgoMF7g0Lper5fz8/b295uffvv19pOPAoMFDqpD6wXZ4/3zWbapkXRHga8FfCfznSwvAFme2J5BBlleALI8sSWDDLK8AGR5YksGGWR5AcjyxJYMMsjyApDliS0ZZJDlBSDLE1syyCDLC0CWJ7ZkkEGWF4AsT2zJIIMsLwBZntiSQQZZXgCyPLElgwyyvABkeWJLBhlkeQHI8sSWDDLI8gKQ5YktGWSQ5QUgyxNbMsggywtAlie2ZJBBlheALE9sySCDLC8AWZ7YkkEGWV4AsjyxJYMMsrwAZHliSwYZZHkByPLElgwyyPICkOWJLRlkkOUFIMsTWzLIIMsLQJYntmSQQZYXgCxPbMkggywvAFme2JJBBlleALI8sSWDDLK8AGR5YksGGWR5AcjyxJYMMsjyApDliS0ZZJDlBSDLE1syyCDLC0CWJ7ZkkEGWF/gG2dvbT7/8/HR+91FgsMBXVNfr9XJ+Xr96+uH7Dz4KjBc4tF6QPd4/n2XzHUKB2QK+k+XfSGb/wTZegwyyvABkeeKN2zP7ZsggywtAlieeXYWN1yCDLC8AWZ544/bMvhkyyPICkOWJZ1dh4zXIIMsLQJYn3rg9s2+GDLK8AGR54tlV2HgNMsjyApDliTduz+ybIYMsLwBZnnh2FTZegwyyvABkeeKN2zP7ZsggywtAlieeXYWN1yCDLC8AWZ544/bMvhkyyPICkOWJZ1dh4zXIIMsLQJYn3rg9s2+GDLK8AGR54tlV2HgNMsjyApDliTduz+ybIYMsLwBZnnh2FTZegwyyvABkeeKN2zP7ZsggywtAlieeXYWN1yCDLC8AWZ544/bMvhkyyPICkOWJZ1dh4zXIIMsLQJYn3rg9s2+GDLK8AGR54tlV2HgNMsjyApDliTduz+ybIYMsLwBZnnh2FTZegwyyvABkeeKN2zP7ZsggywtAlieeXYWN1yCDLC8AWZ544/bMvhkyyPICkOWJZ1dh4zXIIMsLQJYn3rg9s2+GDLK8AGR54tlV2HgNMsjyApDliTduz+ybIYMsL/B/ZG9uPj7cffZRYLDAQfV4/3y9Xi/n5/27L+cvPgqMFzi0XpCdP/xSoCvwD4GW7y1tgiQVAAAAAElFTkSuQmCC"
 
 /***/ }),
-
-/***/ 309:
+/* 304 */,
+/* 305 */,
+/* 306 */,
+/* 307 */,
+/* 308 */,
+/* 309 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(97);
 
 
-/***/ }),
-
-/***/ 32:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__attributo__ = __webpack_require__(121);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Classe; });
-
-/**
- * Use to model a Java class it contains the name of the class, an array of attributes,
- * an array of methods, and the class exdended by this class.
- */
-var Classe = (function () {
-    /**
-     * The constructor builds a new object of type Classe and sets it's name
-     * @param nome the only parmeter used to build an object of type Classe
-     */
-    function Classe(nome) {
-        /**
-         * Array of attributes of the Java class
-         */
-        this.attributi = new Array();
-        /**
-         * Array of methods of the Java class
-         */
-        this.metodi = new Array();
-        /**
-         * The class extended by this class
-         */
-        this.classePadre = null;
-        this.nome = nome;
-    }
-    // Metodo per aggiungere un attributo all'array di attributi della classe
-    /**
-     * This method adds a new attribute into the array of attributes ´this.attributi´,
-     * but first it'll controll if there is not an attribute with the same name.
-     * @param tipo type of the new attribute, it's passed as parameter to the constructor of Attributo
-     * @param nome the name of the new attribute, it's passed as parameter to the constructor of Attributo
-     * @param acc the visibility of the new attribute, it's passed as parameter to the constructor of Attributo
-     * @throws an error of type Error anche custom message 'NomePresente'
-     */
-    Classe.prototype.addAttributo = function (tipo, nome, acc) {
-        this.attributi.forEach(function (attr) {
-            if (attr.getNome() == nome)
-                throw new Error('NomePresente');
-        });
-        var attr;
-        if (acc)
-            attr = new __WEBPACK_IMPORTED_MODULE_0__attributo__["a" /* Attributo */](tipo, nome, acc);
-        else
-            attr = new __WEBPACK_IMPORTED_MODULE_0__attributo__["a" /* Attributo */](tipo, nome, 'public');
-        this.attributi.push(attr);
-    };
-    /**
-     * Sets the name of the class which is extended by this class
-     * @param superclass the name of the superclass
-     */
-    Classe.prototype.addSuperclass = function (superclass) {
-        this.classePadre = superclass;
-    };
-    /**
-     * Adds a new method for this Java class
-     * @param metodo it takes a pre-built method and adds it into the array of methods
-     */
-    Classe.prototype.addMetodo = function (metodo) {
-        this.metodi.push(metodo);
-    };
-    // Metodo per cambiare il nome alla classe
-    /**
-     * Change the name of the class
-     * @param name the new name of the class
-     */
-    Classe.prototype.changeNome = function (name) {
-        this.nome = name;
-    };
-    /**
-     * Modify an attribute of this class if the attribute is present in the array of attributes.
-     * It changes only the parameter given
-     * @param nomeAttr the name of the attribute to modify
-     * @param tipo the new type for the selected attribute. This parameter is optional
-     * @param nuovoNome the new name for the selected attribute. This parameter is optional
-     * @param acc the new visibility for the selected attribute. This parameter is optional
-     */
-    Classe.prototype.changeAttr = function (nomeAttr, tipo, nuovoNome, acc) {
-        var attributo;
-        this.attributi.forEach(function (attr) {
-            if (attr.getNome() == nomeAttr)
-                attributo = attr;
-        });
-        if (attributo) {
-            if (tipo)
-                attributo.changeTipo(tipo);
-            if (nuovoNome)
-                attributo.changeNome(nuovoNome);
-            if (acc)
-                attributo.changeAcc(acc);
-        }
-    };
-    /**
-     * Removes an attribute from the array of attributes if the given name matches
-     * @param nomeAttr the name of the attribute to remove
-     */
-    Classe.prototype.removeAttr = function (nomeAttr) {
-        var ind;
-        this.attributi.forEach(function (attr, index) {
-            if (attr.getNome() == nomeAttr)
-                ind = index;
-        });
-        if (ind >= 0)
-            this.attributi.splice(ind, 1);
-        console.log(this);
-    };
-    /**
-     * Removes a method from the array of method if the given name matches
-     * @param nomeMetodo the name of the method to remove
-     */
-    Classe.prototype.removeMetodo = function (nomeMetodo) {
-        var ind;
-        this.metodi.forEach(function (metodo, index) {
-            if (metodo.getNome() == nomeMetodo)
-                ind = index;
-        });
-        if (ind >= 0)
-            this.metodi.splice(ind, 1);
-    };
-    /**
-     * Returns the name of this class
-     */
-    Classe.prototype.getNome = function () {
-        return this.nome;
-    };
-    /**
-     * Returns the array of attributes
-     */
-    Classe.prototype.getAttributi = function () {
-        return this.attributi;
-    };
-    /**
-     * Returns the array of methods
-     */
-    Classe.prototype.getMetodi = function () {
-        return this.metodi;
-    };
-    /**
-     * Returns a method from the array of method if the given name matches
-     * @param name the name of the method to retrive
-     * @throws an error of type Error with message 'Metodo non presente' if
-     * the given name does not match
-     */
-    Classe.prototype.retriveMethod = function (name) {
-        var met;
-        this.metodi.forEach(function (metodo) {
-            if (metodo.getNome() == name)
-                met = metodo;
-            else
-                throw new Error('Metodo non presente');
-        });
-        return met;
-    };
-    /**
-     * Returns the name of the superclass
-     */
-    Classe.prototype.getSottoclasse = function () {
-        return this.classePadre;
-    };
-    /**
-     * Override of the toJSON function
-     */
-    Classe.prototype.toJSON = function () {
-        var classe = '{\"name\":\"' + this.nome + '\",\"attributes\":' +
-            JSON.stringify(this.attributi) + ',\"methods\":' +
-            JSON.stringify(this.metodi) + ',\"superclass\":"' +
-            this.classePadre + '\"}';
-        return JSON.parse(classe);
-    };
-    return Classe;
-}());
-
-//# sourceMappingURL=classe.js.map
-
-/***/ }),
-
-/***/ 33:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(41);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Subject__ = __webpack_require__(29);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Subject___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_Subject__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(278);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_catch__ = __webpack_require__(277);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_catch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_catch__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_file_saver__ = __webpack_require__(242);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_file_saver___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_file_saver__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MenuService; });
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-
-
-var MenuService = (function () {
-    function MenuService(http) {
-        this.http = http;
-        this.selectedGraphService = new __WEBPACK_IMPORTED_MODULE_2_rxjs_Subject__["Subject"]();
-        this.selectedGrapg$ = this.selectedGraphService.asObservable();
-    }
-    /**
-    *This method increase the size of the shapes in the editor.
-    */
-    MenuService.prototype.zoomIn = function () {
-        this.selectedGraphService.next('+');
-    };
-    /**
-    *This method decrease the size of the shapes in the editor.
-    */
-    MenuService.prototype.zoomOut = function () {
-        this.selectedGraphService.next('-');
-    };
-    MenuService.prototype.encrypt = function (proj) {
-        // let headers = new Headers({ 'Content-Type': 'application/json' });
-        // let options = new RequestOptions({ headers: headers });
-        this.http.post('/encrypt', proj, {
-            method: __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* RequestMethod */].Post,
-            responseType: __WEBPACK_IMPORTED_MODULE_1__angular_http__["c" /* ResponseContentType */].Blob,
-            headers: new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* Headers */]({ 'Content-Type': 'application/json; charset=UTF-8' })
-        })
-            .subscribe(function (data) {
-            console.log(data);
-            var blob = new Blob([data.blob()], { type: 'application/json' });
-            var filename = 'proj.json';
-            __WEBPACK_IMPORTED_MODULE_5_file_saver__["saveAs"](blob, filename);
-            console.log('diobueo');
-        }, function (error) { console.log(JSON.stringify(error)); });
-    };
-    MenuService.prototype.readFile = function (file, onloadCallBack) {
-        var reader = new FileReader();
-        reader.readAsText(file, "UTF-8");
-        reader.onload = onloadCallBack;
-    };
-    MenuService.prototype.import = function (event) {
-        var _this = this;
-        var file = event.srcElement.files[0];
-        if (file) {
-            this.readFile(file, function (e) {
-                var contents = e.target;
-                var readed = JSON.parse(contents.result);
-                console.log(readed);
-                _this.http.post('/decrypt', readed, {
-                    method: __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* RequestMethod */].Post,
-                    responseType: __WEBPACK_IMPORTED_MODULE_1__angular_http__["c" /* ResponseContentType */].Json,
-                    headers: new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* Headers */]({ 'Content-Type': 'application/json' })
-                })
-                    .subscribe(function (data) {
-                    console.log(data);
-                }, function (error) { console.log(error); });
-            });
-        }
-    };
-    return MenuService;
-}());
-MenuService = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["c" /* Injectable */])(),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["e" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["e" /* Http */]) === "function" && _a || Object])
-], MenuService);
-
-var _a;
-/*
-var file = event.target.files[0];
-var reader = new FileReader();
-reader.onload = file =>{
-  var contents: any = file.target;
-  this.contentProj = contents.result;
-};
-console.log("madonnamaiala" + this.contentProj);
-this.http.post('/decrypt', this.contentProj, {
-  method: RequestMethod.Post,
-  headers: new Headers({'Content-Type': 'application/json'})})
-  .subscribe((data)=>{
-    console.log(data);
-  },
-error => {console.log(error)})
-}*/
-/*
-if(file){
-  var reader = new FileReader();
-  reader.readAsText(file, "UTF-8");
-  reader.onload = function(e){
-    var contents: any = e.target;
-    readed = JSON.parse(contents.result);
-  }
-  reader.onerror = function(e){
-    console.log("non leggo dio cane");
-  }
-}*/ 
-//# sourceMappingURL=menu.service.js.map
-
-/***/ }),
-
-/***/ 65:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Param; });
-/**
- * it rappresents the a method's parameter
- */
-var Param = (function () {
-    /**
-     * Use to model a method class it contains the parameter definition.
-     * @param tipo
-     * @param nome
-     */
-    function Param(tipo, nome) {
-        this.type = tipo;
-        this.name = nome;
-    }
-    /**
-     * it returns the parameter's type
-     */
-    Param.prototype.getTipo = function () {
-        return this.type;
-    };
-    /**
-     * it returns the parameter's name
-     */
-    Param.prototype.getNome = function () {
-        return this.name;
-    };
-    /**
-     * it change the parameter's type
-     * @param tipo
-     */
-    Param.prototype.changeTipo = function (tipo) {
-        this.type = tipo;
-    };
-    /**
-     * it change the parameter's name
-     * @param nome
-     */
-    Param.prototype.changeNome = function (nome) {
-        this.name = nome;
-    };
-    return Param;
-}());
-
-//# sourceMappingURL=param.js.map
-
-/***/ }),
-
-/***/ 66:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Subject__ = __webpack_require__(29);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Subject___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_rxjs_Subject__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ClassMenuService; });
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-var ClassMenuService = (function () {
-    function ClassMenuService() {
-        // Observable object-class source
-        this.selectedClassSource = new __WEBPACK_IMPORTED_MODULE_1_rxjs_Subject__["Subject"]();
-        // Observable object-class stream
-        this.selectedClass$ = this.selectedClassSource.asObservable();
-    }
-    // Service message commands
-    ClassMenuService.prototype.classSelection = function (classe) {
-        this.selectedClassSource.next(classe);
-    };
-    return ClassMenuService;
-}());
-ClassMenuService = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["c" /* Injectable */])(),
-    __metadata("design:paramtypes", [])
-], ClassMenuService);
-
-//# sourceMappingURL=class-menu.service.js.map
-
-/***/ }),
-
-/***/ 96:
-/***/ (function(module, exports) {
-
-function webpackEmptyContext(req) {
-	throw new Error("Cannot find module '" + req + "'.");
-}
-webpackEmptyContext.keys = function() { return []; };
-webpackEmptyContext.resolve = webpackEmptyContext;
-module.exports = webpackEmptyContext;
-webpackEmptyContext.id = 96;
-
-
-/***/ }),
-
-/***/ 97:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dynamic__ = __webpack_require__(113);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_module__ = __webpack_require__(115);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__environments_environment__ = __webpack_require__(132);
-
-
-
-
-if (__WEBPACK_IMPORTED_MODULE_3__environments_environment__["a" /* environment */].production) {
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["a" /* enableProdMode */])();
-}
-__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_2__app_app_module__["a" /* AppModule */]);
-//# sourceMappingURL=main.js.map
-
 /***/ })
-
-},[309]);
+],[309]);
 //# sourceMappingURL=main.bundle.js.map
