@@ -20,13 +20,16 @@
       </button>
     </div>
     <div id="addAttr" class="campiAttributo collapse">
+      <div class="aggiungiAttributo staticAttr">
+        <label>Static <input type="checkbox" name="static" classe="checkbox-circle" value="Stiatic"></label>
+      </div>
       <div class="aggiungiAttributo accessoAttr">
         <label>Seleziona Visibilità</label>
         <select  [(ngModel)]="selectedAccAtt">
           <option *ngFor="let acc of accessoAttr" [value]="acc">{{ acc }}</option>
         </select>
       </div>
-      <div class="aggiungiAttributo .selezionaTipo">
+      <div class="aggiungiAttributo selezionaTipo">
         <label>Seleziona tipo</label>
         <select #tipi [(ngModel)]="selectedTipoAtt">
           <option value=""></option>
@@ -60,29 +63,32 @@
               <span class="glyphicon glyphicon-pencil" aria-hidden="true" title="Modifica"></span>
             </button>
           </span>
-          <!--prova-->
+          <!-- menù a comparsa (collapse) per modificare un attributo-->
           <div class="campiAttributo collapse" attr.id="{{attr.name}}">
-            <div class="aggiungiAttributo accessoAttr">
+            <div class="aggiungiAttributo staticAttr">
+              <label>Static <input type="checkbox" name="static" classe="checkbox-circle" value="Stiatic"></label>
+              <label>Costruttore <input type="checkbox" name="static" classe="checkbox-circle" value="Constructor"></label>
+            </div>
+            <div class="modificaAttributo accessoAttr">
               <label>Seleziona Visibilità</label>
               <select  [(ngModel)]="selectedAccAtt">
                 <option *ngFor="let acc of accessoAttr" [value]="acc">{{ acc }}</option>
               </select>
             </div>
-            <div class="aggiungiAttributo .selezionaTipo">
+            <div class="modificaAttributo .selezionaTipo">
               <label>Seleziona tipo</label>
               <select #tipi [(ngModel)]="selectedTipoAtt">
                 <option value=""></option>
                 <option *ngFor="let type of types" [value]="type">{{type}}</option>
               </select>
             </div>
-            <div class="aggiungiAttributo nomeAttr">
+            <div class="modificaAttributo nomeAttr">
               <label>Nome</label>
               <input [disabled]="!selectedTipoAtt" id="nome-attributo" #nomeAtt
-              (keyup.enter)="addAttributo(nomeAtt.value)">
+              (keyup.enter)="changeAttributo(nomeAtt.value)">
             </div>
-            <button class="btn btn-default" [disabled]="!selectedTipoAtt" (click)="addAttributo(nomeAtt.value)">Modifica Attributo</button>
+            <button class="btn btn-default" [disabled]="!selectedTipoAtt" (click)="changeAttributo(nomeAtt.value)">Modifica Attributo</button>
             </div>
-          <!--prova-->
         </li>
       </ul>
     </div>
