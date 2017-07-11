@@ -46,9 +46,11 @@
     </div>
 
   </div>
-  <button href="#listaAttr" #lista class="btn btn-default listaAttr" data-toggle="collapse" (click)="closeCollapsedList(lista)">
-    <span class="glyphicon glyphicon-triangle-left" aria-hidden="true"></span>Lista Attributi
-  </button>
+  <div class="row">
+    <button href="#listaAttr" #lista class="btn btn-default listaAttr" data-toggle="collapse" (click)="closeCollapsedList(lista)">
+      <span class="glyphicon glyphicon-triangle-left" aria-hidden="true"></span>Lista Attributi
+    </button>
+  </div>
   <!-- lista attributi della classe -->
   <div *ngIf="this.mainEditorService.selectedClasse" class="container listaAttributi">
     <div id="listaAttr" class="row collapse" *ngIf="name">
@@ -166,9 +168,11 @@
       <button class="btn btn-default" [disabled]="isAddableMethod()" (click)="addMetodo(nomeMetodo.value, staticMet.checked, constructor.checked, tipiMetodo.value, accMetodo.value)">Aggiungi Metodo</button>
     </div>   
   </div>
-  <button href="#listaMet" #listac class="btn btn-default" data-toggle="collapse" (click)='closeCollapsedList(listac)'>
-    <span class="glyphicon glyphicon-triangle-left" aria-hidden="true"></span>Lista Metodi
-  </button>
+  <div class="row">
+    <button href="#listaMet" #listac class="btn btn-default" data-toggle="collapse" (click)='closeCollapsedList(listac)'>
+      <span class="glyphicon glyphicon-triangle-left" aria-hidden="true"></span>Lista Metodi
+    </button>
+  </div>
   <!-- lista metodi della classe -->
   <div *ngIf="this.mainEditorService.selectedClasse" class="container listaAttributi">
     <div id="listaMet" class="row collapse" *ngIf="name">
