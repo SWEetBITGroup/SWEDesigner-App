@@ -105,7 +105,7 @@ export class EditorComponent implements OnInit {
     this.paper.on('cell:pointerdown', (cellView) => {
       if(!this.connettore) {
         let type = cellView.model.attributes.type;
-        if((type != 'uml.Generalization') && (type != 'uml.Implementation')){
+        if((type != 'uml.Generalization') && (type != 'uml.Implementation') && (type != 'uml.Association')){
           this.elementSelection(cellView);
         }
       }
