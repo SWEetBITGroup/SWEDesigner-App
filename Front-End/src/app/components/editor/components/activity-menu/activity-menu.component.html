@@ -10,7 +10,7 @@
       <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
     </button>
   </div>
-  <div [hidden]="!this.activityService.getSelectedElement()">
+  <div [hidden]="!this.activityService.isOperation()">
     <div class="container-fluid menu">
       <div class="row changeNome">
         <label>Corpo operazione</label>
@@ -24,6 +24,31 @@
         <button class="btn btn-default" (click)="enterClassMode()">
           <span class="glyphicon glyphicon-arrow-left freccia"></span>
           Diagramma delle Classi</button>
+      </div>
+    </div>
+  </div>
+  <div [hidden]="!this.activityService.isDecision()">
+    <div class="container-fluid menu">
+      <div class="row changeNome">
+        <label>Tipo decisione</label>
+        <select [(ngModel)]="dec">
+          <option *ngFor="let dec of decisions" [value]="dec">{{ dec }}</option>
+        </select>
+      </div>
+      <div [hidden]="dec != 'for'" class="row changeNome">
+        <label>Nome indice</label>
+        <input [(ngModel)]="nomeInd"  /><br />
+        <label>Valore iniziale indice</label>
+        <input [(ngModel)]="valInd" /><br />
+        <label>Guardia indice</label>
+        <input [(ngModel)]="maxInd"/><br />
+        <label>Operatore guardia</label>
+        <select>
+          <option *ngFor="let op of operators" [value]="op">{{ op }}</option>
+        </select><br />
+        <button class="btn btn-default" (click)="generaDecisione()">
+          Genera decisione
+        </button>
       </div>
     </div>
   </div>

@@ -8,7 +8,7 @@ export class operation extends Shape{
   } 
 
   getType() {
-    return 'opearation';
+    return 'operation';
   }
 
   toCode(sh: allShape){

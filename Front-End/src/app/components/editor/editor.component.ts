@@ -131,6 +131,7 @@ export class EditorComponent implements OnInit {
         this.ClassMenuComponent.closeCollapsedAllList();
       }
       this.selectedCell = null;
+      this.activityService.deselectElement();
     });
 
     this.mainEditorService.storeGraph(this.graph.toJSON()); // ELIMINARE

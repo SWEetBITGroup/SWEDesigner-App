@@ -87,9 +87,10 @@ export class MenuService {
   }
 
   code() {
-    let code = 'import javafx.application.Application; import javafx.event.ActionEvent; import javafx.event.EventHandler; import javafx.scene.Scene; import javafx.scene.control.Button; import javafx.scene.layout.StackPane; import javafx.stage.Stage; Class Persona{ private string nome ; private string cognome ; private int eta ;	public static void main(String Args[]){ for ( int i = 0 ; i &lt; 10 ; i++ ) { System.out.println( i ) ;	} }'
-    let blob = new Blob([code], {type: 'text/plain; charset=UTF-8'});
-    var filename = 'hello.txt';
+    let var1 = this.mainEditorService.varCode;
+    let code = 'import javafx.application.Application; import javafx.event.ActionEvent; import javafx.event.EventHandler; import javafx.scene.Scene ; import javafx.scene.control.Button ; import javafx.scene.layout.StackPane ; import javafx.stage.Stage ; class Hello{ private String nome ; private String cognome ; private int eta ; public static void main(String Args[]) { for ( int '+var1[0]+' = '+var1[1]+' ; '+var1[0]+' < '+var1[2]+' ; '+var1[0]+'++ ) { System.out.println( i ) ; } } }'
+    let blob = new Blob([code], {type: 'text/plain'});
+    var filename = 'hello.java';
     FileSaver.saveAs(blob,filename);
     let proj = this.toCode('10');
     this.http.post('/parsing',proj,{

@@ -38,6 +38,8 @@ export class MainEditorService {
 
   private mainExist = false;
 
+  varCode: string[];
+
   constructor() {
   }
 
@@ -243,6 +245,10 @@ export class MainEditorService {
 
   setConnetionActivity(ids: string[]) {
     console.log(ids);
+  }
+
+  setCode(vars: string[]) {
+    this.varCode = vars;
   }
 
 }

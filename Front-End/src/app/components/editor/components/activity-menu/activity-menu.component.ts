@@ -10,6 +10,15 @@ import { ActivityService } from '../../services/activity.service';
 })
 export class ActivityMenuComponent{
 
+  decisions = ['for', 'while','if'];
+  dec: string;
+
+  operators = ['<','<=','>','>=','==','!=']
+
+  nomeInd: string = '';
+  valInd: string = '';
+  maxInd: string = '';
+
   constructor(private mainEditorService : MainEditorService,
               private activityService: ActivityService) { }
 
@@ -27,6 +36,11 @@ export class ActivityMenuComponent{
 
   changeName(name: string) {
     this.activityService.changeName(name);
+  }
+
+  generaDecisione() {
+    this.activityService.setDecisione(this.dec);
+    this.mainEditorService.setCode([this.nomeInd,this.valInd,this.maxInd]);
   }
 
 }

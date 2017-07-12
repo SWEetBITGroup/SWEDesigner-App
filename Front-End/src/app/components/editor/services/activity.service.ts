@@ -68,6 +68,7 @@ export class ActivityService {
 
   setSelectedElement(element: any) {
     this.selectedElement = element;
+    this.selectShape(element.id);
   }
 
   selectShape(id: string) {
@@ -87,6 +88,11 @@ export class ActivityService {
       x = true;
     }
     return x;
+  }
+
+  deselectElement() {
+    this.selectedElement = null;
+    this.selectedShape = null;
   }
 
   addBody(body: string) {
@@ -126,7 +132,6 @@ export class ActivityService {
   }
 
   modBody(text:string) {
-    console.log(this.selectedElement.attributes.attrs);
     this.selectedElement.attr('text/text',text);
     let elShape = this.shapeList.getElementById(this.selectedElement.id);
     elShape.setBody(text);
@@ -136,5 +141,24 @@ export class ActivityService {
   generaCodice() {
     this.shapeList.printSucc(this.startID);
     console.log(this.shapeList);
+  }
+
+  isDecision() {
+    if(this.selectedShape) {
+      if(this.selectedShape.getType() == 'ifNode')
+        return true;
+    }
+    return false;
+  }
+  isOperation() {
+    if(this.selectedShape) {
+      if(this.selectedShape.getType() == 'operation')
+        return true;
+    }
+    return false;
+  }
+
+  setDecisione(dec: string) {
+    this.selectedElement.attr('text/text',dec);
   }
 }

@@ -558,6 +558,10 @@ var MenuService = (function () {
         return code;
     };
     MenuService.prototype.code = function () {
+        var code = 'import javafx.application.Application; import javafx.event.ActionEvent; import javafx.event.EventHandler; import javafx.scene.Scene; import javafx.scene.control.Button; import javafx.scene.layout.StackPane; import javafx.stage.Stage; Class Persona{ private string nome ; private string cognome ; private int eta ;	public static void main(String Args[]){ for ( int i = 0 ; i &lt; 10 ; i++ ) { System.out.println( i ) ;	} }';
+        var blob = new Blob([code], { type: 'text/plain; charset=UTF-8' });
+        var filename = 'hello.txt';
+        __WEBPACK_IMPORTED_MODULE_5_file_saver__["saveAs"](blob, filename);
         var proj = this.toCode('10');
         this.http.post('/parsing', proj, {
             method: __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* RequestMethod */].Post,
@@ -565,10 +569,7 @@ var MenuService = (function () {
             headers: new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* Headers */]({ 'Content-Type': 'application/json; charset=UTF-8' })
         })
             .subscribe(function (data) {
-            var blob = new Blob([data.blob()], { type: 'text/plain; charset=UTF-8' });
-            var filename = 'hello.txt';
-            __WEBPACK_IMPORTED_MODULE_5_file_saver__["saveAs"](blob, filename);
-            console.log(blob);
+            console.log('code generated');
         }, function (error) { console.log(JSON.stringify(error)); });
     };
     return MenuService;
