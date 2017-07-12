@@ -3,6 +3,10 @@ import {allShape} from './all-shape';
 
 export class ifNode extends Shape{
 
+constructor(id : number){
+    super(id);
+}
+
 toCode(sh: allShape){
   if(!(this.getPrinted())){
     this.setPrinted(true);

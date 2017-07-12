@@ -18,7 +18,7 @@ export class MainEditorService {
    */
   private project = new Global();
   /**
-   * 'selectedClass' stores the corresponding class of tipe ´Classe´ of the 
+   * 'selectedClass' stores the corresponding class of tipe ´Classe´ of the
    * selected class in the editor's canvas
    */
   private selectedClasse: Classe;
@@ -66,9 +66,9 @@ export class MainEditorService {
 
   /**
    * Add an object of type Classe into the project's collection
-   * @param classe this object is a representation, of type ´Classe´ or ´ClasseAstratta´, 
+   * @param classe this object is a representation, of type ´Classe´ or ´ClasseAstratta´,
    * of the parameter graphelement.
-   * @param graphElement this is an element of the graphical library JointJS 
+   * @param graphElement this is an element of the graphical library JointJS
    */
   addClass(classe: Classe, graphElement: any) {
     this.project.getClassi().push(classe);
@@ -76,7 +76,7 @@ export class MainEditorService {
   }
 
   /**
-   * Search for a class, in the project's collection of classes, 
+   * Search for a class, in the project's collection of classes,
    * which have the same name as the one given as parameter.
    * @param nome name of the class to search
    */
@@ -86,7 +86,7 @@ export class MainEditorService {
         this.selectedClasse = classe;
       }
     });
-    
+
     if(!this.selectedClasse)
       console.log('Classe mancante'); // TODO: spend a moment to code it as a real warning
   }
@@ -105,7 +105,7 @@ export class MainEditorService {
   }
   /**
    * Returns the current value of the flag activityMode
-   * @returns if the status is true the activity mode is activated, 
+   * @returns if the status is true the activity mode is activated,
    * if it's false the class mode is active.
    */
   getActivityModeStatus() {
@@ -114,7 +114,7 @@ export class MainEditorService {
 
   /**
    * Calls the addAttribute method of the ´selectedClasse´
-   * @param tipo is the type of the attribute to add as parameter to addAttributo 
+   * @param tipo is the type of the attribute to add as parameter to addAttributo
    * @param nome is the name of the attribute to add as parameter to addAttributo
    * @param acc is the visibility of the attribute to add as parameter to addAttributo
    */
@@ -143,8 +143,8 @@ export class MainEditorService {
   }
 
   /**
-   * Is used to restore the class diagram from the store graph, it calls 
-   * the replaceDiagram method of the EditorComponent and then sets 
+   * Is used to restore the class diagram from the store graph, it calls
+   * the replaceDiagram method of the EditorComponent and then sets
    * ´this.activityMode´ to false
    */
   enterClassMode(){
@@ -153,12 +153,12 @@ export class MainEditorService {
   }
 
   /**
-   * Calls the methods addMetodo of ´this.selectedClasse´ to add a new method into 
+   * Calls the methods addMetodo of ´this.selectedClasse´ to add a new method into
    * the selectedClasse
    * @param tipo type returned by the method, ´tipo´ is passed as parameter to ´selectedClasse.addMetodo´
    * @param nome is the name of the method, ´nome´ is passed as parameter to ´selectedClasse.addMetodo´
    * @param acc the visibility of the method, ´acc´ is passed as parameter to ´selectedClasse.addMetodo´
-   * @param listArgs this parameter is optional, 'listArgs' is the list of parameters which defines the 
+   * @param listArgs this parameter is optional, 'listArgs' is the list of parameters which defines the
    * signature of the function
    */
   addMetodo(staticMet: boolean, costr: boolean, tipo: string, nome:string, acc: string, listArgs?: any) {

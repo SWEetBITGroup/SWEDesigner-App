@@ -4,6 +4,10 @@ import {Shape}  from "./shape";
 export class allShape{
   private allShap = new Array<any>();
 
+  public getAllShape(){
+    return this.allShap;
+  }
+
   addShape(shap: Shape){
     this.allShap.push(shap);
   }

@@ -4,6 +4,8 @@ import { MainEditorService } from '../../../../services/main-editor.service';
 import { Classe } from '../../models/classe'
 import { ClasseAstratta } from '../../models/classe-astratta'
 import { Interface } from '../../models/interface'
+import { ActivityService } from '../../services/activity.service';
+import { ifNode } from '../../models/if-node';
 import * as joint from 'jointjs';
 
 @Component({
@@ -23,7 +25,7 @@ export class ToolbarComponent implements OnInit {
   private classCouter: number = 0;
   private interCounter: number = 0;
   private abstCounter: number = 0;
-  constructor(private mainEditorService: MainEditorService) { }
+  constructor(private mainEditorService: MainEditorService, private activityService: ActivityService) { }
 
   ngOnInit() {
   }
@@ -317,6 +319,7 @@ export class ToolbarComponent implements OnInit {
             }
         }
     });
+    this.activityService.addIfNode(new ifNode(1),rombo);
   }
 
   addEndDecision() {

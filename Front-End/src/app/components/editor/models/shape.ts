@@ -16,13 +16,15 @@ export class Shape{
 
   private ifPassed = new Array<number>();
 
-  constructor(id : number, body: string, succ?: number, succElse?: number){
+  constructor(id : number){
     this.id = id;
-    this.body = body;
+    /*
+    if(body)
+      this.body = body;
     if(succ)
       this.succ = succ;
     if(succElse)
-      this.succElse = succElse;
+      this.succElse = succElse;*/
   }
 
   setId(id : number){
