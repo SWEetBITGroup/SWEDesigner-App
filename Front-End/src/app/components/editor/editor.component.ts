@@ -1,9 +1,9 @@
-import { Component, OnInit , AfterViewInit, Input } from '@angular/core';
+import { Component, OnInit , AfterViewInit, Input, ViewChild } from '@angular/core';
 
 import { ClassMenuService } from './services/class-menu.service';
 import { MenuService } from '../../services/menu.service';
 import { MainEditorService } from '../../services/main-editor.service';
-
+import { ClassMenuComponent } from './components/class-menu/class-menu.component';
 import { Subscription } from 'rxjs/Subscription';
 
 import { Classe } from './models/classe';
@@ -58,7 +58,10 @@ export class EditorComponent implements OnInit {
    * it point to the selected element by the click on it, that will be connect by a link shape
    */
   elementToConnect: any;
-
+  /**
+   * 
+   */
+  @ViewChild(ClassMenuComponent) ClassMenuComponent:ClassMenuComponent;
   /**
    * this constructor bind this class with the services use for callback function and draw the grid in the canvas 
    * @param classMenuService
@@ -111,6 +114,7 @@ export class EditorComponent implements OnInit {
     this.paper.on('blank:pointerdown', () => {
       if(this.selectedCell){
         this.selectedCell.unhighlight();
+        this.ClassMenuComponent.closeCollapsedAllList();
       }
       this.selectedCell = null;
     });

@@ -320,4 +320,13 @@ export class ClassMenuComponent implements OnDestroy{
     if ($('#listaMet').attr("aria-expanded"))
        $('#listaMet').removeClass("in");
   }
+  /**
+   * This funcion closes all the collapsed div
+   */
+  closeCollapsedAllList () {
+    if ($('#listaAttr').attr("aria-expanded"))
+          $('#listaAttr').removeClass("in");
+    if ($('#listaMet').attr("aria-expanded"))
+       $('#listaMet').removeClass("in");      
+  }
 }
