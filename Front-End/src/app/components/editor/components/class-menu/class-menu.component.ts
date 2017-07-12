@@ -327,6 +327,12 @@ export class ClassMenuComponent implements OnDestroy{
     if ($('#listaAttr').attr("aria-expanded"))
           $('#listaAttr').removeClass("in");
     if ($('#listaMet').attr("aria-expanded"))
-       $('#listaMet').removeClass("in");      
+       $('#listaMet').removeClass("in");
+    if ($('#addAttr').attr("aria-expanded"))
+       $('#addAttr').removeClass("in");     
+    if ($('.listaModAttr').attr("aria-expanded"))
+       $('.listaModAttr').removeClass("in"); 
+    if ($('#addMetodo').attr("aria-expanded"))
+       $('#addMetodo').removeClass("in");           
   }
 }
