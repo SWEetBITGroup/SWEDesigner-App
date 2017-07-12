@@ -115,3 +115,8 @@
 .activity {
   /*display: none;*/
 }
+
+.freccia:focus {
+  border: 2px red solid;
+  opacity: 0.5;
+}

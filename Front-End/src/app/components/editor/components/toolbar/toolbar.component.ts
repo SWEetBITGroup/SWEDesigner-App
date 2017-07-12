@@ -172,7 +172,7 @@ export class ToolbarComponent implements OnInit {
    * Method selects implementation as connector
    */
   addImplementazione() {
-      this.addConnettore(new joint.shapes.uml.Implementation);
+      this.addConnettore(new joint.shapes.uml.Implementation)
   }
 
   /**
