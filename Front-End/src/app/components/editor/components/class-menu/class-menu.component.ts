@@ -128,6 +128,7 @@ export class ClassMenuComponent implements OnDestroy{
       this.classe.set('attributes',attributi);
       this.selectedAccAtt = 'public';
       this.selectedTipoAtt = null;
+      $('#nome-attributo').val("");
       } else {
         alert('Alcuni capi del form per la creazione del nuovo attributo non sono stati compilati');
     }
@@ -191,8 +192,12 @@ export class ClassMenuComponent implements OnDestroy{
       if(param.getNome() == name)
         sameName = true;
     });
-    if(!sameName)
+    if(!sameName) 
+    {
       this.parametriMetodo.push(new Param(type,name));
+      $('#tipiParam').val("");
+      $('#nomeParam').val("");
+    }
     else  
       alert("Non è possibile inserire due o più parametri con lo stesso nome");
   }
@@ -244,6 +249,11 @@ export class ClassMenuComponent implements OnDestroy{
       this.classe.set('methods',metodi);
       this.selectedAccMet = 'public';
       this.selectedTipoMet = 'void';
+      $('#nome-metodo').val("");
+      this.staticMetCheckbox.nativeElement.checked = false;
+      this.constructorCheckbox.nativeElement.checked = false;
+      $('#tipiParam').val("");
+      $('#nomeParam').val("");
       this.parametriMetodo = new Array<Param>(); // Cleans the array of params
       } else {
         alert('Alcuni capi del form per la creazione del nuovo metodo non sono stati compilati');

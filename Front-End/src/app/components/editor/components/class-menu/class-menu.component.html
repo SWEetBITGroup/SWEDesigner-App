@@ -104,7 +104,7 @@
       <!-- blocco per aggiunta parametri metodo -->
       <div class="aggiungiMetodo .selezionaTipo">
         <div class="aggiungiAttributo staticAttr">
-          <label>Static <input #staticMet type="checkbox" id="static" name="static" classe="checkbox-circle" value="Stiatic" (change)='updateCheckbox(staticMet.id)'></label>
+          <label>Static <input #staticMet type="checkbox" id="static" name="static" classe="checkbox-circle" value="Static" (change)='updateCheckbox(staticMet.id)'></label>
           <label> Costruttore <input #constructor [(ngModel)]="costruttore" type="checkbox" id="constructor" name="constructor" classe="checkbox-circle" value="Constructor" (change)='updateCheckbox(constructor.id)'></label>
         </div>
         <div class="aggiungiMeotdo accessoMetodo">
@@ -125,7 +125,7 @@
         <label>Nome</label>
         <input id="nome-metodo" #nomeMetodo [(ngModel)]="nomeMet">
       </div>
-      <div class="container-fluid">
+      <div class="container-fluid" [hidden]="isAddableMethod()">
         <div class="row clearfix">
           <div class="col-md-12 column" id="tabellaParametri">
             Parametri attuali
@@ -144,13 +144,13 @@
                 </tr>
                 <tr #parametro>
                   <td>
-                    <select #tipiParam class="tipiMetodo">
+                    <select #tipiParam id="tipiParam" class="tipiMetodo">
                       <option value=""></option>
                       <option *ngFor="let type of types" [value]="type">{{type}}</option>
                     </select>
                   </td>
                   <td>
-                    <input #nomeParam type="text" placeholder="Nome" class="form-control"/>
+                    <input #nomeParam id="nomeParam" type="text" placeholder="Nome" class="form-control"/>
                   </td>
                   <td>
                     <button class="btn btn-default" title="Aggiungi Parmetro" (click)="addParam(tipiParam.value, nomeParam.value)">
