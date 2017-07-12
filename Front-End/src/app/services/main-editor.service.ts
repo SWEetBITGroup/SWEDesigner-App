@@ -232,4 +232,8 @@ export class MainEditorService {
     this.editorComp.deleteElement(classe);
   }
 
+  addShape(cell) {
+    this.editorComp.addElement(cell);
+  }
+
 }

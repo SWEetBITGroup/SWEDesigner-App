@@ -236,6 +236,7 @@ export class ToolbarComponent implements OnInit {
             text: {text: 'megaciao', fill: '#ffffff'}
         }
     });
+    this.mainEditorService.addShape(prova);
   }
 
   addActivityForShape() {
