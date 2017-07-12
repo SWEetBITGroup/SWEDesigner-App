@@ -35,8 +35,6 @@
   //global var
   var keyCrypt;
   var ivCrypt;
-  var encrLenghtFile;
-  var encrRead;
   var errRead = "error loading request parameters";
 
   //globalFun
@@ -47,7 +45,7 @@
 
   //baro demo
   var myMU = {
-      "name": "persona",
+      "name": "Persona",
       "private" : true,
       "attrP": [
           {"typeP": "string", "varP": "nome"},
@@ -56,7 +54,7 @@
            ],
       "public" : true,
       "methodsPU": [
-        {"main": "true", "corpoM": "System.out.println(\'Hello World\')"}
+        {"main": "true", "corpoM": null}
       ]
     
   }
@@ -155,10 +153,13 @@ app.listen(port, ()=>{
    */
   app.post("/parsing", function(req,res) { 
     //var myMu = req.body;
+    var metodo = req.body.m;
+    //console.log(metodo);
+    myMU.methodsPU[0].corpoM = metodo;
     console.log(myMU);
     var template = mu.getTemplate();
     mu.parse(template, myMU, function(parsed){
-      res.send(parsed);
+      res.json(parsed);
     });
   })
 
