@@ -1,0 +1,10 @@
+.menu {
+  background-color: #E0E0E0;
+   /*#EAEAF1;*/
+  border-left: 1px solid black;
+  border-bottom: 1px solid black;
+  font-weight: bold;
+  font-size: 14px;
+  text-align: center;
+  border-top: none;
+}

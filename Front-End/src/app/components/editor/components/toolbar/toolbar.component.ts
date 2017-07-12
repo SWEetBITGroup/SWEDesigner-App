@@ -283,14 +283,14 @@ export class ToolbarComponent implements OnInit {
     ].join('');
 
     let start = new joint.shapes.basic.Image({
-    size: {
-        width: 100,
-        height: 100
-    },
     position: {
         x: 100,
         y: 100
     },
+    size: {
+        width: 100,
+        height: 100
+    },  
     attrs: {
         image: {
         width: 1024,
