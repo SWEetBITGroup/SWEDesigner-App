@@ -47,7 +47,7 @@ export class MenuService {
                FileSaver.saveAs(blob,filename);
               },
               error => {console.log(JSON.stringify(error));});
-            }
+  }
             
   readFile(file, onloadCallBack){
     var reader = new FileReader();
@@ -78,7 +78,32 @@ export class MenuService {
   getImportData() {
     return this.importData;
   }
+
+  toCode(var1: string){
+    let code = {
+      m: 'for ( int i = 0 ; i < '+var1+' ; i++ ) { System.out.println( i ) ;'
+    }
+    return code;
+  }
+
+  code() {
+    let code = 'import javafx.application.Application; import javafx.event.ActionEvent; import javafx.event.EventHandler; import javafx.scene.Scene; import javafx.scene.control.Button; import javafx.scene.layout.StackPane; import javafx.stage.Stage; Class Persona{ private string nome ; private string cognome ; private int eta ;	public static void main(String Args[]){ for ( int i = 0 ; i &lt; 10 ; i++ ) { System.out.println( i ) ;	} }'
+    let blob = new Blob([code], {type: 'text/plain; charset=UTF-8'});
+    var filename = 'hello.txt';
+    FileSaver.saveAs(blob,filename);
+    let proj = this.toCode('10');
+    this.http.post('/parsing',proj,{
+              method: RequestMethod.Post,
+              responseType: ResponseContentType.Blob,
+              headers: new Headers({'Content-Type': 'application/json; charset=UTF-8'})})
+             .subscribe((data) => {
+               console.log('code generated')
+              },
+              error => {console.log(JSON.stringify(error));});
+  }
 }
+
+
 
 /*
 var file = event.target.files[0];

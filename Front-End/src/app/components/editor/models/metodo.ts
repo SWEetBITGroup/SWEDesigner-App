@@ -32,6 +32,7 @@ export class Metodo {
 
     costruttore: boolean;
     statico: boolean;
+    main = false;
 
     /**
      * it make a Metodo object, listaArg is optional

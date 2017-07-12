@@ -11,6 +11,7 @@ export class Global {
   private nome_progetto = "Proj";
   private diagramma: string;
   private classi = new Array<Classe>();
+  private main = false;
 
 
   addClasse(nome: string){
@@ -53,6 +54,13 @@ export class Global {
         classe = c;
     });
     return classe;
+  }
+
+  setMain() {
+    this.main = true;
+  }
+  getMainStat() {
+    return this.main;
   }
 
   removeClass(name: string) {

@@ -102,7 +102,7 @@ app.listen(port, ()=>{
 //Express routing
   //Conn to Client
     // Set static folder to public
-    //app.use(express.static(path.join(__dirname, 'dist')));
+    app.use(express.static(path.join(__dirname, 'dist')));
   //Encrypt/Decrypt
   /**
     * @function app/post/encrypt
@@ -159,6 +159,7 @@ app.listen(port, ()=>{
     console.log(myMU);
     var template = mu.getTemplate();
     mu.parse(template, myMU, function(parsed){
+      console.log(parsed);
       res.json(parsed);
     });
   })

@@ -25,4 +25,8 @@ export class ActivityMenuComponent{
     this.activityService.generaCodice();
   }
 
+  changeName(name: string) {
+    this.activityService.changeName(name);
+  }
+
 }

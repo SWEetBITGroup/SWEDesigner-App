@@ -24,4 +24,8 @@ export class FileComponent implements OnInit {
   importa(event) {
     this.menuService.import(event);
   }
+
+  genera() {
+    this.menuService.code();
+  }
 }

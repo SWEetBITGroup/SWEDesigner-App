@@ -96,6 +96,16 @@ export class ActivityService {
   getSelectedMethod() {
     return this.selectedMethod;
   }
+  getSelectedElement(){
+    return this.selectedElement;
+  }
+  getNameMethod() {
+    if(this.selectedMethod)
+      return this.selectedMethod.getNome();
+  }
+  changeName(name: string) {
+    this.selectedMethod.changeNome(name);
+  }
 
   connect(elementCon) {
     this.mainEditorService.addConnettore(elementCon);
