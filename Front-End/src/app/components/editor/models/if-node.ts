@@ -21,13 +21,13 @@ export class ifNode extends Shape{
         sh.printSucc(this.getSucc());
       }
       else{
-        if(!this.getSucc()){
+        if(this.getSucc()){
           console.log("if(");
           console.log(this.getBody());
           console.log("){");
           sh.printSucc(this.getSucc());
         }
-        if(!this.getSuccElse()){
+        if(this.getSuccElse()){
           console.log("else(");
           console.log(this.getBody());
           console.log("){");

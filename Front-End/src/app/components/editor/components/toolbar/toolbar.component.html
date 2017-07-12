@@ -14,7 +14,7 @@
 </div>
 <div [hidden]="!mainEditorService.getActivityModeStatus()" class="container-fluid toolbar activity">
   <div class="tipo"> Activity </div>
-    <div class="icona"><button (click)="addStart()" class="add addStart" title="Aggiungi start"></button></div>
+    <div class="icona"><button [disabled]="this.activityService.start()" (click)="addStart()" class="add addStart" title="Aggiungi start"></button></div>
     <div class="icona"><button (click)="addEnd()" class="add addEnd" title="Aggiungi End"></button></div>
     <div class="icona"><button (click)="addActivityShape()" class="add addAttivita" title="Aggiungi azione"></button></div>
     <div class="icona"><button (click)="addActivityForShape()" class="add addAttivitaFor" title="Richiama l'attività/azione "></button></div>

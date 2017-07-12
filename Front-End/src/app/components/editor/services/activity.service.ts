@@ -9,6 +9,8 @@ import { ifNode } from '../models/if-node';
 import { endIfNode } from '../models/end-if-node';
 import { operation } from '../models/operation';
 import { Shape } from '../models/shape';
+import { Start } from '../models/start';
+import { End } from '../models/end';
 
 import * as joint from 'jointjs';
 
@@ -21,6 +23,10 @@ export class ActivityService {
   private selectedShape: any;
 
   private selectedMethod: Metodo;
+
+  private selectedElement: any;
+
+  private startID: string;
 
   constructor(private mainEditorService : MainEditorService ) { }
 
@@ -42,12 +48,26 @@ export class ActivityService {
     this.mainEditorService.addShape(graphElement);
     let oper = new operation(graphElement.id);
     this.shapeList.getAllShape().push(oper);
-    console.log(graphElement.id);
+  }
+
+  addStart(graphElement: any) {
+    this.startID = graphElement.id;
+    this.mainEditorService.addShape(graphElement);
+    this.shapeList.getAllShape().push(new Start(graphElement.id));
+  }
+
+  addEnd(graphElement: any) {
+    this.mainEditorService.addShape(graphElement);
+    this.shapeList.getAllShape().push(new End(graphElement.id));
   }
 
   setSelectedMethod(metodo: Metodo) {
     this.selectedMethod = metodo;
     this.shapeList = metodo.getShapeList();
+  }
+
+  setSelectedElement(element: any) {
+    this.selectedElement = element;
   }
 
   selectShape(id: string) {
@@ -59,6 +79,14 @@ export class ActivityService {
 
     if(!this.selectedShape)
       console.log('Shape mancante'); // TODO: spend a moment to code it as a real warning
+  }
+
+  start() {
+    let x = false;
+    if(this.startID){
+      x = true;
+    }
+    return x;
   }
 
   addBody(body: string) {
@@ -85,5 +113,18 @@ export class ActivityService {
       last.getIfPassed().push(ids[0]);
     }
     console.log(last);
+  }
+
+  modBody(text:string) {
+    console.log(this.selectedElement.attributes.attrs);
+    this.selectedElement.attr('text/text',text);
+    let elShape = this.shapeList.getElementById(this.selectedElement.id);
+    elShape.setBody(text);
+    console.log(elShape);
+  }
+
+  generaCodice() {
+    this.shapeList.printSucc(this.startID);
+    console.log(this.shapeList);
   }
 }

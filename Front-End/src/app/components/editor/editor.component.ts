@@ -216,7 +216,8 @@ export class EditorComponent implements OnInit {
       this.classMenuService.classSelection(cellView.model);
       this.mainEditorService.selectClasse(cellView.model.attributes.name[0]);
     } else {
-      // TODO selezione elemento dell'activity diagram
+      this.selectedCell = cellView;
+      this.activityService.setSelectedElement(cellView.model);
     }
   }
 

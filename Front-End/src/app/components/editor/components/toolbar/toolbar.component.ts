@@ -213,7 +213,7 @@ export class ToolbarComponent implements OnInit {
 
   addStart() {
     let start = new joint.shapes.uml.StartState({
-        position: { x:20  , y: 20 },
+        position: { x:200  , y: 20 },
         size: { width: 30, height: 30 },
         attrs: {
             'circle': {
@@ -222,6 +222,7 @@ export class ToolbarComponent implements OnInit {
             }
         }
     });
+    this.activityService.addStart(start);
   }
 
   addEnd() {
@@ -238,10 +239,12 @@ export class ToolbarComponent implements OnInit {
             }
         }
     });
+    this.activityService.addEnd(end);
   }
 
   addActivityShape() {
     let prova = new joint.shapes.basic.Rect({
+        position: { x:400  , y: 400 },
         size: { height: 100, width: 150 },
         attrs: {
             rect: {
@@ -252,7 +255,7 @@ export class ToolbarComponent implements OnInit {
                 'ref-height': '100%',
                 fill: '#797d9a'
             },
-            text: {text: 'megaciao', fill: '#ffffff'}
+            text: {text: 'Operation', fill: '#ffffff'}
         }
     });
     this.activityService.addOperation(prova);

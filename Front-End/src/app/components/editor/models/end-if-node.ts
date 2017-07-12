@@ -15,7 +15,7 @@ export class endIfNode extends Shape{
     if(!(this.getPrinted())){
       this.setPrinted(true);
       console.log("}");
-      if(!this.getSucc())
+      if(this.getSucc())
         sh.printSucc(this.getSucc());
     }
   }

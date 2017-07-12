@@ -1,7 +1,20 @@
 <div class="container-fluid menu">
+  <div class="row changeNome">
+    <label>Corpo operazione</label>
+    <input #corpo id="changeName"
+    (keyup.enter)="modBody(corpo.value)">
+    <button class="btn btn-default" (click)="modBody(corpo.value)">
+      <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+    </button>
+  </div>
   <div>
-    <button class="btn btn-default" (click)="this.mainEditorService.enterClassMode()">
+    <button class="btn btn-default" (click)="enterClassMode()">
       <span class="glyphicon glyphicon-arrow-left freccia"></span>
       Diagramma delle Classi</button>
+  </div>
+  <div>
+    <button class="btn btn-default" (click)="generaCodice()">
+      <span class="glyphicon glyphicon-arrow-left freccia"></span>
+      CODE!</button>
   </div>
 </div>

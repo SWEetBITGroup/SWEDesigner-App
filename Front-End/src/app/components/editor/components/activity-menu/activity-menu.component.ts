@@ -11,10 +11,18 @@ import { ActivityService } from '../../services/activity.service';
 export class ActivityMenuComponent{
 
   constructor(private mainEditorService : MainEditorService,
-              private activityservice: ActivityService) { }
+              private activityService: ActivityService) { }
 
   enterClassMode() {
-    this.mainEditorService.enterClassMode(this.activityservice.getSelectedMethod());
+    this.mainEditorService.enterClassMode(this.activityService.getSelectedMethod());
+  }
+
+  modBody(text: string) {
+    this.activityService.modBody(text);
+  }
+
+  generaCodice() {
+    this.activityService.generaCodice();
   }
 
 }

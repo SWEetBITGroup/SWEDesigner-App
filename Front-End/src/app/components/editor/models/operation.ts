@@ -16,7 +16,7 @@ export class operation extends Shape{
       this.setPrinted(true);
       console.log(this.getBody());
       console.log(";");
-      if(!this.getSucc())
+      if(this.getSucc())
         sh.printSucc(this.getSucc());
     }
   }
