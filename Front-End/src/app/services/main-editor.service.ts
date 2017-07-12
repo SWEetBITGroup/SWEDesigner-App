@@ -223,7 +223,7 @@ export class MainEditorService {
 
   removeClass(name: string, classe) {
     this.project.removeClass(name);
-    this.editorComp.graph.removeCells(classe);
+    this.editorComp.deleteElement(classe);
   }
 
 }

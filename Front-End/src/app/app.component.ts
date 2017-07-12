@@ -10,10 +10,10 @@ import { MainEditorService } from './services/main-editor.service';
   providers: [MenuService, MainEditorService]
 })
 export class AppComponent {
-    selectedGrapg: any;
+    selectedGraph: any;
 
     constructor(private myService: MenuService) {
-      this.selectedGrapg = null;
+      this.selectedGraph = null;
     }   
 
 }

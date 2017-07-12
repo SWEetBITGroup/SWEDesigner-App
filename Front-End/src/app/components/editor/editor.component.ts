@@ -240,8 +240,9 @@ export class EditorComponent implements OnInit {
     this.graph.addCell(clone);
   }
 
-  deleteElement() {
-
+  deleteElement(cell: any) {
+    this.graph.removeCells(cell);
+    this.selectedCell = null;
   }
 
 }
