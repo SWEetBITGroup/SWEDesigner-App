@@ -103,8 +103,14 @@ export class EditorComponent implements OnInit {
      * This methods allows to the mouse's pointer to recognize when a class is clicked and select it
      */
     this.paper.on('cell:pointerdown', (cellView) => {
-      if(!this.connettore)
-        this.elementSelection(cellView);
+      if(!this.connettore) {
+        let type = cellView.model.attributes.type;
+        if((type != 'uml.Generalization') && (type != 'uml.Implementation')){
+          this.elementSelection(cellView);
+        }
+      }
+      else
+        this.selectElementsToConnect(cellView);        
     });
     // Funzione per deselezionare le classi selezionate, rimuove l'highlight
     // dall'elemento e pone a null l'oggetto selectedCell del component
@@ -117,11 +123,6 @@ export class EditorComponent implements OnInit {
         this.ClassMenuComponent.closeCollapsedAllList();
       }
       this.selectedCell = null;
-    });
-
-    this.paper.on('cell:pointerdown', (cellView) => {
-      if(this.connettore)
-        this.selectElementsToConnect(cellView);
     });
 
     this.mainEditorService.storeGraph(this.graph.toJSON()); // ELIMINARE
