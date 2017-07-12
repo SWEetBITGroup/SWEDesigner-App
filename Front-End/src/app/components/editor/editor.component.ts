@@ -59,11 +59,11 @@ export class EditorComponent implements OnInit {
    */
   elementToConnect: any;
   /**
-   * 
+   *
    */
   @ViewChild(ClassMenuComponent) ClassMenuComponent:ClassMenuComponent;
   /**
-   * this constructor bind this class with the services use for callback function and draw the grid in the canvas 
+   * this constructor bind this class with the services use for callback function and draw the grid in the canvas
    * @param classMenuService
    * @param editService
    * @param mainEditorService
@@ -110,7 +110,7 @@ export class EditorComponent implements OnInit {
         }
       }
       else
-        this.selectElementsToConnect(cellView);        
+        this.selectElementsToConnect(cellView);
     });
     // Funzione per deselezionare le classi selezionate, rimuove l'highlight
     // dall'elemento e pone a null l'oggetto selectedCell del component

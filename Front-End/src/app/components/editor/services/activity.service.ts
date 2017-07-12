@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { EditorComponent } from '../../editor/editor.component';
+import { MainEditorService } from '../../../services/main-editor.service';
 import { Classe } from '../models/classe';
 import { Global } from '../../../models/global';
 import { Metodo } from '../models/metodo';
@@ -20,13 +20,7 @@ export class ActivityService {
 
   private graph: JSON;
 
-  private editorComp: EditorComponent;
-
-  constructor() { }
-
-  setEditorComp(editCmp: EditorComponent) {
-    this.editorComp = editCmp;
-  }
+  constructor(private mainEditorService : MainEditorService ) { }
 
   getShapeList(){
     return this.project.getAllShape();
@@ -34,17 +28,17 @@ export class ActivityService {
 
   addIfNode(ifNod : ifNode, graphElement: any){
     this.project.getAllShape().push(ifNod);
-    this.editorComp.addElement(graphElement);
+    this.mainEditorService.addShape(graphElement);
   }
 
   addEndIfNode(endIf : endIfNode, graphElement: any){
     this.project.getAllShape().push(endIf);
-    this.editorComp.addElement(graphElement);
+    this.mainEditorService.addShape(graphElement);
   }
 
   addOperation(oper : operation, graphElement: any){
     this.project.getAllShape().push(oper);
-    this.editorComp.addElement(graphElement);
+    this.mainEditorService.addShape(graphElement);
   }
 
 
