@@ -6,6 +6,8 @@ import { ClasseAstratta } from '../../models/classe-astratta'
 import { Interface } from '../../models/interface'
 import { ActivityService } from '../../services/activity.service';
 import { ifNode } from '../../models/if-node';
+import { endIfNode } from '../../models/end-if-node';
+import { operation } from '../../models/operation';
 import * as joint from 'jointjs';
 
 @Component({
@@ -253,7 +255,7 @@ export class ToolbarComponent implements OnInit {
             text: {text: 'megaciao', fill: '#ffffff'}
         }
     });
-    this.mainEditorService.addShape(prova);
+    this.activityService.addOperation(new operation(1),prova);
   }
 
   addActivityForShape() {
@@ -337,5 +339,6 @@ export class ToolbarComponent implements OnInit {
             }
         }
     });
+    this.activityService.addEndIfNode(new endIfNode(1),romboNero);
   }
 }
