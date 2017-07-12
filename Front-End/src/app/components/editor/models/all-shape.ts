@@ -7,7 +7,7 @@ export class allShape{
   addShape(shap: Shape){
     this.allShap.push(shap);
   }
-
+  //V Verifica di essere all'interno di un loop
   existMyLoop(id: number){
     this.allShap.forEach(a => {
       if(a.getSucc() == id || a.getSuccElse() == id ){
@@ -19,7 +19,7 @@ export class allShape{
     });
     return false;
   }
-
+  // Stampa il nodo successivo
   printSucc(id: number){
     this.allShap.forEach(a =>{
       if(a.getId() == id){

@@ -101,6 +101,11 @@
   background-size:100%;
 }
 
+.addEndDecision {
+  background: url(imgs/Activity/RomboNero.svg) no-repeat;
+  background-size:100%;
+}
+
 /*Blocco di icone inizialmente settato a false*/
 .activity {
   /*display: none;*/

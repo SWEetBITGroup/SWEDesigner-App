@@ -447,4 +447,5 @@ export class ToolbarComponent implements OnInit {
     });
   }
 
+  addEndDecision() {}
 }
