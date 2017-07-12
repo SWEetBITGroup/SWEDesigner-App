@@ -13,15 +13,13 @@ webpackJsonp([1,5],[
 /* 11 */,
 /* 12 */,
 /* 13 */,
-/* 14 */,
-/* 15 */,
-/* 16 */
+/* 14 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__models_global__ = __webpack_require__(131);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_editor_models_metodo__ = __webpack_require__(67);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__models_global__ = __webpack_require__(139);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_editor_models_metodo__ = __webpack_require__(69);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MainEditorService; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -149,7 +147,8 @@ var MainEditorService = (function () {
      * the replaceDiagram method of the EditorComponent and then sets
      * ´this.activityMode´ to false
      */
-    MainEditorService.prototype.enterClassMode = function () {
+    MainEditorService.prototype.enterClassMode = function (method) {
+        method.addDiagram(this.editorComp.graph.toJSON());
         this.editorComp.replaceDiagram(this.graph);
         this.activityMode = false;
     };
@@ -226,6 +225,12 @@ var MainEditorService = (function () {
     MainEditorService.prototype.addShape = function (cell) {
         this.editorComp.addElement(cell);
     };
+    MainEditorService.prototype.connetActivity = function (con) {
+        this.editorComp.addConnettore(con);
+    };
+    MainEditorService.prototype.setConnetionActivity = function (ids) {
+        console.log(ids);
+    };
     return MainEditorService;
 }());
 MainEditorService = __decorate([
@@ -236,6 +241,8 @@ MainEditorService = __decorate([
 //# sourceMappingURL=main-editor.service.js.map
 
 /***/ }),
+/* 15 */,
+/* 16 */,
 /* 17 */,
 /* 18 */,
 /* 19 */,
@@ -243,29 +250,220 @@ MainEditorService = __decorate([
 /* 21 */,
 /* 22 */,
 /* 23 */,
-/* 24 */,
-/* 25 */,
+/* 24 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Shape; });
+/**
+* Rappresents a base class and is used to rappresent the base info
+* for the shape on the activity diagram.
+*/
+var Shape = (function () {
+    function Shape(id) {
+        this.ifPassed = new Array();
+        this.id = id;
+        /*
+        if(body)
+          this.body = body;
+        if(succ)
+          this.succ = succ;
+        if(succElse)
+          this.succElse = succElse;*/
+    }
+    Shape.prototype.setId = function (id) {
+        this.id = id;
+    };
+    Shape.prototype.setBody = function (body) {
+        this.body = body;
+    };
+    Shape.prototype.setSucc = function (succ) {
+        this.succ = succ;
+    };
+    Shape.prototype.setSuccElse = function (succElse) {
+        this.succElse = succElse;
+    };
+    Shape.prototype.setIfPassed = function (pas) {
+        var _this = this;
+        pas.forEach(function (element) {
+            _this.ifPassed.push(element);
+        });
+    };
+    Shape.prototype.setPrinted = function (printed) {
+        this.printed = printed;
+    };
+    Shape.prototype.getId = function () {
+        return this.id;
+    };
+    Shape.prototype.getBody = function () {
+        return this.body;
+    };
+    Shape.prototype.getSucc = function () {
+        return this.succ;
+    };
+    Shape.prototype.getSuccElse = function () {
+        return this.succElse;
+    };
+    Shape.prototype.getIfPassed = function () {
+        return this.ifPassed;
+    };
+    Shape.prototype.getPrinted = function () {
+        return this.printed;
+    };
+    return Shape;
+}());
+
+//# sourceMappingURL=shape.js.map
+
+/***/ }),
+/* 25 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_main_editor_service__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__models_if_node__ = __webpack_require__(129);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_end_if_node__ = __webpack_require__(127);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__models_operation__ = __webpack_require__(130);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__models_start__ = __webpack_require__(131);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_end__ = __webpack_require__(128);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ActivityService; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+var ActivityService = (function () {
+    function ActivityService(mainEditorService) {
+        this.mainEditorService = mainEditorService;
+    }
+    ActivityService.prototype.getShapeList = function () {
+        return this.shapeList.getAllShape();
+    };
+    ActivityService.prototype.addIfNode = function (graphElement) {
+        this.shapeList.getAllShape().push(new __WEBPACK_IMPORTED_MODULE_2__models_if_node__["a" /* ifNode */](graphElement.id));
+        this.mainEditorService.addShape(graphElement);
+    };
+    ActivityService.prototype.addEndIfNode = function (graphElement) {
+        this.shapeList.getAllShape().push(new __WEBPACK_IMPORTED_MODULE_3__models_end_if_node__["a" /* endIfNode */](graphElement.id));
+        this.mainEditorService.addShape(graphElement);
+    };
+    ActivityService.prototype.addOperation = function (graphElement) {
+        this.mainEditorService.addShape(graphElement);
+        var oper = new __WEBPACK_IMPORTED_MODULE_4__models_operation__["a" /* operation */](graphElement.id);
+        this.shapeList.getAllShape().push(oper);
+    };
+    ActivityService.prototype.addStart = function (graphElement) {
+        this.startID = graphElement.id;
+        this.mainEditorService.addShape(graphElement);
+        this.shapeList.getAllShape().push(new __WEBPACK_IMPORTED_MODULE_5__models_start__["a" /* Start */](graphElement.id));
+    };
+    ActivityService.prototype.addEnd = function (graphElement) {
+        this.mainEditorService.addShape(graphElement);
+        this.shapeList.getAllShape().push(new __WEBPACK_IMPORTED_MODULE_6__models_end__["a" /* End */](graphElement.id));
+    };
+    ActivityService.prototype.setSelectedMethod = function (metodo) {
+        this.selectedMethod = metodo;
+        this.shapeList = metodo.getShapeList();
+    };
+    ActivityService.prototype.setSelectedElement = function (element) {
+        this.selectedElement = element;
+    };
+    ActivityService.prototype.selectShape = function (id) {
+        var _this = this;
+        this.shapeList.getAllShape().forEach(function (shape) {
+            if (shape.getId() == id) {
+                _this.selectedShape = shape;
+            }
+        });
+        if (!this.selectedShape)
+            console.log('Shape mancante'); // TODO: spend a moment to code it as a real warning
+    };
+    ActivityService.prototype.start = function () {
+        var x = false;
+        if (this.startID) {
+            x = true;
+        }
+        return x;
+    };
+    ActivityService.prototype.addBody = function (body) {
+        this.selectedShape.addBody(body);
+    };
+    ActivityService.prototype.getSelectedMethod = function () {
+        return this.selectedMethod;
+    };
+    ActivityService.prototype.connect = function (elementCon) {
+        this.mainEditorService.addConnettore(elementCon);
+    };
+    ActivityService.prototype.setConnector = function (ids) {
+        var first = this.shapeList.getElementById(ids[0]);
+        var last = this.shapeList.getElementById(ids[1]);
+        if (first.getSucc())
+            first.setSuccElse(ids[1]);
+        else
+            first.setSucc(ids[1]);
+        last.setIfPassed(first.getIfPassed());
+        if (first.getType() == 'ifNode') {
+            last.getIfPassed().push(ids[0]);
+        }
+        console.log(last);
+    };
+    ActivityService.prototype.modBody = function (text) {
+        console.log(this.selectedElement.attributes.attrs);
+        this.selectedElement.attr('text/text', text);
+        var elShape = this.shapeList.getElementById(this.selectedElement.id);
+        elShape.setBody(text);
+        console.log(elShape);
+    };
+    ActivityService.prototype.generaCodice = function () {
+        this.shapeList.printSucc(this.startID);
+        console.log(this.shapeList);
+    };
+    return ActivityService;
+}());
+ActivityService = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["c" /* Injectable */])(),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_main_editor_service__["a" /* MainEditorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_main_editor_service__["a" /* MainEditorService */]) === "function" && _a || Object])
+], ActivityService);
+
+var _a;
+//# sourceMappingURL=activity.service.js.map
+
+/***/ }),
 /* 26 */,
 /* 27 */,
 /* 28 */,
 /* 29 */,
 /* 30 */,
 /* 31 */,
-/* 32 */
+/* 32 */,
+/* 33 */,
+/* 34 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(40);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Subject__ = __webpack_require__(29);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Subject__ = __webpack_require__(31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Subject___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_Subject__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(279);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(289);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_catch__ = __webpack_require__(278);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_catch__ = __webpack_require__(288);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_catch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_catch__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_file_saver__ = __webpack_require__(243);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_file_saver__ = __webpack_require__(253);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_file_saver___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_file_saver__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__main_editor_service__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__main_editor_service__ = __webpack_require__(14);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MenuService; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -382,19 +580,19 @@ if(file){
 //# sourceMappingURL=menu.service.js.map
 
 /***/ }),
-/* 33 */,
-/* 34 */,
 /* 35 */,
 /* 36 */,
 /* 37 */,
 /* 38 */,
 /* 39 */,
 /* 40 */,
-/* 41 */
+/* 41 */,
+/* 42 */,
+/* 43 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__attributo__ = __webpack_require__(122);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__attributo__ = __webpack_require__(125);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Classe; });
 
 /**
@@ -565,13 +763,102 @@ var Classe = (function () {
             this.classePadre + '\"}';
         return JSON.parse(classe);
     };
+    Classe.prototype.retrievePublicAttr = function () {
+        var attr = new Array();
+        this.attributi.forEach(function (element) {
+            if (element.getAccesso() == "public") {
+                attr.push(element);
+            }
+        });
+        return attr;
+    };
+    Classe.prototype.retrievePrivateAttr = function () {
+        var attr = new Array();
+        this.attributi.forEach(function (element) {
+            if (element.getAccesso() == "private") {
+                attr.push(element);
+            }
+        });
+        return attr;
+    };
+    Classe.prototype.getInfoPublic = function (x) {
+        var infoAttr = new Array();
+        x.forEach(function (element, i) {
+            var attr = element.toMU();
+            if (i != x.length - 1)
+                attr += ',';
+            infoAttr.push(attr);
+        });
+        return infoAttr;
+    };
+    Classe.prototype.getInfoPrivate = function (x) {
+        var infoAttr = new Array();
+        x.forEach(function (element, i) {
+            var attr = JSON.stringify(element.toMU());
+            if (i != x.length - 1)
+                attr += ',';
+            infoAttr.push(attr);
+        });
+        return infoAttr;
+    };
+    Classe.prototype.toMU = function () {
+        var program;
+        var attListPrivate = this.retrievePrivateAttr();
+        var attListPublic = this.retrievePublicAttr();
+        var pub;
+        var priv;
+        if (attListPrivate.length == 0) {
+            priv = false;
+        }
+        else {
+            priv = true;
+        }
+        if (attListPublic.length == 0) {
+            pub = false;
+        }
+        else {
+            pub = true;
+        }
+        if (pub && !priv) {
+            program = {
+                name: this.nome,
+                public: true,
+                attrPU: [
+                    JSON.stringify(this.getInfoPublic(attListPublic))
+                ]
+            };
+        }
+        else if (!pub && priv) {
+            program = {
+                name: this.nome,
+                private: true,
+                attrP: [
+                    JSON.stringify(this.getInfoPrivate(attListPrivate))
+                ]
+            };
+        }
+        else if (pub & priv) {
+            program = {
+                name: this.nome,
+                private: true,
+                attrP: [
+                    JSON.stringify(this.getInfoPrivate(attListPrivate))
+                ],
+                public: true,
+                attrPU: [
+                    JSON.stringify(this.getInfoPublic(attListPublic))
+                ]
+            };
+        }
+        return JSON.stringify(program);
+    };
     return Classe;
 }());
 
 //# sourceMappingURL=classe.js.map
 
 /***/ }),
-/* 42 */
+/* 44 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -621,8 +908,6 @@ var Param = (function () {
 //# sourceMappingURL=param.js.map
 
 /***/ }),
-/* 43 */,
-/* 44 */,
 /* 45 */,
 /* 46 */,
 /* 47 */,
@@ -644,14 +929,17 @@ var Param = (function () {
 /* 63 */,
 /* 64 */,
 /* 65 */,
-/* 66 */
+/* 66 */,
+/* 67 */,
+/* 68 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_class_menu_service__ = __webpack_require__(68);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_main_editor_service__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_param__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_class_menu_service__ = __webpack_require__(70);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_main_editor_service__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_activity_service__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__models_param__ = __webpack_require__(44);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ClassMenuComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -666,6 +954,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var ClassMenuComponent = (function () {
     /**
      * Create an instantiation of ClassMenuComponent and sets the properties ´classe´ and ´name´
@@ -673,10 +962,11 @@ var ClassMenuComponent = (function () {
      * @param classMenuService used to create a new instantiation of ClassMenuService
      * @param mainEditorService used to create a new instantiation of ClassMenuService
      */
-    function ClassMenuComponent(classMenuService, mainEditorService) {
+    function ClassMenuComponent(classMenuService, mainEditorService, activityService) {
         var _this = this;
         this.classMenuService = classMenuService;
         this.mainEditorService = mainEditorService;
+        this.activityService = activityService;
         /**
          * The name of the current selected class in the class diagram of the EditorComponent
          */
@@ -748,6 +1038,7 @@ var ClassMenuComponent = (function () {
             this.classe.set('attributes', attributi);
             this.selectedAccAtt = 'public';
             this.selectedTipoAtt = null;
+            $('#nome-attributo').val("");
         }
         else {
             alert('Alcuni capi del form per la creazione del nuovo attributo non sono stati compilati');
@@ -806,8 +1097,11 @@ var ClassMenuComponent = (function () {
             if (param.getNome() == name)
                 sameName = true;
         });
-        if (!sameName)
-            this.parametriMetodo.push(new __WEBPACK_IMPORTED_MODULE_3__models_param__["a" /* Param */](type, name));
+        if (!sameName) {
+            this.parametriMetodo.push(new __WEBPACK_IMPORTED_MODULE_4__models_param__["a" /* Param */](type, name));
+            $('#tipiParam').val("");
+            $('#nomeParam').val("");
+        }
         else
             alert("Non è possibile inserire due o più parametri con lo stesso nome");
     };
@@ -859,6 +1153,11 @@ var ClassMenuComponent = (function () {
             this.classe.set('methods', metodi);
             this.selectedAccMet = 'public';
             this.selectedTipoMet = 'void';
+            $('#nome-metodo').val("");
+            this.staticMetCheckbox.nativeElement.checked = false;
+            this.constructorCheckbox.nativeElement.checked = false;
+            $('#tipiParam').val("");
+            $('#nomeParam').val("");
             this.parametriMetodo = new Array(); // Cleans the array of params
         }
         else {
@@ -889,6 +1188,7 @@ var ClassMenuComponent = (function () {
      */
     ClassMenuComponent.prototype.modifyMetodo = function (nome) {
         this.mainEditorService.enterActivityMode(nome);
+        this.activityService.setSelectedMethod(this.mainEditorService.getSelectedClasse().retriveMethod(nome));
     };
     ClassMenuComponent.prototype.getMetodi = function () {
         return this.mainEditorService.getSelectedClasse().getMetodi();
@@ -956,28 +1256,30 @@ __decorate([
 ClassMenuComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_4" /* Component */])({
         selector: 'class-menu',
-        template: __webpack_require__(266),
-        styles: [__webpack_require__(219)]
+        template: __webpack_require__(276),
+        styles: [__webpack_require__(227)]
     })
     /**
      * Interacts with the HTML template and provides methods to interact with the classes present
      * into the class diagram of the EditorComponent.
      */
     ,
-    __metadata("design:paramtypes", [typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__services_class_menu_service__["a" /* ClassMenuService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_class_menu_service__["a" /* ClassMenuService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2__services_main_editor_service__["a" /* MainEditorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_main_editor_service__["a" /* MainEditorService */]) === "function" && _d || Object])
+    __metadata("design:paramtypes", [typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__services_class_menu_service__["a" /* ClassMenuService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_class_menu_service__["a" /* ClassMenuService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2__services_main_editor_service__["a" /* MainEditorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_main_editor_service__["a" /* MainEditorService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_3__services_activity_service__["a" /* ActivityService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__services_activity_service__["a" /* ActivityService */]) === "function" && _e || Object])
 ], ClassMenuComponent);
 
-var _a, _b, _c, _d;
+var _a, _b, _c, _d, _e;
 //# sourceMappingURL=class-menu.component.js.map
 
 /***/ }),
-/* 67 */
+/* 69 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jointjs__ = __webpack_require__(60);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jointjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_jointjs__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__all_shape__ = __webpack_require__(124);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_jointjs__ = __webpack_require__(62);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_jointjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_jointjs__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Metodo; });
+
 
 /**
  * it define the class's method
@@ -991,12 +1293,13 @@ var Metodo = (function () {
      * @param listaArg
      */
     function Metodo(stat, costr, nome, acc, tipo, listaArg) {
+        this.shapeList = new __WEBPACK_IMPORTED_MODULE_0__all_shape__["a" /* allShape */]();
         this.statico = stat;
         this.costruttore = costr;
         this.nome = nome;
         this.accesso = acc;
         this.tipoRitorno = tipo;
-        this.diagramma = (new __WEBPACK_IMPORTED_MODULE_0_jointjs__["dia"].Graph).toJSON();
+        this.diagramma = (new __WEBPACK_IMPORTED_MODULE_1_jointjs__["dia"].Graph).toJSON();
         if (listaArg)
             this.listaArgomenti = listaArg;
     }
@@ -1074,6 +1377,9 @@ var Metodo = (function () {
     Metodo.prototype.getListaArgomenti = function () {
         return this.listaArgomenti;
     };
+    Metodo.prototype.getShapeList = function () {
+        return this.shapeList;
+    };
     Metodo.prototype.isConstructor = function () {
         return this.costruttore;
     };
@@ -1105,12 +1411,12 @@ var Metodo = (function () {
 //# sourceMappingURL=metodo.js.map
 
 /***/ }),
-/* 68 */
+/* 70 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Subject__ = __webpack_require__(29);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Subject__ = __webpack_require__(31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Subject___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_rxjs_Subject__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ClassMenuService; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -1145,8 +1451,6 @@ ClassMenuService = __decorate([
 //# sourceMappingURL=class-menu.service.js.map
 
 /***/ }),
-/* 69 */,
-/* 70 */,
 /* 71 */,
 /* 72 */,
 /* 73 */,
@@ -1174,7 +1478,9 @@ ClassMenuService = __decorate([
 /* 95 */,
 /* 96 */,
 /* 97 */,
-/* 98 */
+/* 98 */,
+/* 99 */,
+/* 100 */
 /***/ (function(module, exports) {
 
 function webpackEmptyContext(req) {
@@ -1183,19 +1489,19 @@ function webpackEmptyContext(req) {
 webpackEmptyContext.keys = function() { return []; };
 webpackEmptyContext.resolve = webpackEmptyContext;
 module.exports = webpackEmptyContext;
-webpackEmptyContext.id = 98;
+webpackEmptyContext.id = 100;
 
 
 /***/ }),
-/* 99 */
+/* 101 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dynamic__ = __webpack_require__(115);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_module__ = __webpack_require__(117);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__environments_environment__ = __webpack_require__(132);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dynamic__ = __webpack_require__(117);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_module__ = __webpack_require__(119);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__environments_environment__ = __webpack_require__(140);
 
 
 
@@ -1207,8 +1513,6 @@ __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dyna
 //# sourceMappingURL=main.js.map
 
 /***/ }),
-/* 100 */,
-/* 101 */,
 /* 102 */,
 /* 103 */,
 /* 104 */,
@@ -1223,13 +1527,16 @@ __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dyna
 /* 113 */,
 /* 114 */,
 /* 115 */,
-/* 116 */
+/* 116 */,
+/* 117 */,
+/* 118 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_menu_service__ = __webpack_require__(32);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_main_editor_service__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_menu_service__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_main_editor_service__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_editor_services_activity_service__ = __webpack_require__(25);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1243,6 +1550,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var AppComponent = (function () {
     function AppComponent(myService) {
         this.myService = myService;
@@ -1253,9 +1561,9 @@ var AppComponent = (function () {
 AppComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_4" /* Component */])({
         selector: 'app-root',
-        template: __webpack_require__(263),
-        styles: [__webpack_require__(216)],
-        providers: [__WEBPACK_IMPORTED_MODULE_1__services_menu_service__["a" /* MenuService */], __WEBPACK_IMPORTED_MODULE_2__services_main_editor_service__["a" /* MainEditorService */]]
+        template: __webpack_require__(273),
+        styles: [__webpack_require__(224)],
+        providers: [__WEBPACK_IMPORTED_MODULE_1__services_menu_service__["a" /* MenuService */], __WEBPACK_IMPORTED_MODULE_2__services_main_editor_service__["a" /* MainEditorService */], __WEBPACK_IMPORTED_MODULE_3__components_editor_services_activity_service__["a" /* ActivityService */]]
     }),
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_menu_service__["a" /* MenuService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_menu_service__["a" /* MenuService */]) === "function" && _a || Object])
 ], AppComponent);
@@ -1264,27 +1572,27 @@ var _a;
 //# sourceMappingURL=app.component.js.map
 
 /***/ }),
-/* 117 */
+/* 119 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__(33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(114);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_http__ = __webpack_require__(40);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_component__ = __webpack_require__(116);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_menu_menu_component__ = __webpack_require__(130);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_menu_components_file_file_component__ = __webpack_require__(124);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_menu_components_profilo_profilo_component__ = __webpack_require__(127);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_menu_components_progetto_progetto_component__ = __webpack_require__(128);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_menu_components_modifica_modifica_component__ = __webpack_require__(126);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_menu_components_template_template_component__ = __webpack_require__(129);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_menu_components_layer_layer_component__ = __webpack_require__(125);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_editor_components_toolbar_toolbar_component__ = __webpack_require__(120);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_editor_editor_component__ = __webpack_require__(121);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_activity_frame_activity_frame_component__ = __webpack_require__(118);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_editor_components_class_menu_class_menu_component__ = __webpack_require__(66);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_editor_components_activity_menu_activity_menu_component__ = __webpack_require__(119);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(116);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_http__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_component__ = __webpack_require__(118);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_menu_menu_component__ = __webpack_require__(138);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_menu_components_file_file_component__ = __webpack_require__(132);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_menu_components_profilo_profilo_component__ = __webpack_require__(135);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_menu_components_progetto_progetto_component__ = __webpack_require__(136);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_menu_components_modifica_modifica_component__ = __webpack_require__(134);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_menu_components_template_template_component__ = __webpack_require__(137);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_menu_components_layer_layer_component__ = __webpack_require__(133);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_editor_components_toolbar_toolbar_component__ = __webpack_require__(122);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_editor_editor_component__ = __webpack_require__(123);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_activity_frame_activity_frame_component__ = __webpack_require__(120);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_editor_components_class_menu_class_menu_component__ = __webpack_require__(68);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_editor_components_activity_menu_activity_menu_component__ = __webpack_require__(121);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1344,7 +1652,7 @@ AppModule = __decorate([
 //# sourceMappingURL=app.module.js.map
 
 /***/ }),
-/* 118 */
+/* 120 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1370,8 +1678,8 @@ var ActivityFrameComponent = (function () {
 ActivityFrameComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_4" /* Component */])({
         selector: 'app-activity-frame',
-        template: __webpack_require__(264),
-        styles: [__webpack_require__(217)]
+        template: __webpack_require__(274),
+        styles: [__webpack_require__(225)]
     }),
     __metadata("design:paramtypes", [])
 ], ActivityFrameComponent);
@@ -1379,12 +1687,13 @@ ActivityFrameComponent = __decorate([
 //# sourceMappingURL=activity-frame.component.js.map
 
 /***/ }),
-/* 119 */
+/* 121 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_main_editor_service__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_main_editor_service__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_activity_service__ = __webpack_require__(25);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ActivityMenuComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1397,37 +1706,47 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
 var ActivityMenuComponent = (function () {
-    function ActivityMenuComponent(mainEditorService) {
+    function ActivityMenuComponent(mainEditorService, activityService) {
         this.mainEditorService = mainEditorService;
+        this.activityService = activityService;
     }
-    ActivityMenuComponent.prototype.ngOnInit = function () {
+    ActivityMenuComponent.prototype.enterClassMode = function () {
+        this.mainEditorService.enterClassMode(this.activityService.getSelectedMethod());
+    };
+    ActivityMenuComponent.prototype.modBody = function (text) {
+        this.activityService.modBody(text);
+    };
+    ActivityMenuComponent.prototype.generaCodice = function () {
+        this.activityService.generaCodice();
     };
     return ActivityMenuComponent;
 }());
 ActivityMenuComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_4" /* Component */])({
         selector: 'activity-menu',
-        template: __webpack_require__(265),
-        styles: [__webpack_require__(218)]
+        template: __webpack_require__(275),
+        styles: [__webpack_require__(226)]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_main_editor_service__["a" /* MainEditorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_main_editor_service__["a" /* MainEditorService */]) === "function" && _a || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_main_editor_service__["a" /* MainEditorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_main_editor_service__["a" /* MainEditorService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__services_activity_service__["a" /* ActivityService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_activity_service__["a" /* ActivityService */]) === "function" && _b || Object])
 ], ActivityMenuComponent);
 
-var _a;
+var _a, _b;
 //# sourceMappingURL=activity-menu.component.js.map
 
 /***/ }),
-/* 120 */
+/* 122 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_main_editor_service__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__models_classe__ = __webpack_require__(41);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_classe_astratta__ = __webpack_require__(123);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_jointjs__ = __webpack_require__(60);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_jointjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_jointjs__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_main_editor_service__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__models_classe__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_classe_astratta__ = __webpack_require__(126);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_activity_service__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_jointjs__ = __webpack_require__(62);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_jointjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_jointjs__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ToolbarComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1443,9 +1762,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var ToolbarComponent = (function () {
-    function ToolbarComponent(mainEditorService) {
+    function ToolbarComponent(mainEditorService, activityService) {
         this.mainEditorService = mainEditorService;
+        this.activityService = activityService;
         this.classCouter = 0;
         this.interCounter = 0;
         this.abstCounter = 0;
@@ -1457,7 +1778,7 @@ var ToolbarComponent = (function () {
      */
     ToolbarComponent.prototype.addClasse = function () {
         var nomeClasse = 'Classe #' + this.classCouter++;
-        var uml = __WEBPACK_IMPORTED_MODULE_4_jointjs__["shapes"].uml;
+        var uml = __WEBPACK_IMPORTED_MODULE_5_jointjs__["shapes"].uml;
         var classe = new uml.Class({
             position: { x: 300, y: 300 },
             size: { width: 300, height: 100 },
@@ -1499,7 +1820,7 @@ var ToolbarComponent = (function () {
      */
     ToolbarComponent.prototype.addInterfaccia = function () {
         var nomeInterf = 'Interfaccia #' + this.interCounter++;
-        var uml = __WEBPACK_IMPORTED_MODULE_4_jointjs__["shapes"].uml;
+        var uml = __WEBPACK_IMPORTED_MODULE_5_jointjs__["shapes"].uml;
         var interfaccia = new uml.Interface({
             position: { x: 50, y: 30 },
             size: { width: 300, height: 100 },
@@ -1540,7 +1861,7 @@ var ToolbarComponent = (function () {
      * Method add abstract class to editor
      */
     ToolbarComponent.prototype.addAstratta = function () {
-        var uml = __WEBPACK_IMPORTED_MODULE_4_jointjs__["shapes"].uml;
+        var uml = __WEBPACK_IMPORTED_MODULE_5_jointjs__["shapes"].uml;
         var nomeClassAbst = 'Classe Astratta #' + this.abstCounter++;
         var abstract = new uml.Abstract({
             position: { x: 400, y: 400 },
@@ -1582,25 +1903,25 @@ var ToolbarComponent = (function () {
      * Method selects association as connector
      */
     ToolbarComponent.prototype.addAssociazione = function () {
-        this.addConnettore(new __WEBPACK_IMPORTED_MODULE_4_jointjs__["shapes"].uml.Association);
+        this.addConnettore(new __WEBPACK_IMPORTED_MODULE_5_jointjs__["shapes"].uml.Association);
     };
     /**
      * Method selects implementation as connector
      */
     ToolbarComponent.prototype.addImplementazione = function () {
-        this.addConnettore(new __WEBPACK_IMPORTED_MODULE_4_jointjs__["shapes"].uml.Implementation);
+        this.addConnettore(new __WEBPACK_IMPORTED_MODULE_5_jointjs__["shapes"].uml.Implementation);
     };
     /**
      * Method selects generalization as connector
      */
     ToolbarComponent.prototype.addGeneralizzazione = function () {
-        this.addConnettore(new __WEBPACK_IMPORTED_MODULE_4_jointjs__["shapes"].uml.Generalization);
+        this.addConnettore(new __WEBPACK_IMPORTED_MODULE_5_jointjs__["shapes"].uml.Generalization);
     };
     /**
      * Method add comment cell to editor
      */
     ToolbarComponent.prototype.addCommento = function () {
-        var comm = new __WEBPACK_IMPORTED_MODULE_4_jointjs__["shapes"].basic.Rect({
+        var comm = new __WEBPACK_IMPORTED_MODULE_5_jointjs__["shapes"].basic.Rect({
             position: { x: 60, y: 10 },
             size: { width: 160, height: 35 },
             attrs: {
@@ -1624,8 +1945,8 @@ var ToolbarComponent = (function () {
         this.mainEditorService.addConnettore(cellView);
     };
     ToolbarComponent.prototype.addStart = function () {
-        var start = new __WEBPACK_IMPORTED_MODULE_4_jointjs__["shapes"].uml.StartState({
-            position: { x: 20, y: 20 },
+        var start = new __WEBPACK_IMPORTED_MODULE_5_jointjs__["shapes"].uml.StartState({
+            position: { x: 200, y: 20 },
             size: { width: 30, height: 30 },
             attrs: {
                 'circle': {
@@ -1634,9 +1955,10 @@ var ToolbarComponent = (function () {
                 }
             }
         });
+        this.activityService.addStart(start);
     };
     ToolbarComponent.prototype.addEnd = function () {
-        var end = new __WEBPACK_IMPORTED_MODULE_4_jointjs__["shapes"].uml.EndState({
+        var end = new __WEBPACK_IMPORTED_MODULE_5_jointjs__["shapes"].uml.EndState({
             position: { x: 750, y: 550 },
             size: { width: 30, height: 30 },
             attrs: {
@@ -1649,9 +1971,11 @@ var ToolbarComponent = (function () {
                 }
             }
         });
+        this.activityService.addEnd(end);
     };
     ToolbarComponent.prototype.addActivityShape = function () {
-        var prova = new __WEBPACK_IMPORTED_MODULE_4_jointjs__["shapes"].basic.Rect({
+        var prova = new __WEBPACK_IMPORTED_MODULE_5_jointjs__["shapes"].basic.Rect({
+            position: { x: 400, y: 400 },
             size: { height: 100, width: 150 },
             attrs: {
                 rect: {
@@ -1662,10 +1986,10 @@ var ToolbarComponent = (function () {
                     'ref-height': '100%',
                     fill: '#797d9a'
                 },
-                text: { text: 'megaciao', fill: '#ffffff' }
+                text: { text: 'Operation', fill: '#ffffff' }
             }
         });
-        this.mainEditorService.addShape(prova);
+        this.activityService.addOperation(prova);
     };
     ToolbarComponent.prototype.addActivityForShape = function () {
         var svgFile = [
@@ -1690,14 +2014,14 @@ var ToolbarComponent = (function () {
             '</g>',
             '</svg>'
         ].join('');
-        var start = new __WEBPACK_IMPORTED_MODULE_4_jointjs__["shapes"].basic.Image({
-            size: {
-                width: 100,
-                height: 100
-            },
+        var start = new __WEBPACK_IMPORTED_MODULE_5_jointjs__["shapes"].basic.Image({
             position: {
                 x: 100,
                 y: 100
+            },
+            size: {
+                width: 100,
+                height: 100
             },
             attrs: {
                 image: {
@@ -1710,10 +2034,10 @@ var ToolbarComponent = (function () {
         });
     };
     ToolbarComponent.prototype.addConnector = function () {
-        this.addConnettore(new __WEBPACK_IMPORTED_MODULE_4_jointjs__["shapes"].fsa.Arrow);
+        this.mainEditorService.connetActivity(new __WEBPACK_IMPORTED_MODULE_5_jointjs__["shapes"].fsa.Arrow);
     };
     ToolbarComponent.prototype.addDecision = function () {
-        var rombo = new __WEBPACK_IMPORTED_MODULE_4_jointjs__["shapes"].erd.Relationship({
+        var rombo = new __WEBPACK_IMPORTED_MODULE_5_jointjs__["shapes"].erd.Relationship({
             position: { x: 300, y: 390 },
             attrs: {
                 text: {
@@ -1727,9 +2051,10 @@ var ToolbarComponent = (function () {
                 }
             }
         });
+        this.activityService.addIfNode(rombo);
     };
     ToolbarComponent.prototype.addEndDecision = function () {
-        var romboNero = new __WEBPACK_IMPORTED_MODULE_4_jointjs__["shapes"].erd.Relationship({
+        var romboNero = new __WEBPACK_IMPORTED_MODULE_5_jointjs__["shapes"].erd.Relationship({
             position: { x: 300, y: 390 },
             attrs: {
                 text: {
@@ -1743,14 +2068,31 @@ var ToolbarComponent = (function () {
                 }
             }
         });
+        this.activityService.addEndIfNode(romboNero);
+    };
+    ToolbarComponent.prototype.addRettangoloAngolo = function () {
+        new __WEBPACK_IMPORTED_MODULE_5_jointjs__["shapes"].erd.Entity({
+            position: { x: 100, y: 200 },
+            attrs: {
+                text: {
+                    fill: '#ffffff',
+                    text: 'Cazzo ridi',
+                    'letter-spacing': 0
+                },
+                '.outer, .inner': {
+                    fill: '#797d9a',
+                    stroke: 'none'
+                }
+            }
+        });
     };
     return ToolbarComponent;
 }());
 ToolbarComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_4" /* Component */])({
         selector: 'app-toolbar',
-        template: __webpack_require__(267),
-        styles: [__webpack_require__(220)]
+        template: __webpack_require__(277),
+        styles: [__webpack_require__(228)]
     })
     /**
      * it rappresent the model that contain the shapesthat will be draw into the editor
@@ -1759,24 +2101,25 @@ ToolbarComponent = __decorate([
      * @param abstCounter [number] it's a counter astract class
      */
     ,
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_main_editor_service__["a" /* MainEditorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_main_editor_service__["a" /* MainEditorService */]) === "function" && _a || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_main_editor_service__["a" /* MainEditorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_main_editor_service__["a" /* MainEditorService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_4__services_activity_service__["a" /* ActivityService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__services_activity_service__["a" /* ActivityService */]) === "function" && _b || Object])
 ], ToolbarComponent);
 
-var _a;
+var _a, _b;
 //# sourceMappingURL=toolbar.component.js.map
 
 /***/ }),
-/* 121 */
+/* 123 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_class_menu_service__ = __webpack_require__(68);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_menu_service__ = __webpack_require__(32);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_main_editor_service__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_class_menu_class_menu_component__ = __webpack_require__(66);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_jointjs__ = __webpack_require__(60);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_jointjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_jointjs__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_class_menu_service__ = __webpack_require__(70);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_menu_service__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_main_editor_service__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_class_menu_class_menu_component__ = __webpack_require__(68);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_activity_service__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_jointjs__ = __webpack_require__(62);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_jointjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_jointjs__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EditorComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1793,6 +2136,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var EditorComponent = (function () {
     /**
      * this constructor bind this class with the services use for callback function and draw the grid in the canvas
@@ -1800,11 +2144,12 @@ var EditorComponent = (function () {
      * @param editService
      * @param mainEditorService
      */
-    function EditorComponent(classMenuService, menuService, mainEditorService) {
+    function EditorComponent(classMenuService, menuService, mainEditorService, activityService) {
         var _this = this;
         this.classMenuService = classMenuService;
         this.menuService = menuService;
         this.mainEditorService = mainEditorService;
+        this.activityService = activityService;
         /**
          * is used to scale the graph
          */
@@ -1820,8 +2165,8 @@ var EditorComponent = (function () {
     }
     EditorComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.graph = new __WEBPACK_IMPORTED_MODULE_5_jointjs__["dia"].Graph;
-        this.paper = new __WEBPACK_IMPORTED_MODULE_5_jointjs__["dia"].Paper({
+        this.graph = new __WEBPACK_IMPORTED_MODULE_6_jointjs__["dia"].Graph;
+        this.paper = new __WEBPACK_IMPORTED_MODULE_6_jointjs__["dia"].Paper({
             el: $("#paper"),
             width: $('#paper').width(),
             height: $('#paper').height(),
@@ -1836,12 +2181,17 @@ var EditorComponent = (function () {
         this.paper.on('cell:pointerdown', function (cellView) {
             if (!_this.connettore) {
                 var type = cellView.model.attributes.type;
-                if ((type != 'uml.Generalization') && (type != 'uml.Implementation') && (type != 'uml.Association')) {
+                if ((type != 'uml.Generalization') &&
+                    (type != 'uml.Implementation') &&
+                    (type != 'uml.Association') &&
+                    (type != 'fsa.Arrow')) {
                     _this.elementSelection(cellView);
                 }
             }
-            else
+            else if (!_this.mainEditorService.getActivityModeStatus())
                 _this.selectElementsToConnect(cellView);
+            else
+                _this.selectElementActivity(cellView);
         });
         // Funzione per deselezionare le classi selezionate, rimuove l'highlight
         // dall'elemento e pone a null l'oggetto selectedCell del component
@@ -1880,7 +2230,7 @@ var EditorComponent = (function () {
     EditorComponent.prototype.selectElementsToConnect = function (cell) {
         if (this.elementToConnect) {
             console.log(cell);
-            if (this.connettore === __WEBPACK_IMPORTED_MODULE_5_jointjs__["shapes"].uml.Generalization) {
+            if (this.connettore === __WEBPACK_IMPORTED_MODULE_6_jointjs__["shapes"].uml.Generalization) {
                 this.mainEditorService.addSuperclass(this.elementToConnect.model.attributes.name, cell.model.attributes.name);
             }
             var element1 = this.elementToConnect;
@@ -1889,6 +2239,7 @@ var EditorComponent = (function () {
                 target: { id: cell.model.id }
             });
             this.graph.addCells([freccia]);
+            $('.freccia').blur();
             this.elementToConnect.unhighlight(null /* defaults to cellView.el */, {
                 highlighter: {
                     name: 'stroke',
@@ -1935,7 +2286,8 @@ var EditorComponent = (function () {
             this.mainEditorService.selectClasse(cellView.model.attributes.name[0]);
         }
         else {
-            // TODO selezione elemento dell'activity diagram
+            this.selectedCell = cellView;
+            this.activityService.setSelectedElement(cellView.model);
         }
     };
     // Aggiunta classe
@@ -1972,6 +2324,23 @@ var EditorComponent = (function () {
         this.graph.removeCells(cell);
         this.selectedCell = null;
     };
+    EditorComponent.prototype.selectElementActivity = function (cell) {
+        if (this.elementToConnect) {
+            var element1 = this.elementToConnect;
+            var freccia = new this.connettore.constructor({
+                source: { id: element1.model.id },
+                target: { id: cell.model.id }
+            });
+            this.graph.addCells([freccia]);
+            this.elementToConnect.unhighlight();
+            this.elementToConnect = this.connettore = null;
+            this.activityService.setConnector([element1.model.id, cell.model.id]);
+        }
+        else {
+            this.elementToConnect = cell;
+            cell.highlight();
+        }
+    };
     return EditorComponent;
 }());
 __decorate([
@@ -1981,8 +2350,8 @@ __decorate([
 EditorComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_4" /* Component */])({
         selector: 'app-editor',
-        template: __webpack_require__(268),
-        styles: [__webpack_require__(221)],
+        template: __webpack_require__(278),
+        styles: [__webpack_require__(229)],
         // host: {
         //   '(window:resize)': 'onResize($event)'
         // }
@@ -1992,18 +2361,68 @@ EditorComponent = __decorate([
      * This class is the main component used to drae the UML shapes
      */
     ,
-    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__services_class_menu_service__["a" /* ClassMenuService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_class_menu_service__["a" /* ClassMenuService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__services_menu_service__["a" /* MenuService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_menu_service__["a" /* MenuService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__services_main_editor_service__["a" /* MainEditorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__services_main_editor_service__["a" /* MainEditorService */]) === "function" && _d || Object])
+    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__services_class_menu_service__["a" /* ClassMenuService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_class_menu_service__["a" /* ClassMenuService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__services_menu_service__["a" /* MenuService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_menu_service__["a" /* MenuService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__services_main_editor_service__["a" /* MainEditorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__services_main_editor_service__["a" /* MainEditorService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_5__services_activity_service__["a" /* ActivityService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__services_activity_service__["a" /* ActivityService */]) === "function" && _e || Object])
 ], EditorComponent);
 
-var _a, _b, _c, _d;
+var _a, _b, _c, _d, _e;
 //# sourceMappingURL=editor.component.js.map
 
 /***/ }),
-/* 122 */
+/* 124 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__param__ = __webpack_require__(42);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return allShape; });
+var allShape = (function () {
+    function allShape() {
+        this.allShap = new Array();
+    }
+    allShape.prototype.getAllShape = function () {
+        return this.allShap;
+    };
+    allShape.prototype.getElementById = function (id) {
+        var element;
+        this.allShap.forEach(function (el) {
+            if (el.getId() == id)
+                element = el;
+        });
+        return element;
+    };
+    allShape.prototype.addShape = function (shap) {
+        this.allShap.push(shap);
+    };
+    //V Verifica di essere all'interno di un loop
+    allShape.prototype.existMyLoop = function (id) {
+        this.allShap.forEach(function (a) {
+            if (a.getSucc() == id || a.getSuccElse() == id) {
+                a.getIfPassed().forEach(function (a1) {
+                    if (a1 == id)
+                        return true;
+                });
+            }
+        });
+        return false;
+    };
+    // Stampa il nodo successivo
+    allShape.prototype.printSucc = function (id) {
+        var _this = this;
+        this.allShap.forEach(function (a) {
+            if (a.getId() == id) {
+                a.toCode(_this);
+            }
+        });
+    };
+    return allShape;
+}());
+
+//# sourceMappingURL=all-shape.js.map
+
+/***/ }),
+/* 125 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__param__ = __webpack_require__(44);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Attributo; });
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -2036,17 +2455,29 @@ var Attributo = (function (_super) {
     Attributo.prototype.changeAcc = function (acc) {
         this.visibility = acc;
     };
+    Attributo.prototype.toMU = function () {
+        var attr;
+        if (this.visibility == "public") {
+            attr = '{\"typePU\":\"' + this.getTipo() +
+                '\", \"varPU\":\"' + this.getNome() + '\"}';
+        }
+        else {
+            attr = '{\"typeP\":\"' + this.getTipo() +
+                '\", \"varP\":\"' + this.getNome() + '\"}';
+        }
+        return JSON.stringify(attr);
+    };
     return Attributo;
 }(__WEBPACK_IMPORTED_MODULE_0__param__["a" /* Param */]));
 
 //# sourceMappingURL=attributo.js.map
 
 /***/ }),
-/* 123 */
+/* 126 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__classe__ = __webpack_require__(41);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__classe__ = __webpack_require__(43);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ClasseAstratta; });
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -2106,13 +2537,224 @@ var ClasseAstratta = (function (_super) {
 //# sourceMappingURL=classe-astratta.js.map
 
 /***/ }),
-/* 124 */
+/* 127 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__shape__ = __webpack_require__(24);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return endIfNode; });
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+
+var endIfNode = (function (_super) {
+    __extends(endIfNode, _super);
+    function endIfNode(id) {
+        return _super.call(this, id) || this;
+    }
+    endIfNode.prototype.getType = function () {
+        return 'endIfNode';
+    };
+    endIfNode.prototype.toCode = function (sh) {
+        if (!(this.getPrinted())) {
+            this.setPrinted(true);
+            console.log("}");
+            if (this.getSucc())
+                sh.printSucc(this.getSucc());
+        }
+    };
+    return endIfNode;
+}(__WEBPACK_IMPORTED_MODULE_0__shape__["a" /* Shape */]));
+
+//# sourceMappingURL=end-if-node.js.map
+
+/***/ }),
+/* 128 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__shape__ = __webpack_require__(24);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return End; });
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+
+var End = (function (_super) {
+    __extends(End, _super);
+    function End(id) {
+        return _super.call(this, id) || this;
+    }
+    End.prototype.getType = function () {
+        return 'End';
+    };
+    End.prototype.toCode = function (sh) {
+        console.log('End');
+        sh.getAllShape().forEach(function (element) {
+            element.setPrinted(false);
+        });
+    };
+    return End;
+}(__WEBPACK_IMPORTED_MODULE_0__shape__["a" /* Shape */]));
+
+//# sourceMappingURL=end.js.map
+
+/***/ }),
+/* 129 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__shape__ = __webpack_require__(24);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ifNode; });
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+
+var ifNode = (function (_super) {
+    __extends(ifNode, _super);
+    function ifNode(id) {
+        return _super.call(this, id) || this;
+    }
+    ifNode.prototype.getType = function () {
+        return 'ifNode';
+    };
+    ifNode.prototype.toCode = function (sh) {
+        if (!(this.getPrinted())) {
+            this.setPrinted(true);
+            if (sh.existMyLoop(this.getId())) {
+                console.log("while(");
+                console.log(this.getBody());
+                console.log("){");
+                sh.printSucc(this.getSucc());
+            }
+            else {
+                if (this.getSucc()) {
+                    console.log("if(");
+                    console.log(this.getBody());
+                    console.log("){");
+                    sh.printSucc(this.getSucc());
+                }
+                if (this.getSuccElse()) {
+                    console.log("else(");
+                    console.log(this.getBody());
+                    console.log("){");
+                    sh.printSucc(this.getSuccElse());
+                }
+            }
+        }
+        else {
+            console.log("}");
+            sh.printSucc(this.getSuccElse());
+        }
+    };
+    return ifNode;
+}(__WEBPACK_IMPORTED_MODULE_0__shape__["a" /* Shape */]));
+
+//# sourceMappingURL=if-node.js.map
+
+/***/ }),
+/* 130 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__shape__ = __webpack_require__(24);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return operation; });
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+
+var operation = (function (_super) {
+    __extends(operation, _super);
+    function operation(id) {
+        return _super.call(this, id) || this;
+    }
+    operation.prototype.getType = function () {
+        return 'opearation';
+    };
+    operation.prototype.toCode = function (sh) {
+        if (!(this.getPrinted())) {
+            this.setPrinted(true);
+            console.log(this.getBody());
+            console.log(";");
+            if (this.getSucc())
+                sh.printSucc(this.getSucc());
+        }
+    };
+    return operation;
+}(__WEBPACK_IMPORTED_MODULE_0__shape__["a" /* Shape */]));
+
+//# sourceMappingURL=operation.js.map
+
+/***/ }),
+/* 131 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__shape__ = __webpack_require__(24);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Start; });
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+
+var Start = (function (_super) {
+    __extends(Start, _super);
+    function Start(id) {
+        return _super.call(this, id) || this;
+    }
+    Start.prototype.getType = function () {
+        return 'Start';
+    };
+    Start.prototype.toCode = function (sh) {
+        console.log('start');
+        sh.printSucc(this.getSucc());
+    };
+    return Start;
+}(__WEBPACK_IMPORTED_MODULE_0__shape__["a" /* Shape */]));
+
+//# sourceMappingURL=start.js.map
+
+/***/ }),
+/* 132 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_menu_service__ = __webpack_require__(32);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_main_editor_service__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_menu_service__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_main_editor_service__ = __webpack_require__(14);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FileComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -2145,8 +2787,8 @@ var FileComponent = (function () {
 FileComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_4" /* Component */])({
         selector: 'app-file',
-        template: __webpack_require__(269),
-        styles: [__webpack_require__(222)]
+        template: __webpack_require__(279),
+        styles: [__webpack_require__(230)]
     }),
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_menu_service__["a" /* MenuService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_menu_service__["a" /* MenuService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__services_main_editor_service__["a" /* MainEditorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_main_editor_service__["a" /* MainEditorService */]) === "function" && _b || Object])
 ], FileComponent);
@@ -2155,7 +2797,7 @@ var _a, _b;
 //# sourceMappingURL=file.component.js.map
 
 /***/ }),
-/* 125 */
+/* 133 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2181,8 +2823,8 @@ var LayerComponent = (function () {
 LayerComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_4" /* Component */])({
         selector: 'app-layer',
-        template: __webpack_require__(270),
-        styles: [__webpack_require__(223)]
+        template: __webpack_require__(280),
+        styles: [__webpack_require__(231)]
     }),
     __metadata("design:paramtypes", [])
 ], LayerComponent);
@@ -2190,12 +2832,12 @@ LayerComponent = __decorate([
 //# sourceMappingURL=layer.component.js.map
 
 /***/ }),
-/* 126 */
+/* 134 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_menu_service__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_menu_service__ = __webpack_require__(34);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ModificaComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -2225,8 +2867,8 @@ var ModificaComponent = (function () {
 ModificaComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_4" /* Component */])({
         selector: 'app-modifica',
-        template: __webpack_require__(271),
-        styles: [__webpack_require__(224)]
+        template: __webpack_require__(281),
+        styles: [__webpack_require__(232)]
     }),
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_menu_service__["a" /* MenuService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_menu_service__["a" /* MenuService */]) === "function" && _a || Object])
 ], ModificaComponent);
@@ -2235,7 +2877,7 @@ var _a;
 //# sourceMappingURL=modifica.component.js.map
 
 /***/ }),
-/* 127 */
+/* 135 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2261,8 +2903,8 @@ var ProfiloComponent = (function () {
 ProfiloComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_4" /* Component */])({
         selector: 'app-profilo',
-        template: __webpack_require__(272),
-        styles: [__webpack_require__(225)]
+        template: __webpack_require__(282),
+        styles: [__webpack_require__(233)]
     }),
     __metadata("design:paramtypes", [])
 ], ProfiloComponent);
@@ -2270,7 +2912,7 @@ ProfiloComponent = __decorate([
 //# sourceMappingURL=profilo.component.js.map
 
 /***/ }),
-/* 128 */
+/* 136 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2296,8 +2938,8 @@ var ProgettoComponent = (function () {
 ProgettoComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_4" /* Component */])({
         selector: 'app-progetto',
-        template: __webpack_require__(273),
-        styles: [__webpack_require__(226)]
+        template: __webpack_require__(283),
+        styles: [__webpack_require__(234)]
     }),
     __metadata("design:paramtypes", [])
 ], ProgettoComponent);
@@ -2305,7 +2947,7 @@ ProgettoComponent = __decorate([
 //# sourceMappingURL=progetto.component.js.map
 
 /***/ }),
-/* 129 */
+/* 137 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2331,8 +2973,8 @@ var TemplateComponent = (function () {
 TemplateComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_4" /* Component */])({
         selector: 'app-template',
-        template: __webpack_require__(274),
-        styles: [__webpack_require__(227)]
+        template: __webpack_require__(284),
+        styles: [__webpack_require__(235)]
     }),
     __metadata("design:paramtypes", [])
 ], TemplateComponent);
@@ -2340,7 +2982,7 @@ TemplateComponent = __decorate([
 //# sourceMappingURL=template.component.js.map
 
 /***/ }),
-/* 130 */
+/* 138 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2366,8 +3008,8 @@ var MenuComponent = (function () {
 MenuComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_4" /* Component */])({
         selector: 'app-menu',
-        template: __webpack_require__(275),
-        styles: [__webpack_require__(228)]
+        template: __webpack_require__(285),
+        styles: [__webpack_require__(236)]
     }),
     __metadata("design:paramtypes", [])
 ], MenuComponent);
@@ -2375,13 +3017,13 @@ MenuComponent = __decorate([
 //# sourceMappingURL=menu.component.js.map
 
 /***/ }),
-/* 131 */
+/* 139 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_editor_models_classe__ = __webpack_require__(41);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_editor_models_metodo__ = __webpack_require__(67);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_editor_models_param__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_editor_models_classe__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_editor_models_metodo__ = __webpack_require__(69);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_editor_models_param__ = __webpack_require__(44);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Global; });
 
 
@@ -2456,6 +3098,7 @@ var Global = (function () {
         var _this = this;
         methods.forEach(function (met) {
             var m = new __WEBPACK_IMPORTED_MODULE_1__components_editor_models_metodo__["a" /* Metodo */](met.statico, met.costruttore, met.nome, met.accesso, met.tipo, _this.generateParams(met.listaArgomenti));
+            m.addDiagram(met.diagramma);
             classe.addMetodo(m);
         });
     };
@@ -2479,13 +3122,31 @@ var Global = (function () {
         console.log(global);
         return global;
     };
+    Global.prototype.getInfoClasse = function (x) {
+        var info = new Array();
+        x.forEach(function (element, i) {
+            var classe = element.toMU();
+            if (i != x.length - 1)
+                classe += ',';
+            info.push(classe);
+        });
+        return info;
+    };
+    // I campi devono ritornare come string
+    Global.prototype.toMU = function () {
+        var global = '{' +
+            JSON.stringify(this.getInfoClasse(this.classi))
+            + '}';
+        console.log(global);
+        return JSON.stringify(global);
+    };
     return Global;
 }());
 
 //# sourceMappingURL=global.js.map
 
 /***/ }),
-/* 132 */
+/* 140 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2501,14 +3162,6 @@ var environment = {
 //# sourceMappingURL=environment.js.map
 
 /***/ }),
-/* 133 */,
-/* 134 */,
-/* 135 */,
-/* 136 */,
-/* 137 */,
-/* 138 */,
-/* 139 */,
-/* 140 */,
 /* 141 */,
 /* 142 */,
 /* 143 */,
@@ -2584,7 +3237,15 @@ var environment = {
 /* 213 */,
 /* 214 */,
 /* 215 */,
-/* 216 */
+/* 216 */,
+/* 217 */,
+/* 218 */,
+/* 219 */,
+/* 220 */,
+/* 221 */,
+/* 222 */,
+/* 223 */,
+/* 224 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)(false);
@@ -2601,142 +3262,6 @@ exports.push([module.i, ".row {\n  margin: 0;\n  padding: 0;\n  height: 94vh;\n}
 module.exports = module.exports.toString();
 
 /***/ }),
-/* 217 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(3)(false);
-// imports
-
-
-// module
-exports.push([module.i, "", ""]);
-
-// exports
-
-
-/*** EXPORTS FROM exports-loader ***/
-module.exports = module.exports.toString();
-
-/***/ }),
-/* 218 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(3)(false);
-// imports
-
-
-// module
-exports.push([module.i, "", ""]);
-
-// exports
-
-
-/*** EXPORTS FROM exports-loader ***/
-module.exports = module.exports.toString();
-
-/***/ }),
-/* 219 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(3)(false);
-// imports
-
-
-// module
-exports.push([module.i, ".menu {\n  background-color: #E0E0E0;\n   /*#EAEAF1;*/\n  border-left: 1px solid black;\n  border-bottom: 1px solid black;\n  font-weight: bold;\n  font-size: 14px;\n  text-align: center;\n  border-top: none;\n}\n\n.row {\n  padding: 3% 0;\n  border-top: 1px solid black;\n}\n.selezionato {\n  /*font-size: 16px;*/\n  border-top: none;\n}\n\n.campiAttributo {\n  padding-bottom: 3%;\n}\n\n.iconaMirrow {\n  -webkit-transform: scale(-1, 1);\n  transform: scale(-1, 1);\n}\n\n.aggiungiAttributo {\n  display: block;\n}\n\n#listaAttr {\n  padding-bottom: 2%;\n  border-bottom: 1px solid black;\n  border-top: none;\n}\n\n.listaAttributi {\n  position: absolute;\n  background-color: #EAEAF1;\n  top: 0;\n  left: -100%;\n  z-index: 10;\n  max-width: 100%;\n  border-left: 1px solid black;\n}\n\n.listaAttributi ul {\n  margin-bottom: 0;\n}\n\n#listaMet {\n  /*padding-bottom: 2%;*/\n  border-bottom: 1px solid black;\n  border-top: none;\n}\n\n/*velocità di animazione del menù della lista attributi*/\n.collapsing {\n    transition: height 0.1s;\n}\n\n.tipiMetodo {\n  vertical-align: -webkit-baseline-middle;\n}\n\n#tabellaParametri {\n  max-height:200px;\n  overflow:auto;\n}\n", ""]);
-
-// exports
-
-
-/*** EXPORTS FROM exports-loader ***/
-module.exports = module.exports.toString();
-
-/***/ }),
-/* 220 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(3)(false);
-// imports
-
-
-// module
-exports.push([module.i, ".toolbar {\n  height: 100%;\n  background-color: #F1EDEA;\n  overflow: hidden;\n}\n\n.classi {\n  /*display: none;*/\n}\n\n.tipo {\n  text-align: center;\n  font-weight: bold;\n  vertical-align: middle;\n}\n\n.icona {\n  margin:0 auto;\n  display: block;\n  height: 40px;\n  width: 40px;\n}\n\n.add {\n  cursor: pointer;\n  height: 40px;\n  width: 40px;\n  outline:none;\n  vertical-align: middle;\n  padding: 0;\n\n}\n\n.add:hover {\n  opacity: 0.4;\n}\n\n.addClasse {\n    background: url(" + __webpack_require__(238) + ") no-repeat top left;\n    background-size: contain;\n\n}\n\n.addInterfaccia {\n    background: url(" + __webpack_require__(239) + ") no-repeat top left;\n    background-size: contain;\n}\n\n.addAstratta {\n    background: url(" + __webpack_require__(237) + ") no-repeat top left;\n    background-size: contain;\n}\n\n.addCommento {\n    background: url(" + __webpack_require__(304) + ") no-repeat top left;\n    background-size: contain;\n}\n\n.addAssociazione {\n    background: url(" + __webpack_require__(240) + ") no-repeat top left;\n    background-size: contain;\n}\n\n.addGeneralizzazione {\n    background: url(" + __webpack_require__(241) + ") no-repeat top left;\n    background-size: contain;\n}\n\n.addImplementazione {\n    background: url(" + __webpack_require__(242) + ") no-repeat top left;\n    background-size: contain;\n}\n\n.addStart {\n  background: url(" + __webpack_require__(230) + ") no-repeat top left;\n  background-size:100%;\n}\n\n.addEnd {\n  background: url(" + __webpack_require__(231) + ") no-repeat;\n  background-size:100%;\n}\n\n.addAttivita {\n  background: url(" + __webpack_require__(233) + ") no-repeat top left;\n  background-size:100%;\n}\n\n.addAttivitaFor {\n  background: url(" + __webpack_require__(234) + ") no-repeat top left;\n  background-size:100%;\n}\n\n.addConnettore {\n  background: url(" + __webpack_require__(232) + ") no-repeat;\n  background-size:100%;\n}\n\n.addDecision {\n  background: url(" + __webpack_require__(235) + ") no-repeat;\n  background-size:100%;\n}\n\n.addEndDecision {\n  background: url(" + __webpack_require__(236) + ") no-repeat;\n  background-size:100%;\n}\n\n/*Blocco di icone inizialmente settato a false*/\n.activity {\n  /*display: none;*/\n}\n", ""]);
-
-// exports
-
-
-/*** EXPORTS FROM exports-loader ***/
-module.exports = module.exports.toString();
-
-/***/ }),
-/* 221 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(3)(false);
-// imports
-
-
-// module
-exports.push([module.i, "#paper {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  margin: 0;\n  padding: 0;\n}\n\n.editClass {\n  z-index: 10;\n  position: absolute;\n  width: 33.4%;\n  margin: 0;\n  padding: 0;\n  top: 0;\n  left: 100%;\n}\n\n.toolbar {\n  position: absolute;\n  width: 95px;\n  height: 100%;\n  margin: 0;\n  padding: 0;\n  top: 0;\n  left: 0;\n  border-right: 1px solid black;\n}\n", ""]);
-
-// exports
-
-
-/*** EXPORTS FROM exports-loader ***/
-module.exports = module.exports.toString();
-
-/***/ }),
-/* 222 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(3)(false);
-// imports
-
-
-// module
-exports.push([module.i, ".btn {\n  border: none;\n  border-radius: 0;\n  background-color: #42413D;\n  color: #FFCE2B;\n}\n\n.btn:hover {\n  background-color: none;\n  border-color: #FFCE2B;\n}\n\n.btn:active {\n  box-shadow: 0 5px #666;\n  -webkit-transform: translateY(4px);\n          transform: translateY(4px);\n}\n\nul {\n  background-color: #42413D;\n}\n\n.dropdown-toggle {\n background-color: transparent;\n border-color: #42413D;\n border-style: solid;\n border-top: none;\n border-right: none;\n border-left: none;\n}\n\n.dropdown-toggle:active, .open .dropdown-toggle {\n      background: #FFCE2B !important;\n      color:#42413D !important;\n      border-style: none;\n  }\n\n.dropdown-menu{\n  background-color: #42413D;\n}\n\n.dropdown-menu>li>a{\n  color: #FFCE2B;\n}\n\n.dropdown-menu>li>a:hover{\n  background-color: #636363;\n}\n\n#upload {\n  display: none;\n}", ""]);
-
-// exports
-
-
-/*** EXPORTS FROM exports-loader ***/
-module.exports = module.exports.toString();
-
-/***/ }),
-/* 223 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(3)(false);
-// imports
-
-
-// module
-exports.push([module.i, ".btn {\n  border: none;\n  border-radius: 0;\n  background-color: #42413D;\n  color: #FFCE2B;\n}\n\n.btn:hover {\n  background-color: none;\n  border-color: #FFCE2B;\n}\n\n.btn:active {\n  box-shadow: 0 5px #666;\n  -webkit-transform: translateY(4px);\n          transform: translateY(4px);\n}\n\nul {\n  background-color: #42413D;\n}\n\n.dropdown-toggle {\n background-color: transparent;\n border-color: #42413D;\n border-style: solid;\n border-top: none;\n border-right: none;\n border-left: none;\n}\n\n.dropdown-toggle:active, .open .dropdown-toggle {\n      background: #FFCE2B !important;\n      color:#42413D !important;\n      border-style: none;\n  }\n\n.dropdown-menu{\n  background-color: #42413D;\n}\n\n.dropdown-menu>li>a{\n  color: #FFCE2B;\n}\n\n.dropdown-menu>li>a:hover{\n  background-color: #636363;\n}\n", ""]);
-
-// exports
-
-
-/*** EXPORTS FROM exports-loader ***/
-module.exports = module.exports.toString();
-
-/***/ }),
-/* 224 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(3)(false);
-// imports
-
-
-// module
-exports.push([module.i, ".btn {\n  border: none;\n  border-radius: 0;\n  background-color: #42413D;\n  color: #FFCE2B;\n}\n\n.btn:hover {\n  background-color: none;\n  border-color: #FFCE2B;\n}\n\n.btn:active {\n  box-shadow: 0 5px #666;\n  -webkit-transform: translateY(4px);\n          transform: translateY(4px);\n}\n\nul {\n  background-color: #42413D;\n}\n\n.dropdown-toggle {\n background-color: transparent;\n border-color: #42413D;\n border-style: solid;\n border-top: none;\n border-right: none;\n border-left: none;\n}\n\n.dropdown-toggle:active, .open .dropdown-toggle {\n      background: #FFCE2B !important;\n      color:#42413D !important;\n      border-style: none;\n  }\n\n.dropdown-menu{\n  background-color: #42413D;\n}\n\n.dropdown-menu>li>a{\n  color: #FFCE2B;\n}\n\n.dropdown-menu>li>a:hover{\n  background-color: #636363;\n}\n", ""]);
-
-// exports
-
-
-/*** EXPORTS FROM exports-loader ***/
-module.exports = module.exports.toString();
-
-/***/ }),
 /* 225 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2745,7 +3270,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, ".btn {\n  border: none;\n  border-radius: 0;\n  background-color: #42413D;\n  color: #FFCE2B;\n}\n\n.btn:hover {\n  background-color: none;\n  border-color: #FFCE2B;\n}\n\n.btn:active {\n  box-shadow: 0 5px #666;\n  -webkit-transform: translateY(4px);\n          transform: translateY(4px);\n}\n\nul {\n  background-color: #42413D;\n}\n\n.dropdown-toggle {\n background-color: transparent;\n border-color: #42413D;\n border-style: solid;\n border-top: none;\n border-right: none;\n border-left: none;\n}\n\n.dropdown-toggle:active, .open .dropdown-toggle {\n      background: #FFCE2B !important;\n      color:#42413D !important;\n      border-style: none;\n  }\n\n.dropdown-menu{\n  background-color: #42413D;\n}\n\n.dropdown-menu>li>a{\n  color: #FFCE2B;\n}\n\n.dropdown-menu>li>a:hover{\n  background-color: #636363;\n}\n", ""]);
+exports.push([module.i, "", ""]);
 
 // exports
 
@@ -2762,7 +3287,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, ".btn {\n  border: none;\n  border-radius: 0;\n  background-color: #42413D;\n  color: #FFCE2B;\n}\n\n.btn:hover {\n  background-color: none;\n  border-color: #FFCE2B;\n}\n\nul {\n  background-color: #42413D;\n}\n\n.btn:active {\n  box-shadow: 0 5px #666;\n  -webkit-transform: translateY(4px);\n          transform: translateY(4px);\n}\n\n.dropdown-toggle {\n background-color: transparent;\n border-color: #42413D;\n border-style: solid;\n border-top: none;\n border-right: none;\n border-left: none;\n}\n\n.dropdown-toggle:active, .open .dropdown-toggle {\n      background: #FFCE2B !important;\n      color:#42413D !important;\n      border-style: none;\n  }\n\n.dropdown-menu{\n  background-color: #42413D;\n}\n\n.dropdown-menu>li>a{\n  color: #FFCE2B;\n}\n\n.dropdown-menu>li>a:hover{\n  background-color: #636363;\n}\n", ""]);
+exports.push([module.i, ".menu {\n  background-color: #E0E0E0;\n   /*#EAEAF1;*/\n  border-left: 1px solid black;\n  border-bottom: 1px solid black;\n  font-weight: bold;\n  font-size: 14px;\n  text-align: center;\n  border-top: none;\n}\n\n", ""]);
 
 // exports
 
@@ -2779,7 +3304,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, ".btn {\n  border: none;\n  border-radius: 0;\n  background-color: #42413D;\n  color: #FFCE2B;\n}\n\n.btn:hover {\n  background-color: none;\n  border-color: #FFCE2B;\n}\n\nul {\n  background-color: #42413D;\n}\n\n.btn:active {\n  box-shadow: 0 5px #666;\n  -webkit-transform: translateY(4px);\n          transform: translateY(4px);\n}\n\n.dropdown-toggle {\n background-color: transparent;\n border-color: #42413D;\n border-style: solid;\n border-top: none;\n border-right: none;\n border-left: none;\n}\n\n.dropdown-toggle:active, .open .dropdown-toggle {\n      background: #FFCE2B !important;\n      color:#42413D !important;\n      border-style: none;\n  }\n\n.dropdown-menu{\n  background-color: #42413D;\n}\n\n.dropdown-menu>li>a{\n  color: #FFCE2B;\n}\n\n.dropdown-menu>li>a:hover{\n  background-color: #636363;\n}\n", ""]);
+exports.push([module.i, ".menu {\n  background-color: #E0E0E0;\n   /*#EAEAF1;*/\n  border-left: 1px solid black;\n  border-bottom: 1px solid black;\n  font-weight: bold;\n  font-size: 14px;\n  text-align: center;\n  border-top: none;\n}\n\n.row {\n  padding: 3% 0;\n  border-top: 1px solid black;\n}\n.selezionato {\n  /*font-size: 16px;*/\n  border-top: none;\n}\n\n.campiAttributo {\n  padding-bottom: 3%;\n}\n\n.iconaMirrow {\n  -webkit-transform: scale(-1, 1);\n  transform: scale(-1, 1);\n}\n\n.aggiungiAttributo {\n  display: block;\n}\n\n#listaAttr {\n  padding-bottom: 2%;\n  border-bottom: 1px solid black;\n  border-top: none;\n}\n\n.listaAttributi {\n  position: absolute;\n  background-color: #EAEAF1;\n  top: 0;\n  left: -100%;\n  z-index: 10;\n  max-width: 100%;\n  border-left: 1px solid black;\n}\n\n.listaAttributi ul {\n  margin-bottom: 0;\n}\n\n#listaMet {\n  /*padding-bottom: 2%;*/\n  border-bottom: 1px solid black;\n  border-top: none;\n}\n\n/*velocità di animazione del menù della lista attributi*/\n.collapsing {\n    transition: height 0.1s;\n}\n\n.tipiMetodo {\n  vertical-align: -webkit-baseline-middle;\n}\n\n#tabellaParametri {\n  max-height:200px;\n  overflow:auto;\n}\n", ""]);
 
 // exports
 
@@ -2796,6 +3321,142 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
+exports.push([module.i, ".toolbar {\n  height: 100%;\n  background-color: #F1EDEA;\n  overflow: hidden;\n}\n\n.classi {\n  /*display: none;*/\n}\n\n.tipo {\n  text-align: center;\n  font-weight: bold;\n  vertical-align: middle;\n}\n\n.icona {\n  margin:0 auto;\n  display: block;\n  height: 40px;\n  width: 40px;\n}\n\n.add {\n  cursor: pointer;\n  height: 40px;\n  width: 40px;\n  outline:none;\n  vertical-align: middle;\n  padding: 0;\n\n}\n\n.add:hover {\n  opacity: 0.4;\n}\n\n.addClasse {\n    background: url(" + __webpack_require__(247) + ") no-repeat top left;\n    background-size: contain;\n\n}\n\n.addInterfaccia {\n    background: url(" + __webpack_require__(249) + ") no-repeat top left;\n    background-size: contain;\n}\n\n.addAstratta {\n    background: url(" + __webpack_require__(246) + ") no-repeat top left;\n    background-size: contain;\n}\n\n.addCommento {\n    background: url(" + __webpack_require__(248) + ") no-repeat top left;\n    background-size: contain;\n}\n\n.addAssociazione {\n    background: url(" + __webpack_require__(250) + ") no-repeat top left;\n    background-size: contain;\n}\n\n.addGeneralizzazione {\n    background: url(" + __webpack_require__(251) + ") no-repeat top left;\n    background-size: contain;\n}\n\n.addImplementazione {\n    background: url(" + __webpack_require__(252) + ") no-repeat top left;\n    background-size: contain;\n}\n\n.addStart {\n  background: url(" + __webpack_require__(238) + ") no-repeat top left;\n  background-size:100%;\n}\n\n.addEnd {\n  background: url(" + __webpack_require__(239) + ") no-repeat;\n  background-size:100%;\n}\n\n.addAttivita {\n  background: url(" + __webpack_require__(241) + ") no-repeat top left;\n  background-size:100%;\n}\n\n.addAttivitaFor {\n  background: url(" + __webpack_require__(243) + ") no-repeat top left;\n  background-size:100%;\n}\n\n.addConnettore {\n  background: url(" + __webpack_require__(240) + ") no-repeat;\n  background-size:100%;\n}\n\n.addDecision {\n  background: url(" + __webpack_require__(244) + ") no-repeat;\n  background-size:100%;\n}\n\n.addEndDecision {\n  background: url(" + __webpack_require__(245) + ") no-repeat;\n  background-size:100%;\n}\n\n.addRettangoloAngolo {\n  background: url(" + __webpack_require__(242) + ") no-repeat;\n  background-size:100%;\n}\n\n/*Blocco di icone inizialmente settato a false*/\n.activity {\n  /*display: none;*/\n}\n\n.freccia:focus {\n  border: 2px red solid;\n  opacity: 0.5;\n}", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+/* 229 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(3)(false);
+// imports
+
+
+// module
+exports.push([module.i, "#paper {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  margin: 0;\n  padding: 0;\n}\n\n.editClass {\n  z-index: 10;\n  position: absolute;\n  width: 33.4%;\n  margin: 0;\n  padding: 0;\n  top: 0;\n  left: 100%;\n}\n\n.toolbar {\n  position: absolute;\n  width: 95px;\n  height: 100%;\n  margin: 0;\n  padding: 0;\n  top: 0;\n  left: 0;\n  border-right: 1px solid black;\n}\n", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+/* 230 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(3)(false);
+// imports
+
+
+// module
+exports.push([module.i, ".btn {\n  border: none;\n  border-radius: 0;\n  background-color: #42413D;\n  color: #FFCE2B;\n}\n\n.btn:hover {\n  background-color: none;\n  border-color: #FFCE2B;\n}\n\n.btn:active {\n  box-shadow: 0 5px #666;\n  -webkit-transform: translateY(4px);\n          transform: translateY(4px);\n}\n\nul {\n  background-color: #42413D;\n}\n\n.dropdown-toggle {\n background-color: transparent;\n border-color: #42413D;\n border-style: solid;\n border-top: none;\n border-right: none;\n border-left: none;\n}\n\n.dropdown-toggle:active, .open .dropdown-toggle {\n      background: #FFCE2B !important;\n      color:#42413D !important;\n      border-style: none;\n  }\n\n.dropdown-menu{\n  background-color: #42413D;\n}\n\n.dropdown-menu>li>a{\n  color: #FFCE2B;\n}\n\n.dropdown-menu>li>a:hover{\n  background-color: #636363;\n}\n\n#upload {\n  display: none;\n}", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+/* 231 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(3)(false);
+// imports
+
+
+// module
+exports.push([module.i, ".btn {\n  border: none;\n  border-radius: 0;\n  background-color: #42413D;\n  color: #FFCE2B;\n}\n\n.btn:hover {\n  background-color: none;\n  border-color: #FFCE2B;\n}\n\n.btn:active {\n  box-shadow: 0 5px #666;\n  -webkit-transform: translateY(4px);\n          transform: translateY(4px);\n}\n\nul {\n  background-color: #42413D;\n}\n\n.dropdown-toggle {\n background-color: transparent;\n border-color: #42413D;\n border-style: solid;\n border-top: none;\n border-right: none;\n border-left: none;\n}\n\n.dropdown-toggle:active, .open .dropdown-toggle {\n      background: #FFCE2B !important;\n      color:#42413D !important;\n      border-style: none;\n  }\n\n.dropdown-menu{\n  background-color: #42413D;\n}\n\n.dropdown-menu>li>a{\n  color: #FFCE2B;\n}\n\n.dropdown-menu>li>a:hover{\n  background-color: #636363;\n}\n", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+/* 232 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(3)(false);
+// imports
+
+
+// module
+exports.push([module.i, ".btn {\n  border: none;\n  border-radius: 0;\n  background-color: #42413D;\n  color: #FFCE2B;\n}\n\n.btn:hover {\n  background-color: none;\n  border-color: #FFCE2B;\n}\n\n.btn:active {\n  box-shadow: 0 5px #666;\n  -webkit-transform: translateY(4px);\n          transform: translateY(4px);\n}\n\nul {\n  background-color: #42413D;\n}\n\n.dropdown-toggle {\n background-color: transparent;\n border-color: #42413D;\n border-style: solid;\n border-top: none;\n border-right: none;\n border-left: none;\n}\n\n.dropdown-toggle:active, .open .dropdown-toggle {\n      background: #FFCE2B !important;\n      color:#42413D !important;\n      border-style: none;\n  }\n\n.dropdown-menu{\n  background-color: #42413D;\n}\n\n.dropdown-menu>li>a{\n  color: #FFCE2B;\n}\n\n.dropdown-menu>li>a:hover{\n  background-color: #636363;\n}\n", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+/* 233 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(3)(false);
+// imports
+
+
+// module
+exports.push([module.i, ".btn {\n  border: none;\n  border-radius: 0;\n  background-color: #42413D;\n  color: #FFCE2B;\n}\n\n.btn:hover {\n  background-color: none;\n  border-color: #FFCE2B;\n}\n\n.btn:active {\n  box-shadow: 0 5px #666;\n  -webkit-transform: translateY(4px);\n          transform: translateY(4px);\n}\n\nul {\n  background-color: #42413D;\n}\n\n.dropdown-toggle {\n background-color: transparent;\n border-color: #42413D;\n border-style: solid;\n border-top: none;\n border-right: none;\n border-left: none;\n}\n\n.dropdown-toggle:active, .open .dropdown-toggle {\n      background: #FFCE2B !important;\n      color:#42413D !important;\n      border-style: none;\n  }\n\n.dropdown-menu{\n  background-color: #42413D;\n}\n\n.dropdown-menu>li>a{\n  color: #FFCE2B;\n}\n\n.dropdown-menu>li>a:hover{\n  background-color: #636363;\n}\n", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+/* 234 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(3)(false);
+// imports
+
+
+// module
+exports.push([module.i, ".btn {\n  border: none;\n  border-radius: 0;\n  background-color: #42413D;\n  color: #FFCE2B;\n}\n\n.btn:hover {\n  background-color: none;\n  border-color: #FFCE2B;\n}\n\nul {\n  background-color: #42413D;\n}\n\n.btn:active {\n  box-shadow: 0 5px #666;\n  -webkit-transform: translateY(4px);\n          transform: translateY(4px);\n}\n\n.dropdown-toggle {\n background-color: transparent;\n border-color: #42413D;\n border-style: solid;\n border-top: none;\n border-right: none;\n border-left: none;\n}\n\n.dropdown-toggle:active, .open .dropdown-toggle {\n      background: #FFCE2B !important;\n      color:#42413D !important;\n      border-style: none;\n  }\n\n.dropdown-menu{\n  background-color: #42413D;\n}\n\n.dropdown-menu>li>a{\n  color: #FFCE2B;\n}\n\n.dropdown-menu>li>a:hover{\n  background-color: #636363;\n}\n", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+/* 235 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(3)(false);
+// imports
+
+
+// module
+exports.push([module.i, ".btn {\n  border: none;\n  border-radius: 0;\n  background-color: #42413D;\n  color: #FFCE2B;\n}\n\n.btn:hover {\n  background-color: none;\n  border-color: #FFCE2B;\n}\n\nul {\n  background-color: #42413D;\n}\n\n.btn:active {\n  box-shadow: 0 5px #666;\n  -webkit-transform: translateY(4px);\n          transform: translateY(4px);\n}\n\n.dropdown-toggle {\n background-color: transparent;\n border-color: #42413D;\n border-style: solid;\n border-top: none;\n border-right: none;\n border-left: none;\n}\n\n.dropdown-toggle:active, .open .dropdown-toggle {\n      background: #FFCE2B !important;\n      color:#42413D !important;\n      border-style: none;\n  }\n\n.dropdown-menu{\n  background-color: #42413D;\n}\n\n.dropdown-menu>li>a{\n  color: #FFCE2B;\n}\n\n.dropdown-menu>li>a:hover{\n  background-color: #636363;\n}\n", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+/* 236 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(3)(false);
+// imports
+
+
+// module
 exports.push([module.i, ".barra-menu {\n  background: #42413D;\n  height: 6vh;\n}\n\n.row {\n  padding: 0;\n  margin: 0;\n}\n.logo {\n    display: inline-block;\n    color: #EE7500;\n    margin-left: 1%;\n  }\n\n.logo img{\n  display: inline-block;\n  width: 30px;\n}\n\n.logoText {\n  display: inline-block;\n}\n", ""]);
 
 // exports
@@ -2805,95 +3466,97 @@ exports.push([module.i, ".barra-menu {\n  background: #42413D;\n  height: 6vh;\n
 module.exports = module.exports.toString();
 
 /***/ }),
-/* 229 */,
-/* 230 */
+/* 237 */,
+/* 238 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "Cerchio.39ee067438843db9e6fa.svg";
 
 /***/ }),
-/* 231 */
+/* 239 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "CerchioCerchio.8b1850c7e37c766e8dbb.svg";
 
 /***/ }),
-/* 232 */
+/* 240 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "Freccia.a4c499fd315ae52afecc.svg";
 
 /***/ }),
-/* 233 */
+/* 241 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "Rettangolo.70ad5344a1a2ba3b5c29.svg";
 
 /***/ }),
-/* 234 */
+/* 242 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "RettangoloAngolo.273bf4f00b5c31c15274.svg";
+
+/***/ }),
+/* 243 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "RettangoloForchetta.18beb1c6c069027e2f37.svg";
 
 /***/ }),
-/* 235 */
+/* 244 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "Rombo.f40f0455691a69a821ad.svg";
 
 /***/ }),
-/* 236 */
+/* 245 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "RomboNero.2a60b493a7d5cc3927f5.svg";
 
 /***/ }),
-/* 237 */
+/* 246 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "Abstract.c6e97eeb61e215b9db88.svg";
 
 /***/ }),
-/* 238 */
+/* 247 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "Class.16df5b7229f5c33c2af5.svg";
 
 /***/ }),
-/* 239 */
+/* 248 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "Commento.82f02152bdaa973ffb93.svg";
+
+/***/ }),
+/* 249 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "Interface.3a9ef1baee68153d68e1.svg";
 
 /***/ }),
-/* 240 */
+/* 250 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "Association.92977cfedaee16baf9b0.svg";
 
 /***/ }),
-/* 241 */
+/* 251 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "Generalization.e97844f3e5a27c0f9c2c.svg";
 
 /***/ }),
-/* 242 */
+/* 252 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "Implementation.03e2d3a8adc68c375556.svg";
 
 /***/ }),
-/* 243 */,
-/* 244 */,
-/* 245 */,
-/* 246 */,
-/* 247 */,
-/* 248 */,
-/* 249 */,
-/* 250 */,
-/* 251 */,
-/* 252 */,
 /* 253 */,
 /* 254 */,
 /* 255 */,
@@ -2904,94 +3567,94 @@ module.exports = __webpack_require__.p + "Implementation.03e2d3a8adc68c375556.sv
 /* 260 */,
 /* 261 */,
 /* 262 */,
-/* 263 */
+/* 263 */,
+/* 264 */,
+/* 265 */,
+/* 266 */,
+/* 267 */,
+/* 268 */,
+/* 269 */,
+/* 270 */,
+/* 271 */,
+/* 272 */,
+/* 273 */
 /***/ (function(module, exports) {
 
 module.exports = "<!-- component padre che racchiude gli elementi del menù -->\n<div class=\".container-fluid\">\n<app-menu></app-menu>\n<div class=\"row\">\n  <!-- component padre che racchiude gli elementi dell'editor -->\n  <div class=\"col-md-9 col-xs-9 editor\">\n    <app-editor></app-editor>\n  </div>\n  <!-- component  che racchiude gli elementi del acrivity frame, la quale rappresenta il flusso del programma -->\n  <div class=\"col-md-3 col-xs-3 activityframe\">\n    <app-activity-frame></app-activity-frame>\n  </div>\n</div>\n"
 
 /***/ }),
-/* 264 */
+/* 274 */
 /***/ (function(module, exports) {
 
 module.exports = "Activity frame\n"
 
 /***/ }),
-/* 265 */
+/* 275 */
 /***/ (function(module, exports) {
 
-module.exports = "<div>\n  <button class=\"btn btn-default\" (click)=\"this.mainEditorService.enterClassMode()\">Diagramma delle Classi</button>\n</div>"
+module.exports = "<div class=\"container-fluid menu\">\n  <div class=\"row changeNome\">\n    <label>Corpo operazione</label>\n    <input #corpo id=\"changeName\"\n    (keyup.enter)=\"modBody(corpo.value)\">\n    <button class=\"btn btn-default\" (click)=\"modBody(corpo.value)\">\n      <span class=\"glyphicon glyphicon-floppy-disk\" aria-hidden=\"true\"></span>\n    </button>\n  </div>\n  <div>\n    <button class=\"btn btn-default\" (click)=\"enterClassMode()\">\n      <span class=\"glyphicon glyphicon-arrow-left freccia\"></span>\n      Diagramma delle Classi</button>\n  </div>\n  <div>\n    <button class=\"btn btn-default\" (click)=\"generaCodice()\">\n      <span class=\"glyphicon glyphicon-arrow-left freccia\"></span>\n      CODE!</button>\n  </div>\n</div>"
 
 /***/ }),
-/* 266 */
+/* 276 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container-fluid menu\">\n  <div class=\"row selezionato\">\n    <span class=\"glyphicon glyphicon-wrench iconaMirrow\" aria-hidden=\"true\"></span>&nbsp;&nbsp;{{name}}&nbsp;\n    <button class=\"btn btn-default\" (click)=\"removeClass(name)\" title=\"Rimuovi classe\">\n      <span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span>\n    </button>\n  </div>\n  <div class=\"row changeNome\">\n    Modifica nome:\n    <input #changeName id=\"changeName\"\n    (keyup.enter)=\"changeNome(changeName.value)\">\n    <button class=\"btn btn-default\" (click)=\"changeNome(changeName.value)\">\n      <span class=\"glyphicon glyphicon-floppy-disk\" aria-hidden=\"true\"></span>\n    </button>\n  </div>\n  <!-- div per aggiungere un attributo -->\n  <div class=\"aggiungiAttributo\">\n    <div class=\"row\">\n      <button href=\"#addAttr\" class=\"btn btn-default\" data-toggle=\"collapse\">\n        <span class=\"glyphicon glyphicon-plus\" aria-hidden=\"true\"></span>&nbsp;Aggiungi Attributo\n      </button>\n    </div>\n    <div id=\"addAttr\" class=\"campiAttributo collapse\">\n      <div class=\"aggiungiAttributo staticAttr\">\n        <label>Static <input #checkStaticAtt type=\"checkbox\" name=\"static\" class=\"checkbox-circle\" value=\"Stiatic\" /></label>\n      </div>\n      <div class=\"aggiungiAttributo accessoAttr\">\n        <label>Seleziona Visibilità</label>\n        <select #accAtt  [(ngModel)]=\"selectedAccAtt\">\n          <option *ngFor=\"let acc of accessoAttr\" [value]=\"acc\">{{ acc }}</option>\n        </select>\n      </div>\n      <div class=\"aggiungiAttributo selezionaTipo\">\n        <label>Seleziona tipo</label>\n        <select #tipiAtt [(ngModel)]=\"selectedTipoAtt\">\n          <option value=\"\"></option>\n          <option *ngFor=\"let type of types\" [value]=\"type\">{{type}}</option>\n        </select>\n      </div>\n      <div class=\"aggiungiAttributo nomeAttr\">\n        <label>Nome</label>\n        <input [disabled]=\"!selectedTipoAtt\" id=\"nome-attributo\" #nomeAtt\n        (keyup.enter)=\"addAttributo(nomeAtt.value)\">\n      </div>\n      <button class=\"btn btn-default\" [disabled]=\"!selectedTipoAtt\" (click)=\"addAttributo(nomeAtt.value, checkStaticAtt.checked, tipiAtt.value, accAtt.value)\">Aggiungi Attributo</button>\n    </div>\n\n  </div>\n  <button href=\"#listaAttr\" #lista class=\"btn btn-default listaAttr\" data-toggle=\"collapse\" (click)=\"closeCollapsedList(lista)\">\n    <span class=\"glyphicon glyphicon-triangle-left\" aria-hidden=\"true\"></span>&nbsp;Lista Attributi\n  </button>\n  <!-- lista attributi della classe -->\n  <div *ngIf=\"this.mainEditorService.selectedClasse\" class=\"container listaAttributi\">\n    <div id=\"listaAttr\" class=\"row collapse\" *ngIf=\"name\">\n      Lista attributi\n      <ul class=\"list-group\">\n        <li class=\"list-group-item\" *ngFor=\"let attr of this.mainEditorService.selectedClasse.getAttributi()\">\n          <span>{{attr.name}}: {{attr.type}}\n            <button class=\"btn btn-default\" (click)=\"removeAttributo(attr.name)\">\n              <span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\" title=\"Rimuovi\"></span>\n            </button>\n            <!-- icona di modifica che farà apparire un menù a tendina per la modifica attributo-->\n            <button class=\"btn btn-default\" data-toggle=\"collapse\" [attr.data-target]=\"'#'+attr.name\" title=\"Modifica\">\n              <span class=\"glyphicon glyphicon-pencil\" aria-hidden=\"true\" title=\"Modifica\"></span>\n            </button>\n          </span>\n          <!-- menù a comparsa (collapse) per modificare un attributo-->\n          <div class=\"campiAttributo collapse listaModAttr\" attr.id=\"{{attr.name}}\">\n            <div class=\"modificaAttributo accessoAttr\">\n              <div class=\"aggiungiAttributo staticAttr\">\n                <label>Static <input #checkStaticAtt type=\"checkbox\" name=\"static\" class=\".checkbox-circle\" value=\"Stiatic\" /></label>\n              </div>\n              <label>Seleziona Visibilità</label>\n              <select  [(ngModel)]=\"selectedAccAtt\">\n                <option *ngFor=\"let acc of accessoAttr\" [value]=\"acc\">{{ acc }}</option>\n              </select>\n            </div>\n            <div class=\"modificaAttributo selezionaTipo\">\n              <label>Seleziona tipo</label>\n              <select #tipi [(ngModel)]=\"selectedTipoAtt\">\n                <option value=\"\"></option>\n                <option *ngFor=\"let type of types\" [value]=\"type\">{{type}}</option>\n              </select>\n            </div>\n            <div class=\"modificaAttributo nomeAttr\">\n              <label>Nome</label>\n              <input [disabled]=\"!selectedTipoAtt\" id=\"nome-attributo\" #nomeAtt\n              (keyup.enter)=\"changeAttributo(nomeAtt.value, attr.name)\">\n            </div>\n            <button class=\"btn btn-default\" [disabled]=\"!selectedTipoAtt\" (click)=\"changeAttributo(nomeAtt.value, attr.name)\">Modifica Attributo</button>\n            </div>\n        </li>\n      </ul>\n    </div>\n  </div>\n  <!-- blocco per aggiungere un metodo alla classe -->\n  <div class=\"aggiungiMetodo\">\n    <div class=\"row\">\n      <button href=\"#addMetodo\" class=\"btn btn-default\" data-toggle=\"collapse\">\n        <span class=\"glyphicon glyphicon-plus\" aria-hidden=\"true\"></span>&nbsp;Aggiungi Metodo\n      </button>\n    </div>\n    <div id=\"addMetodo\" class=\"campiMetodo collapse\">\n      <!-- blocco per aggiunta parametri metodo -->\n      <div class=\"aggiungiMetodo .selezionaTipo\">\n        <div class=\"aggiungiAttributo staticAttr\">\n          <label>Static <input #staticMet type=\"checkbox\" id=\"static\" name=\"static\" classe=\"checkbox-circle\" value=\"Stiatic\" (change)='updateCheckbox(staticMet.id)'></label>\n          <label> Costruttore <input #constructor [(ngModel)]=\"costruttore\" type=\"checkbox\" id=\"constructor\" name=\"constructor\" classe=\"checkbox-circle\" value=\"Constructor\" (change)='updateCheckbox(constructor.id)'></label>\n        </div>\n        <div class=\"aggiungiMeotdo accessoMetodo\">\n          <label>Seleziona Visibilità</label>\n          <select #accMetodo [(ngModel)]=\"selectedAccMet\">\n            <option *ngFor=\"let acc of accessoAttr\" [value]=\"acc\">{{ acc }}</option>\n          </select>\n        </div>\n        <div [hidden]=\"costruttore\">\n          <label>Seleziona tipo di ritorno</label>\n          <select #tipiMetodo [(ngModel)]=\"selectedTipoMet\">\n            <option value=\"void\"></option>\n            <option *ngFor=\"let type of types\" [value]=\"type\">{{type}}</option>\n          </select>\n        </div>\n      </div>\n      <div [hidden]=\"costruttore\" class=\"aggiungiMetodo nomeMet\">\n        <label>Nome</label>\n        <input id=\"nome-metodo\" #nomeMetodo [(ngModel)]=\"nomeMet\">\n      </div>\n      <div class=\"container-fluid\">\n        <div class=\"row clearfix\">\n          <div class=\"col-md-12 column\" id=\"tabellaParametri\">\n            Parametri attuali\n            <table class=\"table table-bordered table-hover\" id=\"tab_logic\">\n              <thead>\n                <tr>\n                  <th class=\"text-center\">Tipo</th>        \n                  <th class=\"text-center\">Nome</th>          \n                  <th class=\"text-center\"></th>                \n                </tr>\n              </thead>\n              <tbody>\n                <tr *ngFor=\"let param of parametriMetodo\" class=\"tipiMetodo\">\n                  <td>{{param.getTipo()}}</td>\n                  <td>{{param.getNome()}}</td>\n                </tr>\n                <tr #parametro>\n                  <td>\n                    <select #tipiParam class=\"tipiMetodo\">\n                      <option value=\"\"></option>\n                      <option *ngFor=\"let type of types\" [value]=\"type\">{{type}}</option>\n                    </select>\n                  </td>\n                  <td>\n                    <input #nomeParam type=\"text\" placeholder=\"Nome\" class=\"form-control\"/>\n                  </td>\n                  <td>\n                    <button class=\"btn btn-default\" title=\"Aggiungi Parmetro\" (click)=\"addParam(tipiParam.value, nomeParam.value)\">\n                      <span class=\"glyphicon glyphicon-plus\" aria-hidden=\"true\"></span>\n                    </button>\n                  </td>\n                </tr>\n              </tbody>\n            </table>\n          </div>\n        </div>\n      </div>\n      <button class=\"btn btn-default\" [disabled]=\"isAddableMethod()\" (click)=\"addMetodo(nomeMetodo.value, staticMet.checked, constructor.checked, tipiMetodo.value, accMetodo.value)\">Aggiungi Metodo</button>\n    </div>   \n  </div>\n  <button href=\"#listaMet\" #listac class=\"btn btn-default\" data-toggle=\"collapse\" (click)='closeCollapsedList(listac)'>\n    <span class=\"glyphicon glyphicon-triangle-left\" aria-hidden=\"true\"></span>&nbsp;Lista Metodi\n  </button>\n  <!-- lista metodi della classe -->\n  <div *ngIf=\"this.mainEditorService.selectedClasse\" class=\"container listaAttributi\">\n    <div id=\"listaMet\" class=\"row collapse\" *ngIf=\"name\">\n      Lista metodi\n      <ul class=\"list-group\">\n        <li class=\"list-group-item\" *ngFor=\"let met of getMetodi()\">\n          <span>{{met.accesso}} {{met.staticString()}} {{met.nome}}({{met.paramToString()}}): {{met.tipoRitorno}}\n            <button class=\"btn btn-default\" (click)=\"removeMetodo(met.nome)\">\n               <span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\" title=\"Rimuovi\"></span>\n            </button>\n            <button class=\"btn btn-default\" (click)=\"modifyMetodo(met.nome)\" title=\"Modifica\">\n              <span class=\"glyphicon glyphicon-pencil\" aria-hidden=\"true\" title=\"Modifica\"></span>\n            </button>\n          </span>\n        </li>\n      </ul>\n    </div>\n  </div>\n  <div class=\"aggiungiMetodo\">\n    <div class=\"row\">\n      <button [disabled]=\"this.mainEditorService.isThereAMain()\" class=\"btn btn-default\" (click)=\"addMain()\">\n        <span class=\"glyphicon glyphicon-plus\" aria-hidden=\"true\"></span>&nbsp;Aggiungi Metodo Main\n      </button>\n    </div>\n  </div>\n</div>\n"
+module.exports = "<div class=\"container-fluid menu\">\n  <div class=\"row selezionato\">\n    <span class=\"glyphicon glyphicon-wrench iconaMirrow\" aria-hidden=\"true\"></span>&nbsp;&nbsp;{{name}}&nbsp;\n    <button class=\"btn btn-default\" (click)=\"removeClass(name)\" title=\"Rimuovi classe\">\n      <span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span>\n    </button>\n  </div>\n  <div class=\"row changeNome\">\n    Modifica nome:\n    <input #changeName id=\"changeName\"\n    (keyup.enter)=\"changeNome(changeName.value)\">\n    <button class=\"btn btn-default\" (click)=\"changeNome(changeName.value)\">\n      <span class=\"glyphicon glyphicon-floppy-disk\" aria-hidden=\"true\"></span>\n    </button>\n  </div>\n  <!-- div per aggiungere un attributo -->\n  <div class=\"aggiungiAttributo\">\n    <div class=\"row\">\n      <button href=\"#addAttr\" class=\"btn btn-default\" data-toggle=\"collapse\">\n        <span class=\"glyphicon glyphicon-plus\" aria-hidden=\"true\"></span>&nbsp;Aggiungi Attributo\n      </button>\n    </div>\n    <div id=\"addAttr\" class=\"campiAttributo collapse\">\n      <div class=\"aggiungiAttributo staticAttr\">\n        <label>Static <input #checkStaticAtt type=\"checkbox\" name=\"static\" class=\"checkbox-circle\" value=\"Stiatic\" /></label>\n      </div>\n      <div class=\"aggiungiAttributo accessoAttr\">\n        <label>Seleziona Visibilità</label>\n        <select #accAtt  [(ngModel)]=\"selectedAccAtt\">\n          <option *ngFor=\"let acc of accessoAttr\" [value]=\"acc\">{{ acc }}</option>\n        </select>\n      </div>\n      <div class=\"aggiungiAttributo selezionaTipo\">\n        <label>Seleziona tipo</label>\n        <select #tipiAtt [(ngModel)]=\"selectedTipoAtt\">\n          <option value=\"\"></option>\n          <option *ngFor=\"let type of types\" [value]=\"type\">{{type}}</option>\n        </select>\n      </div>\n      <div class=\"aggiungiAttributo nomeAttr\">\n        <label>Nome</label>\n        <input [disabled]=\"!selectedTipoAtt\" id=\"nome-attributo\" #nomeAtt\n        (keyup.enter)=\"addAttributo(nomeAtt.value)\">\n      </div>\n      <button class=\"btn btn-default\" [disabled]=\"!selectedTipoAtt\" (click)=\"addAttributo(nomeAtt.value, checkStaticAtt.checked, tipiAtt.value, accAtt.value)\">Aggiungi Attributo</button>\n    </div>\n\n  </div>\n  <button href=\"#listaAttr\" #lista class=\"btn btn-default listaAttr\" data-toggle=\"collapse\" (click)=\"closeCollapsedList(lista)\">\n    <span class=\"glyphicon glyphicon-triangle-left\" aria-hidden=\"true\"></span>&nbsp;Lista Attributi\n  </button>\n  <!-- lista attributi della classe -->\n  <div *ngIf=\"this.mainEditorService.selectedClasse\" class=\"container listaAttributi\">\n    <div id=\"listaAttr\" class=\"row collapse\" *ngIf=\"name\">\n      Lista attributi\n      <ul class=\"list-group\">\n        <li class=\"list-group-item\" *ngFor=\"let attr of this.mainEditorService.selectedClasse.getAttributi()\">\n          <span>{{attr.name}}: {{attr.type}}\n            <button class=\"btn btn-default\" (click)=\"removeAttributo(attr.name)\">\n              <span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\" title=\"Rimuovi\"></span>\n            </button>\n            <!-- icona di modifica che farà apparire un menù a tendina per la modifica attributo-->\n            <button class=\"btn btn-default\" data-toggle=\"collapse\" [attr.data-target]=\"'#'+attr.name\" title=\"Modifica\">\n              <span class=\"glyphicon glyphicon-pencil\" aria-hidden=\"true\" title=\"Modifica\"></span>\n            </button>\n          </span>\n          <!-- menù a comparsa (collapse) per modificare un attributo-->\n          <div class=\"campiAttributo collapse listaModAttr\" attr.id=\"{{attr.name}}\">\n            <div class=\"modificaAttributo accessoAttr\">\n              <div class=\"aggiungiAttributo staticAttr\">\n                <label>Static <input #checkStaticAtt type=\"checkbox\" name=\"static\" class=\".checkbox-circle\" value=\"Stiatic\" /></label>\n              </div>\n              <label>Seleziona Visibilità</label>\n              <select  [(ngModel)]=\"selectedAccAtt\">\n                <option *ngFor=\"let acc of accessoAttr\" [value]=\"acc\">{{ acc }}</option>\n              </select>\n            </div>\n            <div class=\"modificaAttributo selezionaTipo\">\n              <label>Seleziona tipo</label>\n              <select #tipi [(ngModel)]=\"selectedTipoAtt\">\n                <option value=\"\"></option>\n                <option *ngFor=\"let type of types\" [value]=\"type\">{{type}}</option>\n              </select>\n            </div>\n            <div class=\"modificaAttributo nomeAttr\">\n              <label>Nome</label>\n              <input [disabled]=\"!selectedTipoAtt\" id=\"nome-attributo\" #nomeAtt\n              (keyup.enter)=\"changeAttributo(nomeAtt.value, attr.name)\">\n            </div>\n            <button class=\"btn btn-default\" [disabled]=\"!selectedTipoAtt\" (click)=\"changeAttributo(nomeAtt.value, attr.name)\">Modifica Attributo</button>\n            </div>\n        </li>\n      </ul>\n    </div>\n  </div>\n  <!-- blocco per aggiungere un metodo alla classe -->\n  <div class=\"aggiungiMetodo\">\n    <div class=\"row\">\n      <button href=\"#addMetodo\" class=\"btn btn-default\" data-toggle=\"collapse\">\n        <span class=\"glyphicon glyphicon-plus\" aria-hidden=\"true\"></span>&nbsp;Aggiungi Metodo\n      </button>\n    </div>\n    <div id=\"addMetodo\" class=\"campiMetodo collapse\">\n      <!-- blocco per aggiunta parametri metodo -->\n      <div class=\"aggiungiMetodo .selezionaTipo\">\n        <div class=\"aggiungiAttributo staticAttr\">\n          <label>Static <input #staticMet type=\"checkbox\" id=\"static\" name=\"static\" classe=\"checkbox-circle\" value=\"Static\" (change)='updateCheckbox(staticMet.id)'></label>\n          <label> Costruttore <input #constructor [(ngModel)]=\"costruttore\" type=\"checkbox\" id=\"constructor\" name=\"constructor\" classe=\"checkbox-circle\" value=\"Constructor\" (change)='updateCheckbox(constructor.id)'></label>\n        </div>\n        <div class=\"aggiungiMeotdo accessoMetodo\">\n          <label>Seleziona Visibilità</label>\n          <select #accMetodo [(ngModel)]=\"selectedAccMet\">\n            <option *ngFor=\"let acc of accessoAttr\" [value]=\"acc\">{{ acc }}</option>\n          </select>\n        </div>\n        <div [hidden]=\"costruttore\">\n          <label>Seleziona tipo di ritorno</label>\n          <select #tipiMetodo [(ngModel)]=\"selectedTipoMet\">\n            <option value=\"void\"></option>\n            <option *ngFor=\"let type of types\" [value]=\"type\">{{type}}</option>\n          </select>\n        </div>\n      </div>\n      <div [hidden]=\"costruttore\" class=\"aggiungiMetodo nomeMet\">\n        <label>Nome</label>\n        <input id=\"nome-metodo\" #nomeMetodo [(ngModel)]=\"nomeMet\">\n      </div>\n      <div class=\"container-fluid\" [hidden]=\"isAddableMethod()\">\n        <div class=\"row clearfix\">\n          <div class=\"col-md-12 column\" id=\"tabellaParametri\">\n            Parametri attuali\n            <table class=\"table table-bordered table-hover\" id=\"tab_logic\">\n              <thead>\n                <tr>\n                  <th class=\"text-center\">Tipo</th>        \n                  <th class=\"text-center\">Nome</th>          \n                  <th class=\"text-center\"></th>                \n                </tr>\n              </thead>\n              <tbody>\n                <tr *ngFor=\"let param of parametriMetodo\" class=\"tipiMetodo\">\n                  <td>{{param.getTipo()}}</td>\n                  <td>{{param.getNome()}}</td>\n                </tr>\n                <tr #parametro>\n                  <td>\n                    <select #tipiParam id=\"tipiParam\" class=\"tipiMetodo\">\n                      <option value=\"\"></option>\n                      <option *ngFor=\"let type of types\" [value]=\"type\">{{type}}</option>\n                    </select>\n                  </td>\n                  <td>\n                    <input #nomeParam id=\"nomeParam\" type=\"text\" placeholder=\"Nome\" class=\"form-control\"/>\n                  </td>\n                  <td>\n                    <button class=\"btn btn-default\" title=\"Aggiungi Parmetro\" (click)=\"addParam(tipiParam.value, nomeParam.value)\">\n                      <span class=\"glyphicon glyphicon-plus\" aria-hidden=\"true\"></span>\n                    </button>\n                  </td>\n                </tr>\n              </tbody>\n            </table>\n          </div>\n        </div>\n      </div>\n      <button class=\"btn btn-default\" [disabled]=\"isAddableMethod()\" (click)=\"addMetodo(nomeMetodo.value, staticMet.checked, constructor.checked, tipiMetodo.value, accMetodo.value)\">Aggiungi Metodo</button>\n    </div>   \n  </div>\n  <button href=\"#listaMet\" #listac class=\"btn btn-default\" data-toggle=\"collapse\" (click)='closeCollapsedList(listac)'>\n    <span class=\"glyphicon glyphicon-triangle-left\" aria-hidden=\"true\"></span>&nbsp;Lista Metodi\n  </button>\n  <!-- lista metodi della classe -->\n  <div *ngIf=\"this.mainEditorService.selectedClasse\" class=\"container listaAttributi\">\n    <div id=\"listaMet\" class=\"row collapse\" *ngIf=\"name\">\n      Lista metodi\n      <ul class=\"list-group\">\n        <li class=\"list-group-item\" *ngFor=\"let met of getMetodi()\">\n          <span>{{met.accesso}} {{met.staticString()}} {{met.nome}}({{met.paramToString()}}): {{met.tipoRitorno}}\n            <button class=\"btn btn-default\" (click)=\"removeMetodo(met.nome)\">\n               <span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\" title=\"Rimuovi\"></span>\n            </button>\n            <button class=\"btn btn-default\" (click)=\"modifyMetodo(met.nome)\" title=\"Modifica\">\n              <span class=\"glyphicon glyphicon-pencil\" aria-hidden=\"true\" title=\"Modifica\"></span>\n            </button>\n          </span>\n        </li>\n      </ul>\n    </div>\n  </div>\n  <div class=\"aggiungiMetodo\">\n    <div class=\"row\">\n      <button [disabled]=\"this.mainEditorService.isThereAMain()\" class=\"btn btn-default\" (click)=\"addMain()\">\n        <span class=\"glyphicon glyphicon-plus\" aria-hidden=\"true\"></span>&nbsp;Aggiungi Metodo Main\n      </button>\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
-/* 267 */
+/* 277 */
 /***/ (function(module, exports) {
 
-module.exports = "<div [hidden]=\"mainEditorService.getActivityModeStatus()\" class=\"container-fluid toolbar classi\">\n  <div class=\"tipo\"> Classi </div>\n    <div class=\"icona\"><button (click)=\"addClasse()\" class=\"add addClasse\" title=\"Aggiungi classe\"></button></div>\n    <div class=\"icona\"><button (click)=\"addInterfaccia()\" class=\"add addInterfaccia\" title=\"Aggiungi interfaccia\"></button></div>\n    <div class=\"icona\"><button (click)=\"addAstratta()\" class=\"add addAstratta\" title=\"Aggiungi classe astratta\"></button></div>\n\n  <div class=\"tipo\"> Connettori </div>\n    <div class=\"icona\"><button (click)=\"addImplementazione()\" class=\"add addImplementazione\" title=\"Aggiungi implementazione\"></button></div>\n    <div class=\"icona\"><button (click)=\"addGeneralizzazione()\" class=\"add addGeneralizzazione\" title=\"Aggiungi generalizzazione\"></button></div>\n\n  <div class=\"tipo\"> Commenti </div>\n    <div class=\"icona\"><button (click)=\"addCommento()\" class=\"add addCommento\" title=\"Agiungi commento\"></button></div>\n    <div class=\"icona\"><button (click)=\"addAssociazione()\" class=\"add addAssociazione\" title=\"Aggiungi associazione\"></button></div>\n</div>\n<div [hidden]=\"!mainEditorService.getActivityModeStatus()\" class=\"container-fluid toolbar activity\">\n  <div class=\"tipo\"> Activity </div>\n    <div class=\"icona\"><button (click)=\"addStart()\" class=\"add addStart\" title=\"Aggiungi start\"></button></div>\n    <div class=\"icona\"><button (click)=\"addEnd()\" class=\"add addEnd\" title=\"Aggiungi End\"></button></div>\n    <div class=\"icona\"><button (click)=\"addActivityShape()\" class=\"add addAttivita\" title=\"Aggiungi l'attività\"></button></div>\n    <div class=\"icona\"><button (click)=\"addActivityForShape()\" class=\"add addAttivitaFor\" title=\"Aggiungi l'attività \"></button></div>\n    <div class=\"icona\"><button (click)=\"addConnector()\" class=\"add addConnettore\" title=\"Aggiungi connettore\"></button></div>\n    <div class=\"icona\"><button (click)=\"addDecision()\" class=\"add addDecision\" title=\"Aggiungi decisione\"></button></div>\n    <div class=\"icona\"><button (click)=\"addEndDecision()\" class=\"add addEndDecision\" title=\"Aggiungi fine decisione\"></button></div>\n</div>\n"
+module.exports = "<div [hidden]=\"mainEditorService.getActivityModeStatus()\" class=\"container-fluid toolbar classi\">\n  <div class=\"tipo\"> Classi </div>\n    <div class=\"icona\"><button (click)=\"addClasse()\" class=\"add addClasse\" title=\"Aggiungi classe\"></button></div>\n    <div class=\"icona\"><button (click)=\"addInterfaccia()\" class=\"add addInterfaccia\" title=\"Aggiungi interfaccia\"></button></div>\n    <div class=\"icona\"><button (click)=\"addAstratta()\" class=\"add addAstratta\" title=\"Aggiungi classe astratta\"></button></div>\n\n  <div class=\"tipo\"> Connettori </div>\n    <div class=\"icona\"><button (click)=\"addImplementazione()\" class=\"add addImplementazione freccia\" title=\"Aggiungi implementazione\"></button></div>\n    <div class=\"icona\"><button (click)=\"addGeneralizzazione()\" class=\"add addGeneralizzazione freccia\" title=\"Aggiungi generalizzazione\"></button></div>\n\n  <div class=\"tipo\"> Commenti </div>\n    <div class=\"icona\"><button (click)=\"addCommento()\" class=\"add addCommento\" title=\"Agiungi commento\"></button></div>\n    <div class=\"icona\"><button (click)=\"addAssociazione()\" class=\"add addAssociazione freccia\" title=\"Aggiungi associazione\"></button></div>\n</div>\n<div [hidden]=\"!mainEditorService.getActivityModeStatus()\" class=\"container-fluid toolbar activity\">\n  <div class=\"tipo\"> Activity </div>\n    <div class=\"icona\"><button [disabled]=\"this.activityService.start()\" (click)=\"addStart()\" class=\"add addStart\" title=\"Aggiungi start\"></button></div>\n    <div class=\"icona\"><button (click)=\"addEnd()\" class=\"add addEnd\" title=\"Aggiungi End\"></button></div>\n    <div class=\"icona\"><button (click)=\"addActivityShape()\" class=\"add addAttivita\" title=\"Aggiungi azione\"></button></div>\n    <div class=\"icona\"><button (click)=\"addActivityForShape()\" class=\"add addAttivitaFor\" title=\"Richiama l'attività/azione \"></button></div>\n    <div class=\"icona\"><button (click)=\"addRettangoloAngolo()\" class=\"add addRettangoloAngolo\" title=\"Aggiungi attività \"></button></div>\n    <div class=\"icona\"><button (click)=\"addConnector()\" class=\"add addConnettore\" title=\"Aggiungi connettore\"></button></div>\n    <div class=\"icona\"><button (click)=\"addDecision()\" class=\"add addDecision\" title=\"Aggiungi decisione\"></button></div>\n    <div class=\"icona\"><button (click)=\"addEndDecision()\" class=\"add addEndDecision\" title=\"Aggiungi fine decisione\"></button></div>\n</div>\n"
 
 /***/ }),
-/* 268 */
+/* 278 */
 /***/ (function(module, exports) {
 
 module.exports = "<div id=\"paper\"></div>\n<div class=\"toolbar\">\n  <app-toolbar></app-toolbar>\n\n</div>\n<div [hidden]=\"!selectedCell\" class=\"editClass\">\n    <class-menu [hidden]=\"mainEditorService.getActivityModeStatus()\"></class-menu>\n</div>\n<div class=\"editClass\">\n  <activity-menu [hidden]=\"!mainEditorService.getActivityModeStatus()\"></activity-menu>\n</div>\n"
 
 /***/ }),
-/* 269 */
+/* 279 */
 /***/ (function(module, exports) {
 
 module.exports = "<div class=\"dropdown\" #menuFile>\n  <button class=\"btn btn-default dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">\n    File\n    <span class=\"caret\"></span>\n  </button>\n  <ul class=\"dropdown-menu\" aria-labelledby=\"dropdownMenu1\">\n    <li><a href=\"#\" >Salva</a></li>\n    <li><a (click)=\"esporta()\" href=\"#\" >Esporta</a></li>\n    <li>\n      <input id=\"upload\" type=\"file\" class=\"custom-file-input\" (change)=\"importa($event)\" placeholder=\"Upload file\" accept=\".json\">\n      <a href=\"#\" onclick=\"$('input[id=upload]').click();\">Importa progetto </a>\n    </li>\n    <li><a href=\"#\" >Genera codice</a></li>\n    <li><a href=\"#\" >Salva template</a></li>\n    <li><a href=\"#\" >Chiudi</a></li>\n  </ul>\n</div>\n\n"
 
 /***/ }),
-/* 270 */
+/* 280 */
 /***/ (function(module, exports) {
 
 module.exports = "<div class=\"dropdown\" #menuLayer>\n  <button class=\"btn btn-default dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">\n    Layer\n    <span class=\"caret\"></span>\n  </button>\n  <ul class=\"dropdown-menu\" aria-labelledby=\"dropdownMenu1\">\n    <li><a href=\"#\" >Aggiungi laver</a></li>\n    <li><a href=\"#\" >Lista layer</a></li>\n    <li><a href=\"#\" >Rinomina laver</a></li>\n    <li><a href=\"#\" >Elimina layer</a></li>\n  </ul>\n</div>\n"
 
 /***/ }),
-/* 271 */
+/* 281 */
 /***/ (function(module, exports) {
 
 module.exports = "<div class=\"dropdown\" #menuModifica>\n  <button class=\"btn btn-default dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">\n    Modifica\n    <span class=\"caret\"></span>\n  </button>\n  <ul class=\"dropdown-menu\" aria-labelledby=\"dropdownMenu1\">\n    <li><a href=\"#\" >Annulla</a></li>\n    <li><a href=\"#\" >Ripristina</a></li>\n    <li><a href=\"#\" >Taglia</a></li>\n    <li><a href=\"#\" >Copia</a></li>\n    <li><a href=\"#\">Incolla</a></li>\n    <li><a href=\"#\">Elimina</a></li>\n    <li><a href=\"#\"  (click)=\"doZoomIn()\" >Zoom In</a></li>\n    <li><a href=\"#\"  (click)=\"doZoomOut()\" >Zoom Out</a></li>\n  </ul>\n</div>\n"
 
 /***/ }),
-/* 272 */
+/* 282 */
 /***/ (function(module, exports) {
 
 module.exports = "<div class=\"dropdown\" #menuProfilo>\n  <button class=\"btn btn-default dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">\n    Profilo\n    <span class=\"caret\"></span>\n  </button>\n  <ul class=\"dropdown-menu\" aria-labelledby=\"dropdownMenu1\">\n    <li><a href=\"#\" >Modifica password</a></li>\n    <li><a href=\"#\" >Modifica email</a></li>\n    <li><a href=\"#\" >Elimina profilo</a></li>\n  </ul>\n</div>\n"
 
 /***/ }),
-/* 273 */
+/* 283 */
 /***/ (function(module, exports) {
 
 module.exports = "<div class=\"dropdown\" #menuProgetto>\n  <button class=\"btn btn-default dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">\n    Progetto\n    <span class=\"caret\"></span>\n  </button>\n  <ul class=\"dropdown-menu\" aria-labelledby=\"dropdownMenu1\">\n    <li><a href=\"#\" >Nuovo</a></li>\n    <li><a href=\"#\" >Apri progetto</a></li>\n    <li><a href=\"#\" >Elimina progetto</a></li>\n  </ul>\n</div>\n"
 
 /***/ }),
-/* 274 */
+/* 284 */
 /***/ (function(module, exports) {
 
 module.exports = "<div class=\"dropdown\" #menuTemplate>\n  <button class=\"btn btn-default dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">\n    Template\n    <span class=\"caret\"></span>\n  </button>\n  <ul class=\"dropdown-menu\" aria-labelledby=\"dropdownMenu1\">\n    <li><a href=\"#\" >Aggiungi template</a></li>\n    <li><a href=\"#\" >Elimina template</a></li>\n  </ul>\n</div>\n"
 
 /***/ }),
-/* 275 */
+/* 285 */
 /***/ (function(module, exports) {
 
 module.exports = "<div class=\".container-fluid barra-menu\">\n  <div class=\"row\">\n    <div class=\"logo\">\n      <img src=\"assets/images/logo.png\" alt=\"logo\">\n      <div class=\"logoText\">SWEDesigner</div>\n    </div>\n    <div class=\"menu btn\">  <app-file></app-file>  </div>\n    <div class=\"menu btn\">  <app-progetto></app-progetto>  </div>\n    <div class=\"menu btn\">  <app-modifica></app-modifica>  </div>\n    <div class=\"menu btn\">  <app-template></app-template>  </div>\n    <div class=\"menu btn\">  <app-layer></app-layer>  </div>\n    <div class=\"menu btn\">  <app-profilo></app-profilo>  </div>\n\n  </div>\n</div>\n"
 
 /***/ }),
-/* 276 */,
-/* 277 */,
-/* 278 */,
-/* 279 */,
-/* 280 */,
-/* 281 */,
-/* 282 */,
-/* 283 */,
-/* 284 */,
-/* 285 */,
 /* 286 */,
 /* 287 */,
 /* 288 */,
@@ -3010,23 +3673,27 @@ module.exports = "<div class=\".container-fluid barra-menu\">\n  <div class=\"ro
 /* 301 */,
 /* 302 */,
 /* 303 */,
-/* 304 */
-/***/ (function(module, exports) {
-
-module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMwAAADMCAIAAACwQNulAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAVHSURBVHhe7dYxbhRWFIbR2VmykaRLxCocGm8AN6G1vAGX9KyA1mkgCpHTUKeavAhLEanvV1zpoDGI5urp4/BrLle/FIgLXM799+++PN4/+ygwXuDQOsD+RXZOv7n5+HD32UeBwQIH1aH1H7KHuz/++vNvHwUGCxxUkPlP1RaArO07uAd7T0EGWV4Asjzx3gWaejlkkOUFIMsTT+3B3juQQZYXgCxPvHeBpl4OGWR5AcjyxFN7sPcOZJDlBSDLE+9doKmXQwZZXgCyPPHUHuy9AxlkeQHI8sR7F2jq5ZBBlheALE88tQd770AGWV4Asjzx3gWaejlkkOUFIMsTT+3B3juQQZYXgCxPvHeBpl4OGWR5AcjyxFN7sPcOZJDlBSDLE+9doKmXQwZZXgCyPPHUHuy9AxlkeQHI8sR7F2jq5ZBBlheALE88tQd770AGWV4Asjzx3gWaejlkkOUFIMsTT+3B3juQQZYXgCxPvHeBpl4OGWR5AcjyxFN7sPcOZJDlBSDLE+9doKmXQwZZXgCyPPHUHuy9AxlkeQHI8sR7F2jq5ZBBlheALE88tQd770AGWV4Asjzx3gWaejlkkOUFIMsTT+3B3juQQZYXgCxPvHeBpl4OGWR5AcjyxFN7sPcOZJDlBSDLE+9doKmXQwZZXgCyPPHUHuy9AxlkeQHI8sR7F2jq5d8ge/3q6cfvPvgoMF7g0Lper5fz8/b295uffvv19pOPAoMFDqpD6wXZ4/3zWbapkXRHga8FfCfznSwvAFme2J5BBlleALI8sSWDDLK8AGR5YksGGWR5AcjyxJYMMsjyApDliS0ZZJDlBSDLE1syyCDLC0CWJ7ZkkEGWF4AsT2zJIIMsLwBZntiSQQZZXgCyPLElgwyyvABkeWJLBhlkeQHI8sSWDDLI8gKQ5YktGWSQ5QUgyxNbMsggywtAlie2ZJBBlheALE9sySCDLC8AWZ7YkkEGWV4AsjyxJYMMsrwAZHliSwYZZHkByPLElgwyyPICkOWJLRlkkOUFIMsTWzLIIMsLQJYntmSQQZYXgCxPbMkggywvAFme2JJBBlleALI8sSWDDLK8AGR5YksGGWR5AcjyxJYMMsjyApDliS0ZZJDlBSDLE1syyCDLC0CWJ7ZkkEGWF/gG2dvbT7/8/HR+91FgsMBXVNfr9XJ+Xr96+uH7Dz4KjBc4tF6QPd4/n2XzHUKB2QK+k+XfSGb/wTZegwyyvABkeeKN2zP7ZsggywtAlieeXYWN1yCDLC8AWZ544/bMvhkyyPICkOWJZ1dh4zXIIMsLQJYn3rg9s2+GDLK8AGR54tlV2HgNMsjyApDliTduz+ybIYMsLwBZnnh2FTZegwyyvABkeeKN2zP7ZsggywtAlieeXYWN1yCDLC8AWZ544/bMvhkyyPICkOWJZ1dh4zXIIMsLQJYn3rg9s2+GDLK8AGR54tlV2HgNMsjyApDliTduz+ybIYMsLwBZnnh2FTZegwyyvABkeeKN2zP7ZsggywtAlieeXYWN1yCDLC8AWZ544/bMvhkyyPICkOWJZ1dh4zXIIMsLQJYn3rg9s2+GDLK8AGR54tlV2HgNMsjyApDliTduz+ybIYMsLwBZnnh2FTZegwyyvABkeeKN2zP7ZsggywtAlieeXYWN1yCDLC8AWZ544/bMvhkyyPICkOWJZ1dh4zXIIMsLQJYn3rg9s2+GDLK8AGR54tlV2HgNMsjyApDliTduz+ybIYMsL/B/ZG9uPj7cffZRYLDAQfV4/3y9Xi/n5/27L+cvPgqMFzi0XpCdP/xSoCvwD4GW7y1tgiQVAAAAAElFTkSuQmCC"
-
-/***/ }),
+/* 304 */,
 /* 305 */,
 /* 306 */,
 /* 307 */,
 /* 308 */,
 /* 309 */,
-/* 310 */
+/* 310 */,
+/* 311 */,
+/* 312 */,
+/* 313 */,
+/* 314 */,
+/* 315 */,
+/* 316 */,
+/* 317 */,
+/* 318 */,
+/* 319 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(99);
+module.exports = __webpack_require__(101);
 
 
 /***/ })
-],[310]);
+],[319]);
 //# sourceMappingURL=main.bundle.js.map

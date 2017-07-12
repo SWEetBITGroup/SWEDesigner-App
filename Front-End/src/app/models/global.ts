@@ -83,6 +83,7 @@ export class Global {
     methods.forEach(met => {
       let m = new Metodo(met.statico,met.costruttore,met.nome,
                          met.accesso,met.tipo,this.generateParams(met.listaArgomenti));
+      m.addDiagram(met.diagramma);
       classe.addMetodo(m);
     });
   }
@@ -108,6 +109,25 @@ export class Global {
                   ',\"classi\":'+JSON.stringify(this.classi)+'}}';
     console.log(global);
     return global;
+  }
+
+  getInfoClasse(x){
+    let info = new Array();
+    x.forEach((element, i) => {
+      let classe = element.toMU();
+      if(i!= x.length-1) classe += ',';
+      info.push(classe);
+    });
+    return info;
+  }
+
+  // I campi devono ritornare come string
+  toMU(){
+    let global = '{'+
+    JSON.stringify(this.getInfoClasse(this.classi))
+    +'}';
+    console.log(global);
+    return JSON.stringify(global);
   }
 
 }

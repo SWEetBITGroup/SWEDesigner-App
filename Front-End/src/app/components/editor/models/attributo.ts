@@ -23,4 +23,16 @@ export class Attributo extends Param {
     changeAcc(acc: string) {
         this.visibility = acc;
     }
+
+    toMU(){
+        let attr;
+        if(this.visibility == "public"){
+            attr = '{\"typePU\":\"'+this.getTipo()+
+                    '\", \"varPU\":\"'+this.getNome()+'\"}'
+        }else{
+            attr = '{\"typeP\":\"'+this.getTipo()+
+            '\", \"varP\":\"'+this.getNome()+'\"}'
+        }
+        return JSON.stringify(attr);
+    }
 }

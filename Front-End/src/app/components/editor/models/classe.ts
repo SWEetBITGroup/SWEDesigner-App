@@ -187,4 +187,97 @@ export class Classe {
                      this.classePadre+'\"}';
         return JSON.parse(classe);
     }
+
+    retrievePublicAttr(){
+        let attr = new Array<Attributo>();
+        this.attributi.forEach(element => {
+            if(element.getAccesso() == "public"){
+                attr.push(element);
+            }
+        });
+        return attr;
+    }
+
+    retrievePrivateAttr(){
+        let attr = new Array<Attributo>();
+        this.attributi.forEach(element => {
+            if(element.getAccesso() == "private"){
+                attr.push(element);
+            }
+        });
+        return attr;
+    }
+
+    getInfoPublic(x){
+        let infoAttr = new Array();
+        x.forEach((element, i) => {
+            let attr = element.toMU();
+            if(i != x.length-1) attr += ',';
+            infoAttr.push(attr);
+        });
+        return infoAttr;
+    }
+
+    getInfoPrivate(x){
+        let infoAttr = new Array();
+        x.forEach((element, i) => {
+            let attr = JSON.stringify(element.toMU());
+            if(i != x.length-1) attr += ',';
+            infoAttr.push(attr);
+        })
+        return infoAttr;
+    }
+
+    toMU(){
+        let program;
+        let attListPrivate = this.retrievePrivateAttr();
+        let attListPublic = this.retrievePublicAttr();
+        let pub;
+        let priv;
+        if(attListPrivate.length == 0){
+            priv = false;
+        }
+        else{
+            priv = true;
+        }
+        if(attListPublic.length == 0){
+            pub = false;
+        }
+        else{
+            pub = true;
+        }
+        if(pub && !priv){
+            program = {
+                name: this.nome,
+                public: true,
+                attrPU: [
+                    JSON.stringify(this.getInfoPublic(attListPublic))
+                ],
+                methodsPU: [
+                    
+                ]
+            }
+        }else if(!pub && priv){
+            program = {
+                name: this.nome,
+                private: true,
+                attrP: [
+                    JSON.stringify(this.getInfoPrivate(attListPrivate))
+                ]
+            }
+        }else if(pub& priv){
+            program = {
+                name: this.nome,
+                private: true,
+                attrP: [
+                    JSON.stringify(this.getInfoPrivate(attListPrivate))
+                ],
+                public: true,
+                attrPU: [
+                    JSON.stringify(this.getInfoPublic(attListPublic))
+                ]
+            }
+        }
+        return JSON.stringify(program);
+    }
 }
