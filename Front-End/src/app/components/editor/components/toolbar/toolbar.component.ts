@@ -181,7 +181,22 @@ export class ToolbarComponent implements OnInit {
   /**
    * Method add comment cell to editor
    */
-  addCommento() {}
+  addCommento() {
+    let comm = new joint.shapes.basic.Rect({
+        position: { x: 60, y: 10 },
+        size: { width: 160, height: 35 },
+        attrs: {
+            rect: {
+                fill: '#ffffff'
+            },
+            text: {
+                text: 'prova',
+                fill: '#000000',
+                'font-size': 12,
+            }
+        }
+    });
+  }
 
   /**
    * Method add selected connector to editor if target element is selected, else the method selects the source element
@@ -283,7 +298,9 @@ export class ToolbarComponent implements OnInit {
     });
   }
 
-  addConnector() {}
+  addConnector() {
+      this.addConnettore(new joint.shapes.fsa.Arrow);
+  }
 
   addDecision() {
     let rombo = new joint.shapes.erd.Relationship({
