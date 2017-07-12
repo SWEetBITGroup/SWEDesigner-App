@@ -36,6 +36,8 @@ export class MainEditorService {
    */
   private activityMode = false;
 
+  private mainExist = false;
+
   constructor() {
   }
 
@@ -189,6 +191,10 @@ export class MainEditorService {
       this.activityMode = true;
       this.editorComp.selectedCell = null;
     }
+  }
+
+  isThereAMain() {
+    return this.mainExist;
   }
 
   addConnettore(connettore: any) {

@@ -287,6 +287,8 @@ export class ClassMenuComponent implements OnDestroy{
     if(!this.costruttore && !this.selectedTipoMet)
       return true;
   }
+
+  addMain() {}
   /**
    * This function allows to be check only one element
    * @param event name of id element

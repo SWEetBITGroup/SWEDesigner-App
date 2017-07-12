@@ -1,6 +1,6 @@
 <div class="container-fluid menu">
   <div class="row selezionato">
-    <span class="glyphicon glyphicon-wrench iconaMirrow" aria-hidden="true"></span>{{name}}
+    <span class="glyphicon glyphicon-wrench iconaMirrow" aria-hidden="true"></span>&nbsp;&nbsp;{{name}}&nbsp;
     <button class="btn btn-default" (click)="removeClass(name)" title="Rimuovi classe">
       <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
     </button>
@@ -17,7 +17,7 @@
   <div class="aggiungiAttributo">
     <div class="row">
       <button href="#addAttr" class="btn btn-default" data-toggle="collapse">
-        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Aggiungi Attributo
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Aggiungi Attributo
       </button>
     </div>
     <div id="addAttr" class="campiAttributo collapse">
@@ -47,7 +47,7 @@
 
   </div>
   <button href="#listaAttr" #lista class="btn btn-default listaAttr" data-toggle="collapse" (click)="closeCollapsedList(lista)">
-    <span class="glyphicon glyphicon-triangle-left" aria-hidden="true"></span>Lista Attributi
+    <span class="glyphicon glyphicon-triangle-left" aria-hidden="true"></span>&nbsp;Lista Attributi
   </button>
   <!-- lista attributi della classe -->
   <div *ngIf="this.mainEditorService.selectedClasse" class="container listaAttributi">
@@ -97,7 +97,7 @@
   <div class="aggiungiMetodo">
     <div class="row">
       <button href="#addMetodo" class="btn btn-default" data-toggle="collapse">
-        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Aggiungi Metodo
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Aggiungi Metodo
       </button>
     </div>
     <div id="addMetodo" class="campiMetodo collapse">
@@ -167,7 +167,7 @@
     </div>   
   </div>
   <button href="#listaMet" #listac class="btn btn-default" data-toggle="collapse" (click)='closeCollapsedList(listac)'>
-    <span class="glyphicon glyphicon-triangle-left" aria-hidden="true"></span>Lista Metodi
+    <span class="glyphicon glyphicon-triangle-left" aria-hidden="true"></span>&nbsp;Lista Metodi
   </button>
   <!-- lista metodi della classe -->
   <div *ngIf="this.mainEditorService.selectedClasse" class="container listaAttributi">
@@ -185,6 +185,13 @@
           </span>
         </li>
       </ul>
+    </div>
+  </div>
+  <div class="aggiungiMetodo">
+    <div class="row">
+      <button [disabled]="this.mainEditorService.isThereAMain()" class="btn btn-default" (click)="addMain()">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Aggiungi Metodo Main
+      </button>
     </div>
   </div>
 </div>
