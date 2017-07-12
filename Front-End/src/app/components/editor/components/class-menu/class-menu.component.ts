@@ -55,7 +55,8 @@ export class ClassMenuComponent implements OnDestroy{
   /**
    * Used to store the selected return type to build a new method.
    */
-  selectedTipoMet: string;
+  selectedTipoMet: string = 'void';
+  nomeMet: string;
   /**
    * Used to store the selected visibility to build a new method
    */
@@ -242,7 +243,8 @@ export class ClassMenuComponent implements OnDestroy{
       this.classe.set('methods',null); // Hack per far funzionare l'event change:attrs
       this.classe.set('methods',metodi);
       this.selectedAccMet = 'public';
-      this.selectedTipoMet = null;
+      this.selectedTipoMet = 'void';
+      this.parametriMetodo = new Array<Param>(); // Cleans the array of params
       } else {
         alert('Alcuni capi del form per la creazione del nuovo metodo non sono stati compilati');
     }
@@ -284,11 +286,14 @@ export class ClassMenuComponent implements OnDestroy{
   }
 
   isAddableMethod() {
-    if(!this.costruttore && !this.selectedTipoMet)
+    if(!this.costruttore && !this.nomeMet)
       return true;
   }
 
-  addMain() {}
+  addMain() {
+    this.addParam('String[]', 'args');
+    this.addMetodo('main', true, false, 'void', 'public');
+  }
   /**
    * This function allows to be check only one element
    * @param event name of id element

@@ -123,7 +123,7 @@
       </div>
       <div [hidden]="costruttore" class="aggiungiMetodo nomeMet">
         <label>Nome</label>
-        <input [disabled]="!selectedTipoMet" id="nome-metodo" #nomeMetodo>
+        <input id="nome-metodo" #nomeMetodo [(ngModel)]="nomeMet">
       </div>
       <div class="container-fluid">
         <div class="row clearfix">
