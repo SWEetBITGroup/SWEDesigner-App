@@ -3,12 +3,20 @@ import {allShape} from './all-shape';
 
 export class endIfNode extends Shape{
 
-toCode(sh: allShape){
-  if(!(this.getPrinted())){
-    this.setPrinted(true);
-    console.log("}");
-    if(this.getSucc() != 0)
-      sh.printSucc(this.getSucc());
+  constructor(id : string){
+      super(id);
   }
-}
+
+  getType() {
+      return 'endIfNode';
+  }
+
+  toCode(sh: allShape){
+    if(!(this.getPrinted())){
+      this.setPrinted(true);
+      console.log("}");
+      if(!this.getSucc())
+        sh.printSucc(this.getSucc());
+    }
+  }
 }

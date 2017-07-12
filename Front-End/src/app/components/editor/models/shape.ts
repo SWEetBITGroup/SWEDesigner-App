@@ -1,22 +1,24 @@
+import { allShape } from './all-shape';
+
 /**
 * Rappresents a base class and is used to rappresent the base info
 * for the shape on the activity diagram.
 */
 
-export class Shape{
-  private id: number;
+export abstract class Shape{
+  private id: string;
 
-  private succ: number;
+  private succ: string;
 
-  private succElse: number;
+  private succElse: string;
 
   private body: string;
 
   private printed : boolean;
 
-  private ifPassed = new Array<number>();
+  private ifPassed = new Array<string>();
 
-  constructor(id : number){
+  constructor(id : string){
     this.id = id;
     /*
     if(body)
@@ -27,7 +29,7 @@ export class Shape{
       this.succElse = succElse;*/
   }
 
-  setId(id : number){
+  setId(id : string){
     this.id = id;
   }
 
@@ -35,16 +37,18 @@ export class Shape{
     this.body = body;
   }
 
-  setSucc(succ: number){
+  setSucc(succ: string){
     this.succ = succ;
   }
 
-  setSuccElse(succElse: number){
+  setSuccElse(succElse: string){
     this.succElse = succElse;
   }
 
-  setIfPassed(pas:number){
-    this.ifPassed.push(pas);
+  setIfPassed(pas: string[]){
+    pas.forEach(element => {
+      this.ifPassed.push(element);
+    });
   }
 
   setPrinted(printed: boolean){
@@ -74,5 +78,9 @@ export class Shape{
   getPrinted(){
     return this.printed;
   }
+
+  abstract getType() : string;
+
+  abstract toCode(allShap : allShape) : void;
 
 }

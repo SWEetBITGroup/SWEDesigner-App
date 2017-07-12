@@ -255,7 +255,7 @@ export class ToolbarComponent implements OnInit {
             text: {text: 'megaciao', fill: '#ffffff'}
         }
     });
-    this.activityService.addOperation(new operation(1),prova);
+    this.activityService.addOperation(prova);
   }
 
   addActivityForShape() {
@@ -303,7 +303,7 @@ export class ToolbarComponent implements OnInit {
   }
 
   addConnector() {
-      this.addConnettore(new joint.shapes.fsa.Arrow);
+      this.mainEditorService.connetActivity(new joint.shapes.fsa.Arrow);
   }
 
   addDecision() {
@@ -321,7 +321,7 @@ export class ToolbarComponent implements OnInit {
             }
         }
     });
-    this.activityService.addIfNode(new ifNode(1),rombo);
+    this.activityService.addIfNode(rombo);
   }
 
   addEndDecision() {
@@ -339,7 +339,7 @@ export class ToolbarComponent implements OnInit {
             }
         }
     });
-    this.activityService.addEndIfNode(new endIfNode(1),romboNero);
+    this.activityService.addEndIfNode(romboNero);
   }
 
   addRettangoloAngolo() {

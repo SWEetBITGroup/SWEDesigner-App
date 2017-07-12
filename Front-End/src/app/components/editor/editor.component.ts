@@ -6,6 +6,8 @@ import { MainEditorService } from '../../services/main-editor.service';
 import { ClassMenuComponent } from './components/class-menu/class-menu.component';
 import { Subscription } from 'rxjs/Subscription';
 
+import { ActivityService } from './services/activity.service';
+
 import { Classe } from './models/classe';
 
 declare var $:JQueryStatic;
@@ -70,7 +72,8 @@ export class EditorComponent implements OnInit {
    */
   constructor(private classMenuService: ClassMenuService,
               private menuService: MenuService,
-              private mainEditorService: MainEditorService) {
+              private mainEditorService: MainEditorService,
+              private activityService: ActivityService) {
     this.selectedCell = null;
 
     // Subscribe all'oggetto observable per la funzione di zoom
@@ -105,12 +108,17 @@ export class EditorComponent implements OnInit {
     this.paper.on('cell:pointerdown', (cellView) => {
       if(!this.connettore) {
         let type = cellView.model.attributes.type;
-        if((type != 'uml.Generalization') && (type != 'uml.Implementation') && (type != 'uml.Association')){
+        if((type != 'uml.Generalization') && 
+           (type != 'uml.Implementation') && 
+           (type != 'uml.Association') && 
+           (type != 'fsa.Arrow')){
           this.elementSelection(cellView);
         }
       }
-      else
+      else if(!this.mainEditorService.getActivityModeStatus())
         this.selectElementsToConnect(cellView);
+      else
+        this.selectElementActivity(cellView);
     });
     // Funzione per deselezionare le classi selezionate, rimuove l'highlight
     // dall'elemento e pone a null l'oggetto selectedCell del component
@@ -248,6 +256,23 @@ export class EditorComponent implements OnInit {
   deleteElement(cell: any) {
     this.graph.removeCells(cell);
     this.selectedCell = null;
+  }
+
+  selectElementActivity(cell: any) {
+    if(this.elementToConnect) {
+      let element1 = this.elementToConnect;
+      let freccia = new this.connettore.constructor({
+                      source: { id: element1.model.id },
+                      target: { id: cell.model.id }
+                    });
+      this.graph.addCells([freccia]);
+      this.elementToConnect.unhighlight();
+      this.elementToConnect = this.connettore = null;
+      this.activityService.setConnector([element1.model.id,cell.model.id]);
+    } else {
+      this.elementToConnect = cell;
+      cell.highlight();
+    }
   }
 
 }

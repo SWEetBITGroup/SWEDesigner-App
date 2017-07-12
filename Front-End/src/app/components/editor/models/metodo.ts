@@ -28,7 +28,7 @@ export class Metodo {
      */
     diagramma: JSON;
 
-    shapeList: allShape;
+    shapeList = new allShape();
 
     costruttore: boolean;
     statico: boolean;
@@ -134,6 +134,10 @@ export class Metodo {
      */
     getListaArgomenti() {
         return this.listaArgomenti;
+    }
+
+    getShapeList() {
+        return this.shapeList;
     }
 
     isConstructor() {

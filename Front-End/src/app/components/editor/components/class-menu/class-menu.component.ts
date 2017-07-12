@@ -2,6 +2,7 @@ import { Component, Input, OnDestroy, ViewChild, ElementRef } from '@angular/cor
 
 import { ClassMenuService } from '../../services/class-menu.service';
 import { MainEditorService } from '../../../../services/main-editor.service';
+import { ActivityService } from '../../services/activity.service'
 import { Subscription } from 'rxjs/Subscription';
 import { Classe } from '../../models/classe';
 import { Param } from '../../models/param';
@@ -82,7 +83,9 @@ export class ClassMenuComponent implements OnDestroy{
    * @param classMenuService used to create a new instantiation of ClassMenuService
    * @param mainEditorService used to create a new instantiation of ClassMenuService
    */
-  constructor(private classMenuService: ClassMenuService, private mainEditorService: MainEditorService) {
+  constructor(private classMenuService: ClassMenuService, 
+              private mainEditorService: MainEditorService,
+              private activityService: ActivityService) {
     this.sub = classMenuService.selectedClass$.subscribe(
       (x) => {
         this.classe = x;
@@ -285,6 +288,7 @@ export class ClassMenuComponent implements OnDestroy{
    */
   modifyMetodo(nome: string) {
     this.mainEditorService.enterActivityMode(nome);
+    this.activityService.setSelectedMethod(this.mainEditorService.getSelectedClasse().retriveMethod(nome));
   }
 
   getMetodi() {

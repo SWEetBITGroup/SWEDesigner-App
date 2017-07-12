@@ -147,7 +147,8 @@ export class MainEditorService {
    * the replaceDiagram method of the EditorComponent and then sets
    * ´this.activityMode´ to false
    */
-  enterClassMode(){
+  enterClassMode(method: Metodo){
+    method.addDiagram(this.editorComp.graph.toJSON());
     this.editorComp.replaceDiagram(this.graph);
     this.activityMode = false;
   }
@@ -234,6 +235,14 @@ export class MainEditorService {
 
   addShape(cell) {
     this.editorComp.addElement(cell);
+  }
+
+  connetActivity(con: any) {
+    this.editorComp.addConnettore(con);
+  }
+
+  setConnetionActivity(ids: string[]) {
+    console.log(ids);
   }
 
 }
