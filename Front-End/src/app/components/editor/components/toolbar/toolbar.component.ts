@@ -299,11 +299,11 @@ export class ToolbarComponent implements OnInit {
   }
 
   addConnector() {
-      this.addConnettore(new joint.shapes.uml.Generalization);
+      this.addConnettore(new joint.shapes.fsa.Arrow);
   }
 
   addDecision() {
-    let rombo = new joint.shapes.fsa.Arrow({
+    let rombo = new joint.shapes.erd.Relationship({
         position: { x: 300, y: 390 },
         attrs: {
             text: {
