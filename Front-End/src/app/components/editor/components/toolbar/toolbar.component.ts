@@ -341,4 +341,21 @@ export class ToolbarComponent implements OnInit {
     });
     this.activityService.addEndIfNode(new endIfNode(1),romboNero);
   }
+
+  addRettangoloAngolo() {
+      new joint.shapes.erd.Entity({
+    position: { x: 100, y: 200 },
+    attrs: {
+        text: {
+            fill: '#ffffff',
+            text: 'Cazzo ridi',
+            'letter-spacing': 0
+        },
+        '.outer, .inner': {
+            fill: '#797d9a',
+            stroke: 'none'
+        }
+      }
+    });
+  }
 }
