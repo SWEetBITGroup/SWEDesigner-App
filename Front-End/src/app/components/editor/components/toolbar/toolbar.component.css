@@ -52,7 +52,7 @@
 }
 
 .addCommento {
-    background: url(imgs/Classi/EsempioClasse.png) no-repeat top left;
+    background: url(imgs/Classi/Commento.svg) no-repeat top left;
     background-size: contain;
 }
 
@@ -114,4 +114,9 @@
 /*Blocco di icone inizialmente settato a false*/
 .activity {
   /*display: none;*/
+}
+
+.freccia:focus {
+  border: 2px red solid;
+  opacity: 0.5;
 }

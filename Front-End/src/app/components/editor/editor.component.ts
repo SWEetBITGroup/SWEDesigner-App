@@ -170,6 +170,7 @@ export class EditorComponent implements OnInit {
                       target: { id: cell.model.id }
                     });
       this.graph.addCells([freccia]);
+      $('.freccia').blur();
       this.elementToConnect.unhighlight(null/* defaults to cellView.el */, {
         highlighter: {
           name: 'stroke',

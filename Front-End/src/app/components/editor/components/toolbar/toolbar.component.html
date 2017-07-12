@@ -5,12 +5,12 @@
     <div class="icona"><button (click)="addAstratta()" class="add addAstratta" title="Aggiungi classe astratta"></button></div>
 
   <div class="tipo"> Connettori </div>
-    <div class="icona"><button (click)="addImplementazione()" class="add addImplementazione" title="Aggiungi implementazione"></button></div>
-    <div class="icona"><button (click)="addGeneralizzazione()" class="add addGeneralizzazione" title="Aggiungi generalizzazione"></button></div>
+    <div class="icona"><button (click)="addImplementazione()" class="add addImplementazione freccia" title="Aggiungi implementazione"></button></div>
+    <div class="icona"><button (click)="addGeneralizzazione()" class="add addGeneralizzazione freccia" title="Aggiungi generalizzazione"></button></div>
 
   <div class="tipo"> Commenti </div>
     <div class="icona"><button (click)="addCommento()" class="add addCommento" title="Agiungi commento"></button></div>
-    <div class="icona"><button (click)="addAssociazione()" class="add addAssociazione" title="Aggiungi associazione"></button></div>
+    <div class="icona"><button (click)="addAssociazione()" class="add addAssociazione freccia" title="Aggiungi associazione"></button></div>
 </div>
 <div [hidden]="!mainEditorService.getActivityModeStatus()" class="container-fluid toolbar activity">
   <div class="tipo"> Activity </div>
