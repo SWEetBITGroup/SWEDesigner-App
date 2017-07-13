@@ -36,7 +36,7 @@ export class ToolbarComponent implements OnInit {
    * Method add class to editor
    */
   addClasse() {
-    let nomeClasse = 'Classe #'+this.classCouter++;
+    let nomeClasse = 'Classe#'+this.classCouter++;
     let uml = joint.shapes.uml;
     let classe = new uml.Class({
       position: { x: 300, y: 300 },
@@ -79,7 +79,7 @@ export class ToolbarComponent implements OnInit {
    * Method add interface to editor
    */
   addInterfaccia() {
-    let nomeInterf = 'Interfaccia #'+this.interCounter++;
+    let nomeInterf = 'Interfaccia#'+this.interCounter++;
     let uml = joint.shapes.uml;
     let interfaccia = new uml.Interface({
       position: { x: 50, y: 30 },
@@ -123,7 +123,7 @@ export class ToolbarComponent implements OnInit {
    */
   addAstratta() {
     let uml = joint.shapes.uml;
-    let nomeClassAbst = 'Classe Astratta #'+this.abstCounter++;
+    let nomeClassAbst = 'ClasseAstratta#'+this.abstCounter++;
     let abstract = new uml.Abstract({
       position: { x: 400, y: 400 },
       size: { width: 300, height: 100 },
@@ -158,21 +158,21 @@ export class ToolbarComponent implements OnInit {
             }
         }
     });
-    this.mainEditorService.addClass(new ClasseAstratta(nomeClassAbst), abstract);
+    // this.mainEditorService.addClass(new ClasseAstratta(nomeClassAbst), abstract);
   }
 
   /**
    * Method selects association as connector
    */
   addAssociazione() {
-      this.addConnettore(new joint.shapes.uml.Association);
+    //   this.addConnettore(new joint.shapes.uml.Association);
   }
 
   /**
    * Method selects implementation as connector
    */
   addImplementazione() {
-      this.addConnettore(new joint.shapes.uml.Implementation)
+    //   this.addConnettore(new joint.shapes.uml.Implementation);
   }
 
   /**
@@ -315,7 +315,7 @@ export class ToolbarComponent implements OnInit {
         attrs: {
             text: {
                 fill: '#ffffff',
-                text: 'If ()',
+                text: 'Decision',
                 'letter-spacing': 0
             },
             '.outer': {
@@ -333,7 +333,7 @@ export class ToolbarComponent implements OnInit {
         attrs: {
             text: {
                 fill: '#ffffff',
-                text: 'If ()',
+                text: '',
                 'letter-spacing': 0
             },
             '.outer': {

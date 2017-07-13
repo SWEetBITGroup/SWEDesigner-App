@@ -22,7 +22,8 @@
     </div>
     <div id="addAttr" class="campiAttributo collapse">
       <div class="aggiungiAttributo staticAttr">
-        <label>Static <input #checkStaticAtt type="checkbox" name="static" class="checkbox-circle" value="Stiatic" /></label>
+        <label>Static <input #checkStaticAtt id="staticAtt" type="checkbox" name="static" class="checkbox-circle" value="Static" (change)='updateCheckbox(checkStaticAtt.id)'/></label>
+        <label>Final <input #checkFinalAtt id="finalAtt" type="checkbox" name="final" class="checkbox-circle" value="Final" (change)='updateCheckbox(checkFinalAtt.id)'/></label>
       </div>
       <div class="aggiungiAttributo accessoAttr">
         <label>Seleziona Visibilità</label>
@@ -42,7 +43,7 @@
         <input [disabled]="!selectedTipoAtt" id="nome-attributo" #nomeAtt
         (keyup.enter)="addAttributo(nomeAtt.value)">
       </div>
-      <button class="btn btn-default" [disabled]="!selectedTipoAtt" (click)="addAttributo(nomeAtt.value, checkStaticAtt.checked, tipiAtt.value, accAtt.value)">Aggiungi Attributo</button>
+      <button class="btn btn-default" [disabled]="!selectedTipoAtt" (click)="addAttributo(nomeAtt.value, checkStaticAtt.checked, checkFinalAtt.checked, tipiAtt.value, accAtt.value)">Aggiungi Attributo</button>
     </div>
 
   </div>
@@ -68,26 +69,27 @@
           <div class="campiAttributo collapse listaModAttr" attr.id="{{attr.name}}">
             <div class="modificaAttributo accessoAttr">
               <div class="aggiungiAttributo staticAttr">
-                <label>Static <input #checkStaticAtt type="checkbox" name="static" class=".checkbox-circle" value="Stiatic" /></label>
+                <label>Static <input #checkStaticAttMod id="staticAttMod" type="checkbox" name="static" class=".checkbox-circle" value="Static" (change)='updateCheckbox(checkStaticAttMod.id)'/></label>
+                <label>Final <input #checkFinalAttMod id="finalAttMod" type="checkbox" name="final" class="checkbox-circle" value="Final" (change)='updateCheckbox(checkFinalAttMod.id)'/></label>
               </div>
               <label>Seleziona Visibilità</label>
-              <select  [(ngModel)]="selectedAccAtt">
+              <select  #accAttMod [(ngModel)]="selectedAccAtt">
                 <option *ngFor="let acc of accessoAttr" [value]="acc">{{ acc }}</option>
               </select>
             </div>
             <div class="modificaAttributo selezionaTipo">
               <label>Seleziona tipo</label>
-              <select #tipi [(ngModel)]="selectedTipoAtt">
+              <select #tipiAttMod [(ngModel)]="selectedTipoAtt">
                 <option value=""></option>
                 <option *ngFor="let type of types" [value]="type">{{type}}</option>
               </select>
             </div>
             <div class="modificaAttributo nomeAttr">
               <label>Nome</label>
-              <input [disabled]="!selectedTipoAtt" id="nome-attributo" #nomeAtt
+              <input [disabled]="!selectedTipoAtt" id="nome-attributo" #nomeAttMod
               (keyup.enter)="changeAttributo(nomeAtt.value, attr.name)">
             </div>
-            <button class="btn btn-default" [disabled]="!selectedTipoAtt" (click)="changeAttributo(nomeAtt.value, attr.name)">Modifica Attributo</button>
+            <button class="btn btn-default" [disabled]="!selectedTipoAtt" (click)="changeAttributo(nomeAttMod.value, attr.name,tipiAttMod.value, accAttMod.value , checkStaticAttMod.checked , checkFinalAttMod.checked)">Modifica Attributo</button>
             </div>
         </li>
       </ul>
@@ -190,7 +192,7 @@
   <div class="aggiungiMetodo">
     <div class="row">
       <button [disabled]="this.mainEditorService.isThereAMain()" class="btn btn-default" (click)="addMain()">
-        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Aggiungi Metodo Main
+        <span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span>&nbsp;Aggiungi Metodo Main
       </button>
     </div>
   </div>

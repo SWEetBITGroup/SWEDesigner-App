@@ -39,7 +39,7 @@ export class ClassMenuComponent implements OnDestroy{
   /**
    * Array of primitive data types
    */
-  types = ['byte','short','int','long','float','double','boolean','char'];
+  types = ['byte','short','int','long','float','double','boolean','char','String'];
   /**
    * Array of visibility
    */
@@ -68,7 +68,7 @@ export class ClassMenuComponent implements OnDestroy{
   parametriMetodo = new Array<Param>();
 
   costruttore: boolean;
-  /**
+   /**
    * Used to point to a HTML checkbox element 
    */
   @ViewChild('staticMet') staticMetCheckbox: ElementRef;
@@ -76,6 +76,22 @@ export class ClassMenuComponent implements OnDestroy{
    * Used to point to a HTML checkbox element 
    */
   @ViewChild('constructor') constructorCheckbox: ElementRef;
+  /**
+   * Used to point to a HTML checkbox element 
+   */
+  @ViewChild('checkStaticAtt') checkStaticAtt: ElementRef;
+  /**
+   * Used to point to a HTML checkbox element 
+   */
+  @ViewChild('checkFinalAtt') checkFinalAtt: ElementRef;
+  /**
+   * Used to point to a HTML checkbox element 
+   */
+  @ViewChild('checkStaticAttMod') checkStaticAttMod: ElementRef;
+  /**
+   * Used to point to a HTML checkbox element 
+   */
+  @ViewChild('checkFinalAttMod') checkFinalAttMod: ElementRef;
 
   /**
    * Create an instantiation of ClassMenuComponent and sets the properties ´classe´ and ´name´
@@ -101,7 +117,7 @@ export class ClassMenuComponent implements OnDestroy{
    * a new attribute. If one or more parameter isn't present an error will be shown 
    * @param nome the neme of the new attribute
    */
-  addAttributo(nome: string, staticAtt: boolean, tipo: string, acc: string) {
+  addAttributo(nome: string, staticAtt: boolean, finalAtt: boolean, tipo: string, acc: string) {
     console.log(nome+' '+tipo+' '+acc);
     if(nome && tipo && acc){
       try {
@@ -124,9 +140,20 @@ export class ClassMenuComponent implements OnDestroy{
           vis = '-';
       }
       let stat = '';
+      let final = '';
       if(staticAtt)
-        stat = 'static'
-      attributi.push(vis+' '+stat+' '+nome+' : '+ tipo);
+        {
+          stat = 'static';
+          attributi.push(vis+' '+stat+' '+nome+' : '+ tipo);
+        }
+       else if(finalAtt)
+        {
+          final = 'final';
+          attributi.push(vis+' '+final+' '+nome+' : '+ tipo);  
+        }
+      else
+        attributi.push(vis+' '+nome+' : '+ tipo);
+
       this.classe.set('attributes',null); // Hack per far funzionare l'event change:attrs
       this.classe.set('attributes',attributi);
       this.selectedAccAtt = 'public';
@@ -158,11 +185,12 @@ export class ClassMenuComponent implements OnDestroy{
   /**
    * Mododify the properties of an attribute
    */
-  changeAttributo(name: string, oldName: string, tipo: string, acc: string) {
-    if(name && tipo && acc) {
-      this.mainEditorService.changeAttributo(oldName,name,tipo,acc);
-    }
-    
+  changeAttributo(name: string, oldName: string, tipo: string, acc: string , stat: boolean, final: boolean) {
+    // if(name && tipo && acc) {
+    //   this.mainEditorService.changeAttributo(oldName,name,tipo,acc);
+    // }
+    this.removeAttributo(oldName);
+    this.addAttributo(name,stat,final,tipo,acc);
   }
 
   /**
@@ -312,14 +340,24 @@ export class ClassMenuComponent implements OnDestroy{
    * This function allows to be check only one element
    * @param event name of id element
    */
-  updateCheckbox(event: any) {
+updateCheckbox(event: any) {
     if (this.staticMetCheckbox.nativeElement.checked && this.constructorCheckbox.nativeElement.checked && event == 'constructor')
         this.staticMetCheckbox.nativeElement.checked = false;
     if (this.staticMetCheckbox.nativeElement.checked && this.constructorCheckbox.nativeElement.checked && event == 'static')
       {
         this.constructorCheckbox.nativeElement.checked = false;
         this.costruttore = false;
-      }  
+      } 
+    //attributi 
+    if (this.checkStaticAtt.nativeElement.checked && this.checkFinalAtt.nativeElement.checked && event == 'staticAtt')
+        this.checkFinalAtt.nativeElement.checked = false;
+    if (this.checkStaticAtt.nativeElement.checked && this.checkFinalAtt.nativeElement.checked && event == 'finalAtt')
+        this.checkStaticAtt.nativeElement.checked = false;
+    //attributi di lista modificata    
+    if (this.checkStaticAttMod.nativeElement.checked && this.checkFinalAttMod.nativeElement.checked && event == 'staticAttMod')
+        this.checkFinalAttMod.nativeElement.checked = false;
+    if (this.checkStaticAttMod.nativeElement.checked && this.checkFinalAttMod.nativeElement.checked && event == 'finalAttMod')
+        this.checkStaticAttMod.nativeElement.checked = false;             
   }
  /**
   * This function closes all the collapsed div except the selected one
