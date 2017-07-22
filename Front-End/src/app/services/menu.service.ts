@@ -86,7 +86,42 @@ export class MenuService {
     return code;
   }
 
+  //servizio di download
+  donwload(){
+    //robo da inviare
+    let j ={
+      "name": "Persona",
+      "private" : true,
+      "attrP": [
+          {"typeP": "string", "varP": "nome"},
+          {"typeP": "string", "varP": "cognome"},
+          {"typeP": "int", "varP": "eta"}
+           ],
+      "public" : true,
+      "methodsPU": [
+        {"main": "true", "corpoM": "for ( int i = 0 ; i < 10 ; i++ ) { System.out.println( i ) ;"}
+      ]
+    }
+    return this.http.post('\parsing', j,{
+      method: RequestMethod.Post,
+      responseType: ResponseContentType.Blob
+    })
+    .map((res)=>{
+      return new Blob([res.blob()], { type: 'application/java' })
+    })
+  }
+
   code() {
+    this.donwload().subscribe(res =>{
+      FileSaver.saveAs(res, "progetto.java");
+      let fileURL = URL.createObjectURL(res);
+      window.open(fileURL);
+    })
+  }
+}
+
+
+ /*code() {
     let var1 = this.mainEditorService.varCode;
     let code = 'import javafx.application.Application; import javafx.event.ActionEvent; import javafx.event.EventHandler; import javafx.scene.Scene ; import javafx.scene.control.Button ; import javafx.scene.layout.StackPane ; import javafx.stage.Stage ; class Hello{ private String text ; public int i ; protected String prova ; public static void main(String Args[]) { for ( int '+var1[0]+' = '+var1[1]+' ; '+var1[0]+' < '+var1[2]+' ; '+var1[0]+'++ ) { System.out.println( '+var1[0]+' ) ; } } }'
     let blob = new Blob([code], {type: 'text/plain'});
@@ -101,37 +136,4 @@ export class MenuService {
                console.log('code generated')
               },
               error => {console.log(JSON.stringify(error));});
-  }
-}
-
-
-
-/*
-var file = event.target.files[0];
-var reader = new FileReader();
-reader.onload = file =>{
-  var contents: any = file.target;
-  this.contentProj = contents.result;
-};
-console.log("madonnamaiala" + this.contentProj);
-this.http.post('/decrypt', this.contentProj, {
-  method: RequestMethod.Post,
-  headers: new Headers({'Content-Type': 'application/json'})})
-  .subscribe((data)=>{
-    console.log(data);
-  },
-error => {console.log(error)})
-}*/
-
-/*
-if(file){
-  var reader = new FileReader();
-  reader.readAsText(file, "UTF-8");
-  reader.onload = function(e){
-    var contents: any = e.target;
-    readed = JSON.parse(contents.result);
-  }
-  reader.onerror = function(e){
-    console.log("non leggo dio cane");
-  }
-}*/
+  }*/

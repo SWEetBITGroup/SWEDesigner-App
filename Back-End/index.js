@@ -44,7 +44,7 @@
   }
 
   //baro demo
-  var myMU = {
+  /*var myMU = {
       "name": "Persona",
       "private" : true,
       "attrP": [
@@ -57,7 +57,7 @@
         {"main": "true", "corpoM": null}
       ]
     
-  }
+  }*/
 
 
 //Init Server
@@ -152,15 +152,25 @@ app.listen(port, ()=>{
     * @see module:parse
    */
   app.post("/parsing", function(req,res) { 
-    //var myMu = req.body;
-    var metodo = req.body.m;
+    var myMu = req.body;
+    //var metodo = req.body.m;
     //console.log(metodo);
-    myMU.methodsPU[0].corpoM = metodo;
+    //myMU.methodsPU[0].corpoM = metodo;
+    var myMU = req.body;
     console.log(myMU);
     var template = mu.getTemplate();
     mu.parse(template, myMU, function(parsed){
       console.log(parsed);
-      res.json(parsed);
+      //res.json(parsed);
+      //res.attachment("./templates/template.html");
+      fs.writeFile("./code/file.java", parsed, function(err){
+        if(err){
+          console.log("errore scrittura file");
+        }
+        else{
+          res.download("./code/file.java");
+        }
+      })
     });
   })
 

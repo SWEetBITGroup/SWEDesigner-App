@@ -203,7 +203,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, "/* You can add global styles to this file, and also import other style files */\n\n body {\n   margin: 0;\n   padding: 0;\n   min-height: 100%;\n }\n", ""]);
+exports.push([module.i, "/* You can add global styles to this file, and also import other style files */\r\n\r\n body {\r\n   margin: 0;\r\n   padding: 0;\r\n   min-height: 100%;\r\n }\r\n", ""]);
 
 // exports
 
