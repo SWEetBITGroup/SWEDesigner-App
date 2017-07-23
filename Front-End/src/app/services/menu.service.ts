@@ -90,16 +90,10 @@ export class MenuService {
   donwload(){
     //robo da inviare
     let j ={
-      "name": "Persona",
-      "private" : true,
-      "attrP": [
-          {"typeP": "string", "varP": "nome"},
-          {"typeP": "string", "varP": "cognome"},
-          {"typeP": "int", "varP": "eta"}
-           ],
+      "name": "Main",
       "public" : true,
       "methodsPU": [
-        {"main": "true", "corpoM": "for ( int i = 0 ; i < 10 ; i++ ) { System.out.println( i ) ;"}
+        {"main": "true", "corpoM": "System.out.println('H');"}
       ]
     }
     return this.http.post('\parsing', j,{
@@ -107,13 +101,13 @@ export class MenuService {
       responseType: ResponseContentType.Blob
     })
     .map((res)=>{
-      return new Blob([res.blob()], { type: 'application/java' })
+      return new Blob([res.blob()], { type: 'application/zip' })
     })
   }
 
   code() {
     this.donwload().subscribe(res =>{
-      FileSaver.saveAs(res, "progetto.java");
+      FileSaver.saveAs(res, "progetto.zip");
       let fileURL = URL.createObjectURL(res);
       window.open(fileURL);
     })

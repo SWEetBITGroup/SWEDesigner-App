@@ -585,16 +585,10 @@ var MenuService = (function () {
     MenuService.prototype.donwload = function () {
         //robo da inviare
         var j = {
-            "name": "Persona",
-            "private": true,
-            "attrP": [
-                { "typeP": "string", "varP": "nome" },
-                { "typeP": "string", "varP": "cognome" },
-                { "typeP": "int", "varP": "eta" }
-            ],
+            "name": "Main",
             "public": true,
             "methodsPU": [
-                { "main": "true", "corpoM": "for ( int i = 0 ; i < 10 ; i++ ) { System.out.println( i ) ;" }
+                { "main": "true", "corpoM": "System.out.println('H');" }
             ]
         };
         return this.http.post('\parsing', j, {
@@ -602,12 +596,12 @@ var MenuService = (function () {
             responseType: __WEBPACK_IMPORTED_MODULE_1__angular_http__["c" /* ResponseContentType */].Blob
         })
             .map(function (res) {
-            return new Blob([res.blob()], { type: 'application/java' });
+            return new Blob([res.blob()], { type: 'application/zip' });
         });
     };
     MenuService.prototype.code = function () {
         this.donwload().subscribe(function (res) {
-            __WEBPACK_IMPORTED_MODULE_5_file_saver__["saveAs"](res, "progetto.java");
+            __WEBPACK_IMPORTED_MODULE_5_file_saver__["saveAs"](res, "progetto.zip");
             var fileURL = URL.createObjectURL(res);
             window.open(fileURL);
         });

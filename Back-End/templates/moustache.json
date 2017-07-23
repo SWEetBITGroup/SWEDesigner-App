@@ -1,11 +1,5 @@
 {
-  "name": "persona",
-  "private" : true,
-  "attrP": [
-      {"typeP": "string", "varP": "nome"},
-      {"typeP": "string", "varP": "cognome"},
-      {"typeP": "int", "varP": "eta", "defP": true, "valueP": "21"}
-       ],
+  "name": "Main",
   "public" : true,
   "methodsPU": [
     {"main": "true", "corpoM": "System.out.println(\"Hello World\")"}

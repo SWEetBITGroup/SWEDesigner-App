@@ -3,6 +3,13 @@
   //ErrorHandler
   //var error = require('./controller/middleware/errorHandler');
 
+  //ToCompile
+  const {spawn} = require('child_process');
+
+  //ToZip
+  var archiver = require('archiver');
+  var archive = archiver('zip');
+
   //FilseSystem init
   var fs = require('fs');
 
@@ -163,12 +170,26 @@ app.listen(port, ()=>{
       console.log(parsed);
       //res.json(parsed);
       //res.attachment("./templates/template.html");
-      fs.writeFile("./code/file.java", parsed, function(err){
+      fs.writeFile("./code/Main.java", parsed, function(err){
         if(err){
           console.log("errore scrittura file");
         }
         else{
-          res.download("./code/file.java");
+          const compiled = spawn("javac", ["./code/Main.java"]);
+          compiled.on('close', (err)=>{
+            var zipOutput = fs.createWriteStream("./code/Main.zip");
+            zipOutput.on('close', function () {
+                console.log(archive.pointer() + ' total bytes');
+                console.log('archiver has been finalized and the output file descriptor has closed.');
+                res.download("./code/Main.zip");
+            });
+            archive.pipe(zipOutput);
+            var fileJava = "./code/Main.java";
+            var fileClass = "./code/Main.class";
+            archive.append(fs.createReadStream(fileJava), { name: 'Main.java' });
+            archive.append(fs.createReadStream(fileClass), { name: 'Main.class' });
+            archive.finalize();
+          })
         }
       })
     });
