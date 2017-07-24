@@ -313,3 +313,34 @@ app.listen(port, ()=>{
         }
       })
     })
+    //DA TESTARE
+    app.post("/updateProj", function(req, res){
+      var name = req.body.nome_progetto;
+      var usr = req.body.username;
+      var proj = req.body.project;
+      mongooseRequest.update_proj(name, usr, proj, function(err, x){
+        if(err){
+          console.log("problemi con l'update di un progetto");
+          res.send("problemi con l'update di un progetto");
+        }
+        else{
+          console.log("progetto aggiornato");
+          res.send("progetto aggiornato");
+        }
+      })
+    })
+    app.post("/updateNameProj", function(req, res){
+      var name = req.body.nome_progetto;
+      var usr = req.body.username;
+      var newName = req.body.new_name;
+      mongooseRequest.update_nameProj(name, usr, newName, function(err, x){
+        if(err){
+          console.log("problema aggiornamento nome del progetto");
+          res.send("problema aggiornamento nome del progetto");
+        }
+        else{
+          console.log("nome aggiornato");
+          res.send("nome aggiornato");
+        }
+      })
+    })

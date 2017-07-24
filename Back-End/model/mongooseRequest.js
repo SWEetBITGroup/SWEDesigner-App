@@ -224,29 +224,45 @@ forgot_mail: function(usr, cb){
         }
     })
 },
+update_proj: function(projName, usr, proj, cb){
+    proget.update({ 'nome_progetto': projName, 'username': usr }, { 'progetto':proj}, function(err, nuovo){
+        if(err){
+            console.log("errore nell'aggiornamento di un progetto");
+            cb(true, "");
+        }
+        else{
+            if(nuovo.n != 0){
+                console.log("progetto aggiornato correttamente");
+                cb(false, nuovo);
+            }
+            else{
+                console.log("errore nell'aggiornamento di un progetto");
+                cb(true, "");
+            }
+        }
+    })
+},
+update_nameProj: function(projName, usr, newName, cb){
+    proget.update({'nome_progetto': projName, 'username': usr}, {'nome_progetto': newName}, function(err, nuovo){
+        if(err){
+            console.log("errore aggiornamnto nome progetto");
+            cb(true, "");
+        }
+        else{
+            if(nuovo.n != 0 ){
+                console.log("nome progetto aggiornato con successo");
+                cb(false, nuovo);
+            }
+            else{
+                console.log("errore aggiornamnto nome progetto");
+                cb(true, "");
+            }
+        }
+    })
+}
 //DA MODIFICARE TUTTE LE FUNZIONI DI SEGUITO
 /*
 //		FUNZIONI DI AGGIORNAMENTO
-update_proj: function(){
-      app.post('/aggiorna_progetto', function(req, res){		//Funzione che aggiorna un progetto dato il nome progetto e l'utente, ritorna true se l'aggiornamento è andato a buon fine, false altrimenti
-      proget.update({ 'nome_progetto': req.body.nome_progetto, 'username': req.body.username}, { 'progetto': req.body.new_progetto }, function (err, nuovo) {
-      if (err) return handleError(err);
-      console.log(nuovo);
-      if(nuovo.n!=0)res.send(true);
-      else res.send(false);
-      });
-});
-},
-update_nameProj: function(){
-      app.post('/aggiorna_nome_progetto', function(req, res){		//Funzione che aggiorna il nome di un progetto dato il vecchio nome progetto e l'username utente, ritorna true se l'aggiornamento è andato a buon fine, false altrimenti
-      proget.update({ 'nome_progetto': req.body.nome_progetto, 'username': req.body.username}, { 'nome_progetto': req.body.new_nome }, function (err, nuovo) {
-      if (err) return handleError(err);
-      console.log(nuovo);
-      if(nuovo.n!=0) res.send(true);
-      else res.send(false);
-      });
-});
-},
 update_username: function(){
       app.post('/aggiorna_username', function(req, res){		//Funzione che aggiorna un username dato un vecchio username utente, ritorna true se l'aggiornamento è andato a buon fine, false altrimenti (Modifica anche tutti gli username nei progetti con l'utente in questione)
       var usern= req.body.username;
