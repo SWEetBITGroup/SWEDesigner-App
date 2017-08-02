@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { MainEditorService } from '../../../../services/main-editor.service';
+import { MainEditorService } from '../../../../../../services/main-editor.service';
 import { Classe } from '../../models/classe'
 import { ClasseAstratta } from '../../models/classe-astratta'
 import { Interface } from '../../models/interface'

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 
-import { MainEditorService } from '../../../services/main-editor.service';
+import { MainEditorService } from '../../../../../services/main-editor.service';
 import { Classe } from '../models/classe';
-import { Global } from '../../../models/global';
+import { Global } from '../../../../../models/global';
 import { Metodo } from '../models/metodo';
 import { allShape } from '../models/all-shape';
 import { ifNode } from '../models/if-node';

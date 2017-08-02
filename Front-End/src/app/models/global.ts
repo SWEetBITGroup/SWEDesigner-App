@@ -1,6 +1,6 @@
-import { Classe }     from '../components/editor/models/classe';
-import { Metodo }     from '../components/editor/models/metodo';
-import { Param }      from '../components/editor/models/param';
+import { Classe }     from '../components/editor-container/components/editor/models/classe';
+import { Metodo }     from '../components/editor-container/components/editor/models/metodo';
+import { Param }      from '../components/editor-container/components/editor/models/param';
 
 
 /**

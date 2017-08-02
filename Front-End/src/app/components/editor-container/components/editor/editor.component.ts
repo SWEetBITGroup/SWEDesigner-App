@@ -1,8 +1,8 @@
 import { Component, OnInit , AfterViewInit, Input, ViewChild } from '@angular/core';
 
 import { ClassMenuService } from './services/class-menu.service';
-import { MenuService } from '../../services/menu.service';
-import { MainEditorService } from '../../services/main-editor.service';
+import { MenuService } from '../../../../services/menu.service';
+import { MainEditorService } from '../../../../services/main-editor.service';
 import { ClassMenuComponent } from './components/class-menu/class-menu.component';
 import { Subscription } from 'rxjs/Subscription';
 

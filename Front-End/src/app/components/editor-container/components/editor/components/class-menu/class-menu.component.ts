@@ -1,7 +1,7 @@
 import { Component, Input, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 
 import { ClassMenuService } from '../../services/class-menu.service';
-import { MainEditorService } from '../../../../services/main-editor.service';
+import { MainEditorService } from '../../../../../../services/main-editor.service';
 import { ActivityService } from '../../services/activity.service'
 import { Subscription } from 'rxjs/Subscription';
 import { Classe } from '../../models/classe';

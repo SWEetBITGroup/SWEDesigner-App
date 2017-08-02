@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { MenuService } from '../../../../services/menu.service';
-import { MainEditorService } from '../../../../services/main-editor.service';
+import { MenuService } from '../../../../../../services/menu.service';
+import { MainEditorService } from '../../../../../../services/main-editor.service';
 
 @Component({
   selector: 'app-file',

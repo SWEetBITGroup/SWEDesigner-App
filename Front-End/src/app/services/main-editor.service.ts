@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 
-import { EditorComponent } from '../components/editor/editor.component';
-import { Classe } from '../components/editor/models/classe';
+import { EditorComponent } from '../components/editor-container/components/editor/editor.component';
+import { Classe } from '../components/editor-container/components/editor/models/classe';
 import { Global } from '../models/global';
-import { Metodo } from '../components/editor/models/metodo';
+import { Metodo } from '../components/editor-container/components/editor/models/metodo';
 
 /**
  * 'MainEditorservice' stores information about the editor's canvas, the project 

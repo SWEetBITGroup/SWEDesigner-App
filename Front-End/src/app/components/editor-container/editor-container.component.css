@@ -1,0 +1,18 @@
+.row {
+  margin: 0;
+  padding: 0;
+  height: 94vh;
+}
+.editor {
+  padding: 0;
+  border-left: 1px solid black;
+  height: 100%;
+}
+
+.activityframe {
+  padding: 0;
+  border-left: 1px solid black;
+  height: 100%;
+  background-color: #03A9F4;
+
+}

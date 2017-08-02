@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { MainEditorService } from '../../../../services/main-editor.service';
+import { MainEditorService } from '../../../../../../services/main-editor.service';
 import { ActivityService } from '../../services/activity.service';
 
 @Component({
