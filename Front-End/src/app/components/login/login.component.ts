@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 @Component({
@@ -7,10 +7,34 @@ import { RouterModule, Routes } from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
+  
   constructor() { }
-
-  ngOnInit() {
+  
+  ngAfterViewInit(){
+    $(function() {
+      setTimeout(function(){
+        showElement();
+      }, 1000);
+      
+      function showElement() {
+        $('.logo').addClass('rotate360');
+        $('.box').toggleClass('active');
+        // setInterval(        
+        //   function(){ 
+        //     $('.logo').css('margin-left', '0');  },
+        //   50)
+                setInterval(        
+          function(){ 
+ 
+            $('.text').removeClass('hide'); },
+          200)  
+          
+        }
+      });
+    }
+    
+    ngOnInit() {
+    }
+    
   }
-
-}
+  
