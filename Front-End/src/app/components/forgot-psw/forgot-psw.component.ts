@@ -5,11 +5,17 @@ import { Component, AfterViewInit } from '@angular/core';
   templateUrl: './forgot-psw.component.html',
   styleUrls: ['./forgot-psw.component.css']
 })
+/**
+* 'ForgotPswComponent' allow to the user to authenticate to the editor by the passowrd's reset
+*/
 export class ForgotPswComponent {
-
+  
+  /**
+  * Create an instantiation of ForgotPswComponent
+  */
   constructor() { }
-
-    ngAfterViewInit(){
+  
+  ngAfterViewInit(){
     /**
     * !IMPORANT the next function is just to add animation on the page
     */
@@ -20,7 +26,7 @@ export class ForgotPswComponent {
     /**
     * This function make the animation that allow to the content of page to diasappear from right to left
     */
-       
+    
   } 
-
+  
 }

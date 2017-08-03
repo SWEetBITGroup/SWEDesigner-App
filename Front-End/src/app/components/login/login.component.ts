@@ -7,15 +7,23 @@ import { AccountService } from '../../services/account.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
+
+/**
+* 'LoginComponent' allow the authentication to the user
+*/
 export class LoginComponent {
-  
-  constructor(private router:Router, private account:AccountService) { }
+  /**
+  * Create an instantiation of LoginComponent
+  * @param router used to create a new instantiation of Router
+  * @param account used to create a new instantiation of AccountService
+  */
+  constructor(private router: Router, private account: AccountService) { }
   
   loginUser(e) {
     e.preventDefault();
     var username = e.target.elements[0].value;
     var password = e.target.elements[1].value;
-
+    
     if (username == "admin" && password == "admin") {
       this.account.setUserLoggedIn();
       this.router.navigate(['/editor']);
@@ -23,7 +31,7 @@ export class LoginComponent {
   }
   
   ngAfterViewInit(){
-
+    
     /**
     * !IMPORANT the next function is just to add animation on the page
     */      
@@ -42,8 +50,8 @@ export class LoginComponent {
       }, 1000);
     });
     /**
-     * This function make some animation on the image logo, text logo and the form
-     */
+    * This function make some animation on the image logo, text logo and the form
+    */
     function showElement() {
       $('img').addClass('rotate360');
       $('.box').toggleClass('active');     
@@ -54,8 +62,7 @@ export class LoginComponent {
             function(){ $('.text').removeClass('hide'); } , 200 );
           }, 900); 
         }
-
       }    
       
-  }
+    }
     

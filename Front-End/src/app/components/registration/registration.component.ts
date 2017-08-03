@@ -5,8 +5,13 @@ import { Component, AfterViewInit } from '@angular/core';
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.css']
 })
-
+/**
+ * 'RegistrationComponent' allow to create a new user
+ */
 export class RegistrationComponent {
+  /**
+   * Create an instantiation of RegistrationComponent
+   */
   constructor() { }
   
   ngAfterViewInit(){
