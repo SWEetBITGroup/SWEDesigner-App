@@ -1,24 +1,15 @@
-<div class="container">
-  <div class="col-xs-6 col-xs-offset-3 col-md-4 col-md-offset-4">
-    <div class="container-fluid">  
-      <span class="text hide glow"> Modifica Password </span>
-    </div> 
-    <div class="box">  
-      <h2>Login</h2>
-      <form name="form">
-        <div class="form-group">
-          <label for="username">Vecchia password:</label>
-          <input type="text" class="form-control" name="vpassword" required />
-        </div>
-        <div class="form-group">
-          <label for="password">Nuova password:</label>
-          <input type="password" class="form-control" name="npassword" required />
-        </div>
-        <div class="form-group">
-          <button [routerLink]="['']" class="btn btn-primary">Modifica</button>
-          <a [routerLink]="['./Editor']" class="btn btn-link">Annulla</a>
-        </div>
-      </form>
-    </div>    
+<form name="form" class="col-xs-6 col-xs-offset-3 col-md-4 col-md-offset-4">
+  <h1>Modifica Password</h1>
+  <div class="form-group">
+    <label for="username">Nuova password:</label>
+    <input type="password" class="form-control" name="vpassword" required />
   </div>
-</div>
+  <div class="form-group">
+    <label for="password">Conferma nuova password:</label>
+    <input type="password" class="form-control" name="npassword" required />
+  </div>
+  <div class="form-group">
+    <button [routerLink]="['/editor']" class="btn btn-primary">Modifica</button>
+    <a [routerLink]="['/editor']" class="btn btn-link">Annulla</a>
+  </div>
+</form>

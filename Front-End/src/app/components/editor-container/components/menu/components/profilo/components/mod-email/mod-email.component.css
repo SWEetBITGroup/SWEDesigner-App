@@ -8,19 +8,6 @@
     transform: translate(-50%,-50%);
 }
 
-img {  
-    /* display: inline-block; */
-    margin-left: 25%;    
-}
-
-.rotate360 {
-    transition: all 0.7s;
-    transform: rotate(360deg);
-    -webkit-transform: rotate(360deg);
-    -o-transform: rotate(360deg); 
-    -moz-transform: rotate(360deg);
-}
-
 .text {
     font-family: serif;
     font-size: large;
