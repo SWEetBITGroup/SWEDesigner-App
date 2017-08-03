@@ -1,4 +1,6 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AccountService } from '../../services/account.service';
 
 @Component({
   selector: 'app-login',
@@ -7,9 +9,21 @@ import { Component, AfterViewInit } from '@angular/core';
 })
 export class LoginComponent {
   
-  constructor() { }
+  constructor(private router:Router, private account:AccountService) { }
+  
+  loginUser(e) {
+    e.preventDefault();
+    var username = e.target.elements[0].value;
+    var password = e.target.elements[1].value;
+
+    if (username == "admin" && password == "admin") {
+      this.account.setUserLoggedIn();
+      this.router.navigate(['/editor']);
+    }
+  }
   
   ngAfterViewInit(){
+
     /**
     * !IMPORANT the next function is just to add animation on the page
     */      

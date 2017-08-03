@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
+// Components
 import { AppComponent } from './app.component';
 import { MenuComponent } from './components/editor-container/components/menu/menu.component';
 import { FileComponent } from './components/editor-container/components/menu/components/file/file.component';
@@ -18,11 +19,19 @@ import { ClassMenuComponent } from './components/editor-container/components/edi
 import { ActivityMenuComponent } from './components/editor-container/components/editor/components/activity-menu/activity-menu.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegistrationComponent } from './components/registration/registration.component';
-import { AppRoutingModule } from './app-routing.module';
 import { EditorContainerComponent } from './components/editor-container/editor-container.component';
 import { ModPswComponent } from './components/editor-container/components/menu/components/profilo/components/mod-psw/mod-psw.component';
 import { ModEmailComponent } from './components/editor-container/components/menu/components/profilo/components/mod-email/mod-email.component';
 import { ForgotPswComponent } from './components/forgot-psw/forgot-psw.component';
+
+// Services
+import { AccountService } from './services/account.service';
+
+// Modules
+import { AppRoutingModule } from './app-routing.module';
+
+// Guard
+import { AuthenticationGuard } from './guards/authentication.guard';
 
 @NgModule({
   declarations: [
@@ -52,7 +61,7 @@ import { ForgotPswComponent } from './components/forgot-psw/forgot-psw.component
     HttpModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [AccountService, AuthenticationGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
