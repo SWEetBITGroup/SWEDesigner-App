@@ -17,7 +17,7 @@ import { ActivityFrameComponent } from './components/editor-container/components
 import { ClassMenuComponent } from './components/editor-container/components/editor/components/class-menu/class-menu.component';
 import { ActivityMenuComponent } from './components/editor-container/components/editor/components/activity-menu/activity-menu.component';
 import { LoginComponent } from './components/login/login.component';
-
+import { RegistrationComponent } from './components/registration/registration.component';
 import { AppRoutingModule } from './app-routing.module';
 import { EditorContainerComponent } from './components/editor-container/editor-container.component';
 import { ModPswComponent } from './components/editor-container/components/menu/components/profilo/components/mod-psw/mod-psw.component';
@@ -39,6 +39,7 @@ import { ModEmailComponent } from './components/editor-container/components/menu
     ClassMenuComponent,
     ActivityMenuComponent,
     LoginComponent,
+    RegistrationComponent,
     EditorContainerComponent,
     ModPswComponent,
     ModEmailComponent

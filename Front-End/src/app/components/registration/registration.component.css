@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css?family=Neuton');
+
+.container {
+    position:absolute; 
+    top:50%;
+    left:50%;
+    padding:15px;
+    -ms-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    
+}
+
+img {  
+    /* display: inline-block; */
+     margin-left: 25%;     
+}
+
+.text{
+    font-family: 'Neuton', serif;
+    font-weight: 300;
+    color: rgb(238,117,0);
+    font-size: 90px;
+    position: absolute;
+    left: -25%;
+    top: -30%;
+}   
