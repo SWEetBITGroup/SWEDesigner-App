@@ -20,6 +20,8 @@ import { LoginComponent } from './components/login/login.component';
 
 import { AppRoutingModule } from './app-routing.module';
 import { EditorContainerComponent } from './components/editor-container/editor-container.component';
+import { ModPswComponent } from './components/editor-container/components/menu/components/profilo/components/mod-psw/mod-psw.component';
+import { ModEmailComponent } from './components/editor-container/components/menu/components/profilo/components/mod-email/mod-email.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,9 @@ import { EditorContainerComponent } from './components/editor-container/editor-c
     ClassMenuComponent,
     ActivityMenuComponent,
     LoginComponent,
-    EditorContainerComponent
+    EditorContainerComponent,
+    ModPswComponent,
+    ModEmailComponent
   ],
   imports: [
     BrowserModule,
