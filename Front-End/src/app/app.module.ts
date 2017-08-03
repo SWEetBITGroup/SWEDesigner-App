@@ -22,6 +22,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { EditorContainerComponent } from './components/editor-container/editor-container.component';
 import { ModPswComponent } from './components/editor-container/components/menu/components/profilo/components/mod-psw/mod-psw.component';
 import { ModEmailComponent } from './components/editor-container/components/menu/components/profilo/components/mod-email/mod-email.component';
+import { ForgotPswComponent } from './components/forgot-psw/forgot-psw.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { ModEmailComponent } from './components/editor-container/components/menu
     RegistrationComponent,
     EditorContainerComponent,
     ModPswComponent,
-    ModEmailComponent
+    ModEmailComponent,
+    ForgotPswComponent
   ],
   imports: [
     BrowserModule,

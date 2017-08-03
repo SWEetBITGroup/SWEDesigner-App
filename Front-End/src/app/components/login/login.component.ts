@@ -11,7 +11,7 @@ export class LoginComponent {
   
   ngAfterViewInit(){
     /**
-    * !important the next function is just to add animation on the page
+    * !IMPORANT the next function is just to add animation on the page
     */      
     /**
     * This function just make a refresh of the page.

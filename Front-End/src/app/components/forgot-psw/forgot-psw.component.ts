@@ -1,15 +1,15 @@
 import { Component, AfterViewInit } from '@angular/core';
 
 @Component({
-  selector: 'app-registration',
-  templateUrl: './registration.component.html',
-  styleUrls: ['./registration.component.css']
+  selector: 'app-forgot-psw',
+  templateUrl: './forgot-psw.component.html',
+  styleUrls: ['./forgot-psw.component.css']
 })
+export class ForgotPswComponent {
 
-export class RegistrationComponent {
   constructor() { }
-  
-  ngAfterViewInit(){
+
+    ngAfterViewInit(){
     /**
     * !IMPORANT the next function is just to add animation on the page
     */
@@ -22,5 +22,5 @@ export class RegistrationComponent {
     */
        
   } 
-  
+
 }

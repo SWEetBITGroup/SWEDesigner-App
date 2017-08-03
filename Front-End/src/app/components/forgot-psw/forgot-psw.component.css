@@ -30,3 +30,7 @@ img {
     -webkit-text-stroke-width: 1px;
     -webkit-text-stroke-color: rgb(129,161,184);
 }   
+
+#submit {
+    float: right;
+}

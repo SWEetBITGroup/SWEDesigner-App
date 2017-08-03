@@ -3,17 +3,17 @@
   height: 6vh;
 }
 
-.row {
+.rowEdit {
   padding: 0;
   margin: 0;
 }
-.logo {
+.logoEdit {
     display: inline-block;
     color: #EE7500;
     margin-left: 1%;
   }
 
-.logo img{
+.logoEdit img{
   display: inline-block;
   width: 30px;
 }

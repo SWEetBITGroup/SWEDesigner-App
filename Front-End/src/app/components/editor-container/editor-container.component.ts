@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { MenuService } from '../../services/menu.service';
 import { MainEditorService } from '../../services/main-editor.service';
@@ -10,11 +10,10 @@ import { ActivityService } from './components/editor/services/activity.service';
   styleUrls: ['./editor-container.component.css'],
   providers: [MenuService, MainEditorService, ActivityService]
 })
-export class EditorContainerComponent{
+export class EditorContainerComponent {
   selectedGraph: any;
   
   constructor(private myService: MenuService) {
     this.selectedGraph = null;
   }
-  
 }
