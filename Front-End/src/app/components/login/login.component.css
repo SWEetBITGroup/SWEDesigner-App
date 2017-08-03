@@ -1,16 +1,39 @@
+@import url('https://fonts.googleapis.com/css?family=Neuton');
+
 .container {
-    position:absolute; 
-    top:50%;
+    position:absolute;
+    top:40%;
     left:50%;
-    padding:15px;
+    padding: 0;
     -ms-transform: translateX(-50%) translateY(-50%);
     -webkit-transform: translate(-50%,-50%);
     transform: translate(-50%,-50%);
 }
 
+.row {
+    margin: 0;
+}
+
 img {  
-    /* display: inline-block; */
-    margin-left: 25%;    
+    padding: 0;
+    margin-left: 25%;
+    max-height: 150px;
+    max-width: 150px;
+}
+
+.logo {
+    margin-left: 0; 
+    max-height: 100px;
+    max-width: 100px; 
+    transform-origin: left top; 
+    animation: scale 800ms ease-in-out forwards; 
+    
+}
+
+@keyframes scale {
+    to {
+        transform: scale(0.6);
+    }
 }
 
 .rotate360 {
@@ -19,11 +42,6 @@ img {
     -webkit-transform: rotate(360deg);
     -o-transform: rotate(360deg); 
     -moz-transform: rotate(360deg);
-}
-
-.text {
-    font-family: serif;
-    font-size: large;
 }
 
 .hide {
@@ -35,8 +53,7 @@ img {
     max-height: 0;
     opacity: 0;
     -webkit-transition: all .8s ease-in-out;
-    transition: all .8s ease-in-out;
-    
+    transition: all .8s ease-in-out;    
 }
 
 .active {
@@ -44,21 +61,12 @@ img {
     opacity: 1;
 }
 
-span{
-    margin: 0;
-    padding: 0;
-    width: 100%;
-}
-
-.glow{
-    font-family: 'Arvo', serif;
-    font-weight: 300;
-    color: orange;
-    font-size: 105px;
-    /* margin-left: auto;
-    margin-right: auto; */
-    position: absolute; 
-    top: -40%;
-    left: -25%;
-    
-}
+.text{
+    font-family: 'Neuton', serif;
+    color: rgb(238,117,0);
+    color: rgb(255, 195, 76);
+    font-size: 35px;
+    font-weight: 700;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: rgb(129,161,184);
+}   
