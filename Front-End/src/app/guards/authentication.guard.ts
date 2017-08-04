@@ -5,6 +5,9 @@ import { Observable } from 'rxjs/Observable';
 // Services
 import { AccountService } from '../services/account.service';
 
+// Routes
+import { Router } from '@angular/router';
+
 @Injectable()
 
 /**
@@ -14,9 +17,10 @@ import { AccountService } from '../services/account.service';
 export class AuthenticationGuard implements CanActivate {
   /**
   * Create an instantiation of AuthenticationGuard
-  * @param AccountService used to create a new instantiation of AccountService
+  * @param account used to create a new instantiation of AccountService
+  * @param router used to create a new instantiation of Router
   */
-  constructor( private account: AccountService ) {}
+  constructor( private account: AccountService, private router: Router ) {}
   /**
   * Checks to see if a user can visit a route, Guards are implemented as services that need to be provided
   * so we typically create them as @Injectable classes.
@@ -26,6 +30,7 @@ export class AuthenticationGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+      this.router.navigate(['/']);
       return this.account.getUserLoggedIn();
     }
   }
