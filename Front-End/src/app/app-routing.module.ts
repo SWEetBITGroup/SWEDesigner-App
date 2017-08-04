@@ -16,10 +16,10 @@ const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home',  component: LoginComponent },
   { path: 'registrazione',  component: RegistrationComponent },
-  { path: 'password dimenticata',  component: ForgotPswComponent },
+  { path: 'passwordDimenticata',  component: ForgotPswComponent },
   { path: 'editor', canActivate: [AuthenticationGuard], component: EditorContainerComponent },
-  { path: 'modifica email', canActivate: [AuthenticationGuard], component: ModEmailComponent },
-  { path: 'modifica password', canActivate: [AuthenticationGuard], component: ModPswComponent }
+  { path: 'modificaMail', canActivate: [AuthenticationGuard], component: ModEmailComponent },
+  { path: 'modificaPassword', canActivate: [AuthenticationGuard], component: ModPswComponent }
 ];
 
 @NgModule({

@@ -21,7 +21,8 @@ export class ForgotPswComponent {
   // restituisce true se non ci son errori
   tryGetNewPassword(e) {
     this.accountService.email = e.target.elements[0].value;
-    return true;
+    
+    this.accountService.retrivePwd(this.accountService.email);
   }
 
   ngAfterViewInit(){

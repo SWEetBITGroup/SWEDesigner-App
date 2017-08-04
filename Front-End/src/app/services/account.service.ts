@@ -46,7 +46,7 @@ export class AccountService {
       "email": mail,
       "pass": pwd
     }
-    this.http.post('\insUsr', user,{
+    this.http.post('/insUsr', user,{
       method: RequestMethod.Post,
       responseType: ResponseContentType.Text
     })
@@ -56,6 +56,20 @@ export class AccountService {
         this.setUserLoggedIn();
         cb(err);
       }
+    })
+  }
+
+  retrivePwd(mail: String){
+    let email = {
+      "mail": mail
+    }
+    this.http.post('/forgotPwd', email,{
+      method: RequestMethod.Post,
+      responseType: ResponseContentType.Text
+    })
+    .subscribe((data)=>{
+      let response = data.text();
+      console.log(response);
     })
   }
   

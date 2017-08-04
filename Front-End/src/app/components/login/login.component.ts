@@ -36,6 +36,10 @@ export class LoginComponent {
   redirSignUp(){
     this.router.navigate(['/registrazione']);
   }
+
+  redirPwd(){
+    this.router.navigate(['/passwordDimenticata']);
+  }
   
   ngAfterViewInit(){
     

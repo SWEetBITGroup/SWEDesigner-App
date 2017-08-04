@@ -265,14 +265,14 @@ app.listen(port, ()=>{
       })
       app.post("/forgotPwd", function(req, res){
         var usr = req.body.mail;
-        mongooseRequest.forgot_mail(usr, function(err, x){
+        mongooseRequest.forgot_password(usr, function(err, x){
           if(err){
             console.log("problema con il recupero password");
             res.send("problema con il recupero password");
           }
           else{
-            console.log("password recuperata: "+x);
-            res.send("password recuperata: "+x);
+            console.log("password recuperata: "+x[0].pass);
+            res.send(x[0].pass);
           }
         })
       })
