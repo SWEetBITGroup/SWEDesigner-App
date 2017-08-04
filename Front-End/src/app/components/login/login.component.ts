@@ -27,19 +27,14 @@ export class LoginComponent {
     this.accountService.checkLogin(this.accountService.email, this.accountService.password, (err)=>{
       if(!err){
         if(this.accountService.getUserLoggedIn()){
-          console.log("entrato get");
           this.router.navigate(['/editor']);
         }
       }
     });
-    
-    
-    
-    
-    /*if (username == "admin" && password == "admin") {
-      this.account.setUserLoggedIn();
-      this.router.navigate(['/editor']);
-    }*/
+  }
+
+  redirSignUp(){
+    this.router.navigate(['/registrazione']);
   }
   
   ngAfterViewInit(){

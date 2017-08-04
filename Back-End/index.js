@@ -218,11 +218,11 @@ app.listen(port, ()=>{
         mongooseRequest.ins_usr(usr, pwd, mail, function(err, x){
           if(err){
             console.log("inserimento non riuscito");
-            res.send("inserimento non riuscito");
+            res.send(false);
           }
           else{
             console.log(x);
-            res.send(x);
+            res.send(true);
           }
         })
       })
@@ -250,7 +250,8 @@ app.listen(port, ()=>{
             if(x){
               console.log("logged");
               var isLogged = {
-                "logged" : true
+                "logged" : true,
+                "username": x.username
               }
               res.json(isLogged);
               //res.send("logged");

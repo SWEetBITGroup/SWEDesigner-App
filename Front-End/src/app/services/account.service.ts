@@ -31,10 +31,41 @@ export class AccountService {
   constructor(private http: Http) {
     this.isUserLoggedIn = false;
   }
+
+  /**
+   * Send, by POST, data to server and catch its response.
+   * This function is used for user's registration
+   * @param usr 
+   * @param mail 
+   * @param pwd 
+   */
+  register(usr: String, mail: String, pwd: String, cb: Function){
+    var err = false;
+    let user = {
+      "username": usr,
+      "email": mail,
+      "pass": pwd
+    }
+    this.http.post('\insUsr', user,{
+      method: RequestMethod.Post,
+      responseType: ResponseContentType.Text
+    })
+    .subscribe((data)=>{
+      let response = data.text();
+      if(response == "true"){
+        this.setUserLoggedIn();
+        cb(err);
+      }
+    })
+  }
   
   /**
-  * Check if data sent to server is correct and, so, the user is correctly logged
-  */
+   * Send, by POST, data to server and catch its response
+   * This function is used for user's login
+   * @param email 
+   * @param pass 
+   * @param cb 
+   */
   checkLogin(email: String, pass: String, cb: Function){
     var err = false;
     let usr = {
@@ -49,7 +80,6 @@ export class AccountService {
       let response = data.json();
       console.log(response);
       if(response.logged == true){
-        console.log("entrato if");
         this.setUserLoggedIn();
         cb(err);
       }

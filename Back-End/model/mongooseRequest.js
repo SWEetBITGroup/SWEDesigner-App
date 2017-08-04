@@ -195,7 +195,7 @@ login: function(mail, pwd, cb){ //giusta
     else{
         if(logged!=""){
             console.log("utente: "+logged+" loggato perfettamente");
-            cb(false, true)
+            cb(false, logged)
         }
         else{
             console.log("problema con i dati di login");
