@@ -212,15 +212,15 @@ login: function(mail, pwd, cb){ //giusta
  * @param {function} cb Callback
  * @return {void}
  */
-forgot_mail: function(usr, cb){
-    user.find({'username': usr}, '-_id email', function(err, mail){
+forgot_password: function(mail, cb){
+    user.find({'email': mail}, '-_id pass', function(err, pass){
         if(err){
-            console.log("errore nel recupero della mail");
+            console.log("errore nel recupero della password");
             cb(true, "");
         }
         else{
-            console.log("Mail recuperata");
-            cb(false, mail);
+            console.log("Password recuperata");
+            cb(false, pass);
         }
     })
 },

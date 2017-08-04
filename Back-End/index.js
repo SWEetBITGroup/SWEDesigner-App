@@ -263,16 +263,16 @@ app.listen(port, ()=>{
           }
         })
       })
-      app.post("/forgotMail", function(req, res){
-        var usr = req.body.username;
+      app.post("/forgotPwd", function(req, res){
+        var usr = req.body.mail;
         mongooseRequest.forgot_mail(usr, function(err, x){
           if(err){
-            console.log("problema con il recupero mail");
-            res.send("problema con il recupero mail");
+            console.log("problema con il recupero password");
+            res.send("problema con il recupero password");
           }
           else{
-            console.log("email recuperata: "+x);
-            res.send("email recuperata: "+x);
+            console.log("password recuperata: "+x);
+            res.send("password recuperata: "+x);
           }
         })
       })
