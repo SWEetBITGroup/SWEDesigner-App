@@ -32,5 +32,9 @@ img {
 }   
 
 #submit {
+    float: left;
+}
+
+#back {
     float: right;
 }

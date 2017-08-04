@@ -15,16 +15,16 @@ export class LoginComponent {
   /**
   * Create an instantiation of LoginComponent
   * @param router used to create a new instantiation of Router
-  * @param account used to create a new instantiation of AccountService
+  * @param accountService used to create a new instantiation of AccountService
   */
   constructor(private router: Router, private accountService: AccountService) { }
-  
+
   loginUser(e) {
     e.preventDefault();
-    var username = e.target.elements[0].value;
-    var password = e.target.elements[1].value;
+    this.accountService.email = e.target.elements[0].value;
+    this.accountService.password = e.target.elements[1].value;
 
-    this.accountService.checkLogin(username, password, (err)=>{
+    this.accountService.checkLogin(this.accountService.email, this.accountService.password, (err)=>{
       if(!err){
         if(this.accountService.getUserLoggedIn()){
           console.log("entrato get");
@@ -59,7 +59,7 @@ export class LoginComponent {
     $(function() {
       setTimeout(function(){
         showElement();
-      }, 1000);
+      }, 600);
     });
     /**
     * This function make some animation on the image logo, text logo and the form

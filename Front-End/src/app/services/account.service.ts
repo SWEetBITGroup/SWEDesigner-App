@@ -15,7 +15,15 @@ export class AccountService {
   /**
   * 'username' is an account's information
   */
-  private username;
+  username;
+  /**
+  * 'password' is an account's information
+  */
+  password;
+  /**
+  * 'email' is an account's information
+  */
+  email;
   /**
   * Create an instantiation of AuthenticationGuard
   * @param isUserLoggedIn to default that variable is set to false
@@ -25,8 +33,8 @@ export class AccountService {
   }
   
   /**
-   * Check if data sent to server is correct and, so, the user is correctly logged
-   */
+  * Check if data sent to server is correct and, so, the user is correctly logged
+  */
   checkLogin(email: String, pass: String, cb: Function){
     var err = false;
     let usr = {

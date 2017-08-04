@@ -6,7 +6,7 @@
     </div> 
     <div>  
       <h2>Registrazione</h2>
-      <form name="form">
+      <form name="form" (submit)="tryRegistration($event)">
         <div class="form-group">
           <label for="username">Username</label>
           <input type="text" class="form-control" name="username" required placeholder="Username"/>
@@ -23,7 +23,8 @@
           <!-- <div *ngIf="f.submitted && !password.valid" class="help-block">Password is required</div> -->
         </div>
         <div class="form-group">
-          <button [routerLink]="['/login']" class="btn btn-primary" id="back" >Back</button>       
+          <input type="submit" class="btn btn-primary" value="Registrati" id="submit"/> 
+          <button [routerLink]="['/home']" class="btn btn-primary" id="back" >Back</button>       
         </div>
       </form>
     </div>    
