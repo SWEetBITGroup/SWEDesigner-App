@@ -259,7 +259,7 @@ update_nameProj: function(projName, usr, newName, cb){
             }
         }
     })
-}
+},
 //DA MODIFICARE TUTTE LE FUNZIONI DI SEGUITO
 /*
 //		FUNZIONI DI AGGIORNAMENTO
