@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { Headers, RequestOptions, RequestMethod, ResponseContentType }  from '@angular/http';
+import { Http, Response }           from '@angular/http';
 
 @Injectable()
 /**
@@ -18,10 +20,36 @@ export class AccountService {
   * Create an instantiation of AuthenticationGuard
   * @param isUserLoggedIn to default that variable is set to false
   */
-  constructor() {
+  constructor(private http: Http) {
     this.isUserLoggedIn = false;
   }
   
+  /**
+   * Check if data sent to server is correct and, so, the user is correctly logged
+   */
+  checkLogin(email: String, pass: String, cb: Function){
+    var err = false;
+    let usr = {
+      "mail" : email,
+      "pass" : pass
+    }
+    this.http.post('/login', usr,{
+      method: RequestMethod.Post,
+      responseType: ResponseContentType.Json
+    })
+    .subscribe((data)=>{
+      let response = data.json();
+      console.log(response);
+      if(response.logged == true){
+        console.log("entrato if");
+        this.setUserLoggedIn();
+        cb(err);
+      }
+      else{
+        console.log("errore nel login");
+      }
+    })
+  }
   /**
   * Change the authenticatio status of the user
   */

@@ -31,6 +31,7 @@
 
   //BodyParser init
   app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({ extended: true }));
 
   //Handling degli errori
   //definire app.use(error.nomefunzione()) 
@@ -247,12 +248,16 @@ app.listen(port, ()=>{
           }
           else{
             if(x){
-              console.log("loged");
-              res.send("logged");
+              console.log("logged");
+              var isLogged = {
+                "logged" : true
+              }
+              res.json(isLogged);
+              //res.send("logged");
             }
             else{
-              console.log("mannaggia a dio non esiste");
-              res.send("malick negro di merda");
+              console.log("utente non esistente");
+              res.send("utente non esistente");
             }
           }
         })

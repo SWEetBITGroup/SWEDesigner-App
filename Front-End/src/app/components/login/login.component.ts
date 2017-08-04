@@ -17,17 +17,29 @@ export class LoginComponent {
   * @param router used to create a new instantiation of Router
   * @param account used to create a new instantiation of AccountService
   */
-  constructor(private router: Router, private account: AccountService) { }
+  constructor(private router: Router, private accountService: AccountService) { }
   
   loginUser(e) {
     e.preventDefault();
     var username = e.target.elements[0].value;
     var password = e.target.elements[1].value;
+
+    this.accountService.checkLogin(username, password, (err)=>{
+      if(!err){
+        if(this.accountService.getUserLoggedIn()){
+          console.log("entrato get");
+          this.router.navigate(['/editor']);
+        }
+      }
+    });
     
-    if (username == "admin" && password == "admin") {
+    
+    
+    
+    /*if (username == "admin" && password == "admin") {
       this.account.setUserLoggedIn();
       this.router.navigate(['/editor']);
-    }
+    }*/
   }
   
   ngAfterViewInit(){

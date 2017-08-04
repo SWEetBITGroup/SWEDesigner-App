@@ -13,8 +13,8 @@ import { ModPswComponent } from './components/editor-container/components/menu/c
 import { AuthenticationGuard } from './guards/authentication.guard';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: 'login',  component: LoginComponent },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: 'home',  component: LoginComponent },
   { path: 'registrazione',  component: RegistrationComponent },
   { path: 'password dimenticata',  component: ForgotPswComponent },
   { path: 'editor', canActivate: [AuthenticationGuard], component: EditorContainerComponent },

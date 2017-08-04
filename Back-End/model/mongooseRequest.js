@@ -187,7 +187,7 @@ load_proj: function(name, usr, cb){ //giusta
  * @param {function} cb Callback
  */
 login: function(mail, pwd, cb){ //giusta
-      user.find({'mail': mail, 'pass': pwd}, '-_id mail pass', function(err, logged){
+      user.find({'email': mail, 'pass': pwd}, '-_id email pass', function(err, logged){
       if(err){
         console.log(err);
         cb(true, "errore nel login");
