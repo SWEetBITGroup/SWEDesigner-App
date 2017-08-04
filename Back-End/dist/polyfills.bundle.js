@@ -18,7 +18,7 @@ module.exports = function(it){
 
 var global    = __webpack_require__(10)
   , core      = __webpack_require__(31)
-  , hide      = __webpack_require__(39)
+  , hide      = __webpack_require__(38)
   , redefine  = __webpack_require__(34)
   , ctx       = __webpack_require__(32)
   , PROTOTYPE = 'prototype';
@@ -151,7 +151,7 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 var store      = __webpack_require__(60)('wks')
-  , uid        = __webpack_require__(42)
+  , uid        = __webpack_require__(41)
   , Symbol     = __webpack_require__(10).Symbol
   , USE_SYMBOL = typeof Symbol == 'function';
 
@@ -305,7 +305,7 @@ module.exports = function(fn, that, length){
 /***/ (function(module, exports, __webpack_require__) {
 
 var pIE            = __webpack_require__(96)
-  , createDesc     = __webpack_require__(41)
+  , createDesc     = __webpack_require__(40)
   , toIObject      = __webpack_require__(61)
   , toPrimitive    = __webpack_require__(64)
   , has            = __webpack_require__(12)
@@ -326,9 +326,9 @@ exports.f = __webpack_require__(19) ? gOPD : function getOwnPropertyDescriptor(O
 /***/ (function(module, exports, __webpack_require__) {
 
 var global    = __webpack_require__(10)
-  , hide      = __webpack_require__(39)
+  , hide      = __webpack_require__(38)
   , has       = __webpack_require__(12)
-  , SRC       = __webpack_require__(42)('src')
+  , SRC       = __webpack_require__(41)('src')
   , TO_STRING = 'toString'
   , $toString = Function[TO_STRING]
   , TPL       = ('' + $toString).split(TO_STRING);
@@ -361,8 +361,7 @@ __webpack_require__(31).inspectSource = function(it){
 /***/ }),
 /* 35 */,
 /* 36 */,
-/* 37 */,
-/* 38 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ctx         = __webpack_require__(32)
@@ -392,11 +391,11 @@ exports.BREAK  = BREAK;
 exports.RETURN = RETURN;
 
 /***/ }),
-/* 39 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var dP         = __webpack_require__(17)
-  , createDesc = __webpack_require__(41);
+  , createDesc = __webpack_require__(40);
 module.exports = __webpack_require__(19) ? function(object, key, value){
   return dP.f(object, key, createDesc(1, value));
 } : function(object, key, value){
@@ -405,10 +404,10 @@ module.exports = __webpack_require__(19) ? function(object, key, value){
 };
 
 /***/ }),
-/* 40 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var META     = __webpack_require__(42)('meta')
+var META     = __webpack_require__(41)('meta')
   , isObject = __webpack_require__(6)
   , has      = __webpack_require__(12)
   , setDesc  = __webpack_require__(17).f
@@ -463,7 +462,7 @@ var meta = module.exports = {
 };
 
 /***/ }),
-/* 41 */
+/* 40 */
 /***/ (function(module, exports) {
 
 module.exports = function(bitmap, value){
@@ -476,7 +475,7 @@ module.exports = function(bitmap, value){
 };
 
 /***/ }),
-/* 42 */
+/* 41 */
 /***/ (function(module, exports) {
 
 var id = 0
@@ -486,6 +485,7 @@ module.exports = function(key){
 };
 
 /***/ }),
+/* 42 */,
 /* 43 */,
 /* 44 */,
 /* 45 */,
@@ -521,8 +521,8 @@ var global            = __webpack_require__(10)
   , $export           = __webpack_require__(5)
   , redefine          = __webpack_require__(34)
   , redefineAll       = __webpack_require__(57)
-  , meta              = __webpack_require__(40)
-  , forOf             = __webpack_require__(38)
+  , meta              = __webpack_require__(39)
+  , forOf             = __webpack_require__(37)
   , anInstance        = __webpack_require__(49)
   , isObject          = __webpack_require__(6)
   , fails             = __webpack_require__(16)
@@ -711,7 +711,7 @@ module.exports = function(it, tag, stat){
 /***/ (function(module, exports, __webpack_require__) {
 
 var shared = __webpack_require__(60)('keys')
-  , uid    = __webpack_require__(42);
+  , uid    = __webpack_require__(41);
 module.exports = function(key){
   return shared[key] || (shared[key] = uid(key));
 };
@@ -860,12 +860,12 @@ var dP          = __webpack_require__(17).f
   , ctx         = __webpack_require__(32)
   , anInstance  = __webpack_require__(49)
   , defined     = __webpack_require__(52)
-  , forOf       = __webpack_require__(38)
+  , forOf       = __webpack_require__(37)
   , $iterDefine = __webpack_require__(178)
   , step        = __webpack_require__(180)
   , setSpecies  = __webpack_require__(186)
   , DESCRIPTORS = __webpack_require__(19)
-  , fastKey     = __webpack_require__(40).fastKey
+  , fastKey     = __webpack_require__(39).fastKey
   , SIZE        = DESCRIPTORS ? '_s' : 'size';
 
 var getEntry = function(that, key){
@@ -1023,12 +1023,12 @@ module.exports = !__webpack_require__(19) && !__webpack_require__(16)(function()
 "use strict";
 
 var create         = __webpack_require__(56)
-  , descriptor     = __webpack_require__(41)
+  , descriptor     = __webpack_require__(40)
   , setToStringTag = __webpack_require__(58)
   , IteratorPrototype = {};
 
 // 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
-__webpack_require__(39)(IteratorPrototype, __webpack_require__(14)('iterator'), function(){ return this; });
+__webpack_require__(38)(IteratorPrototype, __webpack_require__(14)('iterator'), function(){ return this; });
 
 module.exports = function(Constructor, NAME, next){
   Constructor.prototype = create(IteratorPrototype, {next: descriptor(1, next)});
@@ -1296,7 +1296,7 @@ module.exports = __webpack_require__(31).Reflect;
 /* 165 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var forOf = __webpack_require__(38);
+var forOf = __webpack_require__(37);
 
 module.exports = function(iter, ITERATOR){
   var result = [];
@@ -1428,11 +1428,11 @@ module.exports = function(it){
 "use strict";
 
 var redefineAll       = __webpack_require__(57)
-  , getWeak           = __webpack_require__(40).getWeak
+  , getWeak           = __webpack_require__(39).getWeak
   , anObject          = __webpack_require__(1)
   , isObject          = __webpack_require__(6)
   , anInstance        = __webpack_require__(49)
-  , forOf             = __webpack_require__(38)
+  , forOf             = __webpack_require__(37)
   , createArrayMethod = __webpack_require__(88)
   , $has              = __webpack_require__(12)
   , arrayFind         = createArrayMethod(5)
@@ -1599,7 +1599,7 @@ module.exports = function(iterator, fn, value, entries){
 var LIBRARY        = __webpack_require__(181)
   , $export        = __webpack_require__(5)
   , redefine       = __webpack_require__(34)
-  , hide           = __webpack_require__(39)
+  , hide           = __webpack_require__(38)
   , has            = __webpack_require__(12)
   , Iterators      = __webpack_require__(55)
   , $iterCreate    = __webpack_require__(92)
@@ -2150,7 +2150,7 @@ var dP             = __webpack_require__(17)
   , getPrototypeOf = __webpack_require__(20)
   , has            = __webpack_require__(12)
   , $export        = __webpack_require__(5)
-  , createDesc     = __webpack_require__(41)
+  , createDesc     = __webpack_require__(40)
   , anObject       = __webpack_require__(1)
   , isObject       = __webpack_require__(6);
 
@@ -2202,7 +2202,7 @@ module.exports = __webpack_require__(51)('Set', function(get){
 
 var each         = __webpack_require__(88)(0)
   , redefine     = __webpack_require__(34)
-  , meta         = __webpack_require__(40)
+  , meta         = __webpack_require__(39)
   , assign       = __webpack_require__(182)
   , weak         = __webpack_require__(171)
   , isObject     = __webpack_require__(6)
@@ -3501,6 +3501,12 @@ Zone.__load_patch('ZoneAwarePromise', function (global, Zone, api) {
         var originalThen = proto.then;
         // Keep a reference to the original method.
         proto[symbolThen] = originalThen;
+        // check Ctor.prototype.then propertyDescritor is writable or not
+        // in meteor env, writable is false, we have to make it to be true.
+        var prop = Object.getOwnPropertyDescriptor(Ctor.prototype, 'then');
+        if (prop && prop.writable === false && prop.configurable) {
+            Object.defineProperty(Ctor.prototype, 'then', { writable: true });
+        }
         Ctor.prototype.then = function (onResolve, onReject) {
             var _this = this;
             var wrapped = new ZoneAwarePromise(function (resolve, reject) {

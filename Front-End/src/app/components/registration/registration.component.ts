@@ -18,10 +18,10 @@ export class RegistrationComponent {
   * @param accountService used to create a new instantiation of AccountService
   */
   constructor(private router: Router, private accountService: AccountService) { }
-  
+
   /**
    * This function try to register an user
-   * @param e 
+   * @param e event
    */
   tryRegistration(e) {
     this.accountService.username = e.target.elements[0].value;
@@ -30,6 +30,7 @@ export class RegistrationComponent {
 
     this.accountService.register(this.accountService.username, this.accountService.email, this.accountService.password, (err)=>{
       if(!err){
+        alert("Registrazione effettuata con successo!");
         console.log("noerr");
         this.router.navigate(['/editor']);
       }
