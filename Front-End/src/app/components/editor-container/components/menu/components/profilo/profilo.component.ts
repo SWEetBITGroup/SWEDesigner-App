@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 
 @Component({
   selector: 'app-profilo',
@@ -8,9 +7,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProfiloComponent implements OnInit {
 
-  constructor() { }
+  constructor() { 
 
-  ngOnInit() {
   }
+
+  
+  ngOnInit() { }
+
+    ngAfterViewInit(){
+$('#menuProfilo').click(function(){
+  if (!$('#menuProfiloToggle').is(':visible'))
+    $('.tmp-disable').addClass('disabled');
+  else
+    $('.tmp-disable').removeClass('disabled');
+});
+
+       }
+
 
 }

@@ -17,14 +17,24 @@ export class LoginComponent {
   * @param router used to create a new instantiation of Router
   * @param accountService used to create a new instantiation of AccountService
   */
-  constructor(private router: Router, private accountService: AccountService) { }
+  constructor(private router: Router, private accountService: AccountService) { 
+    this.accountService.email = 'prova@Mail';
+    this.accountService.password = 'provaPsw';
+    this.accountService.username = 'provaUsername';
+  }
   
   
+  // e solo una funzione che logga sempre
+  loginUserProva() {
+    this.accountService.setUserLoggedIn();
+    this.router.navigate(['/editor']);
+  }
+  
+  // funzione per login
   loginUser(e) {
     e.preventDefault();
     this.accountService.email = e.target.elements[0].value;
     this.accountService.password = e.target.elements[1].value;
-    
     this.accountService.checkLogin(this.accountService.email, this.accountService.password, (err)=>{
       if(!err){
         if(this.accountService.getUserLoggedIn()){

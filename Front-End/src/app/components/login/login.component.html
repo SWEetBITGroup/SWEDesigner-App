@@ -8,7 +8,7 @@
     <!-- Form -->
     <div class="box">  
       <h2 class="text-warning">Login</h2>
-      <form name="form" (submit)="loginUser($event)" #loginForm="ngForm">
+      <form name="form"  #loginForm="ngForm" (submit)="loginUserProva()">
         <div class="form-group has-warning" >
           <label class="control-label" for="email"> Email </label>
           <div class="input-group">
@@ -28,7 +28,7 @@
               <i class="glyphicon glyphicon-lock"></i>
             </span> 
             <input type="password" class="form-control" name="password" required placeholder="Password"
-            [(ngModel)]="accountService.password" name="password"
+            [(ngModel)]="accountService.password" name="password" value="a"
             id="password"/>
           </div>
         </div>

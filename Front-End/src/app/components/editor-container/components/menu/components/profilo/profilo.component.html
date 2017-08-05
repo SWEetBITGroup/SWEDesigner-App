@@ -1,9 +1,10 @@
 <div class="dropdown" #menuProfilo>
-  <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+  <button class="btn btn-default dropdown-toggle tmp-disable" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" 
+  id="menuProfilo">
     Profilo
     <span class="caret"></span>
   </button>
-  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" id="menuProfiloToggle">
     <li><a [routerLink]="['/modifica password']" >Modifica password</a></li>
     <li><a [routerLink]="['/modifica email']" >Modifica email</a></li>
     <li><a href="#" >Elimina profilo</a></li>

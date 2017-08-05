@@ -1,6 +1,6 @@
 .barra-menu {
   background: #42413D;
-  height: 6vh;
+  height: 6vh; 
 }
 
 .rowEdit {
@@ -20,4 +20,11 @@
 
 .logoText {
   display: inline-block;
+}
+
+.wellcome {
+  display: inline-block;
+  color: #FFCE2B;;
+  text-align:left;
+  margin-right: 30px;
 }
