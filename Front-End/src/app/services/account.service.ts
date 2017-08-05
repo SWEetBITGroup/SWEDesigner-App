@@ -122,7 +122,7 @@ export class AccountService {
   * @param destination is the route destination component
   */
   redirectComponent(destination:string){
-    location.reload();
+    // location.reload();
     this.router.navigate(['/' + destination ]);
   }
 }

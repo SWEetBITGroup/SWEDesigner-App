@@ -259,6 +259,7 @@ MainEditorService = __decorate([
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__(36);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AccountService; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -272,22 +273,26 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var AccountService = (function () {
     /**
     * Create an instantiation of AuthenticationGuard
     * @param isUserLoggedIn to default that variable is set to false
+    * @param router used to create a new instantiation of Router
+    * @param http used to create a new instantiation of Http
     */
-    function AccountService(http) {
+    function AccountService(router, http) {
+        this.router = router;
         this.http = http;
         this.isUserLoggedIn = false;
     }
     /**
-     * Send, by POST, data to server and catch its response.
-     * This function is used for user's registration
-     * @param usr
-     * @param mail
-     * @param pwd
-     */
+    * Send, by POST, data to server and catch its response.
+    * This function is used for user's registration
+    * @param usr
+    * @param mail
+    * @param pwd
+    */
     AccountService.prototype.register = function (usr, mail, pwd, cb) {
         var _this = this;
         var err = false;
@@ -296,7 +301,7 @@ var AccountService = (function () {
             "email": mail,
             "pass": pwd
         };
-        this.http.post('\insUsr', user, {
+        this.http.post('/insUsr', user, {
             method: __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* RequestMethod */].Post,
             responseType: __WEBPACK_IMPORTED_MODULE_1__angular_http__["c" /* ResponseContentType */].Text
         })
@@ -309,12 +314,29 @@ var AccountService = (function () {
         });
     };
     /**
-     * Send, by POST, data to server and catch its response
-     * This function is used for user's login
-     * @param email
-     * @param pass
-     * @param cb
-     */
+    * This function retrive the password by the associated user's mail
+    * @param mail is the user's information that allow to retrive the pawwsord
+    */
+    AccountService.prototype.retrivePwd = function (mail) {
+        var email = {
+            "mail": mail
+        };
+        this.http.post('/forgotPwd', email, {
+            method: __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* RequestMethod */].Post,
+            responseType: __WEBPACK_IMPORTED_MODULE_1__angular_http__["c" /* ResponseContentType */].Text
+        })
+            .subscribe(function (data) {
+            var response = data.text();
+            console.log(response);
+        });
+    };
+    /**
+    * Send, by POST, data to server and catch its response
+    * This function is used for user's login
+    * @param email
+    * @param pass
+    * @param cb
+    */
     AccountService.prototype.checkLogin = function (email, pass, cb) {
         var _this = this;
         var err = false;
@@ -350,6 +372,14 @@ var AccountService = (function () {
     AccountService.prototype.getUserLoggedIn = function () {
         return this.isUserLoggedIn;
     };
+    /**
+    * This function redirect the current component to the 'destination' component
+    * @param destination is the route destination component
+    */
+    AccountService.prototype.redirectComponent = function (destination) {
+        // location.reload();
+        this.router.navigate(['/' + destination]);
+    };
     return AccountService;
 }());
 AccountService = __decorate([
@@ -359,10 +389,10 @@ AccountService = __decorate([
     * 'AccountService' provides methods to interact with the whole application, and allow to change the account information.
     */
     ,
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* Http */]) === "function" && _a || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* Router */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* Http */]) === "function" && _b || Object])
 ], AccountService);
 
-var _a;
+var _a, _b;
 //# sourceMappingURL=account.service.js.map
 
 /***/ }),
@@ -597,7 +627,8 @@ var _a;
 /* 33 */,
 /* 34 */,
 /* 35 */,
-/* 36 */
+/* 36 */,
+/* 37 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -747,7 +778,6 @@ var _a, _b;
 //# sourceMappingURL=menu.service.js.map
 
 /***/ }),
-/* 37 */,
 /* 38 */,
 /* 39 */,
 /* 40 */,
@@ -1739,7 +1769,7 @@ ModPswComponent = __decorate([
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_menu_service__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_menu_service__ = __webpack_require__(37);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_main_editor_service__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_editor_services_activity_service__ = __webpack_require__(29);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_account_service__ = __webpack_require__(24);
@@ -1811,7 +1841,7 @@ var ForgotPswComponent = (function () {
     // restituisce true se non ci son errori
     ForgotPswComponent.prototype.tryGetNewPassword = function (e) {
         this.accountService.email = e.target.elements[0].value;
-        return true;
+        this.accountService.retrivePwd(this.accountService.email);
     };
     ForgotPswComponent.prototype.ngAfterViewInit = function () {
         /**
@@ -1850,7 +1880,7 @@ var _a;
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(36);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_account_service__ = __webpack_require__(24);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoginComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -1887,9 +1917,6 @@ var LoginComponent = (function () {
                 }
             }
         });
-    };
-    LoginComponent.prototype.redirSignUp = function () {
-        this.router.navigate(['/registrazione']);
     };
     LoginComponent.prototype.ngAfterViewInit = function () {
         /**
@@ -1933,7 +1960,7 @@ LoginComponent = __decorate([
     * 'LoginComponent' allow the authentication to the user
     */
     ,
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__services_account_service__["a" /* AccountService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_account_service__["a" /* AccountService */]) === "function" && _b || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* Router */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__services_account_service__["a" /* AccountService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_account_service__["a" /* AccountService */]) === "function" && _b || Object])
 ], LoginComponent);
 
 var _a, _b;
@@ -1945,7 +1972,7 @@ var _a, _b;
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(36);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_account_service__ = __webpack_require__(24);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RegistrationComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -2011,7 +2038,7 @@ RegistrationComponent = __decorate([
     * 'RegistrationComponent' allow to create a new user
     */
     ,
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__services_account_service__["a" /* AccountService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_account_service__["a" /* AccountService */]) === "function" && _b || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* Router */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__services_account_service__["a" /* AccountService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_account_service__["a" /* AccountService */]) === "function" && _b || Object])
 ], RegistrationComponent);
 
 var _a, _b;
@@ -2158,7 +2185,7 @@ __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dyna
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(36);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_editor_container_editor_container_component__ = __webpack_require__(83);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_login_login_component__ = __webpack_require__(85);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_registration_registration_component__ = __webpack_require__(86);
@@ -2188,10 +2215,10 @@ var routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
     { path: 'home', component: __WEBPACK_IMPORTED_MODULE_3__components_login_login_component__["a" /* LoginComponent */] },
     { path: 'registrazione', component: __WEBPACK_IMPORTED_MODULE_4__components_registration_registration_component__["a" /* RegistrationComponent */] },
-    { path: 'password dimenticata', component: __WEBPACK_IMPORTED_MODULE_5__components_forgot_psw_forgot_psw_component__["a" /* ForgotPswComponent */] },
+    { path: 'passwordDimenticata', component: __WEBPACK_IMPORTED_MODULE_5__components_forgot_psw_forgot_psw_component__["a" /* ForgotPswComponent */] },
     { path: 'editor', canActivate: [__WEBPACK_IMPORTED_MODULE_8__guards_authentication_guard__["a" /* AuthenticationGuard */]], component: __WEBPACK_IMPORTED_MODULE_2__components_editor_container_editor_container_component__["a" /* EditorContainerComponent */] },
-    { path: 'modifica email', canActivate: [__WEBPACK_IMPORTED_MODULE_8__guards_authentication_guard__["a" /* AuthenticationGuard */]], component: __WEBPACK_IMPORTED_MODULE_6__components_editor_container_components_menu_components_profilo_components_mod_email_mod_email_component__["a" /* ModEmailComponent */] },
-    { path: 'modifica password', canActivate: [__WEBPACK_IMPORTED_MODULE_8__guards_authentication_guard__["a" /* AuthenticationGuard */]], component: __WEBPACK_IMPORTED_MODULE_7__components_editor_container_components_menu_components_profilo_components_mod_psw_mod_psw_component__["a" /* ModPswComponent */] }
+    { path: 'modificaMail', canActivate: [__WEBPACK_IMPORTED_MODULE_8__guards_authentication_guard__["a" /* AuthenticationGuard */]], component: __WEBPACK_IMPORTED_MODULE_6__components_editor_container_components_menu_components_profilo_components_mod_email_mod_email_component__["a" /* ModEmailComponent */] },
+    { path: 'modificaPassword', canActivate: [__WEBPACK_IMPORTED_MODULE_8__guards_authentication_guard__["a" /* AuthenticationGuard */]], component: __WEBPACK_IMPORTED_MODULE_7__components_editor_container_components_menu_components_profilo_components_mod_psw_mod_psw_component__["a" /* ModPswComponent */] }
 ];
 var AppRoutingModule = (function () {
     function AppRoutingModule() {
@@ -2200,8 +2227,8 @@ var AppRoutingModule = (function () {
 }());
 AppRoutingModule = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["b" /* NgModule */])({
-        imports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* RouterModule */].forRoot(routes)],
-        exports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* RouterModule */]]
+        imports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* RouterModule */].forRoot(routes)],
+        exports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* RouterModule */]]
     })
 ], AppRoutingModule);
 
@@ -2818,7 +2845,7 @@ var _a, _b;
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_class_menu_service__ = __webpack_require__(80);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_menu_service__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_menu_service__ = __webpack_require__(37);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_main_editor_service__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_class_menu_class_menu_component__ = __webpack_require__(77);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_activity_service__ = __webpack_require__(29);
@@ -3394,7 +3421,7 @@ var Start = (function (_super) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_menu_service__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_menu_service__ = __webpack_require__(37);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_main_editor_service__ = __webpack_require__(15);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FileComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -3481,7 +3508,7 @@ LayerComponent = __decorate([
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_menu_service__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_menu_service__ = __webpack_require__(37);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ModificaComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -4159,7 +4186,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, ".row {\n  margin: 0;\n  padding: 0;\n  height: 94vh;\n}\n.editor {\n  padding: 0;\n  border-left: 1px solid black;\n  height: 100%;\n}\n\n.activityframe {\n  padding: 0;\n  border-left: 1px solid black;\n  height: 100%;\n  background-color: #03A9F4;\n\n}\n", ""]);
+exports.push([module.i, ".row {\n  margin: 0;\n  padding: 0;\n  height: 94vh;\n}\n.editor {\n  padding: 0;\n  border-left: 1px solid black;\n  height: 100%;\n}\n\n.activityframe {\n  padding: 0;\n  border-left: 1px solid black;\n  height: 100%;\n  background-color: #03A9F4;\n}\n", ""]);
 
 // exports
 
@@ -4176,7 +4203,7 @@ exports = module.exports = __webpack_require__(2)(false);
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Neuton);", ""]);
 
 // module
-exports.push([module.i, ".container {\n    position:absolute;\n    top:40%;\n    left:-100%;\n    padding: 0;\n    -webkit-transform: translate(-50%,-50%);\n    transform: translate(-50%,-50%);\n}\n\n.row {\n    margin: 0;\n}\n\nimg {  \n    padding: 0;\n    margin-left: 0;\n    max-height: 60px;\n    max-width: 60px;\n}\n\n.text{\n    font-family: 'Neuton', serif;\n    color: rgb(238,117,0);\n    color: rgb(255, 195, 76);\n    font-size: 35px;\n    font-weight: 700;\n    -webkit-text-stroke-width: 1px;\n    -webkit-text-stroke-color: rgb(129,161,184);\n}   \n\n#submit {\n    float: left;\n}\n\n#back {\n    float: right;\n}", ""]);
+exports.push([module.i, ".container {\n    position:absolute;\n    top:40%;\n    left:-100%;\n    padding: 0;\n    -webkit-transform: translate(-50%,-50%);\n    transform: translate(-50%,-50%);\n}\n\n.row {\n    margin: 0;\n}\n\nimg {  \n    padding: 0;\n    margin-left: 0;\n    max-height: 60px;\n    max-width: 60px;\n}\n\n.text{\n    font-family: 'Neuton', serif;\n    color: rgb(238,117,0);\n    color: rgb(255, 195, 76);\n    font-size: 40px;\n    font-weight: 700;\n    -webkit-text-stroke-width: 0.5px;\n    -webkit-text-stroke-color: rgb(129,161,184);\n    opacity: .9;\n}   \n\n#submit {\n    float: left;\n}\n\n#back {\n    float: right;\n}\n\n.ng-invalid:not(form)  {\n  border-right: 5px solid crimson; /* red */\n}\n\n.ng-valid[required], .ng-valid.required  {\n  border-right: 5px solid springgreen; /* green */\n}", ""]);
 
 // exports
 
@@ -4193,7 +4220,7 @@ exports = module.exports = __webpack_require__(2)(false);
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Neuton);", ""]);
 
 // module
-exports.push([module.i, ".container {\n    position:absolute;\n    top:40%;\n    left:50%;\n    padding: 0;\n    -webkit-transform: translate(-50%,-50%);\n    transform: translate(-50%,-50%);\n}\n\n.row {\n    margin: 0;\n}\n\nimg {  \n    padding: 0;\n    margin-left: 25%;\n    max-height: 150px;\n    max-width: 150px;\n}\n\n.logo {\n    margin-left: 0; \n    max-height: 100px;\n    max-width: 100px; \n    -webkit-transform-origin: left top; \n            transform-origin: left top; \n    -webkit-animation: scale 800ms ease-in-out forwards; \n            animation: scale 800ms ease-in-out forwards; \n    \n}\n\n@-webkit-keyframes scale {\n    to {\n        -webkit-transform: scale(0.6);\n                transform: scale(0.6);\n    }\n}\n\n@keyframes scale {\n    to {\n        -webkit-transform: scale(0.6);\n                transform: scale(0.6);\n    }\n}\n\n.rotate360 {\n    transition: all 0.7s;\n    transform: rotate(360deg);\n    -webkit-transform: rotate(360deg);\n    -o-transform: rotate(360deg); \n    -moz-transform: rotate(360deg);\n}\n\n.hide {\n    display: none;\n}\n\n.box {\n    min-height: 0;\n    max-height: 0;\n    opacity: 0;\n    transition: all .8s ease-in-out;    \n}\n\n.active {\n    max-height: 100%;\n    opacity: 1;\n}\n\n.text{\n    font-family: 'Neuton', serif;\n    color: rgb(238,117,0);\n    color: rgb(255, 195, 76);\n    font-size: 35px;\n    font-weight: 700;\n    -webkit-text-stroke-width: 1px;\n    -webkit-text-stroke-color: rgb(129,161,184);\n    margin-left: -35px;\n}   \n", ""]);
+exports.push([module.i, ".container {\n    position:absolute;\n    top:40%;\n    left:50%;\n    padding: 0;\n    -webkit-transform: translate(-50%,-50%);\n    transform: translate(-50%,-50%);\n}\n\n.row {\n    margin: 0;\n}\n\nimg {  \n    padding: 0;\n    margin-left: 25%;\n    max-height: 150px;\n    max-width: 150px;\n}\n\n.logo {\n    margin-left: 0; \n    max-height: 100px;\n    max-width: 100px; \n    -webkit-transform-origin: left top; \n            transform-origin: left top; \n    -webkit-animation: scale 800ms ease-in-out forwards; \n            animation: scale 800ms ease-in-out forwards; \n    \n}\n\n@-webkit-keyframes scale {\n    to {\n        -webkit-transform: scale(0.6);\n                transform: scale(0.6);\n    }\n}\n\n@keyframes scale {\n    to {\n        -webkit-transform: scale(0.6);\n                transform: scale(0.6);\n    }\n}\n\n.rotate360 {\n    transition: all 0.7s;\n    transform: rotate(360deg);\n    -webkit-transform: rotate(360deg);\n    -o-transform: rotate(360deg); \n    -moz-transform: rotate(360deg);\n}\n\n.hide {\n    display: none;\n}\n\n.box {\n    min-height: 0;\n    max-height: 0;\n    opacity: 0;\n    transition: all .8s ease-in-out;    \n}\n\n.active {\n    max-height: 100%;\n    opacity: 1;\n    margin-top: -20px;\n}\n\n.text{\n    font-family: 'Neuton', serif;\n    color: rgb(238,117,0);\n    color: rgb(255, 195, 76);\n    font-size: 40px;\n    font-weight: 700;\n    -webkit-text-stroke-width: 0.5px;\n    -webkit-text-stroke-color: rgb(129,161,184);\n    opacity: .9;\n    margin-left: -30px;\n}   \n\n.ng-invalid:not(form)  {\n  border-right: 5px solid crimson; /* red */\n}\n\n.ng-valid[required], .ng-valid.required  {\n  border-right: 5px solid springgreen; /* green */\n}", ""]);
 
 // exports
 
@@ -4210,7 +4237,7 @@ exports = module.exports = __webpack_require__(2)(false);
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Neuton);", ""]);
 
 // module
-exports.push([module.i, ".container {\n    position:absolute;\n    top:40%;\n    left:-100%;\n    padding: 0;\n    -webkit-transform: translate(-50%,-50%);\n    transform: translate(-50%,-50%);\n}\n\n.row {\n    margin: 0;\n}\n\nimg {  \n    padding: 0;\n    margin-left: 0;\n    max-height: 60px;\n    max-width: 60px;\n}\n\n.text{\n    font-family: 'Neuton', serif;\n    color: rgb(238,117,0);\n    color: rgb(255, 195, 76);\n    font-size: 35px;\n    font-weight: 700;\n    -webkit-text-stroke-width: 1px;\n    -webkit-text-stroke-color: rgb(129,161,184);\n}   \n\n#submit {\n    float: left;\n}\n\n#back {\n    float: right;\n}", ""]);
+exports.push([module.i, ".container {\n    position:absolute;\n    top:40%;\n    left:-100%;\n    padding: 0;\n    -webkit-transform: translate(-50%,-50%);\n    transform: translate(-50%,-50%);\n}\n\n.row {\n    margin: 0;\n}\n\nimg {  \n    padding: 0;\n    margin-left: 0;\n    max-height: 60px;\n    max-width: 60px;\n}\n\n.text{\n    font-family: 'Neuton', serif;\n    color: rgb(238,117,0);\n    color: rgb(255, 195, 76);\n    font-size: 40px;\n    font-weight: 700;\n    -webkit-text-stroke-width: 0.5px;\n    -webkit-text-stroke-color: rgb(129,161,184);\n    opacity: .9;\n}   \n\n#submit {\n    float: left;\n}\n\n#back {\n    float: right;\n}\n\n.ng-invalid:not(form)  {\n  border-right: 5px solid crimson; /* red */\n}\n\n.ng-valid[required], .ng-valid.required  {\n  border-right: 5px solid springgreen; /* green */\n}", ""]);
 
 // exports
 
@@ -4429,19 +4456,19 @@ module.exports = "<!-- component padre che racchiude gli elementi del menù -->\
 /* 316 */
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"mainDiv\" class=\"container col-xs-6 col-md-4\">\n  <div class=\"sub-container\">\n    <div class=\"row\" >      \n      <img src=\"assets/images/logo.png\" alt=\"logo\" class=\"col-xs-6\" />\n      <span class=\"text\"> SWEDesigner </span>\n    </div> \n    <div>  \n      <h3>Password dimenticata</h3>\n      <form name=\"form\">\n        <div class=\"form-group\" (submit)=\"tryGetNewPassword($event)\">\n          <label for=\"email\">Email</label>\n          <input type=\"email\" class=\"form-control\" name=\"email\" required placeholder=\"Email\"/>\n          <!-- <div class=\"help-block\">Email is required</div> -->\n        </div>\n        <div class=\"form-group\">\n\n        </div>\n        <div class=\"form-group\">\n          <input type=\"submit\" class=\"btn btn-primary\" value=\"Invia\" id=\"submit\"/>       \n          <button [routerLink]=\"['/home']\" class=\"btn btn-primary\" id=\"back\" >Back</button> \n        </div>\n      </form>\n    </div>    \n  </div>\n</div>"
+module.exports = "<div id=\"mainDiv\" class=\"container col-xs-6 col-md-4\">\n  <div class=\"sub-container\">\n    <div class=\"row\" >      \n      <img src=\"assets/images/logo.png\" alt=\"logo\" class=\"col-xs-6\" />\n      <span class=\"text\"> SWEDesigner </span>\n    </div> \n    <div>  \n      <h3 class=\"text-warning\">Password dimenticata</h3>\n      <form name=\"form\" (submit)=\"tryGetNewPassword($event)\" #forgotPswForm=\"ngForm\">\n        <div class=\"form-group has-warning\">\n          <label for=\"email\" class=\"control-label\">Email</label>\n          <div class=\"input-group\">\n            <span class=\"input-group-addon\">\n              <i class=\"glyphicon glyphicon-envelope\"></i>\n            </span>\n            <input type=\"email\" class=\"form-control\" name=\"email\" required placeholder=\"Email\"\n            id=\"email\"\n            ngModel email\n            [(ngModel)]=\"accountService.email\"/>\n            <!-- <div class=\"help-block\">Email is required</div> -->\n          </div>\n        </div>\n        <div class=\"form-group\">        \n        </div>\n        <div class=\"form-group\">\n          <input type=\"submit\" class=\"btn btn-warning\" value=\"Invia\" [disabled]=\"!forgotPswForm.form.valid\"/>       \n          <button class=\"btn btn-warning\" id=\"back\" (click)='accountService.redirectComponent(\"home\")'>Back</button> \n        </div>\n      </form>\n    </div>    \n  </div>\n</div>"
 
 /***/ }),
 /* 317 */
 /***/ (function(module, exports) {
 
-module.exports = " <div class=\"container col-xs-6 col-md-4\">\n  <div class=\"sub-container\">\n    <div class=\"row\" >      \n      <img src=\"assets/images/logo.png\" alt=\"logo\" class=\"col-xs-6\" />\n      <span id=\"content\" class=\"text hide\"> SWEDesigner </span>\n    </div> \n    <div class=\"box\">  \n      <h2>Login</h2>\n      <form name=\"form\" (submit)=\"loginUser($event)\">\n        <div class=\"form-group\" >\n          <label for=\"email\">Email</label>\n          <input type=\"email\" class=\"form-control\" name=\"email\" required placeholder=\"Email\"/>\n          <!-- <div class=\"help-block\">Email is required</div> -->\n           </div>\n            <div class=\"form-group\">\n              <label for=\"password\">Password</label>\n              <input type=\"password\" class=\"form-control\" name=\"password\" required placeholder=\"Password\"/>\n              <!-- <div *ngIf=\"f.submitted && !password.valid\" class=\"help-block\">Password is required</div> -->\n               </div>\n                <div class=\"form-group\">\n                  <input type=\"submit\" class=\"btn btn-primary\" value=\"Login\"/> \n                  <a class=\"btn btn-link\" (click)='redirSignUp()'>Registrati</a>\n                  <a [routerLink]=\"['/password dimenticata']\" class=\"btn btn-link\" (click)='refresh()'>Password dimenticata</a>\n                </div>\n              </form>\n            </div>    \n          </div>\n        </div> \n"
+module.exports = " <div class=\"container col-xs-6 col-md-4\">\n  <div class=\"sub-container\">\n    <!-- Logo -->\n    <div class=\"row\" >      \n      <img src=\"assets/images/logo.png\" alt=\"logo\" class=\"col-xs-6\" />\n      <span id=\"content\" class=\"text hide\"> SWEDesigner </span>\n    </div> \n    <!-- Form -->\n    <div class=\"box\">  \n      <h2 class=\"text-warning\">Login</h2>\n      <form name=\"form\" (submit)=\"loginUser($event)\" #loginForm=\"ngForm\">\n        <div class=\"form-group has-warning\" >\n          <label class=\"control-label\" for=\"email\"> Email </label>\n          <div class=\"input-group\">\n            <span class=\"input-group-addon\">\n              <i class=\"glyphicon glyphicon-envelope\"></i>\n            </span>  \n            <input type=\"email\" class=\"form-control\" placeholder=\"Email\" required\n            ngModel email\n            [(ngModel)]=\"accountService.email\" name=\"email\"\n            id=\"email\" />\n          </div>\n        </div>\n        <div class=\"form-group has-warning\">\n          <label for=\"password\" class=\"control-label\">Password</label>\n          <div class=\"input-group\">\n            <span class=\"input-group-addon\">\n              <i class=\"glyphicon glyphicon-lock\"></i>\n            </span> \n            <input type=\"password\" class=\"form-control\" name=\"password\" required placeholder=\"Password\"\n            [(ngModel)]=\"accountService.password\" name=\"password\"\n            id=\"password\"/>\n          </div>\n        </div>\n        <div class=\"form-group\">\n          <input type=\"submit\" class=\"btn btn-warning\" value=\"Login\" [disabled]=\"!loginForm.form.valid\"/> \n          <a class=\"btn btn-link text-warning .warning\t\" (click)='accountService.redirectComponent(\"registrazione\")'>Registrati</a>\n          <a class=\"btn btn-link text-warning\" (click)='accountService.redirectComponent(\"passwordDimenticata\")'>Password dimenticata</a>\n        </div>\n      </form>\n    </div>    \n  </div>\n</div> \n"
 
 /***/ }),
 /* 318 */
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"mainDiv\" class=\"container col-xs-6 col-md-4\">\n  <div class=\"sub-container\">\n    <div class=\"row\" >      \n      <img src=\"assets/images/logo.png\" alt=\"logo\" class=\"col-xs-6\" />\n      <span class=\"text\"> SWEDesigner </span>\n    </div> \n    <div>  \n      <h2>Registrazione</h2>\n      <form name=\"form\" (submit)=\"tryRegistration($event)\">\n        <div class=\"form-group\">\n          <label for=\"username\">Username</label>\n          <input type=\"text\" class=\"form-control\" name=\"username\" required placeholder=\"Username\"/>\n           <div class=\"help-block bg-danger\">Email is required</div> \n        </div>\n        <div class=\"form-group\">\n          <label for=\"email\">Email</label>\n          <input type=\"email\" class=\"form-control\" name=\"email\" required  placeholder=\"Email\"/>\n          <!-- <div class=\"help-block\">Email is required</div> -->\n        </div>\n        <div class=\"form-group\">\n          <label for=\"password\">Password</label>\n          <input type=\"password\" class=\"form-control\" name=\"password\" required placeholder=\"Password\"/>\n          <!-- <div *ngIf=\"f.submitted && !password.valid\" class=\"help-block\">Password is required</div> -->\n        </div>\n        <div class=\"form-group\">\n          <input type=\"submit\" class=\"btn btn-primary\" value=\"Registrati\" id=\"submit\"/> \n          <button [routerLink]=\"['/home']\" class=\"btn btn-primary\" id=\"back\" >Back</button>       \n        </div>\n      </form>\n    </div>    \n  </div>\n</div>\n\n\n"
+module.exports = "<div id=\"mainDiv\" class=\"container col-xs-6 col-md-4\">\n  <div class=\"sub-container\">\n    <div class=\"row\" >      \n      <img src=\"assets/images/logo.png\" alt=\"logo\" class=\"col-xs-6\" />\n      <span class=\"text\"> SWEDesigner </span>\n    </div> \n    <div>  \n      <h2 class=\"text-warning\">Registrazione</h2>\n      <form name=\"form\" (submit)=\"tryRegistration($event)\" #registrationForm=\"ngForm\">\n        <div class=\"form-group has-warning\">\n          <label for=\"username\" class=\"control-label\">Username</label>\n          <div class=\"input-group\">\n            <span class=\"input-group-addon\">\n              <i class=\"glyphicon glyphicon-user\"></i>\n            </span>  \n            <input type=\"text\" class=\"form-control\" name=\"username\" required placeholder=\"Username\" \n            id=\"username\"\n            [(ngModel)]=\"accountService.username\"/>      \n          </div>\n        </div>\n        <div class=\"form-group has-warning\">\n          <label for=\"email\" class=\"control-label\">Email</label>\n          <div class=\"input-group\">\n            <span class=\"input-group-addon\">\n              <i class=\"glyphicon glyphicon-envelope\"></i>\n            </span>  \n            <input type=\"email\" class=\"form-control\" placeholder=\"Email\" name=\"email\" required\n            id=\"email\"\n            ngModel email\n            [(ngModel)]=\"accountService.email\"/>\n          </div>        \n        </div>\n        <div class=\"form-group has-warning\">\n          <label for=\"password\" class=\"control-label\">Password</label>\n          <div class=\"input-group\">\n            <span class=\"input-group-addon\">\n              <i class=\"glyphicon glyphicon-lock\"></i>\n            </span> \n            <input type=\"password\" class=\"form-control\" name=\"password\" required placeholder=\"Password\"\n            id=\"password\"\n            [(ngModel)]=\"accountService.password\"/>\n          </div>\n        </div>\n        <div class=\"form-group\">\n          <input type=\"submit\" class=\"btn btn-warning\" value=\"Registrati\" id=\"submit\" [disabled]=\"!registrationForm.form.valid\"/> \n          <button class=\"btn btn-warning\" id=\"back\" (click)='accountService.redirectComponent(\"home\")'>Back</button>       \n        </div>\n      </form>\n    </div>    \n  </div>\n</div>\n\n\n"
 
 /***/ }),
 /* 319 */,
