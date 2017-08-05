@@ -121,6 +121,9 @@ app.listen(port, ()=>{
     app.use('/editor', function(req, res){
       res.sendFile(__dirname + '/dist/index.html');
     });
+    app.use('/passwordDimenticata', function(req, res){
+      res.sendFile(__dirname + '/dist/index.html');
+    });
     app.use('/modificaMail', function(req, res){
       res.sendFile(__dirname + '/dist/index.html');
     });
