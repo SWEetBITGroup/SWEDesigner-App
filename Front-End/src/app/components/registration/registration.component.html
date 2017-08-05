@@ -5,26 +5,39 @@
       <span class="text"> SWEDesigner </span>
     </div> 
     <div>  
-      <h2>Registrazione</h2>
+      <h2 class="text-warning">Registrazione</h2>
       <form name="form" (submit)="tryRegistration($event)">
-        <div class="form-group">
-          <label for="username">Username</label>
-          <input type="text" class="form-control" name="username" required placeholder="Username"/>
-           <div class="help-block bg-danger">Email is required</div> 
+        <div class="form-group has-warning">
+          <label for="username" class="control-label">Username</label>
+          <div class="input-group">
+            <span class="input-group-addon">
+              <i class="glyphicon glyphicon-user"></i>
+            </span>  
+            <input type="text" class="form-control" name="username" required placeholder="Username"/>      
+          </div>
+             <div class="help-block bg-danger">Email is required</div>  
+        </div>
+        <div class="form-group has-warning">
+          <label for="email" class="control-label">Email</label>
+          <div class="input-group">
+            <span class="input-group-addon">
+              <i class="glyphicon glyphicon-envelope"></i>
+            </span>  
+            <input type="email" class="form-control" placeholder="Email"/>
+          </div>        
+        </div>
+        <div class="form-group has-warning">
+          <label for="password" class="control-label">Password</label>
+          <div class="input-group">
+            <span class="input-group-addon">
+              <i class="glyphicon glyphicon-lock"></i>
+            </span> 
+            <input type="password" class="form-control" name="password" required placeholder="Password"/>
+          </div>
         </div>
         <div class="form-group">
-          <label for="email">Email</label>
-          <input type="email" class="form-control" name="email" required  placeholder="Email"/>
-          <!-- <div class="help-block">Email is required</div> -->
-        </div>
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input type="password" class="form-control" name="password" required placeholder="Password"/>
-          <!-- <div *ngIf="f.submitted && !password.valid" class="help-block">Password is required</div> -->
-        </div>
-        <div class="form-group">
-          <input type="submit" class="btn btn-primary" value="Registrati" id="submit"/> 
-          <button [routerLink]="['/home']" class="btn btn-primary" id="back" >Back</button>       
+          <input type="submit" class="btn btn-warning" value="Registrati" id="submit" /> 
+          <button class="btn btn-warning" id="back" (click)='accountService.redirectComponent("home")'>Back</button>       
         </div>
       </form>
     </div>    

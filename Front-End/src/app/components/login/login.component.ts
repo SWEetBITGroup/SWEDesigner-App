@@ -19,6 +19,7 @@ export class LoginComponent {
   */
   constructor(private router: Router, private accountService: AccountService) { }
 
+
   loginUser(e) {
     e.preventDefault();
     this.accountService.email = e.target.elements[0].value;
@@ -32,17 +33,8 @@ export class LoginComponent {
       }
     });
   }
-
-  redirSignUp(){
-    this.router.navigate(['/registrazione']);
-  }
-
-  redirPwd(){
-    this.router.navigate(['/passwordDimenticata']);
-  }
   
-  ngAfterViewInit(){
-    
+  ngAfterViewInit(){   
     /**
     * !IMPORANT the next function is just to add animation on the page
     */      

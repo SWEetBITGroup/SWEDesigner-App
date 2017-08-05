@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Headers, RequestOptions, RequestMethod, ResponseContentType }  from '@angular/http';
 import { Http, Response }           from '@angular/http';
-
+import { Router } from '@angular/router';
 @Injectable()
 /**
 * 'AccountService' stores information about the account's information.
@@ -27,18 +27,19 @@ export class AccountService {
   /**
   * Create an instantiation of AuthenticationGuard
   * @param isUserLoggedIn to default that variable is set to false
+  * @param router used to create a new instantiation of Router
+  * @param http used to create a new instantiation of Http
   */
-  constructor(private http: Http) {
+  constructor(private router: Router,private http: Http) {
     this.isUserLoggedIn = false;
   }
-
   /**
-   * Send, by POST, data to server and catch its response.
-   * This function is used for user's registration
-   * @param usr 
-   * @param mail 
-   * @param pwd 
-   */
+  * Send, by POST, data to server and catch its response.
+  * This function is used for user's registration
+  * @param usr 
+  * @param mail 
+  * @param pwd 
+  */
   register(usr: String, mail: String, pwd: String, cb: Function){
     var err = false;
     let user = {
@@ -58,7 +59,10 @@ export class AccountService {
       }
     })
   }
-
+  /**
+  * This function retrive the password by the associated user's mail
+  * @param mail is the user's information that allow to retrive the pawwsord
+  */
   retrivePwd(mail: String){
     let email = {
       "mail": mail
@@ -71,15 +75,14 @@ export class AccountService {
       let response = data.text();
       console.log(response);
     })
-  }
-  
+  } 
   /**
-   * Send, by POST, data to server and catch its response
-   * This function is used for user's login
-   * @param email 
-   * @param pass 
-   * @param cb 
-   */
+  * Send, by POST, data to server and catch its response
+  * This function is used for user's login
+  * @param email 
+  * @param pass 
+  * @param cb 
+  */
   checkLogin(email: String, pass: String, cb: Function){
     var err = false;
     let usr = {
@@ -113,5 +116,13 @@ export class AccountService {
   */
   getUserLoggedIn() {
     return this.isUserLoggedIn;
+  }
+  /**
+  * This function redirect the current component to the 'destination' component
+  * @param destination is the route destination component
+  */
+  redirectComponent(destination:string){
+    location.reload();
+    this.router.navigate(['/' + destination ]);
   }
 }

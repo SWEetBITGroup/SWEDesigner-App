@@ -25,10 +25,11 @@ img {
     font-family: 'Neuton', serif;
     color: rgb(238,117,0);
     color: rgb(255, 195, 76);
-    font-size: 35px;
+    font-size: 40px;
     font-weight: 700;
-    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-width: 0.5px;
     -webkit-text-stroke-color: rgb(129,161,184);
+    opacity: .9;
 }   
 
 #submit {

@@ -5,19 +5,23 @@
       <span class="text"> SWEDesigner </span>
     </div> 
     <div>  
-      <h3>Password dimenticata</h3>
+      <h3 class="text-warning">Password dimenticata</h3>
       <form name="form" (submit)="tryGetNewPassword($event)">
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input type="email" class="form-control" name="email" required placeholder="Email"/>
-          <!-- <div class="help-block">Email is required</div> -->
+        <div class="form-group has-warning">
+          <label for="email" class="control-label">Email</label>
+          <div class="input-group">
+            <span class="input-group-addon">
+              <i class="glyphicon glyphicon-envelope"></i>
+            </span>
+            <input type="email" class="form-control" name="email" required placeholder="Email"/>
+            <!-- <div class="help-block">Email is required</div> -->
+          </div>
+        </div>
+        <div class="form-group">        
         </div>
         <div class="form-group">
-
-        </div>
-        <div class="form-group">
-          <input type="submit" class="btn btn-primary" value="Invia"/>       
-          <button [routerLink]="['/home']" class="btn btn-primary" id="back" >Back</button> 
+          <input type="submit" class="btn btn-warning" value="Invia"/>       
+          <button class="btn btn-warning" id="back" (click)='accountService.redirectComponent("home")'>Back</button> 
         </div>
       </form>
     </div>    
