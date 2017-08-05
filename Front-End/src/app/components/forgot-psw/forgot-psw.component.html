@@ -6,21 +6,24 @@
     </div> 
     <div>  
       <h3 class="text-warning">Password dimenticata</h3>
-      <form name="form" (submit)="tryGetNewPassword($event)">
+      <form name="form" (submit)="tryGetNewPassword($event)" #forgotPswForm="ngForm">
         <div class="form-group has-warning">
           <label for="email" class="control-label">Email</label>
           <div class="input-group">
             <span class="input-group-addon">
               <i class="glyphicon glyphicon-envelope"></i>
             </span>
-            <input type="email" class="form-control" name="email" required placeholder="Email"/>
+            <input type="email" class="form-control" name="email" required placeholder="Email"
+            id="email"
+            ngModel email
+            [(ngModel)]="accountService.email"/>
             <!-- <div class="help-block">Email is required</div> -->
           </div>
         </div>
         <div class="form-group">        
         </div>
         <div class="form-group">
-          <input type="submit" class="btn btn-warning" value="Invia"/>       
+          <input type="submit" class="btn btn-warning" value="Invia" [disabled]="!forgotPswForm.form.valid"/>       
           <button class="btn btn-warning" id="back" (click)='accountService.redirectComponent("home")'>Back</button> 
         </div>
       </form>

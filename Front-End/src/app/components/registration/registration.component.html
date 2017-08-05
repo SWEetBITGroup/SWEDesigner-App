@@ -6,16 +6,17 @@
     </div> 
     <div>  
       <h2 class="text-warning">Registrazione</h2>
-      <form name="form" (submit)="tryRegistration($event)">
+      <form name="form" (submit)="tryRegistration($event)" #registrationForm="ngForm">
         <div class="form-group has-warning">
           <label for="username" class="control-label">Username</label>
           <div class="input-group">
             <span class="input-group-addon">
               <i class="glyphicon glyphicon-user"></i>
             </span>  
-            <input type="text" class="form-control" name="username" required placeholder="Username"/>      
+            <input type="text" class="form-control" name="username" required placeholder="Username" 
+            id="username"
+            [(ngModel)]="accountService.username"/>      
           </div>
-             <div class="help-block bg-danger">Email is required</div>  
         </div>
         <div class="form-group has-warning">
           <label for="email" class="control-label">Email</label>
@@ -23,7 +24,10 @@
             <span class="input-group-addon">
               <i class="glyphicon glyphicon-envelope"></i>
             </span>  
-            <input type="email" class="form-control" placeholder="Email"/>
+            <input type="email" class="form-control" placeholder="Email" name="email" required
+            id="email"
+            ngModel email
+            [(ngModel)]="accountService.email"/>
           </div>        
         </div>
         <div class="form-group has-warning">
@@ -32,11 +36,13 @@
             <span class="input-group-addon">
               <i class="glyphicon glyphicon-lock"></i>
             </span> 
-            <input type="password" class="form-control" name="password" required placeholder="Password"/>
+            <input type="password" class="form-control" name="password" required placeholder="Password"
+            id="password"
+            [(ngModel)]="accountService.password"/>
           </div>
         </div>
         <div class="form-group">
-          <input type="submit" class="btn btn-warning" value="Registrati" id="submit" /> 
+          <input type="submit" class="btn btn-warning" value="Registrati" id="submit" [disabled]="!registrationForm.form.valid"/> 
           <button class="btn btn-warning" id="back" (click)='accountService.redirectComponent("home")'>Back</button>       
         </div>
       </form>

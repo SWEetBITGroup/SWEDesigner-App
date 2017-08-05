@@ -1,19 +1,24 @@
  <div class="container col-xs-6 col-md-4">
   <div class="sub-container">
+    <!-- Logo -->
     <div class="row" >      
       <img src="assets/images/logo.png" alt="logo" class="col-xs-6" />
       <span id="content" class="text hide"> SWEDesigner </span>
     </div> 
+    <!-- Form -->
     <div class="box">  
       <h2 class="text-warning">Login</h2>
-      <form name="form" (submit)="loginUser($event)">
+      <form name="form" (submit)="loginUser($event)" #loginForm="ngForm">
         <div class="form-group has-warning" >
           <label class="control-label" for="email"> Email </label>
           <div class="input-group">
             <span class="input-group-addon">
               <i class="glyphicon glyphicon-envelope"></i>
             </span>  
-            <input type="email" class="form-control" placeholder="Email"/>
+            <input type="email" class="form-control" placeholder="Email" required
+            ngModel email
+            [(ngModel)]="accountService.email" name="email"
+            id="email" />
           </div>
         </div>
         <div class="form-group has-warning">
@@ -22,11 +27,13 @@
             <span class="input-group-addon">
               <i class="glyphicon glyphicon-lock"></i>
             </span> 
-            <input type="password" class="form-control" name="password" required placeholder="Password"/>
+            <input type="password" class="form-control" name="password" required placeholder="Password"
+            [(ngModel)]="accountService.password" name="password"
+            id="password"/>
           </div>
         </div>
         <div class="form-group">
-          <input type="submit" class="btn btn-warning" value="Login"/> 
+          <input type="submit" class="btn btn-warning" value="Login" [disabled]="!loginForm.form.valid"/> 
           <a class="btn btn-link text-warning .warning	" (click)='accountService.redirectComponent("registrazione")'>Registrati</a>
           <a class="btn btn-link text-warning" (click)='accountService.redirectComponent("passwordDimenticata")'>Password dimenticata</a>
         </div>

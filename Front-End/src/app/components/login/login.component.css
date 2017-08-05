@@ -73,3 +73,11 @@ img {
     opacity: .9;
     margin-left: -30px;
 }   
+
+.ng-invalid:not(form)  {
+  border-right: 5px solid crimson; /* red */
+}
+
+.ng-valid[required], .ng-valid.required  {
+  border-right: 5px solid springgreen; /* green */
+}

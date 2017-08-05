@@ -18,13 +18,13 @@ export class LoginComponent {
   * @param accountService used to create a new instantiation of AccountService
   */
   constructor(private router: Router, private accountService: AccountService) { }
-
-
+  
+  
   loginUser(e) {
     e.preventDefault();
     this.accountService.email = e.target.elements[0].value;
     this.accountService.password = e.target.elements[1].value;
-
+    
     this.accountService.checkLogin(this.accountService.email, this.accountService.password, (err)=>{
       if(!err){
         if(this.accountService.getUserLoggedIn()){
