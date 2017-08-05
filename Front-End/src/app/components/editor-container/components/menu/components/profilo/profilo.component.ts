@@ -11,11 +11,20 @@ export class ProfiloComponent {
   
   ngAfterViewInit(){
     /**
-     * This directiove disable all the button in the top menu while the manage profile div is open
-     */
+    * This directiove disable all the button in the top menu while the manage profile div is open
+    */
+    $(window).resize(function(){
+      let y:number = -$("#qwerty").position().left;
+      $('#manage-profile').css({left: y});
+      $('#manage-profile').width($(window).width());
+    });
     $('#menuProfilo').click(function(){
-      if (!$('#menuProfiloToggle').is(':visible'))
+      if (!$('#manage-profile').is(':visible')) {
         $('.tmp-disable').addClass('disabled');
+        $('#manage-profile').width($(window).width());
+        let y:number = -$("#qwerty").position().left;
+        $('#manage-profile').css({left: y});
+      }
       else
         $('.tmp-disable').removeClass('disabled');
     });

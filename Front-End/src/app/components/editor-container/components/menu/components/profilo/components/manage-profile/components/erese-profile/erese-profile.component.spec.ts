@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ModPswComponent } from './mod-psw.component';
+import { EreseProfileComponent } from './erese-profile.component';
 
-describe('ModPswComponent', () => {
-  let component: ModPswComponent;
-  let fixture: ComponentFixture<ModPswComponent>;
+describe('EreseProfileComponent', () => {
+  let component: EreseProfileComponent;
+  let fixture: ComponentFixture<EreseProfileComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ModPswComponent ]
+      declarations: [ EreseProfileComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ModPswComponent);
+    fixture = TestBed.createComponent(EreseProfileComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

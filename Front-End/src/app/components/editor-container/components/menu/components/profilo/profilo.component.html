@@ -1,12 +1,8 @@
-<div class="dropdown" #menuProfilo>
-  <button class="btn btn-default dropdown-toggle tmp-disable" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" 
-  id="menuProfilo">
+<div class="dropdown" #menuProfilo id="qwerty">
+  <button class="btn btn-default" data-toggle="collapse" id="menuProfilo" href="#manage-profile">
     Profilo
     <span class="caret"></span>
   </button>
-  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" id="menuProfiloToggle">
-    <li><a [routerLink]="['/modifica password']" >Modifica password</a></li>
-    <li><a [routerLink]="['/modifica email']" >Modifica email</a></li>
-    <li><a href="#" >Elimina profilo</a></li>
-  </ul>
+  <div >
+  <app-manage-profile class="collapse" id="manage-profile"></app-manage-profile></div>
 </div>

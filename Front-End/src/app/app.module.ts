@@ -20,9 +20,12 @@ import { ActivityMenuComponent } from './components/editor-container/components/
 import { LoginComponent } from './components/login/login.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { EditorContainerComponent } from './components/editor-container/editor-container.component';
-import { ModPswComponent } from './components/editor-container/components/menu/components/profilo/components/mod-psw/mod-psw.component';
-import { ModEmailComponent } from './components/editor-container/components/menu/components/profilo/components/mod-email/mod-email.component';
 import { ForgotPswComponent } from './components/forgot-psw/forgot-psw.component';
+import { ManageProfileComponent } from './components/editor-container/components/menu/components/profilo/components/manage-profile/manage-profile.component';
+import { EditPswComponent } from './components/editor-container/components/menu/components/profilo/components/manage-profile/components/edit-psw/edit-psw.component';
+import { EditEmailComponent } from './components/editor-container/components/menu/components/profilo/components/manage-profile/components/edit-email/edit-email.component';
+import { EreseProfileComponent } from './components/editor-container/components/menu/components/profilo/components/manage-profile/components/erese-profile/erese-profile.component';
+import { ProjListComponent } from './components/editor-container/components/menu/components/profilo/components/manage-profile/components/proj-list/proj-list.component';
 
 // Services
 import { AccountService } from './services/account.service';
@@ -51,9 +54,12 @@ import { AuthenticationGuard } from './guards/authentication.guard';
     LoginComponent,
     RegistrationComponent,
     EditorContainerComponent,
-    ModPswComponent,
-    ModEmailComponent,
-    ForgotPswComponent
+    ForgotPswComponent,
+    ManageProfileComponent,
+    EditPswComponent,
+    EditEmailComponent,
+    EreseProfileComponent,
+    ProjListComponent
   ],
   imports: [
     BrowserModule,

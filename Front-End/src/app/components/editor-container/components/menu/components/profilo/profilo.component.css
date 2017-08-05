@@ -45,3 +45,8 @@ ul {
 .dropdown-menu>li>a:hover{
   background-color: #636363;
 }
+
+#manage-profile {
+  margin: 0;
+  padding: 0;
+}

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ModEmailComponent } from './mod-email.component';
+import { ProjListComponent } from './proj-list.component';
 
-describe('ModEmailComponent', () => {
-  let component: ModEmailComponent;
-  let fixture: ComponentFixture<ModEmailComponent>;
+describe('ProjListComponent', () => {
+  let component: ProjListComponent;
+  let fixture: ComponentFixture<ProjListComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ModEmailComponent ]
+      declarations: [ ProjListComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ModEmailComponent);
+    fixture = TestBed.createComponent(ProjListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

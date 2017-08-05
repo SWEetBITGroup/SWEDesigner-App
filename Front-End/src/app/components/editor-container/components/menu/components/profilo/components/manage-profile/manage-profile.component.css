@@ -1,0 +1,15 @@
+:host {
+    height: 94vh;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    top: 5vh;
+    z-index: 9999;
+    position: absolute;
+    background-color: purple;
+    cursor: default;
+}
+
+.close {
+    float: right;
+}
