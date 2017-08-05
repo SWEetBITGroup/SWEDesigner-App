@@ -62,7 +62,7 @@ export class LoginComponent {
         function(){ 
           $('img').addClass('logo');
           setInterval(        
-            function(){ $('.text').removeClass('hide'); } , 200 );
+            function(){ $('.text').removeClass('hide'); } , 400 );
           }, 900); 
         }
       }    
