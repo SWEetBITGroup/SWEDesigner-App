@@ -208,7 +208,7 @@ webpackJsonp([4,5],[
 /* unused harmony export ɵu */
 
 /**
- * @license Angular v4.3.2
+ * @license Angular v4.3.1
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -1004,7 +1004,7 @@ var Version = (function () {
 /**
  * \@stable
  */
-var VERSION = new Version('4.3.2');
+var VERSION = new Version('4.3.1');
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -4117,7 +4117,7 @@ function forkInnerZoneWithAngularBehavior(zone) {
         },
         onHandleError: function (delegate, current, target, error) {
             delegate.handleError(target, error);
-            zone.runOutsideAngular(function () { return zone.onError.emit(error); });
+            zone.onError.emit(error);
             return false;
         }
     });
@@ -4605,16 +4605,15 @@ var PlatformRef = (function () {
 }());
 /**
  * @param {?} errorHandler
- * @param {?} ngZone
  * @param {?} callback
  * @return {?}
  */
-function _callAndReportToErrorHandler(errorHandler, ngZone, callback) {
+function _callAndReportToErrorHandler(errorHandler, callback) {
     try {
         var /** @type {?} */ result = callback();
         if (isPromise(result)) {
             return result.catch(function (e) {
-                ngZone.runOutsideAngular(function () { return errorHandler.handleError(e); });
+                errorHandler.handleError(e);
                 // rethrow as the exception handler might not do it
                 throw e;
             });
@@ -4622,7 +4621,7 @@ function _callAndReportToErrorHandler(errorHandler, ngZone, callback) {
         return result;
     }
     catch (e) {
-        ngZone.runOutsideAngular(function () { return errorHandler.handleError(e); });
+        errorHandler.handleError(e);
         // rethrow as the exception handler might not do it
         throw e;
     }
@@ -4708,8 +4707,8 @@ var PlatformRef_ = (function (_super) {
                 throw new Error('No ErrorHandler. Is platform module (BrowserModule) included?');
             }
             moduleRef.onDestroy(function () { return remove(_this._modules, moduleRef); }); /** @type {?} */
-            ((ngZone)).runOutsideAngular(function () { return ((ngZone)).onError.subscribe({ next: function (error) { exceptionHandler.handleError(error); } }); });
-            return _callAndReportToErrorHandler(exceptionHandler, /** @type {?} */ ((ngZone)), function () {
+            ((ngZone)).onError.subscribe({ next: function (error) { exceptionHandler.handleError(error); } });
+            return _callAndReportToErrorHandler(exceptionHandler, function () {
                 var /** @type {?} */ initStatus = moduleRef.injector.get(ApplicationInitStatus);
                 initStatus.runInitializers();
                 return initStatus.donePromise.then(function () {
@@ -5005,7 +5004,6 @@ var ApplicationRef_ = (function (_super) {
      * @return {?}
      */
     ApplicationRef_.prototype.tick = function () {
-        var _this = this;
         if (this._runningTick) {
             throw new Error('ApplicationRef.tick is called recursively');
         }
@@ -5019,7 +5017,7 @@ var ApplicationRef_ = (function (_super) {
         }
         catch (e) {
             // Attention: Don't rethrow as it could cancel subscriptions to Observables!
-            this._zone.runOutsideAngular(function () { return _this._exceptionHandler.handleError(e); });
+            this._exceptionHandler.handleError(e);
         }
         finally {
             this._runningTick = false;
@@ -16390,7 +16388,7 @@ module.exports = g;
 /* unused harmony export ɵd */
 
 /**
- * @license Angular v4.3.2
+ * @license Angular v4.3.1
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -18545,7 +18543,7 @@ JsonpModule.ctorParameters = function () { return []; };
 /**
  * \@stable
  */
-var VERSION = new __WEBPACK_IMPORTED_MODULE_1__angular_core__["d" /* Version */]('4.3.2');
+var VERSION = new __WEBPACK_IMPORTED_MODULE_1__angular_core__["d" /* Version */]('4.3.1');
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -18627,7 +18625,7 @@ var VERSION = new __WEBPACK_IMPORTED_MODULE_1__angular_core__["d" /* Version */]
 /* unused harmony export ɵe */
 
 /**
- * @license Angular v4.3.2
+ * @license Angular v4.3.1
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -23034,7 +23032,7 @@ var By = (function () {
 /**
  * \@stable
  */
-var VERSION = new __WEBPACK_IMPORTED_MODULE_2__angular_core__["d" /* Version */]('4.3.2');
+var VERSION = new __WEBPACK_IMPORTED_MODULE_2__angular_core__["d" /* Version */]('4.3.1');
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -23172,7 +23170,7 @@ var VERSION = new __WEBPACK_IMPORTED_MODULE_2__angular_core__["d" /* Version */]
 /* unused harmony export ɵl */
 
 /**
- * @license Angular v4.3.2
+ * @license Angular v4.3.1
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -27593,7 +27591,7 @@ var PreActivation = (function () {
     PreActivation.prototype.runCanActivateChecks = function () {
         var _this = this;
         var /** @type {?} */ checks$ = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5_rxjs_observable_from__["from"])(this.canActivateChecks);
-        var /** @type {?} */ runningChecks$ = __WEBPACK_IMPORTED_MODULE_7_rxjs_operator_concatMap__["concatMap"].call(checks$, function (check) { return andObservables(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5_rxjs_observable_from__["from"])([_this.runCanActivateChild(check.path), _this.runCanActivate(check.route)])); });
+        var /** @type {?} */ runningChecks$ = __WEBPACK_IMPORTED_MODULE_12_rxjs_operator_mergeMap__["mergeMap"].call(checks$, function (check) { return andObservables(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5_rxjs_observable_from__["from"])([_this.runCanActivateChild(check.path), _this.runCanActivate(check.route)])); });
         return __WEBPACK_IMPORTED_MODULE_8_rxjs_operator_every__["every"].call(runningChecks$, function (result) { return result === true; });
     };
     /**
@@ -29422,7 +29420,7 @@ function provideRouterInitializer() {
 /**
  * \@stable
  */
-var VERSION = new __WEBPACK_IMPORTED_MODULE_2__angular_core__["d" /* Version */]('4.3.2');
+var VERSION = new __WEBPACK_IMPORTED_MODULE_2__angular_core__["d" /* Version */]('4.3.1');
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -29908,7 +29906,7 @@ exports.subscribeToResult = subscribeToResult;
 /* unused harmony export ɵb */
 
 /**
- * @license Angular v4.3.2
+ * @license Angular v4.3.1
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -33851,7 +33849,7 @@ function isPlatformWorkerUi(platformId) {
 /**
  * \@stable
  */
-var VERSION = new __WEBPACK_IMPORTED_MODULE_1__angular_core__["d" /* Version */]('4.3.2');
+var VERSION = new __WEBPACK_IMPORTED_MODULE_1__angular_core__["d" /* Version */]('4.3.1');
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -59065,7 +59063,7 @@ exports.isScheduler = isScheduler;
 /* unused harmony export removeSummaryDuplicates */
 
 /**
- * @license Angular v4.3.2
+ * @license Angular v4.3.1
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -59085,7 +59083,7 @@ exports.isScheduler = isScheduler;
 /**
  * \@stable
  */
-var VERSION = new __WEBPACK_IMPORTED_MODULE_1__angular_core__["d" /* Version */]('4.3.2');
+var VERSION = new __WEBPACK_IMPORTED_MODULE_1__angular_core__["d" /* Version */]('4.3.1');
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -66062,7 +66060,7 @@ function isExpansionFormStart(input, offset, interpolationConfig) {
  * @return {?}
  */
 function isExpansionCaseStart(peek) {
-    return peek === $EQ || isAsciiLetter(peek) || isDigit(peek);
+    return peek === $EQ || isAsciiLetter(peek);
 }
 /**
  * @param {?} code1
@@ -69006,9 +69004,8 @@ var _WriteVisitor$1 = (function () {
      * @return {?}
      */
     _WriteVisitor$1.prototype.visitPlaceholder = function (ph, context) {
-        var /** @type {?} */ idStr = (this._nextPlaceholderId++).toString();
         return [new Tag(_PLACEHOLDER_TAG$1, {
-                id: idStr,
+                id: (this._nextPlaceholderId++).toString(),
                 equiv: ph.name,
                 disp: "{{" + ph.value + "}}",
             })];
@@ -69019,9 +69016,7 @@ var _WriteVisitor$1 = (function () {
      * @return {?}
      */
     _WriteVisitor$1.prototype.visitIcuPlaceholder = function (ph, context) {
-        var /** @type {?} */ cases = Object.keys(ph.value.cases).map(function (value) { return value + ' {...}'; }).join(' ');
-        var /** @type {?} */ idStr = (this._nextPlaceholderId++).toString();
-        return [new Tag(_PLACEHOLDER_TAG$1, { id: idStr, equiv: ph.name, disp: "{" + ph.value.expression + ", " + ph.value.type + ", " + cases + "}" })];
+        return [new Tag(_PLACEHOLDER_TAG$1, { id: (this._nextPlaceholderId++).toString() })];
     };
     /**
      * @param {?} nodes
@@ -86792,7 +86787,7 @@ function _mergeArrays(parts) {
 /* unused harmony export ɵr */
 
 /**
- * @license Angular v4.3.2
+ * @license Angular v4.3.1
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -92641,7 +92636,7 @@ FormBuilder.ctorParameters = function () { return []; };
 /**
  * \@stable
  */
-var VERSION = new __WEBPACK_IMPORTED_MODULE_1__angular_core__["d" /* Version */]('4.3.2');
+var VERSION = new __WEBPACK_IMPORTED_MODULE_1__angular_core__["d" /* Version */]('4.3.1');
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -92825,7 +92820,7 @@ ReactiveFormsModule.ctorParameters = function () { return []; };
 /* unused harmony export ɵResourceLoaderImpl */
 
 /**
- * @license Angular v4.3.2
+ * @license Angular v4.3.1
  * (c) 2010-2017 Google, Inc. https://angular.io/
  * License: MIT
  */
@@ -92958,7 +92953,7 @@ var CachedResourceLoader = (function (_super) {
 /**
  * @stable
  */
-var VERSION = new __WEBPACK_IMPORTED_MODULE_2__angular_core__["d" /* Version */]('4.3.2');
+var VERSION = new __WEBPACK_IMPORTED_MODULE_2__angular_core__["d" /* Version */]('4.3.1');
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.

@@ -110,7 +110,23 @@ app.listen(port, ()=>{
 //Express routing
   //Conn to Client
     // Set static folder to public
+    // manage client routing
     app.use(express.static(path.join(__dirname, 'dist')));
+    app.use('/home', function(req, res){
+      res.sendFile(__dirname + '/dist/index.html');
+    });
+    app.use('/registrazione', function(req, res){
+      res.sendFile(__dirname + '/dist/index.html');
+    });
+    app.use('/editor', function(req, res){
+      res.sendFile(__dirname + '/dist/index.html');
+    });
+    app.use('/modificaMail', function(req, res){
+      res.sendFile(__dirname + '/dist/index.html');
+    });
+    app.use('/modificaPassword', function(req, res){
+      res.sendFile(__dirname + '/dist/index.html');
+    });
   //Encrypt/Decrypt
   /**
     * @function app/post/encrypt
