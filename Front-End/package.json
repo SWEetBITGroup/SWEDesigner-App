@@ -1,5 +1,5 @@
 {
-  "name": "Front-End",
+  "name": "SWEDesigner",
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
@@ -29,6 +29,7 @@
     "core-js": "^2.4.1",
     "file-saver": "^1.3.3",
     "hammerjs": "^2.0.8",
+    "ng2-cookies": "^1.0.12",
     "rxjs": "^5.1.0",
     "tether": "^1.4.0",
     "zone.js": "^0.8.4"
