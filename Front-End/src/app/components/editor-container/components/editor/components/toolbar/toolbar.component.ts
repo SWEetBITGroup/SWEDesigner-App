@@ -115,7 +115,7 @@ export class ToolbarComponent implements OnInit {
             }
         }
     });
-    // this.mainEditorService.addClass(new Interface(nomeInterf), interfaccia);
+    this.mainEditorService.addClass(new Interface(nomeInterf), interfaccia);
   }
 
   /**
@@ -158,21 +158,21 @@ export class ToolbarComponent implements OnInit {
             }
         }
     });
-    // this.mainEditorService.addClass(new ClasseAstratta(nomeClassAbst), abstract);
+    this.mainEditorService.addClass(new ClasseAstratta(nomeClassAbst), abstract);
   }
 
   /**
    * Method selects association as connector
    */
   addAssociazione() {
-    //   this.addConnettore(new joint.shapes.uml.Association);
+    this.addConnettore(new joint.shapes.uml.Association);
   }
 
   /**
    * Method selects implementation as connector
    */
   addImplementazione() {
-    //   this.addConnettore(new joint.shapes.uml.Implementation);
+    this.addConnettore(new joint.shapes.uml.Implementation);
   }
 
   /**

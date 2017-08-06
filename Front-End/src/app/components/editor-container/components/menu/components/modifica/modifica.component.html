@@ -6,9 +6,9 @@
   <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
     <li><a href="#" >Annulla</a></li>
     <li><a href="#" >Ripristina</a></li>
-    <li><a href="#" >Taglia</a></li>
-    <li><a href="#" >Copia</a></li>
-    <li><a href="#">Incolla</a></li>
+    <li><a href="#" (click)="doCut()" >Taglia</a></li>
+    <li><a href="#" (click)="doCopy()" >Copia</a></li>
+    <li><a href="#" (click)="doPaste()" >Incolla</a></li>
     <li><a href="#">Elimina</a></li>
     <li><a href="#"  (click)="doZoomIn()" >Zoom In</a></li>
     <li><a href="#"  (click)="doZoomOut()" >Zoom Out</a></li>

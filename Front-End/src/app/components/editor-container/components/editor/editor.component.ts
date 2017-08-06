@@ -9,6 +9,8 @@ import { Subscription } from 'rxjs/Subscription';
 import { ActivityService } from './services/activity.service';
 
 import { Classe } from './models/classe';
+import { Interface } from './models/interface';
+import { ClasseAstratta } from './models/classe-astratta';
 
 declare var $:JQueryStatic;
 import * as _ from 'lodash';
@@ -53,6 +55,11 @@ export class EditorComponent implements OnInit {
   selectedCell: any;
 
   /**
+   * it point to the copied element after the click on "Copia" or "Taglia"
+   */
+  copiedElement: any;
+
+  /**
    * is the type of the link shape selected
    */
   connettore: any;
@@ -60,6 +67,14 @@ export class EditorComponent implements OnInit {
    * it point to the selected element by the click on it, that will be connect by a link shape
    */
   elementToConnect: any;
+  
+  /**
+   * They point to the graph after a undo, after a redo and the actual graph
+   */
+  undoGraph: any;
+  redoGraph: any;
+  actualGraph: any;
+
   /**
    *
    */
@@ -76,13 +91,21 @@ export class EditorComponent implements OnInit {
               private activityService: ActivityService) {
     this.selectedCell = null;
 
-    // Subscribe all'oggetto observable per la funzione di zoom
+    // Subscribe all'oggetto observable per la funzione di zoom e di copia
     this.sub = menuService.selectedGrapg$.subscribe(
       (x) => {
         if(x=='+')
           this.zoomIn();
         else if(x=='-')
           this.zoomOut();
+        else if(x=='copied')
+          this.copyElement();
+        else if(x=='pasted')
+          this.pasteElement();
+        else if(x=='cuted')
+          this.cutElement();
+        else if(x=='undo')
+          this.undo();
       }
     );
   }
@@ -101,6 +124,29 @@ export class EditorComponent implements OnInit {
     this.paper.drawGrid("dot");
 
     this.paper.scale(this.xAx,this.xAx);
+
+    /**
+     * This methods allows to recognize when there is a change in the graph
+     */
+    this.graph.on('change', ()=> {
+      this.undoGraph= new joint.dia.Graph;
+      this.actualGraph=new joint.dia.Graph;
+      let i;
+      let a= new Array();
+      let cont= this.actualGraph.getCells();
+      for(i=0; i<this.actualGraph.length; i++){
+        a[i]= cont[i].clone();
+      }
+      this.undoGraph.clear();
+      this.undoGraph.addCell(a);
+      cont= this.graph.getCells();
+      for(i=0; i<this.graph.getCells().length; i++){
+        a[i]= cont[i].clone();
+      }
+      this.actualGraph.clear();
+      this.actualGraph.addCell(a);
+      console.log("change");
+    })
 
     /**
      * This methods allows to the mouse's pointer to recognize when a class is clicked and select it
@@ -259,6 +305,69 @@ export class EditorComponent implements OnInit {
   deleteElement(cell: any) {
     this.graph.removeCells(cell);
     this.selectedCell = null;
+  }
+
+  /**
+   * This methods copy the selected element
+   */
+  copyElement(){
+    if(this.selectedCell!=null){
+          this.copiedElement= this.selectedCell;
+    }
+    
+  }
+
+  /**
+   * This methods pastes the element copied earlier
+   */
+  pasteElement(){
+    if(this.copiedElement!= null){
+      this.elementSelection(this.copiedElement);
+      let nome = this.selectedCell.model.getClassName();
+      this.ClassMenuComponent.changeNome(nome+'_copia');
+      if(this.selectedCell.model.attributes.type=='uml.Class') this.mainEditorService.addClass(new Classe(this.copiedElement.model.getClassName()+'_copia'), this.copiedElement.model.clone());
+      if(this.selectedCell.model.attributes.type=='uml.Interface') this.mainEditorService.addClass(new Interface(this.copiedElement.model.getClassName()+'_copia'), this.copiedElement.model.clone());
+      if(this.selectedCell.model.attributes.type=='uml.Abstract') this.mainEditorService.addClass(new ClasseAstratta(this.copiedElement.model.getClassName()+'_copia'), this.copiedElement.model.clone());
+      this.ClassMenuComponent.changeNome(nome);
+    }
+    this.copiedElement= null;
+  }
+
+  /**
+   * This methods cut the selected element
+   */
+  cutElement(){
+    if(this.selectedCell!=null){
+          this.copiedElement= this.selectedCell;
+          this.ClassMenuComponent.removeClass(this.selectedCell.model.getClassName());
+    }
+  }
+
+  /**
+   * This methods undo the last change in the graph
+   */
+  undo(){
+    if(this.undoGraph != null){
+      this.redoGraph= new joint.dia.Graph;
+      this.redoGraph.clear();
+      let a= new Array();
+      let i;
+      let cont= this.graph.getCells();
+      for(i=0; i<this.graph.getCells().length; i++){
+              a[i]= cont[i].clone();
+     }
+      this.redoGraph.clear();
+      this.redoGraph.addCell(a);
+      cont = this.undoGraph.getCells();
+      for(i=0; i<this.undoGraph.getCells().length; i++){
+              a[i]= cont[i].clone();
+            }
+      let elim= this.graph.getCells();
+      this.graph.clear();
+      this.graph.addCell(a);
+      this.undoGraph= null;
+      console.log("modificato");
+    }
   }
 
   selectElementActivity(cell: any) {

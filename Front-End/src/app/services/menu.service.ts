@@ -32,7 +32,30 @@ export class MenuService {
     this.selectedGraphService.next('-');
   }
 
+  /**
+  *This method copy the selected shapes in the editor.
+  */
+  copyElement(){
+    this.selectedGraphService.next('copied');
+  }
 
+  /**
+  *This method paste the selected shapes in the editor.
+  */
+  pasteElement(){
+    this.selectedGraphService.next('pasted');
+  }
+
+  /**
+  *This method cut the selected shapes in the editor.
+  */
+  cutElement(){
+    this.selectedGraphService.next('cuted');
+  }
+
+  undo(){
+    this.selectedGraphService.next('undo');
+  }
 
   encrypt(proj: JSON) {
     // let headers = new Headers({ 'Content-Type': 'application/json' });
