@@ -4,13 +4,13 @@
     <span class="caret"></span>
   </button>
   <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-    <li><a href="#" >Annulla</a></li>
-    <li><a href="#" >Ripristina</a></li>
-    <li><a href="#" (click)="doCut()" >Taglia</a></li>
-    <li><a href="#" (click)="doCopy()" >Copia</a></li>
-    <li><a href="#" (click)="doPaste()" >Incolla</a></li>
-    <li><a href="#">Elimina</a></li>
-    <li><a href="#"  (click)="doZoomIn()" >Zoom In</a></li>
-    <li><a href="#"  (click)="doZoomOut()" >Zoom Out</a></li>
+    <li><a (click)="doUndo()" >Annulla</a></li>
+    <li><a  >Ripristina</a></li>
+    <li><a (click)="doCut()" >Taglia</a></li>
+    <li><a  (click)="doCopy()" >Copia</a></li>
+    <li><a  (click)="doPaste()" >Incolla</a></li>
+    <li><a (click)="doElimina()" >Elimina</a></li>
+    <li><a  (click)="doZoomIn()" >Zoom In</a></li>
+    <li><a  (click)="doZoomOut()" >Zoom Out</a></li>
   </ul>
 </div>

@@ -106,6 +106,8 @@ export class EditorComponent implements OnInit {
           this.cutElement();
         else if(x=='undo')
           this.undo();
+        else if(x=='elimina')
+          this.elimina();
       }
     );
   }
@@ -343,6 +345,12 @@ export class EditorComponent implements OnInit {
     }
   }
 
+  elimina(){
+    if(this.selectedCell!=null)
+      this.deleteElement(this.selectedCell.model);
+
+  }
+
   /**
    * This methods undo the last change in the graph
    */
@@ -362,7 +370,6 @@ export class EditorComponent implements OnInit {
       for(i=0; i<this.undoGraph.getCells().length; i++){
               a[i]= cont[i].clone();
             }
-      let elim= this.graph.getCells();
       this.graph.clear();
       this.graph.addCell(a);
       this.undoGraph= null;

@@ -975,6 +975,9 @@ var MenuService = (function () {
     MenuService.prototype.undo = function () {
         this.selectedGraphService.next('undo');
     };
+    MenuService.prototype.elimina = function () {
+        this.selectedGraphService.next('elimina');
+    };
     MenuService.prototype.encrypt = function (proj) {
         // let headers = new Headers({ 'Content-Type': 'application/json' });
         // let options = new RequestOptions({ headers: headers });
@@ -2992,11 +2995,14 @@ var EditorComponent = (function () {
                 _this.cutElement();
             else if (x == 'undo')
                 _this.undo();
+            else if (x == 'elimina')
+                _this.elimina();
         });
     }
     EditorComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.graph = new __WEBPACK_IMPORTED_MODULE_9_jointjs__["dia"].Graph;
+        this.actualGraph = this.graph;
         this.paper = new __WEBPACK_IMPORTED_MODULE_9_jointjs__["dia"].Paper({
             el: $("#paper"),
             width: $('#paper').width(),
@@ -3011,7 +3017,6 @@ var EditorComponent = (function () {
          */
         this.graph.on('change', function () {
             _this.undoGraph = new __WEBPACK_IMPORTED_MODULE_9_jointjs__["dia"].Graph;
-            _this.actualGraph = new __WEBPACK_IMPORTED_MODULE_9_jointjs__["dia"].Graph;
             var i;
             var a = new Array();
             var cont = _this.actualGraph.getCells();
@@ -3213,6 +3218,10 @@ var EditorComponent = (function () {
             this.ClassMenuComponent.removeClass(this.selectedCell.model.getClassName());
         }
     };
+    EditorComponent.prototype.elimina = function () {
+        if (this.selectedCell != null)
+            this.deleteElement(this.selectedCell.model);
+    };
     /**
      * This methods undo the last change in the graph
      */
@@ -3232,7 +3241,6 @@ var EditorComponent = (function () {
             for (i = 0; i < this.undoGraph.getCells().length; i++) {
                 a[i] = cont[i].clone();
             }
-            var elim = this.graph.getCells();
             this.graph.clear();
             this.graph.addCell(a);
             this.undoGraph = null;
@@ -3734,6 +3742,9 @@ var ModificaComponent = (function () {
     };
     ModificaComponent.prototype.doUndo = function () {
         this.menuService.undo();
+    };
+    ModificaComponent.prototype.doElimina = function () {
+        this.menuService.elimina();
     };
     ModificaComponent.prototype.ngOnInit = function () {
     };
@@ -4564,7 +4575,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, ":host {\r\n    height: 94vh;\r\n    width: 100%;\r\n    margin: 0;\r\n    padding: 0;\r\n    top: 5vh;\r\n    z-index: 9999;\r\n    position: absolute;\r\n    background-color: purple;\r\n    cursor: default;\r\n}\r\n\r\n.close {\r\n    float: right;\r\n}", ""]);
+exports.push([module.i, ":host {\r\n    height: 94vh;\r\n    width: 100%;\r\n    margin: 0;\r\n    padding: 0;\r\n    top: 5vh;\r\n    z-index: 9999;\r\n    position: absolute;\r\n    background-color: purple;\r\n    cursor: default;\r\n    overflow: hidden;\r\n}\r\n\r\n.close {\r\n    float: right;\r\n}", ""]);
 
 // exports
 
@@ -4872,7 +4883,7 @@ module.exports = "<div class=\"dropdown\" #menuLayer>\r\n  <button class=\"btn b
 /* 319 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"dropdown\" #menuModifica>\r\n  <button class=\"btn btn-default dropdown-toggle tmp-disable\" type=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">\r\n    Modifica\r\n    <span class=\"caret\"></span>\r\n  </button>\r\n  <ul class=\"dropdown-menu\" aria-labelledby=\"dropdownMenu1\">\r\n    <li><a href=\"#\" >Annulla</a></li>\r\n    <li><a href=\"#\" >Ripristina</a></li>\r\n    <li><a href=\"#\" (click)=\"doCut()\" >Taglia</a></li>\r\n    <li><a href=\"#\" (click)=\"doCopy()\" >Copia</a></li>\r\n    <li><a href=\"#\" (click)=\"doPaste()\" >Incolla</a></li>\r\n    <li><a href=\"#\">Elimina</a></li>\r\n    <li><a href=\"#\"  (click)=\"doZoomIn()\" >Zoom In</a></li>\r\n    <li><a href=\"#\"  (click)=\"doZoomOut()\" >Zoom Out</a></li>\r\n  </ul>\r\n</div>\r\n"
+module.exports = "<div class=\"dropdown\" #menuModifica>\r\n  <button class=\"btn btn-default dropdown-toggle tmp-disable\" type=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">\r\n    Modifica\r\n    <span class=\"caret\"></span>\r\n  </button>\r\n  <ul class=\"dropdown-menu\" aria-labelledby=\"dropdownMenu1\">\r\n    <li><a (click)=\"doUndo()\" >Annulla</a></li>\r\n    <li><a  >Ripristina</a></li>\r\n    <li><a (click)=\"doCut()\" >Taglia</a></li>\r\n    <li><a  (click)=\"doCopy()\" >Copia</a></li>\r\n    <li><a  (click)=\"doPaste()\" >Incolla</a></li>\r\n    <li><a (click)=\"doElimina()\" >Elimina</a></li>\r\n    <li><a  (click)=\"doZoomIn()\" >Zoom In</a></li>\r\n    <li><a  (click)=\"doZoomOut()\" >Zoom Out</a></li>\r\n  </ul>\r\n</div>\r\n"
 
 /***/ }),
 /* 320 */

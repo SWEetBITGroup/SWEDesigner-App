@@ -48,6 +48,10 @@ export class ModificaComponent implements OnInit {
   doUndo(){
     this.menuService.undo();
   }
+  
+  doElimina(){
+    this.menuService.elimina();
+  }
 
   ngOnInit() {
   }
