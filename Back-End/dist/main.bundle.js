@@ -3002,7 +3002,6 @@ var EditorComponent = (function () {
     EditorComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.graph = new __WEBPACK_IMPORTED_MODULE_9_jointjs__["dia"].Graph;
-        this.actualGraph = this.graph;
         this.paper = new __WEBPACK_IMPORTED_MODULE_9_jointjs__["dia"].Paper({
             el: $("#paper"),
             width: $('#paper').width(),
@@ -3015,24 +3014,25 @@ var EditorComponent = (function () {
         /**
          * This methods allows to recognize when there is a change in the graph
          */
-        this.graph.on('change', function () {
-            _this.undoGraph = new __WEBPACK_IMPORTED_MODULE_9_jointjs__["dia"].Graph;
-            var i;
-            var a = new Array();
-            var cont = _this.actualGraph.getCells();
-            for (i = 0; i < _this.actualGraph.length; i++) {
-                a[i] = cont[i].clone();
-            }
-            _this.undoGraph.clear();
-            _this.undoGraph.addCell(a);
-            cont = _this.graph.getCells();
-            for (i = 0; i < _this.graph.getCells().length; i++) {
-                a[i] = cont[i].clone();
-            }
-            _this.actualGraph.clear();
-            _this.actualGraph.addCell(a);
-            console.log("change");
-        });
+        /* this.graph.on('change', ()=> {
+           this.undoGraph= new joint.dia.Graph;
+           this.actualGraph=new joint.dia.Graph;
+           let i;
+           let a= new Array();
+           let cont= this.actualGraph.getCells();
+           for(i=0; i<this.actualGraph.length; i++){
+             a[i]= cont[i].clone();
+           }
+           this.undoGraph.clear();
+           this.undoGraph.addCell(a);
+           cont= this.graph.getCells();
+           for(i=0; i<this.graph.getCells().length; i++){
+             a[i]= cont[i].clone();
+           }
+           this.actualGraph.clear();
+           this.actualGraph.addCell(a);
+           console.log("change");
+         })*/
         /**
          * This methods allows to the mouse's pointer to recognize when a class is clicked and select it
          */

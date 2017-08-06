@@ -130,7 +130,7 @@ export class EditorComponent implements OnInit {
     /**
      * This methods allows to recognize when there is a change in the graph
      */
-    this.graph.on('change', ()=> {
+   /* this.graph.on('change', ()=> {
       this.undoGraph= new joint.dia.Graph;
       this.actualGraph=new joint.dia.Graph;
       let i;
@@ -148,7 +148,7 @@ export class EditorComponent implements OnInit {
       this.actualGraph.clear();
       this.actualGraph.addCell(a);
       console.log("change");
-    })
+    })*/
 
     /**
      * This methods allows to the mouse's pointer to recognize when a class is clicked and select it
