@@ -1,6 +1,7 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AccountService } from '../../services/account.service';
+import { Cookie } from 'ng2-cookies/ng2-cookies';
 
 @Component({
   selector: 'app-login',
@@ -17,10 +18,13 @@ export class LoginComponent {
   * @param router used to create a new instantiation of Router
   * @param accountService used to create a new instantiation of AccountService
   */
-  constructor(private router: Router, private accountService: AccountService) { 
-    this.accountService.email = 'prova@Mail';
-    this.accountService.password = 'provaPsw';
-    this.accountService.username = 'provaUsername';
+  constructor(private router: Router, private accountService: AccountService) {
+    Cookie.set('email', 'prova@Mail');
+    Cookie.set('password', 'provapsw');
+    Cookie.set('username', 'gianfrancioschio'); 
+    this.accountService.email = Cookie.get('email');
+    this.accountService.password = Cookie.get('password');
+    this.accountService.username = Cookie.get('username');
   }
   
   

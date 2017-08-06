@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Headers, RequestOptions, RequestMethod, ResponseContentType }  from '@angular/http';
 import { Http, Response }           from '@angular/http';
 import { Router } from '@angular/router';
+import { Cookie } from 'ng2-cookies/ng2-cookies';
+
 @Injectable()
 /**
 * 'AccountService' stores information about the account's information.
@@ -43,9 +45,9 @@ export class AccountService {
   register(usr: String, mail: String, pwd: String, cb: Function){
     var err = false;
     let user = {
-      "username": usr,
-      "email": mail,
-      "pass": pwd
+      "username": Cookie.get('username'),
+      "email": Cookie.get('email'),
+      "pass": Cookie.get('password')
     }
     this.http.post('/insUsr', user,{
       method: RequestMethod.Post,
