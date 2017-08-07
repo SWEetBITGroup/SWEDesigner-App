@@ -1,7 +1,24 @@
-<div> 
-  <i class="glyphicon glyphicon-remove-sign close"></i>
-  <p>
-    manage-profile works!
-  </p>
+<div class="container-fluid"> 
+  <div>
+    <i class="glyphicon glyphicon-remove-sign close"></i>
+  </div>
+  <div class="col-md-4 col-xs-4 accountSetting">
+    <div class="col">
+      <h3> Gestione profilo</h3>
+      <hr/>
+      <app-edit-username></app-edit-username>
+      <hr/>
+      <app-edit-email></app-edit-email>
+      <hr/>
+      <app-edit-psw></app-edit-psw>
+      <hr/>
+      <app-erase-profile></app-erase-profile>
+      <hr/>     
+    </div>
+  </div>
+  <div class="col-md-8 col-xs-8 list">
+    <h3>Lista progetti</h3>
+    <app-proj-list></app-proj-list>
+  </div>
 </div>
 

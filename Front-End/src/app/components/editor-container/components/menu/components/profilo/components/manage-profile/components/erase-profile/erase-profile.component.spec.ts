@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EreseProfileComponent } from './erese-profile.component';
+import { EraseProfileComponent } from './erase-profile.component';
 
 describe('EreseProfileComponent', () => {
-  let component: EreseProfileComponent;
-  let fixture: ComponentFixture<EreseProfileComponent>;
+  let component: EraseProfileComponent;
+  let fixture: ComponentFixture<EraseProfileComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EreseProfileComponent ]
+      declarations: [ EraseProfileComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EreseProfileComponent);
+    fixture = TestBed.createComponent(EraseProfileComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

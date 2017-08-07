@@ -24,7 +24,7 @@ import { ForgotPswComponent } from './components/forgot-psw/forgot-psw.component
 import { ManageProfileComponent } from './components/editor-container/components/menu/components/profilo/components/manage-profile/manage-profile.component';
 import { EditPswComponent } from './components/editor-container/components/menu/components/profilo/components/manage-profile/components/edit-psw/edit-psw.component';
 import { EditEmailComponent } from './components/editor-container/components/menu/components/profilo/components/manage-profile/components/edit-email/edit-email.component';
-import { EreseProfileComponent } from './components/editor-container/components/menu/components/profilo/components/manage-profile/components/erese-profile/erese-profile.component';
+import { EraseProfileComponent } from './components/editor-container/components/menu/components/profilo/components/manage-profile/components/erase-profile/erase-profile.component';
 import { ProjListComponent } from './components/editor-container/components/menu/components/profilo/components/manage-profile/components/proj-list/proj-list.component';
 
 // Services
@@ -35,6 +35,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 // Guard
 import { AuthenticationGuard } from './guards/authentication.guard';
+import { EditUsernameComponent } from './components/editor-container/components/menu/components/profilo/components/manage-profile/components/edit-username/edit-username.component';
 
 @NgModule({
   declarations: [
@@ -58,8 +59,9 @@ import { AuthenticationGuard } from './guards/authentication.guard';
     ManageProfileComponent,
     EditPswComponent,
     EditEmailComponent,
-    EreseProfileComponent,
-    ProjListComponent
+    EraseProfileComponent,
+    ProjListComponent,
+    EditUsernameComponent
   ],
   imports: [
     BrowserModule,

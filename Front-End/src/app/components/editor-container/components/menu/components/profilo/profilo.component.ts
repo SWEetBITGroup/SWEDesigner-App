@@ -10,6 +10,7 @@ export class ProfiloComponent {
   constructor(private accountService: AccountService) {}
   
   ngAfterViewInit(){
+    // CSS Function
     /**
     * This directiove disable all the button in the top menu while the manage profile div is open
     */
@@ -27,9 +28,6 @@ export class ProfiloComponent {
       }
       else
         $('.tmp-disable').removeClass('disabled');
-    });
-    
-  }
-  
-  
+    });    
+  } 
 }

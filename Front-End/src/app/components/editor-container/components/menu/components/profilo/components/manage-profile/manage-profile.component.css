@@ -6,11 +6,27 @@
     top: 5vh;
     z-index: 9999;
     position: absolute;
-    background-color: purple;
+    background-color: #636363;
     cursor: default;
     overflow: hidden;
+    -moz-transition : height 0.5s;
+    -webkit-transition : height 0.5s;
+    -o-transition : height 0.5s;
+    transition : height 0.5s;
+    color: #FFCE2B; 
+}
+
+h3 {
+    color: #eea236;
 }
 
 .close {
     float: right;
+    color: #FFCE2B;
+    opacity: 0.65;
+    text-shadow: 0 1px 0 #636363;
+}
+
+.close:hover {
+    opacity: 1;
 }

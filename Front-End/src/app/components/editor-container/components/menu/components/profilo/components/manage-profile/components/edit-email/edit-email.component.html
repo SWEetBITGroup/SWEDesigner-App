@@ -1,3 +1,15 @@
-<p>
-  edit-email works!
-</p>
+<div class="container-fluid">
+      <form name="form"  #changeEmailForm="ngForm" (submit)="changeEmail()">
+        <div class="form-group has-warning" >
+          <div class="input-group">
+            <span class="input-group-addon">
+              <i class="glyphicon glyphicon-envelope"></i>
+            </span>  
+            <input type="email" class="form-control" placeholder="Email" required
+            ngModel email
+            [(ngModel)]="newEmail" name="email"
+            id="email" />
+          </div>
+          <input type="submit" class="btn btn-warning" value="Modifica email" [disabled]="!changeEmailForm.form.valid"/> 
+        </div></form>
+</div>
