@@ -1,5 +1,5 @@
 import { Component, AfterViewInit } from '@angular/core';
-
+import { AccountService } from '../../../../../../services/account.service';
 @Component({
   selector: 'app-profilo',
   templateUrl: './profilo.component.html',
@@ -7,7 +7,7 @@ import { Component, AfterViewInit } from '@angular/core';
 })
 export class ProfiloComponent {
   
-  constructor() {}
+  constructor(private accountService: AccountService) {}
   
   ngAfterViewInit(){
     /**
