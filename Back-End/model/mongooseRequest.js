@@ -178,6 +178,7 @@ load_proj: function(name, usr, cb){ //giusta
     } 
   });
 },
+//ACCOUNT MANAGEMENT
 /**
  * @function login
  * @description
@@ -224,6 +225,7 @@ forgot_password: function(mail, cb){
         }
     })
 },
+//AGGIORNAMENTO
 update_proj: function(projName, usr, proj, cb){
     proget.update({ 'nome_progetto': projName, 'username': usr }, { 'progetto':proj}, function(err, nuovo){
         if(err){
@@ -260,78 +262,100 @@ update_nameProj: function(projName, usr, newName, cb){
         }
     })
 },
-//DA MODIFICARE TUTTE LE FUNZIONI DI SEGUITO
-/*
-//		FUNZIONI DI AGGIORNAMENTO
-update_username: function(){
-      app.post('/aggiorna_username', function(req, res){		//Funzione che aggiorna un username dato un vecchio username utente, ritorna true se l'aggiornamento è andato a buon fine, false altrimenti (Modifica anche tutti gli username nei progetti con l'utente in questione)
-      var usern= req.body.username;
-      var nusern= req.body.new_username;
-      user.update({ 'username': usern}, { 'username': nusern}, function (err, nuovo) {
-      if (err) return handleError(err);
-      console.log(nuovo);
-      if(nuovo.n!=0){
-          proget.update({'username': usern},{ 'username': nusern},{multi: true}, function(err, controllo){
-              if(err) console.log(err);
-          });
-          res.send(true);
-          }
-      else res.send(false);
-      });
-  });
+update_username: function(username, newUsername, cb){
+    user.update({'username': username}, {'username': newUsername}, (err, nuovo)=>{
+        if(err){
+            console.log("errore nell'update dell'userneme");
+            cb(true, "");
+        }
+        else{
+            if(nuovo.n!=0){
+                this.load_allProj(username, function(err, x){
+                    if(err){
+                        console.log("problema caricamento progetti utente");
+                    }
+                    else{
+                        if(x){
+                            console.log("progetti e  username aggiornati con successo");
+                            cb(false, nuovo);
+                        }
+                        else{
+                            console.log("username aggiornato con successo");
+                            cb(false, nuovo);
+                        }
+                    }
+                })
+            }
+            else{
+                console.log("problema aggiornamento username");
+                cb(true, "");
+            }
+        }
+    })
 },
-update_pwd: function(){
-      app.post('/aggiorna_password', function(req, res){		//Funzione che aggiorna una password utente dato un username, ritorna true se l'aggiornamento è andato a buon fine, false altrimenti
-      user.update({ 'username': req.body.username}, { 'pass': req.body.new_password }, function (err, nuovo) {
-      if (err) return handleError(err);
-      console.log(nuovo);
-      if(nuovo.n!=0)res.send(true);
-      else res.send(false);
-      });
-
-});
+update_pwd: function(username, password, cb){
+    user.update({'username': username}, {'pass': password}, function(err, nuovo){
+        if(err){
+            console.log("problema aggiornamento password");
+            cb(true, "");
+        }
+        else{
+            if(nuovo.n!=0){
+                console.log("password aggiornata");
+                cb(false, nuovo);
+            }
+            else{
+                console.log("problema aggiornamento password");
+                cb(true, "");
+            }
+        }
+    })
 },
-update_mail: function(){
-      app.post('/aggiorna_email', function(req, res){			//Funzione che aggiorna un indirizzo email dato un username utente, ritorna true se l'aggiornamento è andato a buon fine, false altrimenti
-      user.update({ 'username': req.body.username}, { 'email': req.body.new_email }, function (err, nuovo) {
-      if (err) return handleError(err);
-      console.log(nuovo);
-      if(nuovo.n!=0)res.send(true);
-      else res.send(false);
-      });
-});
+update_mail: function(username, mail, cb){
+    user.update({'username': username}, {'email': mail}, function(err, nuovo){
+        if(err){
+            console.log("problema aggiornamnto mail");
+            cb(true, "");
+        }
+        else{
+            if(nuovo.n!=0){
+                console.log("mail aggiornata correttamente");
+                cb(false, nuovo);
+            }
+            else{
+                console.log("problema aggiornamnto mail");
+                cb(true, "");
+            }
+        }
+    })
 },
-//		FUNZIONI DI ELIMINAZIONE DATI
-delete_proj: function(){
-      app.post('/elimina_progetto', function(req, res){		//Funzione che elimina un progetto dato il nome del progetto e il nome dell'utente, ritorna true se l'eliminazione è andato a buon fine, false altrimenti
-      proget.findOneAndRemove({'nome_progetto': req.body.nome_progetto, 'username': req.body.username}, function(err, progetti){
-          if(err){
-              console.log(err);
-              res.send(false);
-          }
-          else{
-              console.log("Eliminazione eseguita");
-              res.send(true);
-          }
-      });
-});
+//ELIMINAZIONI
+delete_proj: function(username, projName, cb){
+    proget.findOneAndRemove({'nome_progetto': projName, 'username': username}, function(err, deleted){
+        if(err){
+            console.log("problema con l'elimnazione del progetto");
+            cb(true, "");
+        }
+        else{
+            console.log("eeliminazione del progetto avvenuta correttamente");
+            cb(false, deleted);
+        }
+    })
 },
-delete_usr: function(){
-      app.post('/elimina_utente', function(req, res){		//Funzione che elimina un utente e i suoi progetti dato un username utente, ritorna true se l'eliminazione è andato a buon fine, false altrimenti
-      user.findOneAndRemove({'username': req.body.username}, function(err, progetti){
-          proget.find({'username': req.body.username}).remove( function(err, progetti){
-          if(err){
-              console.log(err);
-              res.send(false);
-          }
-          else {
-              console.log("Eliminazione eseguita");
-              res.send("<h1><p>Eliminazione progetto riuscita! B)</p>");
-          }
-          });
-  });
-});
-},*/
+delete_usr: function(username, cb){
+    user.findOneAndRemove({'username': username}, function(err, progetti){
+        proget.find({'username': username}).remove(function(err, progetti){
+            if(err){
+                console.log("problema eliminazione utente");
+                cb(true, "");
+            }
+            else{
+                console.log("uente eliminato con successo");
+                cb(false, progetti);
+            }
+        })
+    })
+},
 /**
  * @function drop_schema
  * @description

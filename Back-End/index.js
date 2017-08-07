@@ -295,6 +295,75 @@ app.listen(port, ()=>{
           }
         })
       })
+      app.post("/updateUsername", function(req, res){
+        var username = req.body.username;
+        var newUsername = req.body.new_username;
+        mongooseRequest.update_username(username, newUsername, function(err, x){
+          if(err){
+            console.log("problema con l'aggiornamento dell'username");
+            res.send("problema con l'aggiornamento dell'username");
+          }
+          else{
+            console.log("username aggiornato");
+            res.send("nuovo username aggiornato");
+          }
+        })
+      })
+      app.post("/updatePwd", function(req, res){
+        var username = req.body.username;
+        var pwd = req.body.new_password;
+        mongooseRequest.update_pwd(username, pwd, function(err, x){
+          if(err){
+            console.log("prolema aggiornamento password");
+            res.send("prolema aggiornamento password");
+          }
+          else{
+            console.log("password aggiornata con successo");
+            res.send("password aggiornata con successo");
+          }
+        })
+      })
+      app.post("/updateMail", function(req, res){
+        var username = req.body.username;
+        var mail = req.body.new_mail;
+        mongooseRequest.update_mail(username, mail, function(err, x){
+          if(err){
+            console.log("problema aggiornamento mail");
+            res.send("problema aggiornamento mail");
+          }
+          else{
+            console.log("mail aggiornata correttamente");
+            res.send("mail aggiornata correttamente");
+          }
+        })
+      })
+      app.post("/deleteUsr", function(req, res){
+        var username = req.body.username;
+        mongooseRequest.delete_usr(username, function(err, x){
+          if(err){
+            console.log("utente non eliminato");
+            res.send("utente non eliminato");
+          }
+          else{
+            console.log("utente eliminato");
+            res.send("utente eliminato");
+          }
+        })
+      })
+      app.post("/deleteProj", function(req, res){
+        var username = req.body.username;
+        var name = req.body.nome_progetto;
+        mongooseRequest.delete_proj(username, name, function(err, x){
+          if(err){
+            console.log("progetto non eliminato");
+            res.send("progetto non eliminato");
+          }
+          else{
+            console.log("progetto eliminato");
+            res.send("progetto eliminato");
+          }
+        })
+      })
     //Projects' Query
     app.post("/insProject", function(req, res){
       var name = req.body.nome_progetto;
@@ -338,7 +407,6 @@ app.listen(port, ()=>{
         }
       })
     })
-    //DA TESTARE
     app.post("/updateProj", function(req, res){
       var name = req.body.nome_progetto;
       var usr = req.body.username;
