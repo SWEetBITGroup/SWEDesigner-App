@@ -1,6 +1,11 @@
-<div class="container-fluid"> 
-  <div>
+<div class="container-fluid">
+  <div class="container-fluid">
+    <div class="logout">
+      <button type="button" class="btn btn-warning" (click)=accountService.logout()>Logout</button>
+    </div>
+    <div class="icon">
     <i class="glyphicon glyphicon-remove-sign close"></i>
+    </div>
   </div>
   <div class="col-md-4 col-xs-4 accountSetting">
     <div class="col">
@@ -13,7 +18,7 @@
       <app-edit-psw></app-edit-psw>
       <hr/>
       <app-erase-profile></app-erase-profile>
-      <hr/>     
+      <hr/>
     </div>
   </div>
   <div class="col-md-8 col-xs-8 list">

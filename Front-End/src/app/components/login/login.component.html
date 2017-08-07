@@ -1,12 +1,12 @@
  <div class="container col-xs-6 col-md-4">
   <div class="sub-container">
     <!-- Logo -->
-    <div class="row" >      
+    <div class="row" >
       <img src="assets/images/logo.png" alt="logo" class="col-xs-6" />
       <span id="content" class="text hide"> SWEDesigner </span>
-    </div> 
+    </div>
     <!-- Form -->
-    <div class="box">  
+    <div class="box">
       <h2 class="text-warning">Login</h2>
       <form name="form"  #loginForm="ngForm" (submit)="loginUser($event)">
         <div class="form-group has-warning" >
@@ -14,7 +14,7 @@
           <div class="input-group">
             <span class="input-group-addon">
               <i class="glyphicon glyphicon-envelope"></i>
-            </span>  
+            </span>
             <input type="email" class="form-control" placeholder="Email" required
             ngModel email
             [(ngModel)]="accountService.email" name="email"
@@ -26,18 +26,18 @@
           <div class="input-group">
             <span class="input-group-addon">
               <i class="glyphicon glyphicon-lock"></i>
-            </span> 
+            </span>
             <input type="password" class="form-control" name="password" required placeholder="Password"
             [(ngModel)]="accountService.password"
             id="password"/>
           </div>
         </div>
         <div class="form-group">
-          <input type="submit" class="btn btn-warning" value="Login" [disabled]="!loginForm.form.valid"/> 
+          <input type="submit" class="btn btn-warning" value="Login" [disabled]="!loginForm.form.valid"/>
           <a class="btn btn-link text-warning .warning	" (click)='accountService.redirectComponent("registrazione")'>Registrati</a>
           <a class="btn btn-link text-warning" (click)='accountService.redirectComponent("passwordDimenticata")'>Password dimenticata</a>
         </div>
       </form>
-    </div>    
+    </div>
   </div>
-</div> 
+</div>

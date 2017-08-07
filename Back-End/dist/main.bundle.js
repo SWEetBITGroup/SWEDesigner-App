@@ -7,16 +7,14 @@ webpackJsonp([0,5],[
 /* 5 */,
 /* 6 */,
 /* 7 */,
-/* 8 */,
-/* 9 */,
-/* 10 */
+/* 8 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(26);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng2_cookies_ng2_cookies__ = __webpack_require__(304);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng2_cookies_ng2_cookies__ = __webpack_require__(108);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng2_cookies_ng2_cookies___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_ng2_cookies_ng2_cookies__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AccountService; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -56,9 +54,9 @@ var AccountService = (function () {
         var _this = this;
         var err = false;
         var user = {
-            "username": __WEBPACK_IMPORTED_MODULE_3_ng2_cookies_ng2_cookies__["Cookie"].get('username'),
-            "email": __WEBPACK_IMPORTED_MODULE_3_ng2_cookies_ng2_cookies__["Cookie"].get('email'),
-            "pass": __WEBPACK_IMPORTED_MODULE_3_ng2_cookies_ng2_cookies__["Cookie"].get('password')
+            "username": usr,
+            "email": mail,
+            "pass": pwd
         };
         this.http.post('/insUsr', user, {
             method: __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* RequestMethod */].Post,
@@ -114,6 +112,7 @@ var AccountService = (function () {
                 console.log(response);
                 _this.setUserLoggedIn();
                 _this.setUsername(response.username);
+                _this.makeCokie();
                 cb(err);
             }
             else {
@@ -157,12 +156,39 @@ var AccountService = (function () {
     * @param destination is the route destination component
     */
     AccountService.prototype.redirectComponent = function (destination) {
-        // location.reload();
         this.router.navigate(['/' + destination]);
     };
     AccountService.prototype.setUsername = function (usr) {
         console.log(usr);
         this.username = usr;
+    };
+    /**
+     * This function make 3 cookie with the 3 user's information
+     */
+    AccountService.prototype.makeCokie = function () {
+        __WEBPACK_IMPORTED_MODULE_3_ng2_cookies_ng2_cookies__["Cookie"].set('email', this.email);
+        __WEBPACK_IMPORTED_MODULE_3_ng2_cookies_ng2_cookies__["Cookie"].set('password', this.password);
+        __WEBPACK_IMPORTED_MODULE_3_ng2_cookies_ng2_cookies__["Cookie"].set('username', this.username);
+    };
+    /**
+     * This function set the 'AccountService' variables by the input information
+     * @param {string} user used to set the username
+     * @param {string} mail used to set the email
+     * @param {string} pwd  used to set the password
+     * @memberof AccountService
+     */
+    AccountService.prototype.setParam = function (user, mail, pwd) {
+        this.email = mail;
+        this.password = pwd;
+        this.username = user;
+    };
+    /**
+     * This funcion delete all cookie and make the user logout
+     */
+    AccountService.prototype.logout = function () {
+        __WEBPACK_IMPORTED_MODULE_3_ng2_cookies_ng2_cookies__["Cookie"].deleteAll();
+        this.isUserLoggedIn = false;
+        this.redirectComponent('home');
     };
     return AccountService;
 }());
@@ -180,6 +206,8 @@ var _a, _b;
 //# sourceMappingURL=account.service.js.map
 
 /***/ }),
+/* 9 */,
+/* 10 */,
 /* 11 */,
 /* 12 */,
 /* 13 */,
@@ -190,7 +218,7 @@ var _a, _b;
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__models_global__ = __webpack_require__(167);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__models_global__ = __webpack_require__(168);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_editor_container_components_editor_models_metodo__ = __webpack_require__(81);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MainEditorService; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -432,7 +460,7 @@ MainEditorService = __decorate([
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__attributo__ = __webpack_require__(148);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__attributo__ = __webpack_require__(149);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Classe; });
 
 /**
@@ -771,11 +799,11 @@ var Shape = (function () {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_main_editor_service__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__models_if_node__ = __webpack_require__(151);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_end_if_node__ = __webpack_require__(149);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__models_operation__ = __webpack_require__(152);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__models_start__ = __webpack_require__(153);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_end__ = __webpack_require__(150);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__models_if_node__ = __webpack_require__(152);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_end_if_node__ = __webpack_require__(150);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__models_operation__ = __webpack_require__(153);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__models_start__ = __webpack_require__(154);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_end__ = __webpack_require__(151);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ActivityService; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -939,7 +967,7 @@ var _a;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_catch__ = __webpack_require__(340);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_catch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_catch__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_file_saver__ = __webpack_require__(291);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_file_saver__ = __webpack_require__(292);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_file_saver___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_file_saver__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__main_editor_service__ = __webpack_require__(16);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MenuService; });
@@ -1551,7 +1579,7 @@ ClassMenuComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
         selector: 'class-menu',
         template: __webpack_require__(316),
-        styles: [__webpack_require__(255)]
+        styles: [__webpack_require__(256)]
     })
     /**
      * Interacts with the HTML template and provides methods to interact with the classes present
@@ -1667,7 +1695,7 @@ var Interface = (function (_super) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__all_shape__ = __webpack_require__(147);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__all_shape__ = __webpack_require__(148);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_jointjs__ = __webpack_require__(67);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_jointjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_jointjs__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Metodo; });
@@ -1852,7 +1880,7 @@ ClassMenuService = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_menu_service__ = __webpack_require__(38);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_main_editor_service__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_editor_services_activity_service__ = __webpack_require__(31);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_account_service__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_account_service__ = __webpack_require__(8);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EditorContainerComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1882,7 +1910,7 @@ EditorContainerComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
         selector: 'app-editor-container',
         template: __webpack_require__(332),
-        styles: [__webpack_require__(271)],
+        styles: [__webpack_require__(272)],
         providers: [__WEBPACK_IMPORTED_MODULE_1__services_menu_service__["a" /* MenuService */], __WEBPACK_IMPORTED_MODULE_2__services_main_editor_service__["a" /* MainEditorService */], __WEBPACK_IMPORTED_MODULE_3__components_editor_services_activity_service__["a" /* ActivityService */]]
     }),
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_menu_service__["a" /* MenuService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_menu_service__["a" /* MenuService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_4__services_account_service__["a" /* AccountService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__services_account_service__["a" /* AccountService */]) === "function" && _b || Object])
@@ -1897,7 +1925,7 @@ var _a, _b;
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_account_service__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_account_service__ = __webpack_require__(8);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ForgotPswComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1941,7 +1969,7 @@ ForgotPswComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
         selector: 'app-forgot-psw',
         template: __webpack_require__(333),
-        styles: [__webpack_require__(272)]
+        styles: [__webpack_require__(273)]
     })
     /**
     * 'ForgotPswComponent' allow to the user to authenticate to the editor by the passowrd's reset
@@ -1961,7 +1989,9 @@ var _a;
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_account_service__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_account_service__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng2_cookies_ng2_cookies__ = __webpack_require__(108);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng2_cookies_ng2_cookies___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_ng2_cookies_ng2_cookies__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoginComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1975,12 +2005,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var LoginComponent = (function () {
-    /**
-    * Create an instantiation of LoginComponent
-    * @param router used to create a new instantiation of Router
-    * @param accountService used to create a new instantiation of AccountService
-    */
     function LoginComponent(router, accountService) {
         this.router = router;
         this.accountService = accountService;
@@ -1991,6 +2017,14 @@ var LoginComponent = (function () {
         this.accountService.password = Cookie.get('password');
         this.accountService.username = Cookie.get('username');*/
     }
+    LoginComponent.prototype.ngOnInit = function () {
+        this.cookieUser = __WEBPACK_IMPORTED_MODULE_3_ng2_cookies_ng2_cookies__["Cookie"].get('username');
+        if (this.cookieUser) {
+            this.accountService.setParam(__WEBPACK_IMPORTED_MODULE_3_ng2_cookies_ng2_cookies__["Cookie"].get('username'), __WEBPACK_IMPORTED_MODULE_3_ng2_cookies_ng2_cookies__["Cookie"].get('email'), __WEBPACK_IMPORTED_MODULE_3_ng2_cookies_ng2_cookies__["Cookie"].get('password'));
+            this.accountService.setUserLoggedIn();
+            this.router.navigate(['/editor']);
+        }
+    };
     // e solo una funzione che logga sempre
     LoginComponent.prototype.loginUserProva = function () {
         this.accountService.setUserLoggedIn();
@@ -2046,7 +2080,7 @@ LoginComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
         selector: 'app-login',
         template: __webpack_require__(334),
-        styles: [__webpack_require__(273)]
+        styles: [__webpack_require__(274)]
     })
     /**
     * 'LoginComponent' allow the authentication to the user
@@ -2065,7 +2099,7 @@ var _a, _b;
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_account_service__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_account_service__ = __webpack_require__(8);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RegistrationComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -2100,6 +2134,7 @@ var RegistrationComponent = (function () {
         this.accountService.password = e.target.elements[2].value;
         this.accountService.register(this.accountService.username, this.accountService.email, this.accountService.password, function (err) {
             if (!err) {
+                _this.accountService.makeCokie();
                 alert("Registrazione effettuata con successo!");
                 console.log("noerr");
                 _this.router.navigate(['/editor']);
@@ -2124,7 +2159,7 @@ RegistrationComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
         selector: 'app-registration',
         template: __webpack_require__(335),
-        styles: [__webpack_require__(274)]
+        styles: [__webpack_require__(275)]
     })
     /**
     * 'RegistrationComponent' allow to create a new user
@@ -2142,7 +2177,7 @@ var _a, _b;
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_account_service__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_account_service__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__(28);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AuthenticationGuard; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -2234,7 +2269,8 @@ var _a, _b;
 /* 119 */,
 /* 120 */,
 /* 121 */,
-/* 122 */
+/* 122 */,
+/* 123 */
 /***/ (function(module, exports) {
 
 function webpackEmptyContext(req) {
@@ -2243,19 +2279,19 @@ function webpackEmptyContext(req) {
 webpackEmptyContext.keys = function() { return []; };
 webpackEmptyContext.resolve = webpackEmptyContext;
 module.exports = webpackEmptyContext;
-webpackEmptyContext.id = 122;
+webpackEmptyContext.id = 123;
 
 
 /***/ }),
-/* 123 */
+/* 124 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dynamic__ = __webpack_require__(139);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_module__ = __webpack_require__(142);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__environments_environment__ = __webpack_require__(168);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dynamic__ = __webpack_require__(140);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_module__ = __webpack_require__(143);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__environments_environment__ = __webpack_require__(169);
 
 
 
@@ -2267,7 +2303,6 @@ __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dyna
 //# sourceMappingURL=main.js.map
 
 /***/ }),
-/* 124 */,
 /* 125 */,
 /* 126 */,
 /* 127 */,
@@ -2283,7 +2318,8 @@ __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dyna
 /* 137 */,
 /* 138 */,
 /* 139 */,
-/* 140 */
+/* 140 */,
+/* 141 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2332,7 +2368,7 @@ AppRoutingModule = __decorate([
 //# sourceMappingURL=app-routing.module.js.map
 
 /***/ }),
-/* 141 */
+/* 142 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2354,47 +2390,47 @@ AppComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
         selector: 'app-root',
         template: __webpack_require__(313),
-        styles: [__webpack_require__(252)]
+        styles: [__webpack_require__(253)]
     })
 ], AppComponent);
 
 //# sourceMappingURL=app.component.js.map
 
 /***/ }),
-/* 142 */
+/* 143 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(138);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(139);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_http__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_component__ = __webpack_require__(141);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_editor_container_components_menu_menu_component__ = __webpack_require__(166);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_editor_container_components_menu_components_file_file_component__ = __webpack_require__(154);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_editor_container_components_menu_components_profilo_profilo_component__ = __webpack_require__(163);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_editor_container_components_menu_components_progetto_progetto_component__ = __webpack_require__(164);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_editor_container_components_menu_components_modifica_modifica_component__ = __webpack_require__(156);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_editor_container_components_menu_components_template_template_component__ = __webpack_require__(165);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_editor_container_components_menu_components_layer_layer_component__ = __webpack_require__(155);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_editor_container_components_editor_components_toolbar_toolbar_component__ = __webpack_require__(145);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_editor_container_components_editor_editor_component__ = __webpack_require__(146);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_editor_container_components_activity_frame_activity_frame_component__ = __webpack_require__(143);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_component__ = __webpack_require__(142);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_editor_container_components_menu_menu_component__ = __webpack_require__(167);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_editor_container_components_menu_components_file_file_component__ = __webpack_require__(155);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_editor_container_components_menu_components_profilo_profilo_component__ = __webpack_require__(164);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_editor_container_components_menu_components_progetto_progetto_component__ = __webpack_require__(165);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_editor_container_components_menu_components_modifica_modifica_component__ = __webpack_require__(157);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_editor_container_components_menu_components_template_template_component__ = __webpack_require__(166);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_editor_container_components_menu_components_layer_layer_component__ = __webpack_require__(156);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_editor_container_components_editor_components_toolbar_toolbar_component__ = __webpack_require__(146);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_editor_container_components_editor_editor_component__ = __webpack_require__(147);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_editor_container_components_activity_frame_activity_frame_component__ = __webpack_require__(144);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_editor_container_components_editor_components_class_menu_class_menu_component__ = __webpack_require__(78);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_editor_container_components_editor_components_activity_menu_activity_menu_component__ = __webpack_require__(144);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_editor_container_components_editor_components_activity_menu_activity_menu_component__ = __webpack_require__(145);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__components_login_login_component__ = __webpack_require__(85);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__components_registration_registration_component__ = __webpack_require__(86);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__components_editor_container_editor_container_component__ = __webpack_require__(83);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__components_forgot_psw_forgot_psw_component__ = __webpack_require__(84);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__components_editor_container_components_menu_components_profilo_components_manage_profile_manage_profile_component__ = __webpack_require__(162);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__components_editor_container_components_menu_components_profilo_components_manage_profile_components_edit_psw_edit_psw_component__ = __webpack_require__(158);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__components_editor_container_components_menu_components_profilo_components_manage_profile_components_edit_email_edit_email_component__ = __webpack_require__(157);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__components_editor_container_components_menu_components_profilo_components_manage_profile_components_erase_profile_erase_profile_component__ = __webpack_require__(160);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__components_editor_container_components_menu_components_profilo_components_manage_profile_components_proj_list_proj_list_component__ = __webpack_require__(161);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__services_account_service__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__app_routing_module__ = __webpack_require__(140);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__components_editor_container_components_menu_components_profilo_components_manage_profile_manage_profile_component__ = __webpack_require__(163);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__components_editor_container_components_menu_components_profilo_components_manage_profile_components_edit_psw_edit_psw_component__ = __webpack_require__(159);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__components_editor_container_components_menu_components_profilo_components_manage_profile_components_edit_email_edit_email_component__ = __webpack_require__(158);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__components_editor_container_components_menu_components_profilo_components_manage_profile_components_erase_profile_erase_profile_component__ = __webpack_require__(161);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__components_editor_container_components_menu_components_profilo_components_manage_profile_components_proj_list_proj_list_component__ = __webpack_require__(162);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__services_account_service__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__app_routing_module__ = __webpack_require__(141);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__guards_authentication_guard__ = __webpack_require__(87);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__components_editor_container_components_menu_components_profilo_components_manage_profile_components_edit_username_edit_username_component__ = __webpack_require__(159);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__components_editor_container_components_menu_components_profilo_components_manage_profile_components_edit_username_edit_username_component__ = __webpack_require__(160);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -2482,7 +2518,7 @@ AppModule = __decorate([
 //# sourceMappingURL=app.module.js.map
 
 /***/ }),
-/* 143 */
+/* 144 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2509,7 +2545,7 @@ ActivityFrameComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
         selector: 'app-activity-frame',
         template: __webpack_require__(314),
-        styles: [__webpack_require__(253)]
+        styles: [__webpack_require__(254)]
     }),
     __metadata("design:paramtypes", [])
 ], ActivityFrameComponent);
@@ -2517,7 +2553,7 @@ ActivityFrameComponent = __decorate([
 //# sourceMappingURL=activity-frame.component.js.map
 
 /***/ }),
-/* 144 */
+/* 145 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2569,7 +2605,7 @@ ActivityMenuComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
         selector: 'activity-menu',
         template: __webpack_require__(315),
-        styles: [__webpack_require__(254)]
+        styles: [__webpack_require__(255)]
     }),
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_main_editor_service__["a" /* MainEditorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_main_editor_service__["a" /* MainEditorService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__services_activity_service__["a" /* ActivityService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_activity_service__["a" /* ActivityService */]) === "function" && _b || Object])
 ], ActivityMenuComponent);
@@ -2578,7 +2614,7 @@ var _a, _b;
 //# sourceMappingURL=activity-menu.component.js.map
 
 /***/ }),
-/* 145 */
+/* 146 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2936,7 +2972,7 @@ ToolbarComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
         selector: 'app-toolbar',
         template: __webpack_require__(317),
-        styles: [__webpack_require__(256)]
+        styles: [__webpack_require__(257)]
     })
     /**
      * it rappresent the model that contain the shapesthat will be draw into the editor
@@ -2952,7 +2988,7 @@ var _a, _b;
 //# sourceMappingURL=toolbar.component.js.map
 
 /***/ }),
-/* 146 */
+/* 147 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3298,7 +3334,7 @@ EditorComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
         selector: 'app-editor',
         template: __webpack_require__(318),
-        styles: [__webpack_require__(257)],
+        styles: [__webpack_require__(258)],
         // host: {
         //   '(window:resize)': 'onResize($event)'
         // }
@@ -3315,7 +3351,7 @@ var _a, _b, _c, _d, _e;
 //# sourceMappingURL=editor.component.js.map
 
 /***/ }),
-/* 147 */
+/* 148 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3365,7 +3401,7 @@ var allShape = (function () {
 //# sourceMappingURL=all-shape.js.map
 
 /***/ }),
-/* 148 */
+/* 149 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3420,7 +3456,7 @@ var Attributo = (function (_super) {
 //# sourceMappingURL=attributo.js.map
 
 /***/ }),
-/* 149 */
+/* 150 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3459,7 +3495,7 @@ var endIfNode = (function (_super) {
 //# sourceMappingURL=end-if-node.js.map
 
 /***/ }),
-/* 150 */
+/* 151 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3496,7 +3532,7 @@ var End = (function (_super) {
 //# sourceMappingURL=end.js.map
 
 /***/ }),
-/* 151 */
+/* 152 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3556,7 +3592,7 @@ var ifNode = (function (_super) {
 //# sourceMappingURL=if-node.js.map
 
 /***/ }),
-/* 152 */
+/* 153 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3596,7 +3632,7 @@ var operation = (function (_super) {
 //# sourceMappingURL=operation.js.map
 
 /***/ }),
-/* 153 */
+/* 154 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3631,7 +3667,7 @@ var Start = (function (_super) {
 //# sourceMappingURL=start.js.map
 
 /***/ }),
-/* 154 */
+/* 155 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3674,7 +3710,7 @@ FileComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
         selector: 'app-file',
         template: __webpack_require__(319),
-        styles: [__webpack_require__(258)]
+        styles: [__webpack_require__(259)]
     }),
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_menu_service__["a" /* MenuService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_menu_service__["a" /* MenuService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__services_main_editor_service__["a" /* MainEditorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_main_editor_service__["a" /* MainEditorService */]) === "function" && _b || Object])
 ], FileComponent);
@@ -3683,7 +3719,7 @@ var _a, _b;
 //# sourceMappingURL=file.component.js.map
 
 /***/ }),
-/* 155 */
+/* 156 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3710,7 +3746,7 @@ LayerComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
         selector: 'app-layer',
         template: __webpack_require__(320),
-        styles: [__webpack_require__(259)]
+        styles: [__webpack_require__(260)]
     }),
     __metadata("design:paramtypes", [])
 ], LayerComponent);
@@ -3718,7 +3754,7 @@ LayerComponent = __decorate([
 //# sourceMappingURL=layer.component.js.map
 
 /***/ }),
-/* 156 */
+/* 157 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3778,7 +3814,7 @@ ModificaComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
         selector: 'app-modifica',
         template: __webpack_require__(321),
-        styles: [__webpack_require__(260)]
+        styles: [__webpack_require__(261)]
     }),
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_menu_service__["a" /* MenuService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_menu_service__["a" /* MenuService */]) === "function" && _a || Object])
 ], ModificaComponent);
@@ -3787,12 +3823,12 @@ var _a;
 //# sourceMappingURL=modifica.component.js.map
 
 /***/ }),
-/* 157 */
+/* 158 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_account_service__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_account_service__ = __webpack_require__(8);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EditEmailComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -3834,7 +3870,7 @@ EditEmailComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
         selector: 'app-edit-email',
         template: __webpack_require__(322),
-        styles: [__webpack_require__(261)]
+        styles: [__webpack_require__(262)]
     }),
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_account_service__["a" /* AccountService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_account_service__["a" /* AccountService */]) === "function" && _a || Object])
 ], EditEmailComponent);
@@ -3843,12 +3879,12 @@ var _a;
 //# sourceMappingURL=edit-email.component.js.map
 
 /***/ }),
-/* 158 */
+/* 159 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_account_service__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_account_service__ = __webpack_require__(8);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EditPswComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -3887,7 +3923,7 @@ EditPswComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
         selector: 'app-edit-psw',
         template: __webpack_require__(323),
-        styles: [__webpack_require__(262)]
+        styles: [__webpack_require__(263)]
     }),
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_account_service__["a" /* AccountService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_account_service__["a" /* AccountService */]) === "function" && _a || Object])
 ], EditPswComponent);
@@ -3896,12 +3932,12 @@ var _a;
 //# sourceMappingURL=edit-psw.component.js.map
 
 /***/ }),
-/* 159 */
+/* 160 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_account_service__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_account_service__ = __webpack_require__(8);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EditUsernameComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -3940,7 +3976,7 @@ EditUsernameComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
         selector: 'app-edit-username',
         template: __webpack_require__(324),
-        styles: [__webpack_require__(263)]
+        styles: [__webpack_require__(264)]
     })
     /**
     * Allow the username's upgrade
@@ -3953,7 +3989,7 @@ var _a;
 //# sourceMappingURL=edit-username.component.js.map
 
 /***/ }),
-/* 160 */
+/* 161 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3984,7 +4020,7 @@ EraseProfileComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
         selector: 'app-erase-profile',
         template: __webpack_require__(325),
-        styles: [__webpack_require__(264)]
+        styles: [__webpack_require__(265)]
     }),
     __metadata("design:paramtypes", [])
 ], EraseProfileComponent);
@@ -3992,7 +4028,7 @@ EraseProfileComponent = __decorate([
 //# sourceMappingURL=erase-profile.component.js.map
 
 /***/ }),
-/* 161 */
+/* 162 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4019,7 +4055,7 @@ ProjListComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
         selector: 'app-proj-list',
         template: __webpack_require__(326),
-        styles: [__webpack_require__(265)]
+        styles: [__webpack_require__(266)]
     }),
     __metadata("design:paramtypes", [])
 ], ProjListComponent);
@@ -4027,11 +4063,12 @@ ProjListComponent = __decorate([
 //# sourceMappingURL=proj-list.component.js.map
 
 /***/ }),
-/* 162 */
+/* 163 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_account_service__ = __webpack_require__(8);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ManageProfileComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -4043,8 +4080,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+// Services
+
 var ManageProfileComponent = (function () {
-    function ManageProfileComponent() {
+    function ManageProfileComponent(accountService) {
+        this.accountService = accountService;
     }
     ManageProfileComponent.prototype.ngAfterViewInit = function () {
         /**
@@ -4061,20 +4101,21 @@ ManageProfileComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
         selector: 'app-manage-profile',
         template: __webpack_require__(327),
-        styles: [__webpack_require__(266)]
+        styles: [__webpack_require__(267)]
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_account_service__["a" /* AccountService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_account_service__["a" /* AccountService */]) === "function" && _a || Object])
 ], ManageProfileComponent);
 
+var _a;
 //# sourceMappingURL=manage-profile.component.js.map
 
 /***/ }),
-/* 163 */
+/* 164 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_account_service__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_account_service__ = __webpack_require__(8);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ProfiloComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -4118,7 +4159,7 @@ ProfiloComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
         selector: 'app-profilo',
         template: __webpack_require__(328),
-        styles: [__webpack_require__(267)]
+        styles: [__webpack_require__(268)]
     }),
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_account_service__["a" /* AccountService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_account_service__["a" /* AccountService */]) === "function" && _a || Object])
 ], ProfiloComponent);
@@ -4127,7 +4168,7 @@ var _a;
 //# sourceMappingURL=profilo.component.js.map
 
 /***/ }),
-/* 164 */
+/* 165 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4154,7 +4195,7 @@ ProgettoComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
         selector: 'app-progetto',
         template: __webpack_require__(329),
-        styles: [__webpack_require__(268)]
+        styles: [__webpack_require__(269)]
     }),
     __metadata("design:paramtypes", [])
 ], ProgettoComponent);
@@ -4162,7 +4203,7 @@ ProgettoComponent = __decorate([
 //# sourceMappingURL=progetto.component.js.map
 
 /***/ }),
-/* 165 */
+/* 166 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4189,7 +4230,7 @@ TemplateComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
         selector: 'app-template',
         template: __webpack_require__(330),
-        styles: [__webpack_require__(269)]
+        styles: [__webpack_require__(270)]
     }),
     __metadata("design:paramtypes", [])
 ], TemplateComponent);
@@ -4197,12 +4238,12 @@ TemplateComponent = __decorate([
 //# sourceMappingURL=template.component.js.map
 
 /***/ }),
-/* 166 */
+/* 167 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_account_service__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_account_service__ = __webpack_require__(8);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MenuComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -4231,7 +4272,7 @@ MenuComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
         selector: 'app-menu',
         template: __webpack_require__(331),
-        styles: [__webpack_require__(270)]
+        styles: [__webpack_require__(271)]
     }),
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_account_service__["a" /* AccountService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_account_service__["a" /* AccountService */]) === "function" && _a || Object])
 ], MenuComponent);
@@ -4240,7 +4281,7 @@ var _a;
 //# sourceMappingURL=menu.component.js.map
 
 /***/ }),
-/* 167 */
+/* 168 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4376,7 +4417,7 @@ var Global = (function () {
 //# sourceMappingURL=global.js.map
 
 /***/ }),
-/* 168 */
+/* 169 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4392,7 +4433,6 @@ var environment = {
 //# sourceMappingURL=environment.js.map
 
 /***/ }),
-/* 169 */,
 /* 170 */,
 /* 171 */,
 /* 172 */,
@@ -4475,23 +4515,7 @@ var environment = {
 /* 249 */,
 /* 250 */,
 /* 251 */,
-/* 252 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(1)(false);
-// imports
-
-
-// module
-exports.push([module.i, "", ""]);
-
-// exports
-
-
-/*** EXPORTS FROM exports-loader ***/
-module.exports = module.exports.toString();
-
-/***/ }),
+/* 252 */,
 /* 253 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -4517,7 +4541,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, ".menu {\r\n  background-color: #E0E0E0;\r\n   /*#EAEAF1;*/\r\n  border-left: 1px solid black;\r\n  border-bottom: 1px solid black;\r\n  font-weight: bold;\r\n  font-size: 14px;\r\n  text-align: center;\r\n  border-top: none;\r\n}\r\n\r\n", ""]);
+exports.push([module.i, "", ""]);
 
 // exports
 
@@ -4534,7 +4558,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, ".menu {\r\n  background-color: #E0E0E0;\r\n   /*#EAEAF1;*/\r\n  border-left: 1px solid black;\r\n  border-bottom: 1px solid black;\r\n  font-weight: bold;\r\n  font-size: 14px;\r\n  text-align: center;\r\n  border-top: none;\r\n}\r\n\r\n.row {\r\n  padding: 3% 0;\r\n  border-top: 1px solid black;\r\n}\r\n.selezionato {\r\n  /*font-size: 16px;*/\r\n  border-top: none;\r\n}\r\n\r\n.campiAttributo {\r\n  padding-bottom: 3%;\r\n}\r\n\r\n.iconaMirrow {\r\n  -webkit-transform: scale(-1, 1);\r\n  transform: scale(-1, 1);\r\n}\r\n\r\n.aggiungiAttributo {\r\n  display: block;\r\n}\r\n\r\n#listaAttr {\r\n  padding-bottom: 2%;\r\n  border-bottom: 1px solid black;\r\n  border-top: none;\r\n}\r\n\r\n.listaAttributi {\r\n  position: absolute;\r\n  background-color: #EAEAF1;\r\n  top: 0;\r\n  left: -100%;\r\n  z-index: 10;\r\n  max-width: 100%;\r\n  border-left: 1px solid black;\r\n}\r\n\r\n.listaAttributi ul {\r\n  margin-bottom: 0;\r\n}\r\n\r\n#listaMet {\r\n  /*padding-bottom: 2%;*/\r\n  border-bottom: 1px solid black;\r\n  border-top: none;\r\n}\r\n\r\n/*velocità di animazione del menù della lista attributi*/\r\n.collapsing {\r\n    transition: height 0.1s;\r\n}\r\n\r\n.tipiMetodo {\r\n  vertical-align: -webkit-baseline-middle;\r\n}\r\n\r\n#tabellaParametri {\r\n  max-height:200px;\r\n  overflow:auto;\r\n}\r\n", ""]);
+exports.push([module.i, ".menu {\n  background-color: #E0E0E0;\n   /*#EAEAF1;*/\n  border-left: 1px solid black;\n  border-bottom: 1px solid black;\n  font-weight: bold;\n  font-size: 14px;\n  text-align: center;\n  border-top: none;\n}\n\n", ""]);
 
 // exports
 
@@ -4551,7 +4575,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, ".toolbar {\r\n  height: 100%;\r\n  background-color: #F1EDEA;\r\n  overflow: hidden;\r\n}\r\n\r\n.classi {\r\n  /*display: none;*/\r\n}\r\n\r\n.tipo {\r\n  text-align: center;\r\n  font-weight: bold;\r\n  vertical-align: middle;\r\n}\r\n\r\n.icona {\r\n  margin:0 auto;\r\n  display: block;\r\n  height: 40px;\r\n  width: 40px;\r\n}\r\n\r\n.add {\r\n  cursor: pointer;\r\n  height: 40px;\r\n  width: 40px;\r\n  outline:none;\r\n  vertical-align: middle;\r\n  padding: 0;\r\n\r\n}\r\n\r\n.add:hover {\r\n  opacity: 0.4;\r\n}\r\n\r\n.addClasse {\r\n    background: url(" + __webpack_require__(285) + ") no-repeat top left;\r\n    background-size: contain;\r\n\r\n}\r\n\r\n.addInterfaccia {\r\n    background: url(" + __webpack_require__(287) + ") no-repeat top left;\r\n    background-size: contain;\r\n}\r\n\r\n.addAstratta {\r\n    background: url(" + __webpack_require__(284) + ") no-repeat top left;\r\n    background-size: contain;\r\n}\r\n\r\n.addCommento {\r\n    background: url(" + __webpack_require__(286) + ") no-repeat top left;\r\n    background-size: contain;\r\n}\r\n\r\n.addAssociazione {\r\n    background: url(" + __webpack_require__(288) + ") no-repeat top left;\r\n    background-size: contain;\r\n}\r\n\r\n.addGeneralizzazione {\r\n    background: url(" + __webpack_require__(289) + ") no-repeat top left;\r\n    background-size: contain;\r\n}\r\n\r\n.addImplementazione {\r\n    background: url(" + __webpack_require__(290) + ") no-repeat top left;\r\n    background-size: contain;\r\n}\r\n\r\n.addStart {\r\n  background: url(" + __webpack_require__(276) + ") no-repeat top left;\r\n  background-size:100%;\r\n}\r\n\r\n.addEnd {\r\n  background: url(" + __webpack_require__(277) + ") no-repeat;\r\n  background-size:100%;\r\n}\r\n\r\n.addAttivita {\r\n  background: url(" + __webpack_require__(279) + ") no-repeat top left;\r\n  background-size:100%;\r\n}\r\n\r\n.addAttivitaFor {\r\n  background: url(" + __webpack_require__(281) + ") no-repeat top left;\r\n  background-size:100%;\r\n}\r\n\r\n.addConnettore {\r\n  background: url(" + __webpack_require__(278) + ") no-repeat;\r\n  background-size:100%;\r\n}\r\n\r\n.addDecision {\r\n  background: url(" + __webpack_require__(282) + ") no-repeat;\r\n  background-size:100%;\r\n}\r\n\r\n.addEndDecision {\r\n  background: url(" + __webpack_require__(283) + ") no-repeat;\r\n  background-size:100%;\r\n}\r\n\r\n.addRettangoloAngolo {\r\n  background: url(" + __webpack_require__(280) + ") no-repeat;\r\n  background-size:100%;\r\n}\r\n\r\n/*Blocco di icone inizialmente settato a false*/\r\n.activity {\r\n  /*display: none;*/\r\n}\r\n\r\n.freccia:focus {\r\n  border: 2px red solid;\r\n  opacity: 0.5;\r\n}", ""]);
+exports.push([module.i, ".menu {\n  background-color: #E0E0E0;\n   /*#EAEAF1;*/\n  border-left: 1px solid black;\n  border-bottom: 1px solid black;\n  font-weight: bold;\n  font-size: 14px;\n  text-align: center;\n  border-top: none;\n}\n\n.row {\n  padding: 3% 0;\n  border-top: 1px solid black;\n}\n.selezionato {\n  /*font-size: 16px;*/\n  border-top: none;\n}\n\n.campiAttributo {\n  padding-bottom: 3%;\n}\n\n.iconaMirrow {\n  -webkit-transform: scale(-1, 1);\n  transform: scale(-1, 1);\n}\n\n.aggiungiAttributo {\n  display: block;\n}\n\n#listaAttr {\n  padding-bottom: 2%;\n  border-bottom: 1px solid black;\n  border-top: none;\n}\n\n.listaAttributi {\n  position: absolute;\n  background-color: #EAEAF1;\n  top: 0;\n  left: -100%;\n  z-index: 10;\n  max-width: 100%;\n  border-left: 1px solid black;\n}\n\n.listaAttributi ul {\n  margin-bottom: 0;\n}\n\n#listaMet {\n  /*padding-bottom: 2%;*/\n  border-bottom: 1px solid black;\n  border-top: none;\n}\n\n/*velocità di animazione del menù della lista attributi*/\n.collapsing {\n    transition: height 0.1s;\n}\n\n.tipiMetodo {\n  vertical-align: -webkit-baseline-middle;\n}\n\n#tabellaParametri {\n  max-height:200px;\n  overflow:auto;\n}\n", ""]);
 
 // exports
 
@@ -4568,7 +4592,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "#paper {\r\n  position: absolute;\r\n  width: 100%;\r\n  height: 100%;\r\n  margin: 0;\r\n  padding: 0;\r\n}\r\n\r\n.editClass {\r\n  z-index: 10;\r\n  position: absolute;\r\n  width: 33.4%;\r\n  margin: 0;\r\n  padding: 0;\r\n  top: 0;\r\n  left: 100%;\r\n}\r\n\r\n.toolbar {\r\n  position: absolute;\r\n  width: 95px;\r\n  height: 100%;\r\n  margin: 0;\r\n  padding: 0;\r\n  top: 0;\r\n  left: 0;\r\n  border-right: 1px solid black;\r\n}\r\n", ""]);
+exports.push([module.i, ".toolbar {\n  height: 100%;\n  background-color: #F1EDEA;\n  overflow: hidden;\n}\n\n.classi {\n  /*display: none;*/\n}\n\n.tipo {\n  text-align: center;\n  font-weight: bold;\n  vertical-align: middle;\n}\n\n.icona {\n  margin:0 auto;\n  display: block;\n  height: 40px;\n  width: 40px;\n}\n\n.add {\n  cursor: pointer;\n  height: 40px;\n  width: 40px;\n  outline:none;\n  vertical-align: middle;\n  padding: 0;\n\n}\n\n.add:hover {\n  opacity: 0.4;\n}\n\n.addClasse {\n    background: url(" + __webpack_require__(286) + ") no-repeat top left;\n    background-size: contain;\n\n}\n\n.addInterfaccia {\n    background: url(" + __webpack_require__(288) + ") no-repeat top left;\n    background-size: contain;\n}\n\n.addAstratta {\n    background: url(" + __webpack_require__(285) + ") no-repeat top left;\n    background-size: contain;\n}\n\n.addCommento {\n    background: url(" + __webpack_require__(287) + ") no-repeat top left;\n    background-size: contain;\n}\n\n.addAssociazione {\n    background: url(" + __webpack_require__(289) + ") no-repeat top left;\n    background-size: contain;\n}\n\n.addGeneralizzazione {\n    background: url(" + __webpack_require__(290) + ") no-repeat top left;\n    background-size: contain;\n}\n\n.addImplementazione {\n    background: url(" + __webpack_require__(291) + ") no-repeat top left;\n    background-size: contain;\n}\n\n.addStart {\n  background: url(" + __webpack_require__(277) + ") no-repeat top left;\n  background-size:100%;\n}\n\n.addEnd {\n  background: url(" + __webpack_require__(278) + ") no-repeat;\n  background-size:100%;\n}\n\n.addAttivita {\n  background: url(" + __webpack_require__(280) + ") no-repeat top left;\n  background-size:100%;\n}\n\n.addAttivitaFor {\n  background: url(" + __webpack_require__(282) + ") no-repeat top left;\n  background-size:100%;\n}\n\n.addConnettore {\n  background: url(" + __webpack_require__(279) + ") no-repeat;\n  background-size:100%;\n}\n\n.addDecision {\n  background: url(" + __webpack_require__(283) + ") no-repeat;\n  background-size:100%;\n}\n\n.addEndDecision {\n  background: url(" + __webpack_require__(284) + ") no-repeat;\n  background-size:100%;\n}\n\n.addRettangoloAngolo {\n  background: url(" + __webpack_require__(281) + ") no-repeat;\n  background-size:100%;\n}\n\n/*Blocco di icone inizialmente settato a false*/\n.activity {\n  /*display: none;*/\n}\n\n.freccia:focus {\n  border: 2px red solid;\n  opacity: 0.5;\n}", ""]);
 
 // exports
 
@@ -4585,7 +4609,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, ".btn {\r\n  border: none;\r\n  border-radius: 0;\r\n  background-color: #42413D;\r\n  color: #FFCE2B;\r\n}\r\n\r\n.btn:hover {\r\n  background-color: none;\r\n  border-color: #FFCE2B;\r\n}\r\n\r\n.btn:active {\r\n  box-shadow: 0 5px #666;\r\n  -webkit-transform: translateY(4px);\r\n          transform: translateY(4px);\r\n}\r\n\r\nul {\r\n  background-color: #42413D;\r\n}\r\n\r\n.dropdown-toggle {\r\n background-color: transparent;\r\n border-color: #42413D;\r\n border-style: solid;\r\n border-top: none;\r\n border-right: none;\r\n border-left: none;\r\n}\r\n\r\n.dropdown-toggle:active, .open .dropdown-toggle {\r\n      background: #FFCE2B !important;\r\n      color:#42413D !important;\r\n      border-style: none;\r\n  }\r\n\r\n.dropdown-menu{\r\n  background-color: #42413D;\r\n}\r\n\r\n.dropdown-menu>li>a{\r\n  color: #FFCE2B;\r\n}\r\n\r\n.dropdown-menu>li>a:hover{\r\n  background-color: #636363;\r\n}\r\n\r\n#upload {\r\n  display: none;\r\n}", ""]);
+exports.push([module.i, "#paper {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  margin: 0;\n  padding: 0;\n}\n\n.editClass {\n  z-index: 10;\n  position: absolute;\n  width: 33.4%;\n  margin: 0;\n  padding: 0;\n  top: 0;\n  left: 100%;\n}\n\n.toolbar {\n  position: absolute;\n  width: 95px;\n  height: 100%;\n  margin: 0;\n  padding: 0;\n  top: 0;\n  left: 0;\n  border-right: 1px solid black;\n}\n", ""]);
 
 // exports
 
@@ -4602,7 +4626,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, ".btn {\r\n  border: none;\r\n  border-radius: 0;\r\n  background-color: #42413D;\r\n  color: #FFCE2B;\r\n}\r\n\r\n.btn:hover {\r\n  background-color: none;\r\n  border-color: #FFCE2B;\r\n}\r\n\r\n.btn:active {\r\n  box-shadow: 0 5px #666;\r\n  -webkit-transform: translateY(4px);\r\n          transform: translateY(4px);\r\n}\r\n\r\nul {\r\n  background-color: #42413D;\r\n}\r\n\r\n.dropdown-toggle {\r\n background-color: transparent;\r\n border-color: #42413D;\r\n border-style: solid;\r\n border-top: none;\r\n border-right: none;\r\n border-left: none;\r\n}\r\n\r\n.dropdown-toggle:active, .open .dropdown-toggle {\r\n      background: #FFCE2B !important;\r\n      color:#42413D !important;\r\n      border-style: none;\r\n  }\r\n\r\n.dropdown-menu{\r\n  background-color: #42413D;\r\n}\r\n\r\n.dropdown-menu>li>a{\r\n  color: #FFCE2B;\r\n}\r\n\r\n.dropdown-menu>li>a:hover{\r\n  background-color: #636363;\r\n}\r\n", ""]);
+exports.push([module.i, ".btn {\n  border: none;\n  border-radius: 0;\n  background-color: #42413D;\n  color: #FFCE2B;\n}\n\n.btn:hover {\n  background-color: none;\n  border-color: #FFCE2B;\n}\n\n.btn:active {\n  box-shadow: 0 5px #666;\n  -webkit-transform: translateY(4px);\n          transform: translateY(4px);\n}\n\nul {\n  background-color: #42413D;\n}\n\n.dropdown-toggle {\n background-color: transparent;\n border-color: #42413D;\n border-style: solid;\n border-top: none;\n border-right: none;\n border-left: none;\n}\n\n.dropdown-toggle:active, .open .dropdown-toggle {\n      background: #FFCE2B !important;\n      color:#42413D !important;\n      border-style: none;\n  }\n\n.dropdown-menu{\n  background-color: #42413D;\n}\n\n.dropdown-menu>li>a{\n  color: #FFCE2B;\n}\n\n.dropdown-menu>li>a:hover{\n  background-color: #636363;\n}\n\n#upload {\n  display: none;\n}", ""]);
 
 // exports
 
@@ -4619,7 +4643,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, ".btn {\r\n  border: none;\r\n  border-radius: 0;\r\n  background-color: #42413D;\r\n  color: #FFCE2B;\r\n}\r\n\r\n.btn:hover {\r\n  background-color: none;\r\n  border-color: #FFCE2B;\r\n}\r\n\r\n.btn:active {\r\n  box-shadow: 0 5px #666;\r\n  -webkit-transform: translateY(4px);\r\n          transform: translateY(4px);\r\n}\r\n\r\nul {\r\n  background-color: #42413D;\r\n}\r\n\r\n.dropdown-toggle {\r\n background-color: transparent;\r\n border-color: #42413D;\r\n border-style: solid;\r\n border-top: none;\r\n border-right: none;\r\n border-left: none;\r\n}\r\n\r\n.dropdown-toggle:active, .open .dropdown-toggle {\r\n      background: #FFCE2B !important;\r\n      color:#42413D !important;\r\n      border-style: none;\r\n  }\r\n\r\n.dropdown-menu{\r\n  background-color: #42413D;\r\n}\r\n\r\n.dropdown-menu>li>a{\r\n  color: #FFCE2B;\r\n}\r\n\r\n.dropdown-menu>li>a:hover{\r\n  background-color: #636363;\r\n}\r\n", ""]);
+exports.push([module.i, ".btn {\n  border: none;\n  border-radius: 0;\n  background-color: #42413D;\n  color: #FFCE2B;\n}\n\n.btn:hover {\n  background-color: none;\n  border-color: #FFCE2B;\n}\n\n.btn:active {\n  box-shadow: 0 5px #666;\n  -webkit-transform: translateY(4px);\n          transform: translateY(4px);\n}\n\nul {\n  background-color: #42413D;\n}\n\n.dropdown-toggle {\n background-color: transparent;\n border-color: #42413D;\n border-style: solid;\n border-top: none;\n border-right: none;\n border-left: none;\n}\n\n.dropdown-toggle:active, .open .dropdown-toggle {\n      background: #FFCE2B !important;\n      color:#42413D !important;\n      border-style: none;\n  }\n\n.dropdown-menu{\n  background-color: #42413D;\n}\n\n.dropdown-menu>li>a{\n  color: #FFCE2B;\n}\n\n.dropdown-menu>li>a:hover{\n  background-color: #636363;\n}\n", ""]);
 
 // exports
 
@@ -4636,7 +4660,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, ".form-group {\r\n    margin-bottom: 0;\r\n}\r\n\r\n.ng-invalid:not(form)  {\r\n    border-right: 5px solid crimson; /* red */\r\n}\r\n\r\n.ng-valid[required], .ng-valid.required  {\r\n    border-right: 5px solid springgreen; /* green */\r\n}", ""]);
+exports.push([module.i, ".btn {\n  border: none;\n  border-radius: 0;\n  background-color: #42413D;\n  color: #FFCE2B;\n}\n\n.btn:hover {\n  background-color: none;\n  border-color: #FFCE2B;\n}\n\n.btn:active {\n  box-shadow: 0 5px #666;\n  -webkit-transform: translateY(4px);\n          transform: translateY(4px);\n}\n\nul {\n  background-color: #42413D;\n}\n\n.dropdown-toggle {\n background-color: transparent;\n border-color: #42413D;\n border-style: solid;\n border-top: none;\n border-right: none;\n border-left: none;\n}\n\n.dropdown-toggle:active, .open .dropdown-toggle {\n      background: #FFCE2B !important;\n      color:#42413D !important;\n      border-style: none;\n  }\n\n.dropdown-menu{\n  background-color: #42413D;\n}\n\n.dropdown-menu>li>a{\n  color: #FFCE2B;\n}\n\n.dropdown-menu>li>a:hover{\n  background-color: #636363;\n}\n", ""]);
 
 // exports
 
@@ -4653,7 +4677,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, ".form-group {\r\n    margin-bottom: 0;\r\n}\r\n.ng-invalid:not(form)  {\r\n    border-right: 5px solid crimson; /* red */\r\n}\r\n\r\n.ng-valid[required], .ng-valid.required  {\r\n    border-right: 5px solid springgreen; /* green */\r\n}", ""]);
+exports.push([module.i, ".form-group {\n    margin-bottom: 0;\n}\n\n.ng-invalid:not(form)  {\n    border-right: 5px solid crimson; /* red */\n}\n\n.ng-valid[required], .ng-valid.required  {\n    border-right: 5px solid springgreen; /* green */\n}", ""]);
 
 // exports
 
@@ -4670,7 +4694,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, ".form-group {\r\n    margin-bottom: 0;\r\n}\r\n\r\n.ng-invalid:not(form)  {\r\n    border-right: 5px solid crimson; /* red */\r\n}\r\n\r\n.ng-valid[required], .ng-valid.required  {\r\n    border-right: 5px solid springgreen; /* green */\r\n}", ""]);
+exports.push([module.i, ".form-group {\n    margin-bottom: 0;\n}\n.ng-invalid:not(form)  {\n    border-right: 5px solid crimson; /* red */\n}\n\n.ng-valid[required], .ng-valid.required  {\n    border-right: 5px solid springgreen; /* green */\n}", ""]);
 
 // exports
 
@@ -4687,7 +4711,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, ".form-group {\r\n    margin-bottom: 0;\r\n}\r\n\r\nbutton.choice {\r\n    width: 44px;\r\n}", ""]);
+exports.push([module.i, ".form-group {\n    margin-bottom: 0;\n}\n\n.ng-invalid:not(form)  {\n    border-right: 5px solid crimson; /* red */\n}\n\n.ng-valid[required], .ng-valid.required  {\n    border-right: 5px solid springgreen; /* green */\n}", ""]);
 
 // exports
 
@@ -4704,7 +4728,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "", ""]);
+exports.push([module.i, ".form-group {\n    margin-bottom: 0;\n}\n\nbutton.choice {\n    width: 44px;\n}", ""]);
 
 // exports
 
@@ -4721,7 +4745,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, ":host {\r\n    height: 94vh;\r\n    width: 100%;\r\n    margin: 0;\r\n    padding: 0;\r\n    top: 5vh;\r\n    z-index: 9999;\r\n    position: absolute;\r\n    background-color: #636363;\r\n    cursor: default;\r\n    overflow: hidden;\r\n    transition : height 0.5s;\r\n    color: #FFCE2B; \r\n}\r\n\r\nh3 {\r\n    color: #eea236;\r\n}\r\n\r\n.close {\r\n    float: right;\r\n    color: #FFCE2B;\r\n    opacity: 0.65;\r\n    text-shadow: 0 1px 0 #636363;\r\n}\r\n\r\n.close:hover {\r\n    opacity: 1;\r\n}\r\n", ""]);
+exports.push([module.i, "", ""]);
 
 // exports
 
@@ -4738,7 +4762,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, ".btn {\r\n  border: none;\r\n  border-radius: 0;\r\n  background-color: #42413D;\r\n  color: #FFCE2B;\r\n}\r\n\r\n.btn:hover {\r\n  background-color: none;\r\n  border-color: #FFCE2B;\r\n}\r\n\r\n.btn:active {\r\n  box-shadow: 0 5px #666;\r\n  -webkit-transform: translateY(4px);\r\n          transform: translateY(4px);\r\n}\r\n\r\nul {\r\n  background-color: #42413D;\r\n}\r\n\r\n.dropdown-toggle {\r\n background-color: transparent;\r\n border-color: #42413D;\r\n border-style: solid;\r\n border-top: none;\r\n border-right: none;\r\n border-left: none;\r\n}\r\n\r\n.dropdown-toggle:active, .open .dropdown-toggle {\r\n      background: #FFCE2B !important;\r\n      color:#42413D !important;\r\n      border-style: none;\r\n  }\r\n\r\n.dropdown-menu{\r\n  background-color: #42413D;\r\n}\r\n\r\n.dropdown-menu>li>a{\r\n  color: #FFCE2B;\r\n}\r\n\r\n.dropdown-menu>li>a:hover{\r\n  background-color: #636363;\r\n}\r\n\r\n#manage-profile {\r\n  margin: 0;\r\n  padding: 0;\r\n}", ""]);
+exports.push([module.i, ":host {\n    height: 94vh;\n    width: 100%;\n    margin: 0;\n    padding: 0;\n    top: 5vh;\n    z-index: 9999;\n    position: absolute;\n    background-color: #636363;\n    cursor: default;\n    overflow: hidden;\n    transition : height 0.5s;\n    color: #FFCE2B; \n}\n\nh3 {\n    color: #eea236;\n}\n\n.close {\n    float: right;\n    color: #FFCE2B;\n    opacity: 0.65;\n    text-shadow: 0 1px 0 #636363;\n}\n\n.close:hover {\n    opacity: 1;\n}\n", ""]);
 
 // exports
 
@@ -4755,7 +4779,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, ".btn {\r\n  border: none;\r\n  border-radius: 0;\r\n  background-color: #42413D;\r\n  color: #FFCE2B;\r\n}\r\n\r\n.btn:hover {\r\n  background-color: none;\r\n  border-color: #FFCE2B;\r\n}\r\n\r\nul {\r\n  background-color: #42413D;\r\n}\r\n\r\n.btn:active {\r\n  box-shadow: 0 5px #666;\r\n  -webkit-transform: translateY(4px);\r\n          transform: translateY(4px);\r\n}\r\n\r\n.dropdown-toggle {\r\n background-color: transparent;\r\n border-color: #42413D;\r\n border-style: solid;\r\n border-top: none;\r\n border-right: none;\r\n border-left: none;\r\n}\r\n\r\n.dropdown-toggle:active, .open .dropdown-toggle {\r\n      background: #FFCE2B !important;\r\n      color:#42413D !important;\r\n      border-style: none;\r\n  }\r\n\r\n.dropdown-menu{\r\n  background-color: #42413D;\r\n}\r\n\r\n.dropdown-menu>li>a{\r\n  color: #FFCE2B;\r\n}\r\n\r\n.dropdown-menu>li>a:hover{\r\n  background-color: #636363;\r\n}\r\n", ""]);
+exports.push([module.i, ".btn {\n  border: none;\n  border-radius: 0;\n  background-color: #42413D;\n  color: #FFCE2B;\n}\n\n.btn:hover {\n  background-color: none;\n  border-color: #FFCE2B;\n}\n\n.btn:active {\n  box-shadow: 0 5px #666;\n  -webkit-transform: translateY(4px);\n          transform: translateY(4px);\n}\n\nul {\n  background-color: #42413D;\n}\n\n.dropdown-toggle {\n background-color: transparent;\n border-color: #42413D;\n border-style: solid;\n border-top: none;\n border-right: none;\n border-left: none;\n}\n\n.dropdown-toggle:active, .open .dropdown-toggle {\n      background: #FFCE2B !important;\n      color:#42413D !important;\n      border-style: none;\n  }\n\n.dropdown-menu{\n  background-color: #42413D;\n}\n\n.dropdown-menu>li>a{\n  color: #FFCE2B;\n}\n\n.dropdown-menu>li>a:hover{\n  background-color: #636363;\n}\n\n#manage-profile {\n  margin: 0;\n  padding: 0;\n}", ""]);
 
 // exports
 
@@ -4772,7 +4796,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, ".btn {\r\n  border: none;\r\n  border-radius: 0;\r\n  background-color: #42413D;\r\n  color: #FFCE2B;\r\n}\r\n\r\n.btn:hover {\r\n  background-color: none;\r\n  border-color: #FFCE2B;\r\n}\r\n\r\nul {\r\n  background-color: #42413D;\r\n}\r\n\r\n.btn:active {\r\n  box-shadow: 0 5px #666;\r\n  -webkit-transform: translateY(4px);\r\n          transform: translateY(4px);\r\n}\r\n\r\n.dropdown-toggle {\r\n background-color: transparent;\r\n border-color: #42413D;\r\n border-style: solid;\r\n border-top: none;\r\n border-right: none;\r\n border-left: none;\r\n}\r\n\r\n.dropdown-toggle:active, .open .dropdown-toggle {\r\n      background: #FFCE2B !important;\r\n      color:#42413D !important;\r\n      border-style: none;\r\n  }\r\n\r\n.dropdown-menu{\r\n  background-color: #42413D;\r\n}\r\n\r\n.dropdown-menu>li>a{\r\n  color: #FFCE2B;\r\n}\r\n\r\n.dropdown-menu>li>a:hover{\r\n  background-color: #636363;\r\n}\r\n", ""]);
+exports.push([module.i, ".btn {\n  border: none;\n  border-radius: 0;\n  background-color: #42413D;\n  color: #FFCE2B;\n}\n\n.btn:hover {\n  background-color: none;\n  border-color: #FFCE2B;\n}\n\nul {\n  background-color: #42413D;\n}\n\n.btn:active {\n  box-shadow: 0 5px #666;\n  -webkit-transform: translateY(4px);\n          transform: translateY(4px);\n}\n\n.dropdown-toggle {\n background-color: transparent;\n border-color: #42413D;\n border-style: solid;\n border-top: none;\n border-right: none;\n border-left: none;\n}\n\n.dropdown-toggle:active, .open .dropdown-toggle {\n      background: #FFCE2B !important;\n      color:#42413D !important;\n      border-style: none;\n  }\n\n.dropdown-menu{\n  background-color: #42413D;\n}\n\n.dropdown-menu>li>a{\n  color: #FFCE2B;\n}\n\n.dropdown-menu>li>a:hover{\n  background-color: #636363;\n}\n", ""]);
 
 // exports
 
@@ -4789,7 +4813,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, ".barra-menu {\r\n  background: #42413D;\r\n  height: 6vh; \r\n}\r\n\r\n.rowEdit {\r\n  padding: 0;\r\n  margin: 0;\r\n}\r\n.logoEdit {\r\n    display: inline-block;\r\n    color: #EE7500;\r\n    margin-left: 1%;\r\n  }\r\n\r\n.logoEdit img{\r\n  display: inline-block;\r\n  width: 30px;\r\n}\r\n\r\n.logoText {\r\n  display: inline-block;\r\n}\r\n", ""]);
+exports.push([module.i, ".btn {\n  border: none;\n  border-radius: 0;\n  background-color: #42413D;\n  color: #FFCE2B;\n}\n\n.btn:hover {\n  background-color: none;\n  border-color: #FFCE2B;\n}\n\nul {\n  background-color: #42413D;\n}\n\n.btn:active {\n  box-shadow: 0 5px #666;\n  -webkit-transform: translateY(4px);\n          transform: translateY(4px);\n}\n\n.dropdown-toggle {\n background-color: transparent;\n border-color: #42413D;\n border-style: solid;\n border-top: none;\n border-right: none;\n border-left: none;\n}\n\n.dropdown-toggle:active, .open .dropdown-toggle {\n      background: #FFCE2B !important;\n      color:#42413D !important;\n      border-style: none;\n  }\n\n.dropdown-menu{\n  background-color: #42413D;\n}\n\n.dropdown-menu>li>a{\n  color: #FFCE2B;\n}\n\n.dropdown-menu>li>a:hover{\n  background-color: #636363;\n}\n", ""]);
 
 // exports
 
@@ -4806,7 +4830,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, ".row {\r\n  margin: 0;\r\n  padding: 0;\r\n  height: 94vh;\r\n}\r\n.editor {\r\n  padding: 0;\r\n  border-left: 1px solid black;\r\n  height: 100%;\r\n}\r\n\r\n.activityframe {\r\n  padding: 0;\r\n  border-left: 1px solid black;\r\n  height: 100%;\r\n  background-color: #03A9F4;\r\n}\r\n", ""]);
+exports.push([module.i, ".barra-menu {\n  background: #42413D;\n  height: 6vh; \n}\n\n.rowEdit {\n  padding: 0;\n  margin: 0;\n}\n.logoEdit {\n    display: inline-block;\n    color: #EE7500;\n    margin-left: 1%;\n  }\n\n.logoEdit img{\n  display: inline-block;\n  width: 30px;\n}\n\n.logoText {\n  display: inline-block;\n}\n", ""]);
 
 // exports
 
@@ -4820,10 +4844,10 @@ module.exports = module.exports.toString();
 
 exports = module.exports = __webpack_require__(1)(false);
 // imports
-exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Neuton);", ""]);
+
 
 // module
-exports.push([module.i, ".container {\r\n    position:absolute;\r\n    top:40%;\r\n    left:-100%;\r\n    padding: 0;\r\n    -webkit-transform: translate(-50%,-50%);\r\n    transform: translate(-50%,-50%);\r\n}\r\n\r\n.row {\r\n    margin: 0;\r\n}\r\n\r\nimg {  \r\n    padding: 0;\r\n    margin-left: 0;\r\n    max-height: 60px;\r\n    max-width: 60px;\r\n}\r\n\r\n.text{\r\n    font-family: 'Neuton', serif;\r\n    color: rgb(238,117,0);\r\n    color: rgb(255, 195, 76);\r\n    font-size: 40px;\r\n    font-weight: 400;\r\n    -webkit-text-stroke-width: 1px;\r\n    -webkit-text-stroke-color: rgb(129,161,184);\r\n    opacity: .9;\r\n}   \r\n\r\n#submit {\r\n    float: left;\r\n}\r\n\r\n#back {\r\n    float: right;\r\n}\r\n\r\n.ng-invalid:not(form)  {\r\n  border-right: 5px solid crimson; /* red */\r\n}\r\n\r\n.ng-valid[required], .ng-valid.required  {\r\n  border-right: 5px solid springgreen; /* green */\r\n}", ""]);
+exports.push([module.i, ".row {\n  margin: 0;\n  padding: 0;\n  height: 94vh;\n}\n.editor {\n  padding: 0;\n  border-left: 1px solid black;\n  height: 100%;\n}\n\n.activityframe {\n  padding: 0;\n  border-left: 1px solid black;\n  height: 100%;\n  background-color: #03A9F4;\n}\n", ""]);
 
 // exports
 
@@ -4840,7 +4864,7 @@ exports = module.exports = __webpack_require__(1)(false);
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Neuton);", ""]);
 
 // module
-exports.push([module.i, ".container {\r\n    position:absolute;\r\n    top:40%;\r\n    left:50%;\r\n    padding: 0;\r\n    -webkit-transform: translate(-50%,-50%);\r\n    transform: translate(-50%,-50%);\r\n}\r\n\r\n.row {\r\n    margin: 0;\r\n}\r\n\r\nimg {  \r\n    padding: 0;\r\n    margin-left: 25%;\r\n    max-height: 150px;\r\n    max-width: 150px;\r\n}\r\n\r\n.logo {\r\n    margin-left: 0; \r\n    max-height: 100px;\r\n    max-width: 100px; \r\n    -webkit-transform-origin: left top; \r\n            transform-origin: left top; \r\n    -webkit-animation: scale 800ms ease-in-out forwards; \r\n            animation: scale 800ms ease-in-out forwards; \r\n    \r\n}\r\n\r\n@-webkit-keyframes scale {\r\n    to {\r\n        -webkit-transform: scale(0.6);\r\n                transform: scale(0.6);\r\n    }\r\n}\r\n\r\n@keyframes scale {\r\n    to {\r\n        -webkit-transform: scale(0.6);\r\n                transform: scale(0.6);\r\n    }\r\n}\r\n\r\n.rotate360 {\r\n    transition: all 0.7s;\r\n    transform: rotate(360deg);\r\n    -webkit-transform: rotate(360deg);\r\n    -o-transform: rotate(360deg); \r\n    -moz-transform: rotate(360deg);\r\n}\r\n\r\n.hide {\r\n    display: none;\r\n}\r\n\r\n.box {\r\n    min-height: 0;\r\n    max-height: 0;\r\n    opacity: 0;\r\n    transition: all .8s ease-in-out;    \r\n}\r\n\r\n.active {\r\n    max-height: 100%;\r\n    opacity: 1;\r\n    margin-top: -20px;\r\n}\r\n\r\n.text{\r\n    font-family: 'Neuton', serif;\r\n    color: rgb(238,117,0);\r\n    color: rgb(255, 195, 76); \r\n    font-size: 50px;\r\n    line-height: 1;\r\n    font-weight: 400;\r\n    -webkit-text-stroke-width: 1px;\r\n    -webkit-text-stroke-color: rgb(129,161,184);\r\n    opacity: .9;\r\n    margin-left: -30px;\r\n}   \r\n\r\n.ng-invalid:not(form)  {\r\n  border-right: 5px solid crimson; /* red */\r\n}\r\n\r\n.ng-valid[required], .ng-valid.required  {\r\n  border-right: 5px solid springgreen; /* green */\r\n}", ""]);
+exports.push([module.i, ".container {\n    position:absolute;\n    top:40%;\n    left:-100%;\n    padding: 0;\n    -webkit-transform: translate(-50%,-50%);\n    transform: translate(-50%,-50%);\n}\n\n.row {\n    margin: 0;\n}\n\nimg {  \n    padding: 0;\n    margin-left: 0;\n    max-height: 60px;\n    max-width: 60px;\n}\n\n.text{\n    font-family: 'Neuton', serif;\n    color: rgb(238,117,0);\n    color: rgb(255, 195, 76);\n    font-size: 40px;\n    font-weight: 400;\n    -webkit-text-stroke-width: 1px;\n    -webkit-text-stroke-color: rgb(129,161,184);\n    opacity: .9;\n}   \n\n#submit {\n    float: left;\n}\n\n#back {\n    float: right;\n}\n\n.ng-invalid:not(form)  {\n  border-right: 5px solid crimson; /* red */\n}\n\n.ng-valid[required], .ng-valid.required  {\n  border-right: 5px solid springgreen; /* green */\n}", ""]);
 
 // exports
 
@@ -4857,7 +4881,7 @@ exports = module.exports = __webpack_require__(1)(false);
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Neuton);", ""]);
 
 // module
-exports.push([module.i, ".container {\r\n    position:absolute;\r\n    top:40%;\r\n    left:-100%;\r\n    padding: 0;\r\n    -webkit-transform: translate(-50%,-50%);\r\n    transform: translate(-50%,-50%);\r\n}\r\n\r\n.row {\r\n    margin: 0;\r\n}\r\n\r\nimg {  \r\n    padding: 0;\r\n    margin-left: 0;\r\n    max-height: 60px;\r\n    max-width: 60px;\r\n}\r\n\r\n.text{\r\n    font-family: 'Neuton', serif;\r\n    color: rgb(238,117,0);\r\n    color: rgb(255, 195, 76);\r\n    font-size: 40px;\r\n    font-weight:400;\r\n    -webkit-text-stroke-width: 1px;\r\n    -webkit-text-stroke-color: rgb(129,161,184);\r\n    opacity: .9;\r\n}   \r\n\r\n#submit {\r\n    float: left;\r\n}\r\n\r\n#back {\r\n    float: right;\r\n}\r\n\r\n.ng-invalid:not(form)  {\r\n  border-right: 5px solid crimson; /* red */\r\n}\r\n\r\n.ng-valid[required], .ng-valid.required  {\r\n  border-right: 5px solid springgreen; /* green */\r\n}", ""]);
+exports.push([module.i, ".container {\n    position:absolute;\n    top:40%;\n    left:50%;\n    padding: 0;\n    -webkit-transform: translate(-50%,-50%);\n    transform: translate(-50%,-50%);\n}\n\n.row {\n    margin: 0;\n}\n\nimg {  \n    padding: 0;\n    margin-left: 25%;\n    max-height: 150px;\n    max-width: 150px;\n}\n\n.logo {\n    margin-left: 0; \n    max-height: 100px;\n    max-width: 100px; \n    -webkit-transform-origin: left top; \n            transform-origin: left top; \n    -webkit-animation: scale 800ms ease-in-out forwards; \n            animation: scale 800ms ease-in-out forwards; \n    \n}\n\n@-webkit-keyframes scale {\n    to {\n        -webkit-transform: scale(0.6);\n                transform: scale(0.6);\n    }\n}\n\n@keyframes scale {\n    to {\n        -webkit-transform: scale(0.6);\n                transform: scale(0.6);\n    }\n}\n\n.rotate360 {\n    transition: all 0.7s;\n    transform: rotate(360deg);\n    -webkit-transform: rotate(360deg);\n    -o-transform: rotate(360deg); \n    -moz-transform: rotate(360deg);\n}\n\n.hide {\n    display: none;\n}\n\n.box {\n    min-height: 0;\n    max-height: 0;\n    opacity: 0;\n    transition: all .8s ease-in-out;    \n}\n\n.active {\n    max-height: 100%;\n    opacity: 1;\n    margin-top: -20px;\n}\n\n.text{\n    font-family: 'Neuton', serif;\n    color: rgb(238,117,0);\n    color: rgb(255, 195, 76); \n    font-size: 50px;\n    line-height: 1;\n    font-weight: 400;\n    -webkit-text-stroke-width: 1px;\n    -webkit-text-stroke-color: rgb(129,161,184);\n    opacity: .9;\n    margin-left: -30px;\n}   \n\n.ng-invalid:not(form)  {\n  border-right: 5px solid crimson; /* red */\n}\n\n.ng-valid[required], .ng-valid.required  {\n  border-right: 5px solid springgreen; /* green */\n}", ""]);
 
 // exports
 
@@ -4866,98 +4890,114 @@ exports.push([module.i, ".container {\r\n    position:absolute;\r\n    top:40%;\
 module.exports = module.exports.toString();
 
 /***/ }),
-/* 275 */,
-/* 276 */
+/* 275 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "Cerchio.3c37602c756b4336e229.svg";
+exports = module.exports = __webpack_require__(1)(false);
+// imports
+exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Neuton);", ""]);
+
+// module
+exports.push([module.i, ".container {\n    position:absolute;\n    top:40%;\n    left:-100%;\n    padding: 0;\n    -webkit-transform: translate(-50%,-50%);\n    transform: translate(-50%,-50%);\n}\n\n.row {\n    margin: 0;\n}\n\nimg {  \n    padding: 0;\n    margin-left: 0;\n    max-height: 60px;\n    max-width: 60px;\n}\n\n.text{\n    font-family: 'Neuton', serif;\n    color: rgb(238,117,0);\n    color: rgb(255, 195, 76);\n    font-size: 40px;\n    font-weight:400;\n    -webkit-text-stroke-width: 1px;\n    -webkit-text-stroke-color: rgb(129,161,184);\n    opacity: .9;\n}   \n\n#submit {\n    float: left;\n}\n\n#back {\n    float: right;\n}\n\n.ng-invalid:not(form)  {\n  border-right: 5px solid crimson; /* red */\n}\n\n.ng-valid[required], .ng-valid.required  {\n  border-right: 5px solid springgreen; /* green */\n}", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
 
 /***/ }),
+/* 276 */,
 /* 277 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "CerchioCerchio.330d74e1bb6750bab4b1.svg";
+module.exports = __webpack_require__.p + "Cerchio.39ee067438843db9e6fa.svg";
 
 /***/ }),
 /* 278 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "Freccia.bc52d9a77119d56ba08e.svg";
+module.exports = __webpack_require__.p + "CerchioCerchio.8b1850c7e37c766e8dbb.svg";
 
 /***/ }),
 /* 279 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "Rettangolo.254c42294a508424df19.svg";
+module.exports = __webpack_require__.p + "Freccia.a4c499fd315ae52afecc.svg";
 
 /***/ }),
 /* 280 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "RettangoloAngolo.cf22bc9209afc6f19bb3.svg";
+module.exports = __webpack_require__.p + "Rettangolo.70ad5344a1a2ba3b5c29.svg";
 
 /***/ }),
 /* 281 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "RettangoloForchetta.c317e1a15ed87cd028da.svg";
+module.exports = __webpack_require__.p + "RettangoloAngolo.273bf4f00b5c31c15274.svg";
 
 /***/ }),
 /* 282 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "Rombo.03fc4172ed30e1078f46.svg";
+module.exports = __webpack_require__.p + "RettangoloForchetta.18beb1c6c069027e2f37.svg";
 
 /***/ }),
 /* 283 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "RomboNero.12e62c8a0985991486a0.svg";
+module.exports = __webpack_require__.p + "Rombo.f40f0455691a69a821ad.svg";
 
 /***/ }),
 /* 284 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "Abstract.3d5f6caa23de207508be.svg";
+module.exports = __webpack_require__.p + "RomboNero.2a60b493a7d5cc3927f5.svg";
 
 /***/ }),
 /* 285 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "Class.9875d376eb36c52da712.svg";
+module.exports = __webpack_require__.p + "Abstract.c6e97eeb61e215b9db88.svg";
 
 /***/ }),
 /* 286 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "Commento.29665ae1b9455361c1e2.svg";
+module.exports = __webpack_require__.p + "Class.16df5b7229f5c33c2af5.svg";
 
 /***/ }),
 /* 287 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "Interface.dc505ca32d8d2c049385.svg";
+module.exports = __webpack_require__.p + "Commento.82f02152bdaa973ffb93.svg";
 
 /***/ }),
 /* 288 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "Association.2b11edeebf9ffcb1c355.svg";
+module.exports = __webpack_require__.p + "Interface.3a9ef1baee68153d68e1.svg";
 
 /***/ }),
 /* 289 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "Generalization.f296809f9bfe8b8e0b94.svg";
+module.exports = __webpack_require__.p + "Association.92977cfedaee16baf9b0.svg";
 
 /***/ }),
 /* 290 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "Implementation.fdfb4a02d46435f04510.svg";
+module.exports = __webpack_require__.p + "Generalization.e97844f3e5a27c0f9c2c.svg";
 
 /***/ }),
-/* 291 */,
+/* 291 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "Implementation.03e2d3a8adc68c375556.svg";
+
+/***/ }),
 /* 292 */,
 /* 293 */,
 /* 294 */,
@@ -4982,139 +5022,139 @@ module.exports = __webpack_require__.p + "Implementation.fdfb4a02d46435f04510.sv
 /* 313 */
 /***/ (function(module, exports) {
 
-module.exports = "<router-outlet></router-outlet>\r\n"
+module.exports = "<router-outlet></router-outlet>\n"
 
 /***/ }),
 /* 314 */
 /***/ (function(module, exports) {
 
-module.exports = "Activity Explorer\r\n"
+module.exports = "Activity Explorer\n"
 
 /***/ }),
 /* 315 */
 /***/ (function(module, exports) {
 
-module.exports = "<div [hidden]=\"selemetedMethod\" class=\"container-fluid menu\">\r\n  <div class=\"row selezionato\">\r\n    <span class=\"glyphicon glyphicon-wrench iconaMirrow\" aria-hidden=\"true\"></span>&nbsp;&nbsp;{{this.activityService.getNameMethod()}}\r\n  </div>\r\n  <div class=\"row changeNome\">\r\n    Modifica nome:\r\n    <input #changeName id=\"changeName\"\r\n    (keyup.enter)=\"changeNome(changeName.value)\">\r\n    <button class=\"btn btn-default\" (click)=\"changeNome(changeName.value)\">\r\n      <span class=\"glyphicon glyphicon-floppy-disk\" aria-hidden=\"true\"></span>\r\n    </button>\r\n  </div>\r\n  <div [hidden]=\"!this.activityService.isOperation()\">\r\n    <div class=\"container-fluid\">\r\n      <div class=\"row changeNome\">\r\n        <label>Corpo operazione</label>\r\n        <input #corpo id=\"changeName\"\r\n        (keyup.enter)=\"modBody(corpo.value)\">\r\n        <button class=\"btn btn-default\" (click)=\"modBody(corpo.value)\">\r\n          <span class=\"glyphicon glyphicon-floppy-disk\" aria-hidden=\"true\"></span>\r\n        </button>\r\n      </div>\r\n    </div>\r\n  </div>\r\n  <div [hidden]=\"!this.activityService.isDecision()\">\r\n    <div class=\"container-fluid\">\r\n      <div class=\"row changeNome\">\r\n        <label>Tipo decisione</label><br />\r\n        <select [(ngModel)]=\"dec\">\r\n          <option *ngFor=\"let dec of decisions\" [value]=\"dec\">{{ dec }}</option>\r\n        </select>\r\n      </div>\r\n      <div [hidden]=\"dec != 'for'\" class=\"row changeNome\">\r\n        <label>Nome indice</label>\r\n        <input [(ngModel)]=\"nomeInd\"  /><br />\r\n        <label>Valore iniziale indice</label>\r\n        <input [(ngModel)]=\"valInd\" /><br />\r\n        <label>Guardia indice</label>\r\n        <input [(ngModel)]=\"maxInd\"/><br />\r\n        <label>Operatore guardia</label>\r\n        <select>\r\n          <option *ngFor=\"let op of operators\" [value]=\"op\">{{ op }}</option>\r\n        </select><br />\r\n        <button class=\"btn btn-default\" (click)=\"generaDecisione()\">\r\n          Genera decisione\r\n        </button>\r\n      </div>\r\n    </div>\r\n  </div>\r\n  <div>\r\n    <button class=\"btn btn-default\" (click)=\"enterClassMode()\">\r\n      <span class=\"glyphicon glyphicon-arrow-left freccia\"></span>\r\n      Diagramma delle Classi</button>\r\n  </div>\r\n</div>"
+module.exports = "<div [hidden]=\"selemetedMethod\" class=\"container-fluid menu\">\n  <div class=\"row selezionato\">\n    <span class=\"glyphicon glyphicon-wrench iconaMirrow\" aria-hidden=\"true\"></span>&nbsp;&nbsp;{{this.activityService.getNameMethod()}}\n  </div>\n  <div class=\"row changeNome\">\n    Modifica nome:\n    <input #changeName id=\"changeName\"\n    (keyup.enter)=\"changeNome(changeName.value)\">\n    <button class=\"btn btn-default\" (click)=\"changeNome(changeName.value)\">\n      <span class=\"glyphicon glyphicon-floppy-disk\" aria-hidden=\"true\"></span>\n    </button>\n  </div>\n  <div [hidden]=\"!this.activityService.isOperation()\">\n    <div class=\"container-fluid\">\n      <div class=\"row changeNome\">\n        <label>Corpo operazione</label>\n        <input #corpo id=\"changeName\"\n        (keyup.enter)=\"modBody(corpo.value)\">\n        <button class=\"btn btn-default\" (click)=\"modBody(corpo.value)\">\n          <span class=\"glyphicon glyphicon-floppy-disk\" aria-hidden=\"true\"></span>\n        </button>\n      </div>\n    </div>\n  </div>\n  <div [hidden]=\"!this.activityService.isDecision()\">\n    <div class=\"container-fluid\">\n      <div class=\"row changeNome\">\n        <label>Tipo decisione</label><br />\n        <select [(ngModel)]=\"dec\">\n          <option *ngFor=\"let dec of decisions\" [value]=\"dec\">{{ dec }}</option>\n        </select>\n      </div>\n      <div [hidden]=\"dec != 'for'\" class=\"row changeNome\">\n        <label>Nome indice</label>\n        <input [(ngModel)]=\"nomeInd\"  /><br />\n        <label>Valore iniziale indice</label>\n        <input [(ngModel)]=\"valInd\" /><br />\n        <label>Guardia indice</label>\n        <input [(ngModel)]=\"maxInd\"/><br />\n        <label>Operatore guardia</label>\n        <select>\n          <option *ngFor=\"let op of operators\" [value]=\"op\">{{ op }}</option>\n        </select><br />\n        <button class=\"btn btn-default\" (click)=\"generaDecisione()\">\n          Genera decisione\n        </button>\n      </div>\n    </div>\n  </div>\n  <div>\n    <button class=\"btn btn-default\" (click)=\"enterClassMode()\">\n      <span class=\"glyphicon glyphicon-arrow-left freccia\"></span>\n      Diagramma delle Classi</button>\n  </div>\n</div>"
 
 /***/ }),
 /* 316 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container-fluid menu\">\r\n  <div class=\"row selezionato\">\r\n    <span class=\"glyphicon glyphicon-wrench iconaMirrow\" aria-hidden=\"true\"></span>&nbsp;&nbsp;{{name}}&nbsp;\r\n    <button class=\"btn btn-default\" (click)=\"removeClass(name)\" title=\"Rimuovi classe\">\r\n      <span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span>\r\n    </button>\r\n  </div>\r\n  <div class=\"row changeNome\">\r\n    Modifica nome:\r\n    <input #changeName id=\"changeName\"\r\n    (keyup.enter)=\"changeNome(changeName.value)\">\r\n    <button class=\"btn btn-default\" (click)=\"changeNome(changeName.value)\">\r\n      <span class=\"glyphicon glyphicon-floppy-disk\" aria-hidden=\"true\"></span>\r\n    </button>\r\n  </div>\r\n  <!-- div per aggiungere un attributo -->\r\n  <div class=\"aggiungiAttributo\">\r\n    <div class=\"row\">\r\n      <button href=\"#addAttr\" class=\"btn btn-default\" data-toggle=\"collapse\">\r\n        <span class=\"glyphicon glyphicon-plus\" aria-hidden=\"true\"></span>&nbsp;Aggiungi Attributo\r\n      </button>\r\n    </div>\r\n    <div id=\"addAttr\" class=\"campiAttributo collapse\">\r\n      <div class=\"aggiungiAttributo staticAttr\">\r\n        <label>Static <input #checkStaticAtt id=\"staticAtt\" type=\"checkbox\" name=\"static\" class=\"checkbox-circle\" value=\"Static\" (change)='updateCheckbox(checkStaticAtt.id)'/></label>\r\n        <label>Final <input #checkFinalAtt id=\"finalAtt\" type=\"checkbox\" name=\"final\" class=\"checkbox-circle\" value=\"Final\" (change)='updateCheckbox(checkFinalAtt.id)'/></label>\r\n      </div>\r\n      <div class=\"aggiungiAttributo accessoAttr\">\r\n        <label>Seleziona Visibilità</label>\r\n        <select #accAtt  [(ngModel)]=\"selectedAccAtt\">\r\n          <option *ngFor=\"let acc of accessoAttr\" [value]=\"acc\">{{ acc }}</option>\r\n        </select>\r\n      </div>\r\n      <div class=\"aggiungiAttributo selezionaTipo\">\r\n        <label>Seleziona tipo</label>\r\n        <select #tipiAtt [(ngModel)]=\"selectedTipoAtt\">\r\n          <option value=\"\"></option>\r\n          <option *ngFor=\"let type of types\" [value]=\"type\">{{type}}</option>\r\n        </select>\r\n      </div>\r\n      <div class=\"aggiungiAttributo nomeAttr\">\r\n        <label>Nome</label>\r\n        <input [disabled]=\"!selectedTipoAtt\" id=\"nome-attributo\" #nomeAtt\r\n        (keyup.enter)=\"addAttributo(nomeAtt.value)\">\r\n      </div>\r\n      <button class=\"btn btn-default\" [disabled]=\"!selectedTipoAtt\" (click)=\"addAttributo(nomeAtt.value, checkStaticAtt.checked, checkFinalAtt.checked, tipiAtt.value, accAtt.value)\">Aggiungi Attributo</button>\r\n    </div>\r\n\r\n  </div>\r\n  <button href=\"#listaAttr\" #lista class=\"btn btn-default listaAttr\" data-toggle=\"collapse\" (click)=\"closeCollapsedList(lista)\">\r\n    <span class=\"glyphicon glyphicon-triangle-left\" aria-hidden=\"true\"></span>&nbsp;Lista Attributi\r\n  </button>\r\n  <!-- lista attributi della classe -->\r\n  <div *ngIf=\"this.mainEditorService.selectedClasse\" class=\"container listaAttributi\">\r\n    <div id=\"listaAttr\" class=\"row collapse\" *ngIf=\"name\">\r\n      Lista attributi\r\n      <ul class=\"list-group\">\r\n        <li class=\"list-group-item\" *ngFor=\"let attr of this.mainEditorService.selectedClasse.getAttributi()\">\r\n          <span>{{attr.name}}: {{attr.type}}\r\n            <button class=\"btn btn-default\" (click)=\"removeAttributo(attr.name)\">\r\n              <span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\" title=\"Rimuovi\"></span>\r\n            </button>\r\n            <!-- icona di modifica che farà apparire un menù a tendina per la modifica attributo-->\r\n            <button class=\"btn btn-default\" data-toggle=\"collapse\" [attr.data-target]=\"'#'+attr.name\" title=\"Modifica\">\r\n              <span class=\"glyphicon glyphicon-pencil\" aria-hidden=\"true\" title=\"Modifica\"></span>\r\n            </button>\r\n          </span>\r\n          <!-- menù a comparsa (collapse) per modificare un attributo-->\r\n          <div class=\"campiAttributo collapse listaModAttr\" attr.id=\"{{attr.name}}\">\r\n            <div class=\"modificaAttributo accessoAttr\">\r\n              <div class=\"aggiungiAttributo staticAttr\">\r\n                <label>Static <input #checkStaticAttMod id=\"staticAttMod\" type=\"checkbox\" name=\"static\" class=\".checkbox-circle\" value=\"Static\" (change)='updateCheckbox(checkStaticAttMod.id)'/></label>\r\n                <label>Final <input #checkFinalAttMod id=\"finalAttMod\" type=\"checkbox\" name=\"final\" class=\"checkbox-circle\" value=\"Final\" (change)='updateCheckbox(checkFinalAttMod.id)'/></label>\r\n              </div>\r\n              <label>Seleziona Visibilità</label>\r\n              <select  #accAttMod [(ngModel)]=\"selectedAccAtt\">\r\n                <option *ngFor=\"let acc of accessoAttr\" [value]=\"acc\">{{ acc }}</option>\r\n              </select>\r\n            </div>\r\n            <div class=\"modificaAttributo selezionaTipo\">\r\n              <label>Seleziona tipo</label>\r\n              <select #tipiAttMod [(ngModel)]=\"selectedTipoAtt\">\r\n                <option value=\"\"></option>\r\n                <option *ngFor=\"let type of types\" [value]=\"type\">{{type}}</option>\r\n              </select>\r\n            </div>\r\n            <div class=\"modificaAttributo nomeAttr\">\r\n              <label>Nome</label>\r\n              <input [disabled]=\"!selectedTipoAtt\" id=\"nome-attributo\" #nomeAttMod\r\n              (keyup.enter)=\"changeAttributo(nomeAtt.value, attr.name)\">\r\n            </div>\r\n            <button class=\"btn btn-default\" [disabled]=\"!selectedTipoAtt\" (click)=\"changeAttributo(nomeAttMod.value, attr.name,tipiAttMod.value, accAttMod.value , checkStaticAttMod.checked , checkFinalAttMod.checked)\">Modifica Attributo</button>\r\n            </div>\r\n        </li>\r\n      </ul>\r\n    </div>\r\n  </div>\r\n  <!-- blocco per aggiungere un metodo alla classe -->\r\n  <div class=\"aggiungiMetodo\">\r\n    <div class=\"row\">\r\n      <button href=\"#addMetodo\" class=\"btn btn-default\" data-toggle=\"collapse\">\r\n        <span class=\"glyphicon glyphicon-plus\" aria-hidden=\"true\"></span>&nbsp;Aggiungi Metodo\r\n      </button>\r\n    </div>\r\n    <div id=\"addMetodo\" class=\"campiMetodo collapse\">\r\n      <!-- blocco per aggiunta parametri metodo -->\r\n      <div class=\"aggiungiMetodo .selezionaTipo\">\r\n        <div class=\"aggiungiAttributo staticAttr\">\r\n          <label>Static <input #staticMet type=\"checkbox\" id=\"static\" name=\"static\" classe=\"checkbox-circle\" value=\"Static\" (change)='updateCheckbox(staticMet.id)'></label>\r\n          <label> Costruttore <input #constructor [(ngModel)]=\"costruttore\" type=\"checkbox\" id=\"constructor\" name=\"constructor\" classe=\"checkbox-circle\" value=\"Constructor\" (change)='updateCheckbox(constructor.id)'></label>\r\n        </div>\r\n        <div class=\"aggiungiMeotdo accessoMetodo\">\r\n          <label>Seleziona Visibilità</label>\r\n          <select #accMetodo [(ngModel)]=\"selectedAccMet\">\r\n            <option *ngFor=\"let acc of accessoAttr\" [value]=\"acc\">{{ acc }}</option>\r\n          </select>\r\n        </div>\r\n        <div [hidden]=\"costruttore\">\r\n          <label>Seleziona tipo di ritorno</label>\r\n          <select #tipiMetodo [(ngModel)]=\"selectedTipoMet\">\r\n            <option value=\"void\"></option>\r\n            <option *ngFor=\"let type of types\" [value]=\"type\">{{type}}</option>\r\n          </select>\r\n        </div>\r\n      </div>\r\n      <div [hidden]=\"costruttore\" class=\"aggiungiMetodo nomeMet\">\r\n        <label>Nome</label>\r\n        <input id=\"nome-metodo\" #nomeMetodo [(ngModel)]=\"nomeMet\">\r\n      </div>\r\n      <div class=\"container-fluid\" [hidden]=\"isAddableMethod()\">\r\n        <div class=\"row clearfix\">\r\n          <div class=\"col-md-12 column\" id=\"tabellaParametri\">\r\n            Parametri attuali\r\n            <table class=\"table table-bordered table-hover\" id=\"tab_logic\">\r\n              <thead>\r\n                <tr>\r\n                  <th class=\"text-center\">Tipo</th>        \r\n                  <th class=\"text-center\">Nome</th>          \r\n                  <th class=\"text-center\"></th>                \r\n                </tr>\r\n              </thead>\r\n              <tbody>\r\n                <tr *ngFor=\"let param of parametriMetodo\" class=\"tipiMetodo\">\r\n                  <td>{{param.getTipo()}}</td>\r\n                  <td>{{param.getNome()}}</td>\r\n                </tr>\r\n                <tr #parametro>\r\n                  <td>\r\n                    <select #tipiParam id=\"tipiParam\" class=\"tipiMetodo\">\r\n                      <option value=\"\"></option>\r\n                      <option *ngFor=\"let type of types\" [value]=\"type\">{{type}}</option>\r\n                    </select>\r\n                  </td>\r\n                  <td>\r\n                    <input #nomeParam id=\"nomeParam\" type=\"text\" placeholder=\"Nome\" class=\"form-control\"/>\r\n                  </td>\r\n                  <td>\r\n                    <button class=\"btn btn-default\" title=\"Aggiungi Parmetro\" (click)=\"addParam(tipiParam.value, nomeParam.value)\">\r\n                      <span class=\"glyphicon glyphicon-plus\" aria-hidden=\"true\"></span>\r\n                    </button>\r\n                  </td>\r\n                </tr>\r\n              </tbody>\r\n            </table>\r\n          </div>\r\n        </div>\r\n      </div>\r\n      <button class=\"btn btn-default\" [disabled]=\"isAddableMethod()\" (click)=\"addMetodo(nomeMetodo.value, staticMet.checked, constructor.checked, tipiMetodo.value, accMetodo.value)\">Aggiungi Metodo</button>\r\n    </div>   \r\n  </div>\r\n  <button href=\"#listaMet\" #listac class=\"btn btn-default\" data-toggle=\"collapse\" (click)='closeCollapsedList(listac)'>\r\n    <span class=\"glyphicon glyphicon-triangle-left\" aria-hidden=\"true\"></span>&nbsp;Lista Metodi\r\n  </button>\r\n  <!-- lista metodi della classe -->\r\n  <div *ngIf=\"this.mainEditorService.selectedClasse\" class=\"container listaAttributi\">\r\n    <div id=\"listaMet\" class=\"row collapse\" *ngIf=\"name\">\r\n      Lista metodi\r\n      <ul class=\"list-group\">\r\n        <li class=\"list-group-item\" *ngFor=\"let met of getMetodi()\">\r\n          <span>{{met.accesso}} {{met.staticString()}} {{met.nome}}({{met.paramToString()}}): {{met.tipoRitorno}}\r\n            <button class=\"btn btn-default\" (click)=\"removeMetodo(met.nome)\">\r\n               <span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\" title=\"Rimuovi\"></span>\r\n            </button>\r\n            <button class=\"btn btn-default\" (click)=\"modifyMetodo(met.nome)\" title=\"Modifica\">\r\n              <span class=\"glyphicon glyphicon-pencil\" aria-hidden=\"true\" title=\"Modifica\"></span>\r\n            </button>\r\n          </span>\r\n        </li>\r\n      </ul>\r\n    </div>\r\n  </div>\r\n  <div class=\"aggiungiMetodo\">\r\n    <div class=\"row\">\r\n      <button [disabled]=\"this.mainEditorService.isThereAMain()\" class=\"btn btn-default\" (click)=\"addMain()\">\r\n        <span class=\"glyphicon glyphicon-asterisk\" aria-hidden=\"true\"></span>&nbsp;Aggiungi Metodo Main\r\n      </button>\r\n    </div>\r\n  </div>\r\n</div>\r\n"
+module.exports = "<div class=\"container-fluid menu\">\n  <div class=\"row selezionato\">\n    <span class=\"glyphicon glyphicon-wrench iconaMirrow\" aria-hidden=\"true\"></span>&nbsp;&nbsp;{{name}}&nbsp;\n    <button class=\"btn btn-default\" (click)=\"removeClass(name)\" title=\"Rimuovi classe\">\n      <span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span>\n    </button>\n  </div>\n  <div class=\"row changeNome\">\n    Modifica nome:\n    <input #changeName id=\"changeName\"\n    (keyup.enter)=\"changeNome(changeName.value)\">\n    <button class=\"btn btn-default\" (click)=\"changeNome(changeName.value)\">\n      <span class=\"glyphicon glyphicon-floppy-disk\" aria-hidden=\"true\"></span>\n    </button>\n  </div>\n  <!-- div per aggiungere un attributo -->\n  <div class=\"aggiungiAttributo\">\n    <div class=\"row\">\n      <button href=\"#addAttr\" class=\"btn btn-default\" data-toggle=\"collapse\">\n        <span class=\"glyphicon glyphicon-plus\" aria-hidden=\"true\"></span>&nbsp;Aggiungi Attributo\n      </button>\n    </div>\n    <div id=\"addAttr\" class=\"campiAttributo collapse\">\n      <div class=\"aggiungiAttributo staticAttr\">\n        <label>Static <input #checkStaticAtt id=\"staticAtt\" type=\"checkbox\" name=\"static\" class=\"checkbox-circle\" value=\"Static\" (change)='updateCheckbox(checkStaticAtt.id)'/></label>\n        <label>Final <input #checkFinalAtt id=\"finalAtt\" type=\"checkbox\" name=\"final\" class=\"checkbox-circle\" value=\"Final\" (change)='updateCheckbox(checkFinalAtt.id)'/></label>\n      </div>\n      <div class=\"aggiungiAttributo accessoAttr\">\n        <label>Seleziona Visibilità</label>\n        <select #accAtt  [(ngModel)]=\"selectedAccAtt\">\n          <option *ngFor=\"let acc of accessoAttr\" [value]=\"acc\">{{ acc }}</option>\n        </select>\n      </div>\n      <div class=\"aggiungiAttributo selezionaTipo\">\n        <label>Seleziona tipo</label>\n        <select #tipiAtt [(ngModel)]=\"selectedTipoAtt\">\n          <option value=\"\"></option>\n          <option *ngFor=\"let type of types\" [value]=\"type\">{{type}}</option>\n        </select>\n      </div>\n      <div class=\"aggiungiAttributo nomeAttr\">\n        <label>Nome</label>\n        <input [disabled]=\"!selectedTipoAtt\" id=\"nome-attributo\" #nomeAtt\n        (keyup.enter)=\"addAttributo(nomeAtt.value)\">\n      </div>\n      <button class=\"btn btn-default\" [disabled]=\"!selectedTipoAtt\" (click)=\"addAttributo(nomeAtt.value, checkStaticAtt.checked, checkFinalAtt.checked, tipiAtt.value, accAtt.value)\">Aggiungi Attributo</button>\n    </div>\n\n  </div>\n  <button href=\"#listaAttr\" #lista class=\"btn btn-default listaAttr\" data-toggle=\"collapse\" (click)=\"closeCollapsedList(lista)\">\n    <span class=\"glyphicon glyphicon-triangle-left\" aria-hidden=\"true\"></span>&nbsp;Lista Attributi\n  </button>\n  <!-- lista attributi della classe -->\n  <div *ngIf=\"this.mainEditorService.selectedClasse\" class=\"container listaAttributi\">\n    <div id=\"listaAttr\" class=\"row collapse\" *ngIf=\"name\">\n      Lista attributi\n      <ul class=\"list-group\">\n        <li class=\"list-group-item\" *ngFor=\"let attr of this.mainEditorService.selectedClasse.getAttributi()\">\n          <span>{{attr.name}}: {{attr.type}}\n            <button class=\"btn btn-default\" (click)=\"removeAttributo(attr.name)\">\n              <span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\" title=\"Rimuovi\"></span>\n            </button>\n            <!-- icona di modifica che farà apparire un menù a tendina per la modifica attributo-->\n            <button class=\"btn btn-default\" data-toggle=\"collapse\" [attr.data-target]=\"'#'+attr.name\" title=\"Modifica\">\n              <span class=\"glyphicon glyphicon-pencil\" aria-hidden=\"true\" title=\"Modifica\"></span>\n            </button>\n          </span>\n          <!-- menù a comparsa (collapse) per modificare un attributo-->\n          <div class=\"campiAttributo collapse listaModAttr\" attr.id=\"{{attr.name}}\">\n            <div class=\"modificaAttributo accessoAttr\">\n              <div class=\"aggiungiAttributo staticAttr\">\n                <label>Static <input #checkStaticAttMod id=\"staticAttMod\" type=\"checkbox\" name=\"static\" class=\".checkbox-circle\" value=\"Static\" (change)='updateCheckbox(checkStaticAttMod.id)'/></label>\n                <label>Final <input #checkFinalAttMod id=\"finalAttMod\" type=\"checkbox\" name=\"final\" class=\"checkbox-circle\" value=\"Final\" (change)='updateCheckbox(checkFinalAttMod.id)'/></label>\n              </div>\n              <label>Seleziona Visibilità</label>\n              <select  #accAttMod [(ngModel)]=\"selectedAccAtt\">\n                <option *ngFor=\"let acc of accessoAttr\" [value]=\"acc\">{{ acc }}</option>\n              </select>\n            </div>\n            <div class=\"modificaAttributo selezionaTipo\">\n              <label>Seleziona tipo</label>\n              <select #tipiAttMod [(ngModel)]=\"selectedTipoAtt\">\n                <option value=\"\"></option>\n                <option *ngFor=\"let type of types\" [value]=\"type\">{{type}}</option>\n              </select>\n            </div>\n            <div class=\"modificaAttributo nomeAttr\">\n              <label>Nome</label>\n              <input [disabled]=\"!selectedTipoAtt\" id=\"nome-attributo\" #nomeAttMod\n              (keyup.enter)=\"changeAttributo(nomeAtt.value, attr.name)\">\n            </div>\n            <button class=\"btn btn-default\" [disabled]=\"!selectedTipoAtt\" (click)=\"changeAttributo(nomeAttMod.value, attr.name,tipiAttMod.value, accAttMod.value , checkStaticAttMod.checked , checkFinalAttMod.checked)\">Modifica Attributo</button>\n            </div>\n        </li>\n      </ul>\n    </div>\n  </div>\n  <!-- blocco per aggiungere un metodo alla classe -->\n  <div class=\"aggiungiMetodo\">\n    <div class=\"row\">\n      <button href=\"#addMetodo\" class=\"btn btn-default\" data-toggle=\"collapse\">\n        <span class=\"glyphicon glyphicon-plus\" aria-hidden=\"true\"></span>&nbsp;Aggiungi Metodo\n      </button>\n    </div>\n    <div id=\"addMetodo\" class=\"campiMetodo collapse\">\n      <!-- blocco per aggiunta parametri metodo -->\n      <div class=\"aggiungiMetodo .selezionaTipo\">\n        <div class=\"aggiungiAttributo staticAttr\">\n          <label>Static <input #staticMet type=\"checkbox\" id=\"static\" name=\"static\" classe=\"checkbox-circle\" value=\"Static\" (change)='updateCheckbox(staticMet.id)'></label>\n          <label> Costruttore <input #constructor [(ngModel)]=\"costruttore\" type=\"checkbox\" id=\"constructor\" name=\"constructor\" classe=\"checkbox-circle\" value=\"Constructor\" (change)='updateCheckbox(constructor.id)'></label>\n        </div>\n        <div class=\"aggiungiMeotdo accessoMetodo\">\n          <label>Seleziona Visibilità</label>\n          <select #accMetodo [(ngModel)]=\"selectedAccMet\">\n            <option *ngFor=\"let acc of accessoAttr\" [value]=\"acc\">{{ acc }}</option>\n          </select>\n        </div>\n        <div [hidden]=\"costruttore\">\n          <label>Seleziona tipo di ritorno</label>\n          <select #tipiMetodo [(ngModel)]=\"selectedTipoMet\">\n            <option value=\"void\"></option>\n            <option *ngFor=\"let type of types\" [value]=\"type\">{{type}}</option>\n          </select>\n        </div>\n      </div>\n      <div [hidden]=\"costruttore\" class=\"aggiungiMetodo nomeMet\">\n        <label>Nome</label>\n        <input id=\"nome-metodo\" #nomeMetodo [(ngModel)]=\"nomeMet\">\n      </div>\n      <div class=\"container-fluid\" [hidden]=\"isAddableMethod()\">\n        <div class=\"row clearfix\">\n          <div class=\"col-md-12 column\" id=\"tabellaParametri\">\n            Parametri attuali\n            <table class=\"table table-bordered table-hover\" id=\"tab_logic\">\n              <thead>\n                <tr>\n                  <th class=\"text-center\">Tipo</th>        \n                  <th class=\"text-center\">Nome</th>          \n                  <th class=\"text-center\"></th>                \n                </tr>\n              </thead>\n              <tbody>\n                <tr *ngFor=\"let param of parametriMetodo\" class=\"tipiMetodo\">\n                  <td>{{param.getTipo()}}</td>\n                  <td>{{param.getNome()}}</td>\n                </tr>\n                <tr #parametro>\n                  <td>\n                    <select #tipiParam id=\"tipiParam\" class=\"tipiMetodo\">\n                      <option value=\"\"></option>\n                      <option *ngFor=\"let type of types\" [value]=\"type\">{{type}}</option>\n                    </select>\n                  </td>\n                  <td>\n                    <input #nomeParam id=\"nomeParam\" type=\"text\" placeholder=\"Nome\" class=\"form-control\"/>\n                  </td>\n                  <td>\n                    <button class=\"btn btn-default\" title=\"Aggiungi Parmetro\" (click)=\"addParam(tipiParam.value, nomeParam.value)\">\n                      <span class=\"glyphicon glyphicon-plus\" aria-hidden=\"true\"></span>\n                    </button>\n                  </td>\n                </tr>\n              </tbody>\n            </table>\n          </div>\n        </div>\n      </div>\n      <button class=\"btn btn-default\" [disabled]=\"isAddableMethod()\" (click)=\"addMetodo(nomeMetodo.value, staticMet.checked, constructor.checked, tipiMetodo.value, accMetodo.value)\">Aggiungi Metodo</button>\n    </div>   \n  </div>\n  <button href=\"#listaMet\" #listac class=\"btn btn-default\" data-toggle=\"collapse\" (click)='closeCollapsedList(listac)'>\n    <span class=\"glyphicon glyphicon-triangle-left\" aria-hidden=\"true\"></span>&nbsp;Lista Metodi\n  </button>\n  <!-- lista metodi della classe -->\n  <div *ngIf=\"this.mainEditorService.selectedClasse\" class=\"container listaAttributi\">\n    <div id=\"listaMet\" class=\"row collapse\" *ngIf=\"name\">\n      Lista metodi\n      <ul class=\"list-group\">\n        <li class=\"list-group-item\" *ngFor=\"let met of getMetodi()\">\n          <span>{{met.accesso}} {{met.staticString()}} {{met.nome}}({{met.paramToString()}}): {{met.tipoRitorno}}\n            <button class=\"btn btn-default\" (click)=\"removeMetodo(met.nome)\">\n               <span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\" title=\"Rimuovi\"></span>\n            </button>\n            <button class=\"btn btn-default\" (click)=\"modifyMetodo(met.nome)\" title=\"Modifica\">\n              <span class=\"glyphicon glyphicon-pencil\" aria-hidden=\"true\" title=\"Modifica\"></span>\n            </button>\n          </span>\n        </li>\n      </ul>\n    </div>\n  </div>\n  <div class=\"aggiungiMetodo\">\n    <div class=\"row\">\n      <button [disabled]=\"this.mainEditorService.isThereAMain()\" class=\"btn btn-default\" (click)=\"addMain()\">\n        <span class=\"glyphicon glyphicon-asterisk\" aria-hidden=\"true\"></span>&nbsp;Aggiungi Metodo Main\n      </button>\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 /* 317 */
 /***/ (function(module, exports) {
 
-module.exports = "<div [hidden]=\"mainEditorService.getActivityModeStatus()\" class=\"container-fluid toolbar classi\">\r\n  <div class=\"tipo\"> Classi </div>\r\n    <div class=\"icona\"><button (click)=\"addClasse()\" class=\"add addClasse\" title=\"Aggiungi classe\"></button></div>\r\n    <div class=\"icona\"><button (click)=\"addInterfaccia()\" class=\"add addInterfaccia\" title=\"Aggiungi interfaccia\"></button></div>\r\n    <div class=\"icona\"><button (click)=\"addAstratta()\" class=\"add addAstratta\" title=\"Aggiungi classe astratta\"></button></div>\r\n\r\n  <div class=\"tipo\"> Connettori </div>\r\n    <div class=\"icona\"><button (click)=\"addImplementazione()\" class=\"add addImplementazione freccia\" title=\"Aggiungi implementazione\"></button></div>\r\n    <div class=\"icona\"><button (click)=\"addGeneralizzazione()\" class=\"add addGeneralizzazione freccia\" title=\"Aggiungi generalizzazione\"></button></div>\r\n\r\n  <div class=\"tipo\"> Commenti </div>\r\n    <div class=\"icona\"><button (click)=\"addCommento()\" class=\"add addCommento\" title=\"Agiungi commento\"></button></div>\r\n    <div class=\"icona\"><button (click)=\"addAssociazione()\" class=\"add addAssociazione freccia\" title=\"Aggiungi associazione\"></button></div>\r\n</div>\r\n<div [hidden]=\"!mainEditorService.getActivityModeStatus()\" class=\"container-fluid toolbar activity\">\r\n  <div class=\"tipo\"> Activity </div>\r\n    <div class=\"icona\"><button [disabled]=\"this.activityService.start()\" (click)=\"addStart()\" class=\"add addStart\" title=\"Aggiungi start\"></button></div>\r\n    <div class=\"icona\"><button (click)=\"addEnd()\" class=\"add addEnd\" title=\"Aggiungi End\"></button></div>\r\n    <div class=\"icona\"><button (click)=\"addActivityShape()\" class=\"add addAttivita\" title=\"Aggiungi azione\"></button></div>\r\n    <div class=\"icona\"><button (click)=\"addActivityForShape()\" class=\"add addAttivitaFor\" title=\"Richiama l'attività/azione \"></button></div>\r\n    <div class=\"icona\"><button (click)=\"addRettangoloAngolo()\" class=\"add addRettangoloAngolo\" title=\"Aggiungi attività \"></button></div>\r\n    <div class=\"icona\"><button (click)=\"addConnector()\" class=\"add addConnettore\" title=\"Aggiungi connettore\"></button></div>\r\n    <div class=\"icona\"><button (click)=\"addDecision()\" class=\"add addDecision\" title=\"Aggiungi decisione\"></button></div>\r\n    <div class=\"icona\"><button (click)=\"addEndDecision()\" class=\"add addEndDecision\" title=\"Aggiungi fine decisione\"></button></div>\r\n</div>\r\n"
+module.exports = "<div [hidden]=\"mainEditorService.getActivityModeStatus()\" class=\"container-fluid toolbar classi\">\n  <div class=\"tipo\"> Classi </div>\n    <div class=\"icona\"><button (click)=\"addClasse()\" class=\"add addClasse\" title=\"Aggiungi classe\"></button></div>\n    <div class=\"icona\"><button (click)=\"addInterfaccia()\" class=\"add addInterfaccia\" title=\"Aggiungi interfaccia\"></button></div>\n    <div class=\"icona\"><button (click)=\"addAstratta()\" class=\"add addAstratta\" title=\"Aggiungi classe astratta\"></button></div>\n\n  <div class=\"tipo\"> Connettori </div>\n    <div class=\"icona\"><button (click)=\"addImplementazione()\" class=\"add addImplementazione freccia\" title=\"Aggiungi implementazione\"></button></div>\n    <div class=\"icona\"><button (click)=\"addGeneralizzazione()\" class=\"add addGeneralizzazione freccia\" title=\"Aggiungi generalizzazione\"></button></div>\n\n  <div class=\"tipo\"> Commenti </div>\n    <div class=\"icona\"><button (click)=\"addCommento()\" class=\"add addCommento\" title=\"Agiungi commento\"></button></div>\n    <div class=\"icona\"><button (click)=\"addAssociazione()\" class=\"add addAssociazione freccia\" title=\"Aggiungi associazione\"></button></div>\n</div>\n<div [hidden]=\"!mainEditorService.getActivityModeStatus()\" class=\"container-fluid toolbar activity\">\n  <div class=\"tipo\"> Activity </div>\n    <div class=\"icona\"><button [disabled]=\"this.activityService.start()\" (click)=\"addStart()\" class=\"add addStart\" title=\"Aggiungi start\"></button></div>\n    <div class=\"icona\"><button (click)=\"addEnd()\" class=\"add addEnd\" title=\"Aggiungi End\"></button></div>\n    <div class=\"icona\"><button (click)=\"addActivityShape()\" class=\"add addAttivita\" title=\"Aggiungi azione\"></button></div>\n    <div class=\"icona\"><button (click)=\"addActivityForShape()\" class=\"add addAttivitaFor\" title=\"Richiama l'attività/azione \"></button></div>\n    <div class=\"icona\"><button (click)=\"addRettangoloAngolo()\" class=\"add addRettangoloAngolo\" title=\"Aggiungi attività \"></button></div>\n    <div class=\"icona\"><button (click)=\"addConnector()\" class=\"add addConnettore\" title=\"Aggiungi connettore\"></button></div>\n    <div class=\"icona\"><button (click)=\"addDecision()\" class=\"add addDecision\" title=\"Aggiungi decisione\"></button></div>\n    <div class=\"icona\"><button (click)=\"addEndDecision()\" class=\"add addEndDecision\" title=\"Aggiungi fine decisione\"></button></div>\n</div>\n"
 
 /***/ }),
 /* 318 */
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"paper\"></div>\r\n<div class=\"toolbar\">\r\n  <app-toolbar></app-toolbar>\r\n\r\n</div>\r\n<div [hidden]=\"!selectedCell\" class=\"editClass\">\r\n    <class-menu [hidden]=\"mainEditorService.getActivityModeStatus()\"></class-menu>\r\n</div>\r\n<div class=\"editClass\">\r\n  <activity-menu [hidden]=\"!mainEditorService.getActivityModeStatus()\"></activity-menu>\r\n</div>\r\n"
+module.exports = "<div id=\"paper\"></div>\n<div class=\"toolbar\">\n  <app-toolbar></app-toolbar>\n\n</div>\n<div [hidden]=\"!selectedCell\" class=\"editClass\">\n    <class-menu [hidden]=\"mainEditorService.getActivityModeStatus()\"></class-menu>\n</div>\n<div class=\"editClass\">\n  <activity-menu [hidden]=\"!mainEditorService.getActivityModeStatus()\"></activity-menu>\n</div>\n"
 
 /***/ }),
 /* 319 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"dropdown\" #menuFile>\r\n  <button class=\"btn btn-default dropdown-toggle tmp-disable\" type=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">\r\n    File\r\n    <span class=\"caret\"></span>\r\n  </button>\r\n  <ul class=\"dropdown-menu\" aria-labelledby=\"dropdownMenu1\">\r\n    <li><a href=\"#\" >Salva</a></li>\r\n    <li><a (click)=\"esporta()\" href=\"#\" >Esporta</a></li>\r\n    <li>\r\n      <input id=\"upload\" type=\"file\" class=\"custom-file-input\" (change)=\"importa($event)\" placeholder=\"Upload file\" accept=\".json\">\r\n      <a href=\"#\" onclick=\"$('input[id=upload]').click();\">Importa progetto </a>\r\n    </li>\r\n    <li><a href=\"#\" (click)=\"genera()\" >Genera codice</a></li>\r\n    <li><a href=\"#\" >Salva template</a></li>\r\n    <li><a href=\"#\" >Chiudi</a></li>\r\n  </ul>\r\n</div>\r\n\r\n"
+module.exports = "<div class=\"dropdown\" #menuFile>\n  <button class=\"btn btn-default dropdown-toggle tmp-disable\" type=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">\n    File\n    <span class=\"caret\"></span>\n  </button>\n  <ul class=\"dropdown-menu\" aria-labelledby=\"dropdownMenu1\">\n    <li><a href=\"#\" >Salva</a></li>\n    <li><a (click)=\"esporta()\" href=\"#\" >Esporta</a></li>\n    <li>\n      <input id=\"upload\" type=\"file\" class=\"custom-file-input\" (change)=\"importa($event)\" placeholder=\"Upload file\" accept=\".json\">\n      <a href=\"#\" onclick=\"$('input[id=upload]').click();\">Importa progetto </a>\n    </li>\n    <li><a href=\"#\" (click)=\"genera()\" >Genera codice</a></li>\n    <li><a href=\"#\" >Salva template</a></li>\n    <li><a href=\"#\" >Chiudi</a></li>\n  </ul>\n</div>\n\n"
 
 /***/ }),
 /* 320 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"dropdown\" #menuLayer>\r\n  <button class=\"btn btn-default dropdown-toggle tmp-disable\" type=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">\r\n    Layer\r\n    <span class=\"caret\"></span>\r\n  </button>\r\n  <ul class=\"dropdown-menu\" aria-labelledby=\"dropdownMenu1\">\r\n    <li><a href=\"#\" >Aggiungi laver</a></li>\r\n    <li><a href=\"#\" >Lista layer</a></li>\r\n    <li><a href=\"#\" >Rinomina laver</a></li>\r\n    <li><a href=\"#\" >Elimina layer</a></li>\r\n  </ul>\r\n</div>\r\n"
+module.exports = "<div class=\"dropdown\" #menuLayer>\n  <button class=\"btn btn-default dropdown-toggle tmp-disable\" type=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">\n    Layer\n    <span class=\"caret\"></span>\n  </button>\n  <ul class=\"dropdown-menu\" aria-labelledby=\"dropdownMenu1\">\n    <li><a href=\"#\" >Aggiungi laver</a></li>\n    <li><a href=\"#\" >Lista layer</a></li>\n    <li><a href=\"#\" >Rinomina laver</a></li>\n    <li><a href=\"#\" >Elimina layer</a></li>\n  </ul>\n</div>\n"
 
 /***/ }),
 /* 321 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"dropdown\" #menuModifica>\r\n  <button class=\"btn btn-default dropdown-toggle tmp-disable\" type=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">\r\n    Modifica\r\n    <span class=\"caret\"></span>\r\n  </button>\r\n  <ul class=\"dropdown-menu\" aria-labelledby=\"dropdownMenu1\">\r\n    <li><a (click)=\"doUndo()\" >Annulla</a></li>\r\n    <li><a  >Ripristina</a></li>\r\n    <li><a (click)=\"doCut()\" >Taglia</a></li>\r\n    <li><a  (click)=\"doCopy()\" >Copia</a></li>\r\n    <li><a  (click)=\"doPaste()\" >Incolla</a></li>\r\n    <li><a (click)=\"doElimina()\" >Elimina</a></li>\r\n    <li><a  (click)=\"doZoomIn()\" >Zoom In</a></li>\r\n    <li><a  (click)=\"doZoomOut()\" >Zoom Out</a></li>\r\n  </ul>\r\n</div>\r\n"
+module.exports = "<div class=\"dropdown\" #menuModifica>\n  <button class=\"btn btn-default dropdown-toggle tmp-disable\" type=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">\n    Modifica\n    <span class=\"caret\"></span>\n  </button>\n  <ul class=\"dropdown-menu\" aria-labelledby=\"dropdownMenu1\">\n    <li><a (click)=\"doUndo()\" >Annulla</a></li>\n    <li><a  >Ripristina</a></li>\n    <li><a (click)=\"doCut()\" >Taglia</a></li>\n    <li><a  (click)=\"doCopy()\" >Copia</a></li>\n    <li><a  (click)=\"doPaste()\" >Incolla</a></li>\n    <li><a (click)=\"doElimina()\" >Elimina</a></li>\n    <li><a  (click)=\"doZoomIn()\" >Zoom In</a></li>\n    <li><a  (click)=\"doZoomOut()\" >Zoom Out</a></li>\n  </ul>\n</div>\n"
 
 /***/ }),
 /* 322 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container-fluid\">\r\n      <form name=\"form\"  #changeEmailForm=\"ngForm\" (submit)=\"changeEmail()\">\r\n        <div class=\"form-group has-warning\" >\r\n          <div class=\"input-group\">\r\n            <span class=\"input-group-addon\">\r\n              <i class=\"glyphicon glyphicon-envelope\"></i>\r\n            </span>  \r\n            <input type=\"email\" class=\"form-control\" placeholder=\"Email\" required\r\n            ngModel email\r\n            [(ngModel)]=\"newEmail\" name=\"email\"\r\n            id=\"email\" />\r\n          </div>\r\n          <input type=\"submit\" class=\"btn btn-warning\" value=\"Modifica email\" [disabled]=\"!changeEmailForm.form.valid\"/> \r\n        </div></form>\r\n</div>\r\n"
+module.exports = "<div class=\"container-fluid\">\n      <form name=\"form\"  #changeEmailForm=\"ngForm\" (submit)=\"changeEmail()\">\n        <div class=\"form-group has-warning\" >\n          <div class=\"input-group\">\n            <span class=\"input-group-addon\">\n              <i class=\"glyphicon glyphicon-envelope\"></i>\n            </span>  \n            <input type=\"email\" class=\"form-control\" placeholder=\"Email\" required\n            ngModel email\n            [(ngModel)]=\"newEmail\" name=\"email\"\n            id=\"email\" />\n          </div>\n          <input type=\"submit\" class=\"btn btn-warning\" value=\"Modifica email\" [disabled]=\"!changeEmailForm.form.valid\"/> \n        </div></form>\n</div>\n"
 
 /***/ }),
 /* 323 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container-fluid\">\r\n      <form name=\"form\"  #changePswForm=\"ngForm\" (submit)=\"changePsw()\">\r\n        <div class=\"form-group has-warning\" >\r\n          <div class=\"input-group\">\r\n            <span class=\"input-group-addon\">\r\n              <i class=\"glyphicon glyphicon-lock\"></i>\r\n            </span>  \r\n            <input type=\"password\" class=\"form-control\" name=\"password\" required placeholder=\"Password\"\r\n            [(ngModel)]=\"newPassword\"\r\n            id=\"password\"/>\r\n          </div>\r\n          <input type=\"submit\" class=\"btn btn-warning\" value=\"Modifica passowrd\" [disabled]=\"!changePswForm.form.valid\"/> \r\n        </div></form>\r\n</div>"
+module.exports = "<div class=\"container-fluid\">\n      <form name=\"form\"  #changePswForm=\"ngForm\" (submit)=\"changePsw()\">\n        <div class=\"form-group has-warning\" >\n          <div class=\"input-group\">\n            <span class=\"input-group-addon\">\n              <i class=\"glyphicon glyphicon-lock\"></i>\n            </span>  \n            <input type=\"password\" class=\"form-control\" name=\"password\" required placeholder=\"Password\"\n            [(ngModel)]=\"newPassword\"\n            id=\"password\"/>\n          </div>\n          <input type=\"submit\" class=\"btn btn-warning\" value=\"Modifica passowrd\" [disabled]=\"!changePswForm.form.valid\"/> \n        </div></form>\n</div>"
 
 /***/ }),
 /* 324 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container-fluid\">\r\n      <form name=\"form\"  #changeUsernameForm=\"ngForm\" (submit)=\"changeUsername()\">\r\n        <div class=\"form-group has-warning\" >\r\n          <div class=\"input-group\">\r\n            <span class=\"input-group-addon\">\r\n              <i class=\"glyphicon glyphicon-user\"></i>\r\n            </span>  \r\n            <input type=\"text\" class=\"form-control\" placeholder=\"Username\" required\r\n            [(ngModel)]=\"newUsername\" name=\"username\"\r\n            id=\"username\" />\r\n          </div>\r\n          <input type=\"submit\" class=\"btn btn-warning\" value=\"Modifica username\" [disabled]=\"!changeUsernameForm.form.valid\"/> \r\n        </div></form>\r\n</div>"
+module.exports = "<div class=\"container-fluid\">\n      <form name=\"form\"  #changeUsernameForm=\"ngForm\" (submit)=\"changeUsername()\">\n        <div class=\"form-group has-warning\" >\n          <div class=\"input-group\">\n            <span class=\"input-group-addon\">\n              <i class=\"glyphicon glyphicon-user\"></i>\n            </span>  \n            <input type=\"text\" class=\"form-control\" placeholder=\"Username\" required\n            [(ngModel)]=\"newUsername\" name=\"username\"\n            id=\"username\" />\n          </div>\n          <input type=\"submit\" class=\"btn btn-warning\" value=\"Modifica username\" [disabled]=\"!changeUsernameForm.form.valid\"/> \n        </div></form>\n</div>"
 
 /***/ }),
 /* 325 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container-fluid\">\r\n    <button type=\"button\" class=\"btn btn-warning\" data-toggle=\"collapse\" data-target=\"#confirmation\">Elimina profilo</button>\r\n    <div id=\"confirmation\" class=\"collapse\">\r\n    <div> Sei sicuro?</div>\r\n    <div>\r\n        <button type=\"button\" class=\"btn btn-success choice\" data-toggle=\"collapse\" (click)=deleteProfile()>Si</button>\r\n        <button type=\"button\" class=\"btn btn-danger choice\" data-toggle=\"collapse\" data-target=\"#confirmation\">No</button>\r\n    </div>    \r\n    </div>\r\n</div>"
+module.exports = "<div class=\"container-fluid\">\n    <button type=\"button\" class=\"btn btn-warning\" data-toggle=\"collapse\" data-target=\"#confirmation\">Elimina profilo</button>\n    <div id=\"confirmation\" class=\"collapse\">\n    <div> Sei sicuro?</div>\n    <div>\n        <button type=\"button\" class=\"btn btn-success choice\" data-toggle=\"collapse\" (click)=deleteProfile()>Si</button>\n        <button type=\"button\" class=\"btn btn-danger choice\" data-toggle=\"collapse\" data-target=\"#confirmation\">No</button>\n    </div>    \n    </div>\n</div>"
 
 /***/ }),
 /* 326 */
 /***/ (function(module, exports) {
 
-module.exports = "<p>\r\n  proj-list works!\r\n</p>\r\n"
+module.exports = "<p>\n  proj-list works!\n</p>\n"
 
 /***/ }),
 /* 327 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container-fluid\"> \r\n  <div>\r\n    <i class=\"glyphicon glyphicon-remove-sign close\"></i>\r\n  </div>\r\n  <div class=\"col-md-4 col-xs-4 accountSetting\">\r\n    <div class=\"col\">\r\n      <h3> Gestione profilo</h3>\r\n      <hr/>\r\n      <app-edit-username></app-edit-username>\r\n      <hr/>\r\n      <app-edit-email></app-edit-email>\r\n      <hr/>\r\n      <app-edit-psw></app-edit-psw>\r\n      <hr/>\r\n      <app-erase-profile></app-erase-profile>\r\n      <hr/>     \r\n    </div>\r\n  </div>\r\n  <div class=\"col-md-8 col-xs-8 list\">\r\n    <h3>Lista progetti</h3>\r\n    <app-proj-list></app-proj-list>\r\n  </div>\r\n</div>\r\n\r\n"
+module.exports = "<div class=\"container-fluid\">\n  <div>\n    <div class=\"container-fluid\">\n    <button type=\"button\" class=\"btn btn-warning\" data-toggle=\"collapse\" data-target=\"#confirmation\">Logout</button>\n    <div id=\"confirmation\" class=\"collapse\">\n    <div> Sei sicuro?</div>\n    <div>\n        <button type=\"button\" class=\"btn btn-success choice\" data-toggle=\"collapse\" (click)=accountService.logout()>Si</button>\n        <button type=\"button\" class=\"btn btn-danger choice\" data-toggle=\"collapse\" data-target=\"#confirmation\">No</button>\n    </div>\n    </div>\n</div>\n    <i class=\"glyphicon glyphicon-remove-sign close\"></i>\n  </div>\n  <div class=\"col-md-4 col-xs-4 accountSetting\">\n    <div class=\"col\">\n      <h3> Gestione profilo</h3>\n      <hr/>\n      <app-edit-username></app-edit-username>\n      <hr/>\n      <app-edit-email></app-edit-email>\n      <hr/>\n      <app-edit-psw></app-edit-psw>\n      <hr/>\n      <app-erase-profile></app-erase-profile>\n      <hr/>\n    </div>\n  </div>\n  <div class=\"col-md-8 col-xs-8 list\">\n    <h3>Lista progetti</h3>\n    <app-proj-list></app-proj-list>\n  </div>\n</div>\n\n"
 
 /***/ }),
 /* 328 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"dropdown\" #menuProfilo id=\"qwerty\">\r\n  <button class=\"btn btn-default\" data-toggle=\"collapse\" id=\"menuProfilo\" href=\"#manage-profile\">\r\n    <i class=\"glyphicon glyphicon-user\"></i> &nbsp;{{accountService.username}}\r\n    <span class=\"caret\"></span>\r\n  </button>\r\n  <div >\r\n  <app-manage-profile class=\"collapse\" id=\"manage-profile\"></app-manage-profile></div>\r\n</div>\r\n"
+module.exports = "<div class=\"dropdown\" #menuProfilo id=\"qwerty\">\n  <button class=\"btn btn-default\" data-toggle=\"collapse\" id=\"menuProfilo\" href=\"#manage-profile\">\n    <i class=\"glyphicon glyphicon-user\"></i> &nbsp;{{accountService.username}}\n    <span class=\"caret\"></span>\n  </button>\n  <div >\n  <app-manage-profile class=\"collapse\" id=\"manage-profile\"></app-manage-profile></div>\n</div>\n"
 
 /***/ }),
 /* 329 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"dropdown\" #menuProgetto>\r\n  <button class=\"btn btn-default dropdown-toggle tmp-disable\" type=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">\r\n    Progetto\r\n    <span class=\"caret\"></span>\r\n  </button>\r\n  <ul class=\"dropdown-menu\" aria-labelledby=\"dropdownMenu1\">\r\n    <li><a href=\"#\" >Nuovo</a></li>\r\n    <li><a href=\"#\" >Apri progetto</a></li>\r\n    <li><a href=\"#\" >Elimina progetto</a></li>\r\n  </ul>\r\n</div>\r\n"
+module.exports = "<div class=\"dropdown\" #menuProgetto>\n  <button class=\"btn btn-default dropdown-toggle tmp-disable\" type=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">\n    Progetto\n    <span class=\"caret\"></span>\n  </button>\n  <ul class=\"dropdown-menu\" aria-labelledby=\"dropdownMenu1\">\n    <li><a href=\"#\" >Nuovo</a></li>\n    <li><a href=\"#\" >Apri progetto</a></li>\n    <li><a href=\"#\" >Elimina progetto</a></li>\n  </ul>\n</div>\n"
 
 /***/ }),
 /* 330 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"dropdown\" #menuTemplate>\r\n  <button class=\"btn btn-default dropdown-toggle tmp-disable\" type=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">\r\n    Template\r\n    <span class=\"caret\"></span>\r\n  </button>\r\n  <ul class=\"dropdown-menu\" aria-labelledby=\"dropdownMenu1\">\r\n    <li><a href=\"#\" >Aggiungi template</a></li>\r\n    <li><a href=\"#\" >Elimina template</a></li>\r\n  </ul>\r\n</div>\r\n"
+module.exports = "<div class=\"dropdown\" #menuTemplate>\n  <button class=\"btn btn-default dropdown-toggle tmp-disable\" type=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">\n    Template\n    <span class=\"caret\"></span>\n  </button>\n  <ul class=\"dropdown-menu\" aria-labelledby=\"dropdownMenu1\">\n    <li><a href=\"#\" >Aggiungi template</a></li>\n    <li><a href=\"#\" >Elimina template</a></li>\n  </ul>\n</div>\n"
 
 /***/ }),
 /* 331 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\".container-fluid barra-menu\">\r\n  <div class=\"rowEdit\">\r\n    <div class=\"logoEdit\">\r\n      <img src=\"assets/images/logo.png\" alt=\"logo\">\r\n      <div class=\"logoText\">SWEDesigner</div>\r\n    </div>\r\n    <div class=\"menu btn\">  <app-file></app-file>  </div>\r\n    <div class=\"menu btn\">  <app-progetto></app-progetto>  </div>\r\n    <div class=\"menu btn\">  <app-modifica></app-modifica>  </div>\r\n    <div class=\"menu btn\">  <app-template></app-template>  </div>\r\n    <div class=\"menu btn\">  <app-layer></app-layer>  </div>\r\n    <div class=\"menu btn\">  <app-profilo></app-profilo>  </div>\r\n  </div>\r\n</div>\r\n"
+module.exports = "<div class=\".container-fluid barra-menu\">\n  <div class=\"rowEdit\">\n    <div class=\"logoEdit\">\n      <img src=\"assets/images/logo.png\" alt=\"logo\">\n      <div class=\"logoText\">SWEDesigner</div>\n    </div>\n    <div class=\"menu btn\">  <app-file></app-file>  </div>\n    <div class=\"menu btn\">  <app-progetto></app-progetto>  </div>\n    <div class=\"menu btn\">  <app-modifica></app-modifica>  </div>\n    <div class=\"menu btn\">  <app-template></app-template>  </div>\n    <div class=\"menu btn\">  <app-layer></app-layer>  </div>\n    <div class=\"menu btn\">  <app-profilo></app-profilo>  </div>\n  </div>\n</div>\n"
 
 /***/ }),
 /* 332 */
 /***/ (function(module, exports) {
 
-module.exports = "<!-- component padre che racchiude gli elementi del menù -->\r\n<div class=\".container-fluid\">\r\n<app-menu></app-menu>\r\n<div class=\"row\">\r\n  <!-- component padre che racchiude gli elementi dell'editor -->\r\n  <div class=\"col-md-9 col-xs-9 editor\">\r\n    <app-editor></app-editor>\r\n  </div>\r\n  <!-- component  che racchiude gli elementi del acrivity frame, la quale rappresenta il flusso del programma -->\r\n  <div class=\"col-md-3 col-xs-3 activityframe\">\r\n    <app-activity-frame></app-activity-frame>\r\n  </div>\r\n</div>\r\n"
+module.exports = "<!-- component padre che racchiude gli elementi del menù -->\n<div class=\".container-fluid\">\n<app-menu></app-menu>\n<div class=\"row\">\n  <!-- component padre che racchiude gli elementi dell'editor -->\n  <div class=\"col-md-9 col-xs-9 editor\">\n    <app-editor></app-editor>\n  </div>\n  <!-- component  che racchiude gli elementi del acrivity frame, la quale rappresenta il flusso del programma -->\n  <div class=\"col-md-3 col-xs-3 activityframe\">\n    <app-activity-frame></app-activity-frame>\n  </div>\n</div>\n"
 
 /***/ }),
 /* 333 */
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"mainDiv\" class=\"container col-xs-6 col-md-4\">\r\n  <div class=\"sub-container\">\r\n    <div class=\"row\" >      \r\n      <img src=\"assets/images/logo.png\" alt=\"logo\" class=\"col-xs-6\" />\r\n      <span class=\"text\"> SWEDesigner </span>\r\n    </div> \r\n    <div>  \r\n      <h3 class=\"text-warning\">Password dimenticata</h3>\r\n      <form name=\"form\" (submit)=\"tryGetNewPassword($event)\" #forgotPswForm=\"ngForm\">\r\n        <div class=\"form-group has-warning\">\r\n          <label for=\"email\" class=\"control-label\">Email</label>\r\n          <div class=\"input-group\">\r\n            <span class=\"input-group-addon\">\r\n              <i class=\"glyphicon glyphicon-envelope\"></i>\r\n            </span>\r\n            <input type=\"email\" class=\"form-control\" name=\"email\" required placeholder=\"Email\"\r\n            id=\"email\"\r\n            ngModel email\r\n            [(ngModel)]=\"accountService.email\"/>\r\n            <!-- <div class=\"help-block\">Email is required</div> -->\r\n          </div>\r\n        </div>\r\n        <div class=\"form-group\">        \r\n        </div>\r\n        <div class=\"form-group\">\r\n          <input type=\"submit\" class=\"btn btn-warning\" value=\"Invia\" [disabled]=\"!forgotPswForm.form.valid\"/>       \r\n          <button class=\"btn btn-warning\" id=\"back\" (click)='accountService.redirectComponent(\"home\")'>Back</button> \r\n        </div>\r\n      </form>\r\n    </div>    \r\n  </div>\r\n</div>"
+module.exports = "<div id=\"mainDiv\" class=\"container col-xs-6 col-md-4\">\n  <div class=\"sub-container\">\n    <div class=\"row\" >      \n      <img src=\"assets/images/logo.png\" alt=\"logo\" class=\"col-xs-6\" />\n      <span class=\"text\"> SWEDesigner </span>\n    </div> \n    <div>  \n      <h3 class=\"text-warning\">Password dimenticata</h3>\n      <form name=\"form\" (submit)=\"tryGetNewPassword($event)\" #forgotPswForm=\"ngForm\">\n        <div class=\"form-group has-warning\">\n          <label for=\"email\" class=\"control-label\">Email</label>\n          <div class=\"input-group\">\n            <span class=\"input-group-addon\">\n              <i class=\"glyphicon glyphicon-envelope\"></i>\n            </span>\n            <input type=\"email\" class=\"form-control\" name=\"email\" required placeholder=\"Email\"\n            id=\"email\"\n            ngModel email\n            [(ngModel)]=\"accountService.email\"/>\n            <!-- <div class=\"help-block\">Email is required</div> -->\n          </div>\n        </div>\n        <div class=\"form-group\">        \n        </div>\n        <div class=\"form-group\">\n          <input type=\"submit\" class=\"btn btn-warning\" value=\"Invia\" [disabled]=\"!forgotPswForm.form.valid\"/>       \n          <button class=\"btn btn-warning\" id=\"back\" (click)='accountService.redirectComponent(\"home\")'>Back</button> \n        </div>\n      </form>\n    </div>    \n  </div>\n</div>"
 
 /***/ }),
 /* 334 */
 /***/ (function(module, exports) {
 
-module.exports = " <div class=\"container col-xs-6 col-md-4\">\r\n  <div class=\"sub-container\">\r\n    <!-- Logo -->\r\n    <div class=\"row\" >      \r\n      <img src=\"assets/images/logo.png\" alt=\"logo\" class=\"col-xs-6\" />\r\n      <span id=\"content\" class=\"text hide\"> SWEDesigner </span>\r\n    </div> \r\n    <!-- Form -->\r\n    <div class=\"box\">  \r\n      <h2 class=\"text-warning\">Login</h2>\r\n      <form name=\"form\"  #loginForm=\"ngForm\" (submit)=\"loginUser($event)\">\r\n        <div class=\"form-group has-warning\" >\r\n          <label class=\"control-label\" for=\"email\"> Email </label>\r\n          <div class=\"input-group\">\r\n            <span class=\"input-group-addon\">\r\n              <i class=\"glyphicon glyphicon-envelope\"></i>\r\n            </span>  \r\n            <input type=\"email\" class=\"form-control\" placeholder=\"Email\" required\r\n            ngModel email\r\n            [(ngModel)]=\"accountService.email\" name=\"email\"\r\n            id=\"email\" />\r\n          </div>\r\n        </div>\r\n        <div class=\"form-group has-warning\">\r\n          <label for=\"password\" class=\"control-label\">Password</label>\r\n          <div class=\"input-group\">\r\n            <span class=\"input-group-addon\">\r\n              <i class=\"glyphicon glyphicon-lock\"></i>\r\n            </span> \r\n            <input type=\"password\" class=\"form-control\" name=\"password\" required placeholder=\"Password\"\r\n            [(ngModel)]=\"accountService.password\"\r\n            id=\"password\"/>\r\n          </div>\r\n        </div>\r\n        <div class=\"form-group\">\r\n          <input type=\"submit\" class=\"btn btn-warning\" value=\"Login\" [disabled]=\"!loginForm.form.valid\"/> \r\n          <a class=\"btn btn-link text-warning .warning\t\" (click)='accountService.redirectComponent(\"registrazione\")'>Registrati</a>\r\n          <a class=\"btn btn-link text-warning\" (click)='accountService.redirectComponent(\"passwordDimenticata\")'>Password dimenticata</a>\r\n        </div>\r\n      </form>\r\n    </div>    \r\n  </div>\r\n</div> \r\n"
+module.exports = " <div class=\"container col-xs-6 col-md-4\">\n  <div class=\"sub-container\">\n    <!-- Logo -->\n    <div class=\"row\" >\n      <img src=\"assets/images/logo.png\" alt=\"logo\" class=\"col-xs-6\" />\n      <span id=\"content\" class=\"text hide\"> SWEDesigner </span>\n    </div>\n    <!-- Form -->\n    <div class=\"box\">\n      <h2 class=\"text-warning\">Login</h2>\n      <form name=\"form\"  #loginForm=\"ngForm\" (submit)=\"loginUser($event)\">\n        <div class=\"form-group has-warning\" >\n          <label class=\"control-label\" for=\"email\"> Email </label>\n          <div class=\"input-group\">\n            <span class=\"input-group-addon\">\n              <i class=\"glyphicon glyphicon-envelope\"></i>\n            </span>\n            <input type=\"email\" class=\"form-control\" placeholder=\"Email\" required\n            ngModel email\n            [(ngModel)]=\"accountService.email\" name=\"email\"\n            id=\"email\" />\n          </div>\n        </div>\n        <div class=\"form-group has-warning\">\n          <label for=\"password\" class=\"control-label\">Password</label>\n          <div class=\"input-group\">\n            <span class=\"input-group-addon\">\n              <i class=\"glyphicon glyphicon-lock\"></i>\n            </span>\n            <input type=\"password\" class=\"form-control\" name=\"password\" required placeholder=\"Password\"\n            [(ngModel)]=\"accountService.password\"\n            id=\"password\"/>\n          </div>\n        </div>\n        <div class=\"form-group\">\n          <input type=\"submit\" class=\"btn btn-warning\" value=\"Login\" [disabled]=\"!loginForm.form.valid\"/>\n          <a class=\"btn btn-link text-warning .warning\t\" (click)='accountService.redirectComponent(\"registrazione\")'>Registrati</a>\n          <a class=\"btn btn-link text-warning\" (click)='accountService.redirectComponent(\"passwordDimenticata\")'>Password dimenticata</a>\n        </div>\n      </form>\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 /* 335 */
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"mainDiv\" class=\"container col-xs-6 col-md-4\">\r\n  <div class=\"sub-container\">\r\n    <div class=\"row\" >      \r\n      <img src=\"assets/images/logo.png\" alt=\"logo\" class=\"col-xs-6\" />\r\n      <span class=\"text\"> SWEDesigner </span>\r\n    </div> \r\n    <div>  \r\n      <h2 class=\"text-warning\">Registrazione</h2>\r\n      <form name=\"form\" (submit)=\"tryRegistration($event)\" #registrationForm=\"ngForm\">\r\n        <div class=\"form-group has-warning\">\r\n          <label for=\"username\" class=\"control-label\">Username</label>\r\n          <div class=\"input-group\">\r\n            <span class=\"input-group-addon\">\r\n              <i class=\"glyphicon glyphicon-user\"></i>\r\n            </span>  \r\n            <input type=\"text\" class=\"form-control\" name=\"username\" required placeholder=\"Username\" \r\n            id=\"username\"\r\n            [(ngModel)]=\"accountService.username\"/>      \r\n          </div>\r\n        </div>\r\n        <div class=\"form-group has-warning\">\r\n          <label for=\"email\" class=\"control-label\">Email</label>\r\n          <div class=\"input-group\">\r\n            <span class=\"input-group-addon\">\r\n              <i class=\"glyphicon glyphicon-envelope\"></i>\r\n            </span>  \r\n            <input type=\"email\" class=\"form-control\" placeholder=\"Email\" name=\"email\" required\r\n            id=\"email\"\r\n            ngModel email\r\n            [(ngModel)]=\"accountService.email\"/>\r\n          </div>        \r\n        </div>\r\n        <div class=\"form-group has-warning\">\r\n          <label for=\"password\" class=\"control-label\">Password</label>\r\n          <div class=\"input-group\">\r\n            <span class=\"input-group-addon\">\r\n              <i class=\"glyphicon glyphicon-lock\"></i>\r\n            </span> \r\n            <input type=\"password\" class=\"form-control\" name=\"password\" required placeholder=\"Password\"\r\n            id=\"password\"\r\n            [(ngModel)]=\"accountService.password\"/>\r\n          </div>\r\n        </div>\r\n        <div class=\"form-group\">\r\n          <input type=\"submit\" class=\"btn btn-warning\" value=\"Registrati\" id=\"submit\" [disabled]=\"!registrationForm.form.valid\"/> \r\n          <button class=\"btn btn-warning\" id=\"back\" (click)='accountService.redirectComponent(\"home\")'>Back</button>       \r\n        </div>\r\n      </form>\r\n    </div>    \r\n  </div>\r\n</div>\r\n\r\n\r\n"
+module.exports = "<div id=\"mainDiv\" class=\"container col-xs-6 col-md-4\">\n  <div class=\"sub-container\">\n    <div class=\"row\" >      \n      <img src=\"assets/images/logo.png\" alt=\"logo\" class=\"col-xs-6\" />\n      <span class=\"text\"> SWEDesigner </span>\n    </div> \n    <div>  \n      <h2 class=\"text-warning\">Registrazione</h2>\n      <form name=\"form\" (submit)=\"tryRegistration($event)\" #registrationForm=\"ngForm\">\n        <div class=\"form-group has-warning\">\n          <label for=\"username\" class=\"control-label\">Username</label>\n          <div class=\"input-group\">\n            <span class=\"input-group-addon\">\n              <i class=\"glyphicon glyphicon-user\"></i>\n            </span>  \n            <input type=\"text\" class=\"form-control\" name=\"username\" required placeholder=\"Username\" \n            id=\"username\"\n            [(ngModel)]=\"accountService.username\"/>      \n          </div>\n        </div>\n        <div class=\"form-group has-warning\">\n          <label for=\"email\" class=\"control-label\">Email</label>\n          <div class=\"input-group\">\n            <span class=\"input-group-addon\">\n              <i class=\"glyphicon glyphicon-envelope\"></i>\n            </span>  \n            <input type=\"email\" class=\"form-control\" placeholder=\"Email\" name=\"email\" required\n            id=\"email\"\n            ngModel email\n            [(ngModel)]=\"accountService.email\"/>\n          </div>        \n        </div>\n        <div class=\"form-group has-warning\">\n          <label for=\"password\" class=\"control-label\">Password</label>\n          <div class=\"input-group\">\n            <span class=\"input-group-addon\">\n              <i class=\"glyphicon glyphicon-lock\"></i>\n            </span> \n            <input type=\"password\" class=\"form-control\" name=\"password\" required placeholder=\"Password\"\n            id=\"password\"\n            [(ngModel)]=\"accountService.password\"/>\n          </div>\n        </div>\n        <div class=\"form-group\">\n          <input type=\"submit\" class=\"btn btn-warning\" value=\"Registrati\" id=\"submit\" [disabled]=\"!registrationForm.form.valid\"/> \n          <button class=\"btn btn-warning\" id=\"back\" (click)='accountService.redirectComponent(\"home\")'>Back</button>       \n        </div>\n      </form>\n    </div>    \n  </div>\n</div>\n\n\n"
 
 /***/ }),
 /* 336 */,
@@ -5158,7 +5198,7 @@ module.exports = "<div id=\"mainDiv\" class=\"container col-xs-6 col-md-4\">\r\n
 /* 374 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(123);
+module.exports = __webpack_require__(124);
 
 
 /***/ })

@@ -30,6 +30,7 @@ export class RegistrationComponent {
 
     this.accountService.register(this.accountService.username, this.accountService.email, this.accountService.password, (err)=>{
       if(!err){
+        this.accountService.makeCokie();
         alert("Registrazione effettuata con successo!");
         console.log("noerr");
         this.router.navigate(['/editor']);
@@ -42,12 +43,12 @@ export class RegistrationComponent {
     */
     /**
     * This call make the animation that allow to the content to apper from left to right and stop in the middle of the page
-    */    
+    */
     $("#mainDiv").css({left: $('#mainDiv').offset().left}).animate({"left":"50%"}, "slow");
     /**
     * This function make the animation that allow to the content of page to diasappear from right to left
     */
-    
-  } 
-  
+
+  }
+
 }

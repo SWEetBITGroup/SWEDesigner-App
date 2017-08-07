@@ -18,22 +18,32 @@ export class LoginComponent {
   * @param router used to create a new instantiation of Router
   * @param accountService used to create a new instantiation of AccountService
   */
+  cookieUser: string ;
   constructor(private router: Router, private accountService: AccountService) {
     /*Cookie.set('email', 'prova@Mail');
     Cookie.set('password', 'provapsw');
-    Cookie.set('username', 'gianfrancioschio'); 
+    Cookie.set('username', 'gianfrancioschio');
     this.accountService.email = Cookie.get('email');
     this.accountService.password = Cookie.get('password');
     this.accountService.username = Cookie.get('username');*/
   }
-  
-  
+
+
+  ngOnInit() {
+    this.cookieUser = Cookie.get('username');
+    if ( this.cookieUser ){
+      this.accountService.setParam(Cookie.get('username'),Cookie.get('email'),Cookie.get('password'));
+      this.accountService.setUserLoggedIn();
+      this.router.navigate(['/editor']);
+    }
+  }
+
   // e solo una funzione che logga sempre
   loginUserProva() {
     this.accountService.setUserLoggedIn();
     this.router.navigate(['/editor']);
   }
-  
+
   // funzione per login
   loginUser(e) {
     e.preventDefault();
@@ -47,11 +57,11 @@ export class LoginComponent {
       }
     });
   }
-  
-  ngAfterViewInit(){   
+
+  ngAfterViewInit(){
     /**
     * !IMPORANT the next function is just to add animation on the page
-    */      
+    */
     /**
     * This function just make a refresh of the page.
     */
@@ -71,15 +81,14 @@ export class LoginComponent {
     */
     function showElement() {
       $('img').addClass('rotate360');
-      $('.box').toggleClass('active');     
-      setInterval(        
-        function(){ 
+      $('.box').toggleClass('active');
+      setInterval(
+        function(){
           $('img').addClass('logo');
-          setInterval(        
+          setInterval(
             function(){ $('.text').removeClass('hide'); } , 400 );
-          }, 900); 
+          }, 900);
         }
-      }    
-      
+      }
+
     }
-    

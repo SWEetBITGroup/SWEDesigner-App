@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Headers, RequestOptions, RequestMethod, ResponseContentType }  from '@angular/http';
-import { Http, Response }           from '@angular/http';
+import { Http, Response } from '@angular/http';
 import { Router } from '@angular/router';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 
@@ -38,16 +38,16 @@ export class AccountService {
   /**
   * Send, by POST, data to server and catch its response.
   * This function is used for user's registration
-  * @param usr 
-  * @param mail 
-  * @param pwd 
+  * @param usr
+  * @param mail
+  * @param pwd
   */
   register(usr: String, mail: String, pwd: String, cb: Function){
     var err = false;
     let user = {
-      "username": Cookie.get('username'),
-      "email": Cookie.get('email'),
-      "pass": Cookie.get('password')
+      "username": usr,
+      "email": mail,
+      "pass": pwd
     }
     this.http.post('/insUsr', user,{
       method: RequestMethod.Post,
@@ -77,13 +77,13 @@ export class AccountService {
       let response = data.text();
       console.log(response);
     })
-  } 
+  }
   /**
   * Send, by POST, data to server and catch its response
   * This function is used for user's login
-  * @param email 
-  * @param pass 
-  * @param cb 
+  * @param email
+  * @param pass
+  * @param cb
   */
   checkLogin(email: String, pass: String, cb: Function){
     var err = false;
@@ -102,6 +102,7 @@ export class AccountService {
         console.log(response);
         this.setUserLoggedIn();
         this.setUsername(response.username);
+        this.makeCokie();
         cb(err);
       }
       else{
@@ -145,11 +146,39 @@ export class AccountService {
   * @param destination is the route destination component
   */
   redirectComponent(destination:string){
-    // location.reload();
     this.router.navigate(['/' + destination ]);
   }
   setUsername(usr: String){
     console.log(usr);
     this.username = usr;
+  }
+  /**
+   * This function make 3 cookie with the 3 user's information
+   */
+  makeCokie() {
+    Cookie.set('email', this.email);
+    Cookie.set('password', this.password);
+    Cookie.set('username', this.username);
+  }
+  /**
+   * This function set the 'AccountService' variables by the input information
+   * @param {string} user used to set the username
+   * @param {string} mail used to set the email
+   * @param {string} pwd  used to set the password
+   * @memberof AccountService
+   */
+  setParam(user: string, mail:string ,pwd: string) {
+    this.email = mail;
+    this.password = pwd;
+    this.username = user;
+  }
+  /**
+   * This funcion delete all cookie and make the user logout
+   */
+  logout(){
+    Cookie.deleteAll();
+    this.isUserLoggedIn = false;
+    this.setParam('', '', '');
+    this.redirectComponent('home');
   }
 }
