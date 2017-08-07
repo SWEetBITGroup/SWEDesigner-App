@@ -24,11 +24,8 @@ export class EditPswComponent {
   * This function change the password's value and reset the input box to null
   */
   changePsw() {
-    let oldPsw = this.accountService.password;
-    console.log(oldPsw + ',' + this.newPassword);
-    if (true) {
-      this.newPassword = '';
-      alert("Modifica effettuata");
-    }
+    let username = this.accountService.username;
+    let newPwd = this.newPassword;
+    this.accountService.changePwd(username, newPwd);
   }
 }

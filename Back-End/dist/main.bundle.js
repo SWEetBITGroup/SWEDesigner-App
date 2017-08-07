@@ -9,12 +9,183 @@ webpackJsonp([0,5],[
 /* 7 */,
 /* 8 */,
 /* 9 */,
-/* 10 */,
+/* 10 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng2_cookies_ng2_cookies__ = __webpack_require__(304);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng2_cookies_ng2_cookies___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_ng2_cookies_ng2_cookies__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AccountService; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+var AccountService = (function () {
+    /**
+    * Create an instantiation of AuthenticationGuard
+    * @param isUserLoggedIn to default that variable is set to false
+    * @param router used to create a new instantiation of Router
+    * @param http used to create a new instantiation of Http
+    */
+    function AccountService(router, http) {
+        this.router = router;
+        this.http = http;
+        this.isUserLoggedIn = false;
+    }
+    /**
+    * Send, by POST, data to server and catch its response.
+    * This function is used for user's registration
+    * @param usr
+    * @param mail
+    * @param pwd
+    */
+    AccountService.prototype.register = function (usr, mail, pwd, cb) {
+        var _this = this;
+        var err = false;
+        var user = {
+            "username": __WEBPACK_IMPORTED_MODULE_3_ng2_cookies_ng2_cookies__["Cookie"].get('username'),
+            "email": __WEBPACK_IMPORTED_MODULE_3_ng2_cookies_ng2_cookies__["Cookie"].get('email'),
+            "pass": __WEBPACK_IMPORTED_MODULE_3_ng2_cookies_ng2_cookies__["Cookie"].get('password')
+        };
+        this.http.post('/insUsr', user, {
+            method: __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* RequestMethod */].Post,
+            responseType: __WEBPACK_IMPORTED_MODULE_1__angular_http__["c" /* ResponseContentType */].Text
+        })
+            .subscribe(function (data) {
+            var response = data.text();
+            if (response == "true") {
+                _this.setUserLoggedIn();
+                cb(err);
+            }
+        });
+    };
+    /**
+    * This function retrive the password by the associated user's mail
+    * @param mail is the user's information that allow to retrive the pawwsord
+    */
+    AccountService.prototype.retrivePwd = function (mail) {
+        var email = {
+            "mail": mail
+        };
+        this.http.post('/forgotPwd', email, {
+            method: __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* RequestMethod */].Post,
+            responseType: __WEBPACK_IMPORTED_MODULE_1__angular_http__["c" /* ResponseContentType */].Text
+        })
+            .subscribe(function (data) {
+            var response = data.text();
+            console.log(response);
+        });
+    };
+    /**
+    * Send, by POST, data to server and catch its response
+    * This function is used for user's login
+    * @param email
+    * @param pass
+    * @param cb
+    */
+    AccountService.prototype.checkLogin = function (email, pass, cb) {
+        var _this = this;
+        var err = false;
+        var usr = {
+            "mail": email,
+            "pass": pass
+        };
+        this.http.post('/login', usr, {
+            method: __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* RequestMethod */].Post,
+            responseType: __WEBPACK_IMPORTED_MODULE_1__angular_http__["c" /* ResponseContentType */].Json
+        })
+            .subscribe(function (data) {
+            var response = data.json();
+            console.log(response);
+            if (response.logged == true) {
+                console.log(response);
+                _this.setUserLoggedIn();
+                _this.setUsername(response.username);
+                cb(err);
+            }
+            else {
+                console.log("errore nel login");
+            }
+        });
+    };
+    AccountService.prototype.changePwd = function (username, pass) {
+        var userData = {
+            "username": username,
+            "new_password": pass
+        };
+        this.http.post('/updatePwd', userData, {
+            method: __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* RequestMethod */].Post,
+            responseType: __WEBPACK_IMPORTED_MODULE_1__angular_http__["c" /* ResponseContentType */].Text
+        })
+            .subscribe(function (data) {
+            var response = data.text();
+            if (response == "true") {
+                console.log("password cambiata con successo");
+            }
+            else {
+                console.log("password non cambiata");
+            }
+        });
+    };
+    /**
+    * Change the authenticatio status of the user
+    */
+    AccountService.prototype.setUserLoggedIn = function () {
+        this.isUserLoggedIn = true;
+    };
+    /**
+    * A getter method that return if the user is logged
+    */
+    AccountService.prototype.getUserLoggedIn = function () {
+        return this.isUserLoggedIn;
+    };
+    /**
+    * This function redirect the current component to the 'destination' component
+    * @param destination is the route destination component
+    */
+    AccountService.prototype.redirectComponent = function (destination) {
+        // location.reload();
+        this.router.navigate(['/' + destination]);
+    };
+    AccountService.prototype.setUsername = function (usr) {
+        console.log(usr);
+        this.username = usr;
+    };
+    return AccountService;
+}());
+AccountService = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["c" /* Injectable */])()
+    /**
+    * 'AccountService' stores information about the account's information.
+    * 'AccountService' provides methods to interact with the whole application, and allow to change the account information.
+    */
+    ,
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* Router */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* Http */]) === "function" && _b || Object])
+], AccountService);
+
+var _a, _b;
+//# sourceMappingURL=account.service.js.map
+
+/***/ }),
 /* 11 */,
 /* 12 */,
 /* 13 */,
 /* 14 */,
-/* 15 */
+/* 15 */,
+/* 16 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -245,155 +416,9 @@ MainEditorService = __decorate([
 //# sourceMappingURL=main-editor.service.js.map
 
 /***/ }),
-/* 16 */,
 /* 17 */,
 /* 18 */,
-/* 19 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng2_cookies_ng2_cookies__ = __webpack_require__(108);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng2_cookies_ng2_cookies___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_ng2_cookies_ng2_cookies__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AccountService; });
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-var AccountService = (function () {
-    /**
-    * Create an instantiation of AuthenticationGuard
-    * @param isUserLoggedIn to default that variable is set to false
-    * @param router used to create a new instantiation of Router
-    * @param http used to create a new instantiation of Http
-    */
-    function AccountService(router, http) {
-        this.router = router;
-        this.http = http;
-        this.isUserLoggedIn = false;
-    }
-    /**
-    * Send, by POST, data to server and catch its response.
-    * This function is used for user's registration
-    * @param usr
-    * @param mail
-    * @param pwd
-    */
-    AccountService.prototype.register = function (usr, mail, pwd, cb) {
-        var _this = this;
-        var err = false;
-        var user = {
-            "username": __WEBPACK_IMPORTED_MODULE_3_ng2_cookies_ng2_cookies__["Cookie"].get('username'),
-            "email": __WEBPACK_IMPORTED_MODULE_3_ng2_cookies_ng2_cookies__["Cookie"].get('email'),
-            "pass": __WEBPACK_IMPORTED_MODULE_3_ng2_cookies_ng2_cookies__["Cookie"].get('password')
-        };
-        this.http.post('/insUsr', user, {
-            method: __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* RequestMethod */].Post,
-            responseType: __WEBPACK_IMPORTED_MODULE_1__angular_http__["c" /* ResponseContentType */].Text
-        })
-            .subscribe(function (data) {
-            var response = data.text();
-            if (response == "true") {
-                _this.setUserLoggedIn();
-                cb(err);
-            }
-        });
-    };
-    /**
-    * This function retrive the password by the associated user's mail
-    * @param mail is the user's information that allow to retrive the pawwsord
-    */
-    AccountService.prototype.retrivePwd = function (mail) {
-        var email = {
-            "mail": mail
-        };
-        this.http.post('/forgotPwd', email, {
-            method: __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* RequestMethod */].Post,
-            responseType: __WEBPACK_IMPORTED_MODULE_1__angular_http__["c" /* ResponseContentType */].Text
-        })
-            .subscribe(function (data) {
-            var response = data.text();
-            console.log(response);
-        });
-    };
-    /**
-    * Send, by POST, data to server and catch its response
-    * This function is used for user's login
-    * @param email
-    * @param pass
-    * @param cb
-    */
-    AccountService.prototype.checkLogin = function (email, pass, cb) {
-        var _this = this;
-        var err = false;
-        var usr = {
-            "mail": email,
-            "pass": pass
-        };
-        this.http.post('/login', usr, {
-            method: __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* RequestMethod */].Post,
-            responseType: __WEBPACK_IMPORTED_MODULE_1__angular_http__["c" /* ResponseContentType */].Json
-        })
-            .subscribe(function (data) {
-            var response = data.json();
-            console.log(response);
-            if (response.logged == true) {
-                _this.setUserLoggedIn();
-                cb(err);
-            }
-            else {
-                console.log("errore nel login");
-            }
-        });
-    };
-    /**
-    * Change the authenticatio status of the user
-    */
-    AccountService.prototype.setUserLoggedIn = function () {
-        this.isUserLoggedIn = true;
-    };
-    /**
-    * A getter method that return if the user is logged
-    */
-    AccountService.prototype.getUserLoggedIn = function () {
-        return this.isUserLoggedIn;
-    };
-    /**
-    * This function redirect the current component to the 'destination' component
-    * @param destination is the route destination component
-    */
-    AccountService.prototype.redirectComponent = function (destination) {
-        // location.reload();
-        this.router.navigate(['/' + destination]);
-    };
-    return AccountService;
-}());
-AccountService = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["c" /* Injectable */])()
-    /**
-    * 'AccountService' stores information about the account's information.
-    * 'AccountService' provides methods to interact with the whole application, and allow to change the account information.
-    */
-    ,
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* Router */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* Http */]) === "function" && _b || Object])
-], AccountService);
-
-var _a, _b;
-//# sourceMappingURL=account.service.js.map
-
-/***/ }),
+/* 19 */,
 /* 20 */,
 /* 21 */,
 /* 22 */,
@@ -407,7 +432,7 @@ var _a, _b;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__attributo__ = __webpack_require__(149);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__attributo__ = __webpack_require__(148);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Classe; });
 
 /**
@@ -745,12 +770,12 @@ var Shape = (function () {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_main_editor_service__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__models_if_node__ = __webpack_require__(152);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_end_if_node__ = __webpack_require__(150);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__models_operation__ = __webpack_require__(153);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__models_start__ = __webpack_require__(154);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_end__ = __webpack_require__(151);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_main_editor_service__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__models_if_node__ = __webpack_require__(151);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_end_if_node__ = __webpack_require__(149);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__models_operation__ = __webpack_require__(152);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__models_start__ = __webpack_require__(153);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_end__ = __webpack_require__(150);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ActivityService; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -910,13 +935,13 @@ var _a;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(26);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Subject__ = __webpack_require__(22);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Subject___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_Subject__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(338);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(341);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_catch__ = __webpack_require__(337);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_catch__ = __webpack_require__(340);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_catch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_catch__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_file_saver__ = __webpack_require__(290);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_file_saver__ = __webpack_require__(291);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_file_saver___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_file_saver__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__main_editor_service__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__main_editor_service__ = __webpack_require__(16);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MenuService; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1170,7 +1195,7 @@ var Param = (function () {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_class_menu_service__ = __webpack_require__(82);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_main_editor_service__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_main_editor_service__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_activity_service__ = __webpack_require__(31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__models_param__ = __webpack_require__(49);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ClassMenuComponent; });
@@ -1499,33 +1524,33 @@ var ClassMenuComponent = (function () {
     return ClassMenuComponent;
 }());
 __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* ViewChild */])('staticMet'),
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_15" /* ViewChild */])('staticMet'),
     __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* ElementRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* ElementRef */]) === "function" && _a || Object)
 ], ClassMenuComponent.prototype, "staticMetCheckbox", void 0);
 __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* ViewChild */])('constructor'),
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_15" /* ViewChild */])('constructor'),
     __metadata("design:type", typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* ElementRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* ElementRef */]) === "function" && _b || Object)
 ], ClassMenuComponent.prototype, "constructorCheckbox", void 0);
 __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* ViewChild */])('checkStaticAtt'),
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_15" /* ViewChild */])('checkStaticAtt'),
     __metadata("design:type", typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* ElementRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* ElementRef */]) === "function" && _c || Object)
 ], ClassMenuComponent.prototype, "checkStaticAtt", void 0);
 __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* ViewChild */])('checkFinalAtt'),
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_15" /* ViewChild */])('checkFinalAtt'),
     __metadata("design:type", typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* ElementRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* ElementRef */]) === "function" && _d || Object)
 ], ClassMenuComponent.prototype, "checkFinalAtt", void 0);
 __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* ViewChild */])('checkStaticAttMod'),
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_15" /* ViewChild */])('checkStaticAttMod'),
     __metadata("design:type", typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* ElementRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* ElementRef */]) === "function" && _e || Object)
 ], ClassMenuComponent.prototype, "checkStaticAttMod", void 0);
 __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* ViewChild */])('checkFinalAttMod'),
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_15" /* ViewChild */])('checkFinalAttMod'),
     __metadata("design:type", typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* ElementRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* ElementRef */]) === "function" && _f || Object)
 ], ClassMenuComponent.prototype, "checkFinalAttMod", void 0);
 ClassMenuComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* Component */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
         selector: 'class-menu',
-        template: __webpack_require__(314),
+        template: __webpack_require__(316),
         styles: [__webpack_require__(255)]
     })
     /**
@@ -1642,7 +1667,7 @@ var Interface = (function (_super) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__all_shape__ = __webpack_require__(148);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__all_shape__ = __webpack_require__(147);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_jointjs__ = __webpack_require__(67);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_jointjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_jointjs__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Metodo; });
@@ -1825,9 +1850,9 @@ ClassMenuService = __decorate([
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_menu_service__ = __webpack_require__(38);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_main_editor_service__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_main_editor_service__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_editor_services_activity_service__ = __webpack_require__(31);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_account_service__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_account_service__ = __webpack_require__(10);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EditorContainerComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1854,10 +1879,10 @@ var EditorContainerComponent = (function () {
     return EditorContainerComponent;
 }());
 EditorContainerComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* Component */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
         selector: 'app-editor-container',
-        template: __webpack_require__(329),
-        styles: [__webpack_require__(270)],
+        template: __webpack_require__(332),
+        styles: [__webpack_require__(271)],
         providers: [__WEBPACK_IMPORTED_MODULE_1__services_menu_service__["a" /* MenuService */], __WEBPACK_IMPORTED_MODULE_2__services_main_editor_service__["a" /* MainEditorService */], __WEBPACK_IMPORTED_MODULE_3__components_editor_services_activity_service__["a" /* ActivityService */]]
     }),
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_menu_service__["a" /* MenuService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_menu_service__["a" /* MenuService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_4__services_account_service__["a" /* AccountService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__services_account_service__["a" /* AccountService */]) === "function" && _b || Object])
@@ -1872,7 +1897,7 @@ var _a, _b;
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_account_service__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_account_service__ = __webpack_require__(10);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ForgotPswComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1913,10 +1938,10 @@ var ForgotPswComponent = (function () {
     return ForgotPswComponent;
 }());
 ForgotPswComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* Component */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
         selector: 'app-forgot-psw',
-        template: __webpack_require__(330),
-        styles: [__webpack_require__(271)]
+        template: __webpack_require__(333),
+        styles: [__webpack_require__(272)]
     })
     /**
     * 'ForgotPswComponent' allow to the user to authenticate to the editor by the passowrd's reset
@@ -1936,9 +1961,7 @@ var _a;
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_account_service__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng2_cookies_ng2_cookies__ = __webpack_require__(108);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng2_cookies_ng2_cookies___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_ng2_cookies_ng2_cookies__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_account_service__ = __webpack_require__(10);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoginComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1952,7 +1975,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-
 var LoginComponent = (function () {
     /**
     * Create an instantiation of LoginComponent
@@ -1962,12 +1984,12 @@ var LoginComponent = (function () {
     function LoginComponent(router, accountService) {
         this.router = router;
         this.accountService = accountService;
-        __WEBPACK_IMPORTED_MODULE_3_ng2_cookies_ng2_cookies__["Cookie"].set('email', 'prova@Mail');
-        __WEBPACK_IMPORTED_MODULE_3_ng2_cookies_ng2_cookies__["Cookie"].set('password', 'provapsw');
-        __WEBPACK_IMPORTED_MODULE_3_ng2_cookies_ng2_cookies__["Cookie"].set('username', 'gianfrancioschio');
-        this.accountService.email = __WEBPACK_IMPORTED_MODULE_3_ng2_cookies_ng2_cookies__["Cookie"].get('email');
-        this.accountService.password = __WEBPACK_IMPORTED_MODULE_3_ng2_cookies_ng2_cookies__["Cookie"].get('password');
-        this.accountService.username = __WEBPACK_IMPORTED_MODULE_3_ng2_cookies_ng2_cookies__["Cookie"].get('username');
+        /*Cookie.set('email', 'prova@Mail');
+        Cookie.set('password', 'provapsw');
+        Cookie.set('username', 'gianfrancioschio');
+        this.accountService.email = Cookie.get('email');
+        this.accountService.password = Cookie.get('password');
+        this.accountService.username = Cookie.get('username');*/
     }
     // e solo una funzione che logga sempre
     LoginComponent.prototype.loginUserProva = function () {
@@ -2021,10 +2043,10 @@ var LoginComponent = (function () {
     return LoginComponent;
 }());
 LoginComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* Component */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
         selector: 'app-login',
-        template: __webpack_require__(331),
-        styles: [__webpack_require__(272)]
+        template: __webpack_require__(334),
+        styles: [__webpack_require__(273)]
     })
     /**
     * 'LoginComponent' allow the authentication to the user
@@ -2043,7 +2065,7 @@ var _a, _b;
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_account_service__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_account_service__ = __webpack_require__(10);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RegistrationComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -2099,10 +2121,10 @@ var RegistrationComponent = (function () {
     return RegistrationComponent;
 }());
 RegistrationComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* Component */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
         selector: 'app-registration',
-        template: __webpack_require__(332),
-        styles: [__webpack_require__(273)]
+        template: __webpack_require__(335),
+        styles: [__webpack_require__(274)]
     })
     /**
     * 'RegistrationComponent' allow to create a new user
@@ -2120,7 +2142,7 @@ var _a, _b;
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_account_service__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_account_service__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__(28);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AuthenticationGuard; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -2212,8 +2234,7 @@ var _a, _b;
 /* 119 */,
 /* 120 */,
 /* 121 */,
-/* 122 */,
-/* 123 */
+/* 122 */
 /***/ (function(module, exports) {
 
 function webpackEmptyContext(req) {
@@ -2222,18 +2243,18 @@ function webpackEmptyContext(req) {
 webpackEmptyContext.keys = function() { return []; };
 webpackEmptyContext.resolve = webpackEmptyContext;
 module.exports = webpackEmptyContext;
-webpackEmptyContext.id = 123;
+webpackEmptyContext.id = 122;
 
 
 /***/ }),
-/* 124 */
+/* 123 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dynamic__ = __webpack_require__(140);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_module__ = __webpack_require__(143);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dynamic__ = __webpack_require__(139);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_module__ = __webpack_require__(142);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__environments_environment__ = __webpack_require__(168);
 
 
@@ -2246,6 +2267,7 @@ __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dyna
 //# sourceMappingURL=main.js.map
 
 /***/ }),
+/* 124 */,
 /* 125 */,
 /* 126 */,
 /* 127 */,
@@ -2261,8 +2283,7 @@ __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dyna
 /* 137 */,
 /* 138 */,
 /* 139 */,
-/* 140 */,
-/* 141 */
+/* 140 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2311,7 +2332,7 @@ AppRoutingModule = __decorate([
 //# sourceMappingURL=app-routing.module.js.map
 
 /***/ }),
-/* 142 */
+/* 141 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2330,9 +2351,9 @@ var AppComponent = (function () {
     return AppComponent;
 }());
 AppComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* Component */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
         selector: 'app-root',
-        template: __webpack_require__(311),
+        template: __webpack_require__(313),
         styles: [__webpack_require__(252)]
     })
 ], AppComponent);
@@ -2340,39 +2361,40 @@ AppComponent = __decorate([
 //# sourceMappingURL=app.component.js.map
 
 /***/ }),
-/* 143 */
+/* 142 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(139);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(138);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_http__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_component__ = __webpack_require__(142);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_component__ = __webpack_require__(141);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_editor_container_components_menu_menu_component__ = __webpack_require__(166);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_editor_container_components_menu_components_file_file_component__ = __webpack_require__(155);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_editor_container_components_menu_components_file_file_component__ = __webpack_require__(154);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_editor_container_components_menu_components_profilo_profilo_component__ = __webpack_require__(163);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_editor_container_components_menu_components_progetto_progetto_component__ = __webpack_require__(164);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_editor_container_components_menu_components_modifica_modifica_component__ = __webpack_require__(157);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_editor_container_components_menu_components_modifica_modifica_component__ = __webpack_require__(156);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_editor_container_components_menu_components_template_template_component__ = __webpack_require__(165);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_editor_container_components_menu_components_layer_layer_component__ = __webpack_require__(156);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_editor_container_components_editor_components_toolbar_toolbar_component__ = __webpack_require__(146);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_editor_container_components_editor_editor_component__ = __webpack_require__(147);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_editor_container_components_activity_frame_activity_frame_component__ = __webpack_require__(144);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_editor_container_components_menu_components_layer_layer_component__ = __webpack_require__(155);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_editor_container_components_editor_components_toolbar_toolbar_component__ = __webpack_require__(145);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_editor_container_components_editor_editor_component__ = __webpack_require__(146);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_editor_container_components_activity_frame_activity_frame_component__ = __webpack_require__(143);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_editor_container_components_editor_components_class_menu_class_menu_component__ = __webpack_require__(78);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_editor_container_components_editor_components_activity_menu_activity_menu_component__ = __webpack_require__(145);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_editor_container_components_editor_components_activity_menu_activity_menu_component__ = __webpack_require__(144);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__components_login_login_component__ = __webpack_require__(85);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__components_registration_registration_component__ = __webpack_require__(86);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__components_editor_container_editor_container_component__ = __webpack_require__(83);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__components_forgot_psw_forgot_psw_component__ = __webpack_require__(84);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__components_editor_container_components_menu_components_profilo_components_manage_profile_manage_profile_component__ = __webpack_require__(162);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__components_editor_container_components_menu_components_profilo_components_manage_profile_components_edit_psw_edit_psw_component__ = __webpack_require__(159);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__components_editor_container_components_menu_components_profilo_components_manage_profile_components_edit_email_edit_email_component__ = __webpack_require__(158);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__components_editor_container_components_menu_components_profilo_components_manage_profile_components_erese_profile_erese_profile_component__ = __webpack_require__(160);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__components_editor_container_components_menu_components_profilo_components_manage_profile_components_edit_psw_edit_psw_component__ = __webpack_require__(158);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__components_editor_container_components_menu_components_profilo_components_manage_profile_components_edit_email_edit_email_component__ = __webpack_require__(157);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__components_editor_container_components_menu_components_profilo_components_manage_profile_components_erase_profile_erase_profile_component__ = __webpack_require__(160);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__components_editor_container_components_menu_components_profilo_components_manage_profile_components_proj_list_proj_list_component__ = __webpack_require__(161);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__services_account_service__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__app_routing_module__ = __webpack_require__(141);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__services_account_service__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__app_routing_module__ = __webpack_require__(140);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__guards_authentication_guard__ = __webpack_require__(87);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__components_editor_container_components_menu_components_profilo_components_manage_profile_components_edit_username_edit_username_component__ = __webpack_require__(159);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -2413,6 +2435,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 // Guard
 
+
 var AppModule = (function () {
     function AppModule() {
     }
@@ -2441,8 +2464,9 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_21__components_editor_container_components_menu_components_profilo_components_manage_profile_manage_profile_component__["a" /* ManageProfileComponent */],
             __WEBPACK_IMPORTED_MODULE_22__components_editor_container_components_menu_components_profilo_components_manage_profile_components_edit_psw_edit_psw_component__["a" /* EditPswComponent */],
             __WEBPACK_IMPORTED_MODULE_23__components_editor_container_components_menu_components_profilo_components_manage_profile_components_edit_email_edit_email_component__["a" /* EditEmailComponent */],
-            __WEBPACK_IMPORTED_MODULE_24__components_editor_container_components_menu_components_profilo_components_manage_profile_components_erese_profile_erese_profile_component__["a" /* EreseProfileComponent */],
-            __WEBPACK_IMPORTED_MODULE_25__components_editor_container_components_menu_components_profilo_components_manage_profile_components_proj_list_proj_list_component__["a" /* ProjListComponent */]
+            __WEBPACK_IMPORTED_MODULE_24__components_editor_container_components_menu_components_profilo_components_manage_profile_components_erase_profile_erase_profile_component__["a" /* EraseProfileComponent */],
+            __WEBPACK_IMPORTED_MODULE_25__components_editor_container_components_menu_components_profilo_components_manage_profile_components_proj_list_proj_list_component__["a" /* ProjListComponent */],
+            __WEBPACK_IMPORTED_MODULE_29__components_editor_container_components_menu_components_profilo_components_manage_profile_components_edit_username_edit_username_component__["a" /* EditUsernameComponent */]
         ],
         imports: [
             __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
@@ -2458,7 +2482,7 @@ AppModule = __decorate([
 //# sourceMappingURL=app.module.js.map
 
 /***/ }),
-/* 144 */
+/* 143 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2482,9 +2506,9 @@ var ActivityFrameComponent = (function () {
     return ActivityFrameComponent;
 }());
 ActivityFrameComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* Component */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
         selector: 'app-activity-frame',
-        template: __webpack_require__(312),
+        template: __webpack_require__(314),
         styles: [__webpack_require__(253)]
     }),
     __metadata("design:paramtypes", [])
@@ -2493,12 +2517,12 @@ ActivityFrameComponent = __decorate([
 //# sourceMappingURL=activity-frame.component.js.map
 
 /***/ }),
-/* 145 */
+/* 144 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_main_editor_service__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_main_editor_service__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_activity_service__ = __webpack_require__(31);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ActivityMenuComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -2542,9 +2566,9 @@ var ActivityMenuComponent = (function () {
     return ActivityMenuComponent;
 }());
 ActivityMenuComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* Component */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
         selector: 'activity-menu',
-        template: __webpack_require__(313),
+        template: __webpack_require__(315),
         styles: [__webpack_require__(254)]
     }),
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_main_editor_service__["a" /* MainEditorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_main_editor_service__["a" /* MainEditorService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__services_activity_service__["a" /* ActivityService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_activity_service__["a" /* ActivityService */]) === "function" && _b || Object])
@@ -2554,12 +2578,12 @@ var _a, _b;
 //# sourceMappingURL=activity-menu.component.js.map
 
 /***/ }),
-/* 146 */
+/* 145 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_main_editor_service__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_main_editor_service__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__models_classe__ = __webpack_require__(29);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_classe_astratta__ = __webpack_require__(79);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__models_interface__ = __webpack_require__(80);
@@ -2909,9 +2933,9 @@ var ToolbarComponent = (function () {
     return ToolbarComponent;
 }());
 ToolbarComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* Component */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
         selector: 'app-toolbar',
-        template: __webpack_require__(315),
+        template: __webpack_require__(317),
         styles: [__webpack_require__(256)]
     })
     /**
@@ -2928,14 +2952,14 @@ var _a, _b;
 //# sourceMappingURL=toolbar.component.js.map
 
 /***/ }),
-/* 147 */
+/* 146 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_class_menu_service__ = __webpack_require__(82);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_menu_service__ = __webpack_require__(38);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_main_editor_service__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_main_editor_service__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_class_menu_class_menu_component__ = __webpack_require__(78);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_activity_service__ = __webpack_require__(31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_classe__ = __webpack_require__(29);
@@ -3267,13 +3291,13 @@ var EditorComponent = (function () {
     return EditorComponent;
 }());
 __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_4__components_class_menu_class_menu_component__["a" /* ClassMenuComponent */]),
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_15" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_4__components_class_menu_class_menu_component__["a" /* ClassMenuComponent */]),
     __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_4__components_class_menu_class_menu_component__["a" /* ClassMenuComponent */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__components_class_menu_class_menu_component__["a" /* ClassMenuComponent */]) === "function" && _a || Object)
 ], EditorComponent.prototype, "ClassMenuComponent", void 0);
 EditorComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* Component */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
         selector: 'app-editor',
-        template: __webpack_require__(316),
+        template: __webpack_require__(318),
         styles: [__webpack_require__(257)],
         // host: {
         //   '(window:resize)': 'onResize($event)'
@@ -3291,7 +3315,7 @@ var _a, _b, _c, _d, _e;
 //# sourceMappingURL=editor.component.js.map
 
 /***/ }),
-/* 148 */
+/* 147 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3341,7 +3365,7 @@ var allShape = (function () {
 //# sourceMappingURL=all-shape.js.map
 
 /***/ }),
-/* 149 */
+/* 148 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3396,7 +3420,7 @@ var Attributo = (function (_super) {
 //# sourceMappingURL=attributo.js.map
 
 /***/ }),
-/* 150 */
+/* 149 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3435,7 +3459,7 @@ var endIfNode = (function (_super) {
 //# sourceMappingURL=end-if-node.js.map
 
 /***/ }),
-/* 151 */
+/* 150 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3472,7 +3496,7 @@ var End = (function (_super) {
 //# sourceMappingURL=end.js.map
 
 /***/ }),
-/* 152 */
+/* 151 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3532,7 +3556,7 @@ var ifNode = (function (_super) {
 //# sourceMappingURL=if-node.js.map
 
 /***/ }),
-/* 153 */
+/* 152 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3572,7 +3596,7 @@ var operation = (function (_super) {
 //# sourceMappingURL=operation.js.map
 
 /***/ }),
-/* 154 */
+/* 153 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3607,13 +3631,13 @@ var Start = (function (_super) {
 //# sourceMappingURL=start.js.map
 
 /***/ }),
-/* 155 */
+/* 154 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_menu_service__ = __webpack_require__(38);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_main_editor_service__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_main_editor_service__ = __webpack_require__(16);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FileComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -3647,9 +3671,9 @@ var FileComponent = (function () {
     return FileComponent;
 }());
 FileComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* Component */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
         selector: 'app-file',
-        template: __webpack_require__(317),
+        template: __webpack_require__(319),
         styles: [__webpack_require__(258)]
     }),
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_menu_service__["a" /* MenuService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_menu_service__["a" /* MenuService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__services_main_editor_service__["a" /* MainEditorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_main_editor_service__["a" /* MainEditorService */]) === "function" && _b || Object])
@@ -3659,7 +3683,7 @@ var _a, _b;
 //# sourceMappingURL=file.component.js.map
 
 /***/ }),
-/* 156 */
+/* 155 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3683,9 +3707,9 @@ var LayerComponent = (function () {
     return LayerComponent;
 }());
 LayerComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* Component */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
         selector: 'app-layer',
-        template: __webpack_require__(318),
+        template: __webpack_require__(320),
         styles: [__webpack_require__(259)]
     }),
     __metadata("design:paramtypes", [])
@@ -3694,7 +3718,7 @@ LayerComponent = __decorate([
 //# sourceMappingURL=layer.component.js.map
 
 /***/ }),
-/* 157 */
+/* 156 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3751,9 +3775,9 @@ var ModificaComponent = (function () {
     return ModificaComponent;
 }());
 ModificaComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* Component */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
         selector: 'app-modifica',
-        template: __webpack_require__(319),
+        template: __webpack_require__(321),
         styles: [__webpack_require__(260)]
     }),
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_menu_service__["a" /* MenuService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_menu_service__["a" /* MenuService */]) === "function" && _a || Object])
@@ -3763,11 +3787,12 @@ var _a;
 //# sourceMappingURL=modifica.component.js.map
 
 /***/ }),
-/* 158 */
+/* 157 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_account_service__ = __webpack_require__(10);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EditEmailComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -3779,30 +3804,51 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
+/**
+* Allow the email's upgrade
+*/
 var EditEmailComponent = (function () {
-    function EditEmailComponent() {
+    /**
+    * Create an instantiation of EditEmailComponent and set 'newEmail' to null
+    * @param accountService used to create a new instantiation of AccountService
+    */
+    function EditEmailComponent(accountService) {
+        this.accountService = accountService;
+        this.newEmail = '';
     }
-    EditEmailComponent.prototype.ngOnInit = function () {
+    /**
+    * This function change the username's value and reset the input box to null
+    */
+    EditEmailComponent.prototype.changeEmail = function () {
+        var oldEmail = this.accountService.email;
+        console.log(oldEmail + ',' + this.newEmail);
+        if (true) {
+            this.newEmail = '';
+            alert("Modifica effettuata");
+        }
     };
     return EditEmailComponent;
 }());
 EditEmailComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* Component */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
         selector: 'app-edit-email',
-        template: __webpack_require__(320),
+        template: __webpack_require__(322),
         styles: [__webpack_require__(261)]
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_account_service__["a" /* AccountService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_account_service__["a" /* AccountService */]) === "function" && _a || Object])
 ], EditEmailComponent);
 
+var _a;
 //# sourceMappingURL=edit-email.component.js.map
 
 /***/ }),
-/* 159 */
+/* 158 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_account_service__ = __webpack_require__(10);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EditPswComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -3814,31 +3860,49 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
+/**
+* Allow the password's upgrade
+*/
 var EditPswComponent = (function () {
-    function EditPswComponent() {
+    /**
+    * Create an instantiation of EditPswComponent and set 'newPassword' to null
+    * @param accountService used to create a new instantiation of AccountService
+    */
+    function EditPswComponent(accountService) {
+        this.accountService = accountService;
+        this.newPassword = '';
     }
-    EditPswComponent.prototype.ngOnInit = function () {
+    /**
+    * This function change the password's value and reset the input box to null
+    */
+    EditPswComponent.prototype.changePsw = function () {
+        var username = this.accountService.username;
+        var newPwd = this.newPassword;
+        this.accountService.changePwd(username, newPwd);
     };
     return EditPswComponent;
 }());
 EditPswComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* Component */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
         selector: 'app-edit-psw',
-        template: __webpack_require__(321),
+        template: __webpack_require__(323),
         styles: [__webpack_require__(262)]
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_account_service__["a" /* AccountService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_account_service__["a" /* AccountService */]) === "function" && _a || Object])
 ], EditPswComponent);
 
+var _a;
 //# sourceMappingURL=edit-psw.component.js.map
 
 /***/ }),
-/* 160 */
+/* 159 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EreseProfileComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_account_service__ = __webpack_require__(10);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EditUsernameComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3849,23 +3913,83 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
-var EreseProfileComponent = (function () {
-    function EreseProfileComponent() {
+
+var EditUsernameComponent = (function () {
+    /**
+    * Create an instantiation of EditUsernameComponent and set 'newUsername' to null
+    * @param accountService used to create a new instantiation of AccountService
+    */
+    function EditUsernameComponent(accountService) {
+        this.accountService = accountService;
+        this.newUsername = '';
     }
-    EreseProfileComponent.prototype.ngOnInit = function () {
+    /**
+     * This function change the username's value and reset the input box to null
+     */
+    EditUsernameComponent.prototype.changeUsername = function () {
+        var oldUsername = this.accountService.username;
+        console.log(oldUsername + ',' + this.newUsername);
+        if (true) {
+            this.newUsername = '';
+            alert("Modifica effettuata");
+        }
     };
-    return EreseProfileComponent;
+    return EditUsernameComponent;
 }());
-EreseProfileComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* Component */])({
-        selector: 'app-erese-profile',
-        template: __webpack_require__(322),
+EditUsernameComponent = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
+        selector: 'app-edit-username',
+        template: __webpack_require__(324),
         styles: [__webpack_require__(263)]
+    })
+    /**
+    * Allow the username's upgrade
+    */
+    ,
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_account_service__["a" /* AccountService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_account_service__["a" /* AccountService */]) === "function" && _a || Object])
+], EditUsernameComponent);
+
+var _a;
+//# sourceMappingURL=edit-username.component.js.map
+
+/***/ }),
+/* 160 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EraseProfileComponent; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var EraseProfileComponent = (function () {
+    function EraseProfileComponent() {
+    }
+    /**
+    * This function delete the profile and all the project binf to it
+    */
+    EraseProfileComponent.prototype.deleteProfile = function () {
+        console.log("Profilo cancellato");
+    };
+    return EraseProfileComponent;
+}());
+EraseProfileComponent = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
+        selector: 'app-erase-profile',
+        template: __webpack_require__(325),
+        styles: [__webpack_require__(264)]
     }),
     __metadata("design:paramtypes", [])
-], EreseProfileComponent);
+], EraseProfileComponent);
 
-//# sourceMappingURL=erese-profile.component.js.map
+//# sourceMappingURL=erase-profile.component.js.map
 
 /***/ }),
 /* 161 */
@@ -3892,10 +4016,10 @@ var ProjListComponent = (function () {
     return ProjListComponent;
 }());
 ProjListComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* Component */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
         selector: 'app-proj-list',
-        template: __webpack_require__(323),
-        styles: [__webpack_require__(264)]
+        template: __webpack_require__(326),
+        styles: [__webpack_require__(265)]
     }),
     __metadata("design:paramtypes", [])
 ], ProjListComponent);
@@ -3934,10 +4058,10 @@ var ManageProfileComponent = (function () {
     return ManageProfileComponent;
 }());
 ManageProfileComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* Component */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
         selector: 'app-manage-profile',
-        template: __webpack_require__(324),
-        styles: [__webpack_require__(265)]
+        template: __webpack_require__(327),
+        styles: [__webpack_require__(266)]
     }),
     __metadata("design:paramtypes", [])
 ], ManageProfileComponent);
@@ -3950,6 +4074,7 @@ ManageProfileComponent = __decorate([
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_account_service__ = __webpack_require__(10);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ProfiloComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -3961,10 +4086,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
 var ProfiloComponent = (function () {
-    function ProfiloComponent() {
+    function ProfiloComponent(accountService) {
+        this.accountService = accountService;
     }
     ProfiloComponent.prototype.ngAfterViewInit = function () {
+        // CSS Function
         /**
         * This directiove disable all the button in the top menu while the manage profile div is open
         */
@@ -3987,14 +4115,15 @@ var ProfiloComponent = (function () {
     return ProfiloComponent;
 }());
 ProfiloComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* Component */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
         selector: 'app-profilo',
-        template: __webpack_require__(325),
-        styles: [__webpack_require__(266)]
+        template: __webpack_require__(328),
+        styles: [__webpack_require__(267)]
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_account_service__["a" /* AccountService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_account_service__["a" /* AccountService */]) === "function" && _a || Object])
 ], ProfiloComponent);
 
+var _a;
 //# sourceMappingURL=profilo.component.js.map
 
 /***/ }),
@@ -4022,10 +4151,10 @@ var ProgettoComponent = (function () {
     return ProgettoComponent;
 }());
 ProgettoComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* Component */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
         selector: 'app-progetto',
-        template: __webpack_require__(326),
-        styles: [__webpack_require__(267)]
+        template: __webpack_require__(329),
+        styles: [__webpack_require__(268)]
     }),
     __metadata("design:paramtypes", [])
 ], ProgettoComponent);
@@ -4057,10 +4186,10 @@ var TemplateComponent = (function () {
     return TemplateComponent;
 }());
 TemplateComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* Component */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
         selector: 'app-template',
-        template: __webpack_require__(327),
-        styles: [__webpack_require__(268)]
+        template: __webpack_require__(330),
+        styles: [__webpack_require__(269)]
     }),
     __metadata("design:paramtypes", [])
 ], TemplateComponent);
@@ -4073,7 +4202,7 @@ TemplateComponent = __decorate([
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_account_service__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_account_service__ = __webpack_require__(10);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MenuComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -4099,10 +4228,10 @@ var MenuComponent = (function () {
     return MenuComponent;
 }());
 MenuComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* Component */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
         selector: 'app-menu',
-        template: __webpack_require__(328),
-        styles: [__webpack_require__(269)]
+        template: __webpack_require__(331),
+        styles: [__webpack_require__(270)]
     }),
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_account_service__["a" /* AccountService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_account_service__["a" /* AccountService */]) === "function" && _a || Object])
 ], MenuComponent);
@@ -4349,7 +4478,7 @@ var environment = {
 /* 252 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(2)(false);
+exports = module.exports = __webpack_require__(1)(false);
 // imports
 
 
@@ -4366,7 +4495,7 @@ module.exports = module.exports.toString();
 /* 253 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(2)(false);
+exports = module.exports = __webpack_require__(1)(false);
 // imports
 
 
@@ -4383,7 +4512,7 @@ module.exports = module.exports.toString();
 /* 254 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(2)(false);
+exports = module.exports = __webpack_require__(1)(false);
 // imports
 
 
@@ -4400,7 +4529,7 @@ module.exports = module.exports.toString();
 /* 255 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(2)(false);
+exports = module.exports = __webpack_require__(1)(false);
 // imports
 
 
@@ -4417,12 +4546,12 @@ module.exports = module.exports.toString();
 /* 256 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(2)(false);
+exports = module.exports = __webpack_require__(1)(false);
 // imports
 
 
 // module
-exports.push([module.i, ".toolbar {\r\n  height: 100%;\r\n  background-color: #F1EDEA;\r\n  overflow: hidden;\r\n}\r\n\r\n.classi {\r\n  /*display: none;*/\r\n}\r\n\r\n.tipo {\r\n  text-align: center;\r\n  font-weight: bold;\r\n  vertical-align: middle;\r\n}\r\n\r\n.icona {\r\n  margin:0 auto;\r\n  display: block;\r\n  height: 40px;\r\n  width: 40px;\r\n}\r\n\r\n.add {\r\n  cursor: pointer;\r\n  height: 40px;\r\n  width: 40px;\r\n  outline:none;\r\n  vertical-align: middle;\r\n  padding: 0;\r\n\r\n}\r\n\r\n.add:hover {\r\n  opacity: 0.4;\r\n}\r\n\r\n.addClasse {\r\n    background: url(" + __webpack_require__(284) + ") no-repeat top left;\r\n    background-size: contain;\r\n\r\n}\r\n\r\n.addInterfaccia {\r\n    background: url(" + __webpack_require__(286) + ") no-repeat top left;\r\n    background-size: contain;\r\n}\r\n\r\n.addAstratta {\r\n    background: url(" + __webpack_require__(283) + ") no-repeat top left;\r\n    background-size: contain;\r\n}\r\n\r\n.addCommento {\r\n    background: url(" + __webpack_require__(285) + ") no-repeat top left;\r\n    background-size: contain;\r\n}\r\n\r\n.addAssociazione {\r\n    background: url(" + __webpack_require__(287) + ") no-repeat top left;\r\n    background-size: contain;\r\n}\r\n\r\n.addGeneralizzazione {\r\n    background: url(" + __webpack_require__(288) + ") no-repeat top left;\r\n    background-size: contain;\r\n}\r\n\r\n.addImplementazione {\r\n    background: url(" + __webpack_require__(289) + ") no-repeat top left;\r\n    background-size: contain;\r\n}\r\n\r\n.addStart {\r\n  background: url(" + __webpack_require__(275) + ") no-repeat top left;\r\n  background-size:100%;\r\n}\r\n\r\n.addEnd {\r\n  background: url(" + __webpack_require__(276) + ") no-repeat;\r\n  background-size:100%;\r\n}\r\n\r\n.addAttivita {\r\n  background: url(" + __webpack_require__(278) + ") no-repeat top left;\r\n  background-size:100%;\r\n}\r\n\r\n.addAttivitaFor {\r\n  background: url(" + __webpack_require__(280) + ") no-repeat top left;\r\n  background-size:100%;\r\n}\r\n\r\n.addConnettore {\r\n  background: url(" + __webpack_require__(277) + ") no-repeat;\r\n  background-size:100%;\r\n}\r\n\r\n.addDecision {\r\n  background: url(" + __webpack_require__(281) + ") no-repeat;\r\n  background-size:100%;\r\n}\r\n\r\n.addEndDecision {\r\n  background: url(" + __webpack_require__(282) + ") no-repeat;\r\n  background-size:100%;\r\n}\r\n\r\n.addRettangoloAngolo {\r\n  background: url(" + __webpack_require__(279) + ") no-repeat;\r\n  background-size:100%;\r\n}\r\n\r\n/*Blocco di icone inizialmente settato a false*/\r\n.activity {\r\n  /*display: none;*/\r\n}\r\n\r\n.freccia:focus {\r\n  border: 2px red solid;\r\n  opacity: 0.5;\r\n}", ""]);
+exports.push([module.i, ".toolbar {\r\n  height: 100%;\r\n  background-color: #F1EDEA;\r\n  overflow: hidden;\r\n}\r\n\r\n.classi {\r\n  /*display: none;*/\r\n}\r\n\r\n.tipo {\r\n  text-align: center;\r\n  font-weight: bold;\r\n  vertical-align: middle;\r\n}\r\n\r\n.icona {\r\n  margin:0 auto;\r\n  display: block;\r\n  height: 40px;\r\n  width: 40px;\r\n}\r\n\r\n.add {\r\n  cursor: pointer;\r\n  height: 40px;\r\n  width: 40px;\r\n  outline:none;\r\n  vertical-align: middle;\r\n  padding: 0;\r\n\r\n}\r\n\r\n.add:hover {\r\n  opacity: 0.4;\r\n}\r\n\r\n.addClasse {\r\n    background: url(" + __webpack_require__(285) + ") no-repeat top left;\r\n    background-size: contain;\r\n\r\n}\r\n\r\n.addInterfaccia {\r\n    background: url(" + __webpack_require__(287) + ") no-repeat top left;\r\n    background-size: contain;\r\n}\r\n\r\n.addAstratta {\r\n    background: url(" + __webpack_require__(284) + ") no-repeat top left;\r\n    background-size: contain;\r\n}\r\n\r\n.addCommento {\r\n    background: url(" + __webpack_require__(286) + ") no-repeat top left;\r\n    background-size: contain;\r\n}\r\n\r\n.addAssociazione {\r\n    background: url(" + __webpack_require__(288) + ") no-repeat top left;\r\n    background-size: contain;\r\n}\r\n\r\n.addGeneralizzazione {\r\n    background: url(" + __webpack_require__(289) + ") no-repeat top left;\r\n    background-size: contain;\r\n}\r\n\r\n.addImplementazione {\r\n    background: url(" + __webpack_require__(290) + ") no-repeat top left;\r\n    background-size: contain;\r\n}\r\n\r\n.addStart {\r\n  background: url(" + __webpack_require__(276) + ") no-repeat top left;\r\n  background-size:100%;\r\n}\r\n\r\n.addEnd {\r\n  background: url(" + __webpack_require__(277) + ") no-repeat;\r\n  background-size:100%;\r\n}\r\n\r\n.addAttivita {\r\n  background: url(" + __webpack_require__(279) + ") no-repeat top left;\r\n  background-size:100%;\r\n}\r\n\r\n.addAttivitaFor {\r\n  background: url(" + __webpack_require__(281) + ") no-repeat top left;\r\n  background-size:100%;\r\n}\r\n\r\n.addConnettore {\r\n  background: url(" + __webpack_require__(278) + ") no-repeat;\r\n  background-size:100%;\r\n}\r\n\r\n.addDecision {\r\n  background: url(" + __webpack_require__(282) + ") no-repeat;\r\n  background-size:100%;\r\n}\r\n\r\n.addEndDecision {\r\n  background: url(" + __webpack_require__(283) + ") no-repeat;\r\n  background-size:100%;\r\n}\r\n\r\n.addRettangoloAngolo {\r\n  background: url(" + __webpack_require__(280) + ") no-repeat;\r\n  background-size:100%;\r\n}\r\n\r\n/*Blocco di icone inizialmente settato a false*/\r\n.activity {\r\n  /*display: none;*/\r\n}\r\n\r\n.freccia:focus {\r\n  border: 2px red solid;\r\n  opacity: 0.5;\r\n}", ""]);
 
 // exports
 
@@ -4434,7 +4563,7 @@ module.exports = module.exports.toString();
 /* 257 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(2)(false);
+exports = module.exports = __webpack_require__(1)(false);
 // imports
 
 
@@ -4451,7 +4580,7 @@ module.exports = module.exports.toString();
 /* 258 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(2)(false);
+exports = module.exports = __webpack_require__(1)(false);
 // imports
 
 
@@ -4468,7 +4597,7 @@ module.exports = module.exports.toString();
 /* 259 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(2)(false);
+exports = module.exports = __webpack_require__(1)(false);
 // imports
 
 
@@ -4485,7 +4614,7 @@ module.exports = module.exports.toString();
 /* 260 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(2)(false);
+exports = module.exports = __webpack_require__(1)(false);
 // imports
 
 
@@ -4502,12 +4631,12 @@ module.exports = module.exports.toString();
 /* 261 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(2)(false);
+exports = module.exports = __webpack_require__(1)(false);
 // imports
 
 
 // module
-exports.push([module.i, "", ""]);
+exports.push([module.i, ".form-group {\r\n    margin-bottom: 0;\r\n}\r\n\r\n.ng-invalid:not(form)  {\r\n    border-right: 5px solid crimson; /* red */\r\n}\r\n\r\n.ng-valid[required], .ng-valid.required  {\r\n    border-right: 5px solid springgreen; /* green */\r\n}", ""]);
 
 // exports
 
@@ -4519,12 +4648,12 @@ module.exports = module.exports.toString();
 /* 262 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(2)(false);
+exports = module.exports = __webpack_require__(1)(false);
 // imports
 
 
 // module
-exports.push([module.i, "", ""]);
+exports.push([module.i, ".form-group {\r\n    margin-bottom: 0;\r\n}\r\n.ng-invalid:not(form)  {\r\n    border-right: 5px solid crimson; /* red */\r\n}\r\n\r\n.ng-valid[required], .ng-valid.required  {\r\n    border-right: 5px solid springgreen; /* green */\r\n}", ""]);
 
 // exports
 
@@ -4536,12 +4665,12 @@ module.exports = module.exports.toString();
 /* 263 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(2)(false);
+exports = module.exports = __webpack_require__(1)(false);
 // imports
 
 
 // module
-exports.push([module.i, "", ""]);
+exports.push([module.i, ".form-group {\r\n    margin-bottom: 0;\r\n}\r\n\r\n.ng-invalid:not(form)  {\r\n    border-right: 5px solid crimson; /* red */\r\n}\r\n\r\n.ng-valid[required], .ng-valid.required  {\r\n    border-right: 5px solid springgreen; /* green */\r\n}", ""]);
 
 // exports
 
@@ -4553,7 +4682,24 @@ module.exports = module.exports.toString();
 /* 264 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(2)(false);
+exports = module.exports = __webpack_require__(1)(false);
+// imports
+
+
+// module
+exports.push([module.i, ".form-group {\r\n    margin-bottom: 0;\r\n}\r\n\r\nbutton.choice {\r\n    width: 44px;\r\n}", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+/* 265 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(1)(false);
 // imports
 
 
@@ -4567,15 +4713,15 @@ exports.push([module.i, "", ""]);
 module.exports = module.exports.toString();
 
 /***/ }),
-/* 265 */
+/* 266 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(2)(false);
+exports = module.exports = __webpack_require__(1)(false);
 // imports
 
 
 // module
-exports.push([module.i, ":host {\r\n    height: 94vh;\r\n    width: 100%;\r\n    margin: 0;\r\n    padding: 0;\r\n    top: 5vh;\r\n    z-index: 9999;\r\n    position: absolute;\r\n    background-color: purple;\r\n    cursor: default;\r\n    overflow: hidden;\r\n}\r\n\r\n.close {\r\n    float: right;\r\n}", ""]);
+exports.push([module.i, ":host {\r\n    height: 94vh;\r\n    width: 100%;\r\n    margin: 0;\r\n    padding: 0;\r\n    top: 5vh;\r\n    z-index: 9999;\r\n    position: absolute;\r\n    background-color: #636363;\r\n    cursor: default;\r\n    overflow: hidden;\r\n    transition : height 0.5s;\r\n    color: #FFCE2B; \r\n}\r\n\r\nh3 {\r\n    color: #eea236;\r\n}\r\n\r\n.close {\r\n    float: right;\r\n    color: #FFCE2B;\r\n    opacity: 0.65;\r\n    text-shadow: 0 1px 0 #636363;\r\n}\r\n\r\n.close:hover {\r\n    opacity: 1;\r\n}\r\n", ""]);
 
 // exports
 
@@ -4584,10 +4730,10 @@ exports.push([module.i, ":host {\r\n    height: 94vh;\r\n    width: 100%;\r\n   
 module.exports = module.exports.toString();
 
 /***/ }),
-/* 266 */
+/* 267 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(2)(false);
+exports = module.exports = __webpack_require__(1)(false);
 // imports
 
 
@@ -4601,27 +4747,10 @@ exports.push([module.i, ".btn {\r\n  border: none;\r\n  border-radius: 0;\r\n  b
 module.exports = module.exports.toString();
 
 /***/ }),
-/* 267 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(2)(false);
-// imports
-
-
-// module
-exports.push([module.i, ".btn {\r\n  border: none;\r\n  border-radius: 0;\r\n  background-color: #42413D;\r\n  color: #FFCE2B;\r\n}\r\n\r\n.btn:hover {\r\n  background-color: none;\r\n  border-color: #FFCE2B;\r\n}\r\n\r\nul {\r\n  background-color: #42413D;\r\n}\r\n\r\n.btn:active {\r\n  box-shadow: 0 5px #666;\r\n  -webkit-transform: translateY(4px);\r\n          transform: translateY(4px);\r\n}\r\n\r\n.dropdown-toggle {\r\n background-color: transparent;\r\n border-color: #42413D;\r\n border-style: solid;\r\n border-top: none;\r\n border-right: none;\r\n border-left: none;\r\n}\r\n\r\n.dropdown-toggle:active, .open .dropdown-toggle {\r\n      background: #FFCE2B !important;\r\n      color:#42413D !important;\r\n      border-style: none;\r\n  }\r\n\r\n.dropdown-menu{\r\n  background-color: #42413D;\r\n}\r\n\r\n.dropdown-menu>li>a{\r\n  color: #FFCE2B;\r\n}\r\n\r\n.dropdown-menu>li>a:hover{\r\n  background-color: #636363;\r\n}\r\n", ""]);
-
-// exports
-
-
-/*** EXPORTS FROM exports-loader ***/
-module.exports = module.exports.toString();
-
-/***/ }),
 /* 268 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(2)(false);
+exports = module.exports = __webpack_require__(1)(false);
 // imports
 
 
@@ -4638,12 +4767,12 @@ module.exports = module.exports.toString();
 /* 269 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(2)(false);
+exports = module.exports = __webpack_require__(1)(false);
 // imports
 
 
 // module
-exports.push([module.i, ".barra-menu {\r\n  background: #42413D;\r\n  height: 6vh; \r\n}\r\n\r\n.rowEdit {\r\n  padding: 0;\r\n  margin: 0;\r\n}\r\n.logoEdit {\r\n    display: inline-block;\r\n    color: #EE7500;\r\n    margin-left: 1%;\r\n  }\r\n\r\n.logoEdit img{\r\n  display: inline-block;\r\n  width: 30px;\r\n}\r\n\r\n.logoText {\r\n  display: inline-block;\r\n}\r\n\r\n.wellcome {\r\n  display: inline-block;\r\n  color: #FFCE2B;;\r\n  text-align:left;\r\n  margin-right: 30px;\r\n}", ""]);
+exports.push([module.i, ".btn {\r\n  border: none;\r\n  border-radius: 0;\r\n  background-color: #42413D;\r\n  color: #FFCE2B;\r\n}\r\n\r\n.btn:hover {\r\n  background-color: none;\r\n  border-color: #FFCE2B;\r\n}\r\n\r\nul {\r\n  background-color: #42413D;\r\n}\r\n\r\n.btn:active {\r\n  box-shadow: 0 5px #666;\r\n  -webkit-transform: translateY(4px);\r\n          transform: translateY(4px);\r\n}\r\n\r\n.dropdown-toggle {\r\n background-color: transparent;\r\n border-color: #42413D;\r\n border-style: solid;\r\n border-top: none;\r\n border-right: none;\r\n border-left: none;\r\n}\r\n\r\n.dropdown-toggle:active, .open .dropdown-toggle {\r\n      background: #FFCE2B !important;\r\n      color:#42413D !important;\r\n      border-style: none;\r\n  }\r\n\r\n.dropdown-menu{\r\n  background-color: #42413D;\r\n}\r\n\r\n.dropdown-menu>li>a{\r\n  color: #FFCE2B;\r\n}\r\n\r\n.dropdown-menu>li>a:hover{\r\n  background-color: #636363;\r\n}\r\n", ""]);
 
 // exports
 
@@ -4655,7 +4784,24 @@ module.exports = module.exports.toString();
 /* 270 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(2)(false);
+exports = module.exports = __webpack_require__(1)(false);
+// imports
+
+
+// module
+exports.push([module.i, ".barra-menu {\r\n  background: #42413D;\r\n  height: 6vh; \r\n}\r\n\r\n.rowEdit {\r\n  padding: 0;\r\n  margin: 0;\r\n}\r\n.logoEdit {\r\n    display: inline-block;\r\n    color: #EE7500;\r\n    margin-left: 1%;\r\n  }\r\n\r\n.logoEdit img{\r\n  display: inline-block;\r\n  width: 30px;\r\n}\r\n\r\n.logoText {\r\n  display: inline-block;\r\n}\r\n", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+/* 271 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(1)(false);
 // imports
 
 
@@ -4669,10 +4815,10 @@ exports.push([module.i, ".row {\r\n  margin: 0;\r\n  padding: 0;\r\n  height: 94
 module.exports = module.exports.toString();
 
 /***/ }),
-/* 271 */
+/* 272 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(2)(false);
+exports = module.exports = __webpack_require__(1)(false);
 // imports
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Neuton);", ""]);
 
@@ -4686,10 +4832,10 @@ exports.push([module.i, ".container {\r\n    position:absolute;\r\n    top:40%;\
 module.exports = module.exports.toString();
 
 /***/ }),
-/* 272 */
+/* 273 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(2)(false);
+exports = module.exports = __webpack_require__(1)(false);
 // imports
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Neuton);", ""]);
 
@@ -4703,10 +4849,10 @@ exports.push([module.i, ".container {\r\n    position:absolute;\r\n    top:40%;\
 module.exports = module.exports.toString();
 
 /***/ }),
-/* 273 */
+/* 274 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(2)(false);
+exports = module.exports = __webpack_require__(1)(false);
 // imports
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Neuton);", ""]);
 
@@ -4720,98 +4866,97 @@ exports.push([module.i, ".container {\r\n    position:absolute;\r\n    top:40%;\
 module.exports = module.exports.toString();
 
 /***/ }),
-/* 274 */,
-/* 275 */
+/* 275 */,
+/* 276 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "Cerchio.3c37602c756b4336e229.svg";
 
 /***/ }),
-/* 276 */
+/* 277 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "CerchioCerchio.330d74e1bb6750bab4b1.svg";
 
 /***/ }),
-/* 277 */
+/* 278 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "Freccia.bc52d9a77119d56ba08e.svg";
 
 /***/ }),
-/* 278 */
+/* 279 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "Rettangolo.254c42294a508424df19.svg";
 
 /***/ }),
-/* 279 */
+/* 280 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "RettangoloAngolo.cf22bc9209afc6f19bb3.svg";
 
 /***/ }),
-/* 280 */
+/* 281 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "RettangoloForchetta.c317e1a15ed87cd028da.svg";
 
 /***/ }),
-/* 281 */
+/* 282 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "Rombo.03fc4172ed30e1078f46.svg";
 
 /***/ }),
-/* 282 */
+/* 283 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "RomboNero.12e62c8a0985991486a0.svg";
 
 /***/ }),
-/* 283 */
+/* 284 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "Abstract.3d5f6caa23de207508be.svg";
 
 /***/ }),
-/* 284 */
+/* 285 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "Class.9875d376eb36c52da712.svg";
 
 /***/ }),
-/* 285 */
+/* 286 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "Commento.29665ae1b9455361c1e2.svg";
 
 /***/ }),
-/* 286 */
+/* 287 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "Interface.dc505ca32d8d2c049385.svg";
 
 /***/ }),
-/* 287 */
+/* 288 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "Association.2b11edeebf9ffcb1c355.svg";
 
 /***/ }),
-/* 288 */
+/* 289 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "Generalization.f296809f9bfe8b8e0b94.svg";
 
 /***/ }),
-/* 289 */
+/* 290 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "Implementation.fdfb4a02d46435f04510.svg";
 
 /***/ }),
-/* 290 */,
 /* 291 */,
 /* 292 */,
 /* 293 */,
@@ -4832,141 +4977,146 @@ module.exports = __webpack_require__.p + "Implementation.fdfb4a02d46435f04510.sv
 /* 308 */,
 /* 309 */,
 /* 310 */,
-/* 311 */
+/* 311 */,
+/* 312 */,
+/* 313 */
 /***/ (function(module, exports) {
 
 module.exports = "<router-outlet></router-outlet>\r\n"
 
 /***/ }),
-/* 312 */
+/* 314 */
 /***/ (function(module, exports) {
 
 module.exports = "Activity Explorer\r\n"
 
 /***/ }),
-/* 313 */
+/* 315 */
 /***/ (function(module, exports) {
 
 module.exports = "<div [hidden]=\"selemetedMethod\" class=\"container-fluid menu\">\r\n  <div class=\"row selezionato\">\r\n    <span class=\"glyphicon glyphicon-wrench iconaMirrow\" aria-hidden=\"true\"></span>&nbsp;&nbsp;{{this.activityService.getNameMethod()}}\r\n  </div>\r\n  <div class=\"row changeNome\">\r\n    Modifica nome:\r\n    <input #changeName id=\"changeName\"\r\n    (keyup.enter)=\"changeNome(changeName.value)\">\r\n    <button class=\"btn btn-default\" (click)=\"changeNome(changeName.value)\">\r\n      <span class=\"glyphicon glyphicon-floppy-disk\" aria-hidden=\"true\"></span>\r\n    </button>\r\n  </div>\r\n  <div [hidden]=\"!this.activityService.isOperation()\">\r\n    <div class=\"container-fluid\">\r\n      <div class=\"row changeNome\">\r\n        <label>Corpo operazione</label>\r\n        <input #corpo id=\"changeName\"\r\n        (keyup.enter)=\"modBody(corpo.value)\">\r\n        <button class=\"btn btn-default\" (click)=\"modBody(corpo.value)\">\r\n          <span class=\"glyphicon glyphicon-floppy-disk\" aria-hidden=\"true\"></span>\r\n        </button>\r\n      </div>\r\n    </div>\r\n  </div>\r\n  <div [hidden]=\"!this.activityService.isDecision()\">\r\n    <div class=\"container-fluid\">\r\n      <div class=\"row changeNome\">\r\n        <label>Tipo decisione</label><br />\r\n        <select [(ngModel)]=\"dec\">\r\n          <option *ngFor=\"let dec of decisions\" [value]=\"dec\">{{ dec }}</option>\r\n        </select>\r\n      </div>\r\n      <div [hidden]=\"dec != 'for'\" class=\"row changeNome\">\r\n        <label>Nome indice</label>\r\n        <input [(ngModel)]=\"nomeInd\"  /><br />\r\n        <label>Valore iniziale indice</label>\r\n        <input [(ngModel)]=\"valInd\" /><br />\r\n        <label>Guardia indice</label>\r\n        <input [(ngModel)]=\"maxInd\"/><br />\r\n        <label>Operatore guardia</label>\r\n        <select>\r\n          <option *ngFor=\"let op of operators\" [value]=\"op\">{{ op }}</option>\r\n        </select><br />\r\n        <button class=\"btn btn-default\" (click)=\"generaDecisione()\">\r\n          Genera decisione\r\n        </button>\r\n      </div>\r\n    </div>\r\n  </div>\r\n  <div>\r\n    <button class=\"btn btn-default\" (click)=\"enterClassMode()\">\r\n      <span class=\"glyphicon glyphicon-arrow-left freccia\"></span>\r\n      Diagramma delle Classi</button>\r\n  </div>\r\n</div>"
 
 /***/ }),
-/* 314 */
+/* 316 */
 /***/ (function(module, exports) {
 
 module.exports = "<div class=\"container-fluid menu\">\r\n  <div class=\"row selezionato\">\r\n    <span class=\"glyphicon glyphicon-wrench iconaMirrow\" aria-hidden=\"true\"></span>&nbsp;&nbsp;{{name}}&nbsp;\r\n    <button class=\"btn btn-default\" (click)=\"removeClass(name)\" title=\"Rimuovi classe\">\r\n      <span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span>\r\n    </button>\r\n  </div>\r\n  <div class=\"row changeNome\">\r\n    Modifica nome:\r\n    <input #changeName id=\"changeName\"\r\n    (keyup.enter)=\"changeNome(changeName.value)\">\r\n    <button class=\"btn btn-default\" (click)=\"changeNome(changeName.value)\">\r\n      <span class=\"glyphicon glyphicon-floppy-disk\" aria-hidden=\"true\"></span>\r\n    </button>\r\n  </div>\r\n  <!-- div per aggiungere un attributo -->\r\n  <div class=\"aggiungiAttributo\">\r\n    <div class=\"row\">\r\n      <button href=\"#addAttr\" class=\"btn btn-default\" data-toggle=\"collapse\">\r\n        <span class=\"glyphicon glyphicon-plus\" aria-hidden=\"true\"></span>&nbsp;Aggiungi Attributo\r\n      </button>\r\n    </div>\r\n    <div id=\"addAttr\" class=\"campiAttributo collapse\">\r\n      <div class=\"aggiungiAttributo staticAttr\">\r\n        <label>Static <input #checkStaticAtt id=\"staticAtt\" type=\"checkbox\" name=\"static\" class=\"checkbox-circle\" value=\"Static\" (change)='updateCheckbox(checkStaticAtt.id)'/></label>\r\n        <label>Final <input #checkFinalAtt id=\"finalAtt\" type=\"checkbox\" name=\"final\" class=\"checkbox-circle\" value=\"Final\" (change)='updateCheckbox(checkFinalAtt.id)'/></label>\r\n      </div>\r\n      <div class=\"aggiungiAttributo accessoAttr\">\r\n        <label>Seleziona Visibilità</label>\r\n        <select #accAtt  [(ngModel)]=\"selectedAccAtt\">\r\n          <option *ngFor=\"let acc of accessoAttr\" [value]=\"acc\">{{ acc }}</option>\r\n        </select>\r\n      </div>\r\n      <div class=\"aggiungiAttributo selezionaTipo\">\r\n        <label>Seleziona tipo</label>\r\n        <select #tipiAtt [(ngModel)]=\"selectedTipoAtt\">\r\n          <option value=\"\"></option>\r\n          <option *ngFor=\"let type of types\" [value]=\"type\">{{type}}</option>\r\n        </select>\r\n      </div>\r\n      <div class=\"aggiungiAttributo nomeAttr\">\r\n        <label>Nome</label>\r\n        <input [disabled]=\"!selectedTipoAtt\" id=\"nome-attributo\" #nomeAtt\r\n        (keyup.enter)=\"addAttributo(nomeAtt.value)\">\r\n      </div>\r\n      <button class=\"btn btn-default\" [disabled]=\"!selectedTipoAtt\" (click)=\"addAttributo(nomeAtt.value, checkStaticAtt.checked, checkFinalAtt.checked, tipiAtt.value, accAtt.value)\">Aggiungi Attributo</button>\r\n    </div>\r\n\r\n  </div>\r\n  <button href=\"#listaAttr\" #lista class=\"btn btn-default listaAttr\" data-toggle=\"collapse\" (click)=\"closeCollapsedList(lista)\">\r\n    <span class=\"glyphicon glyphicon-triangle-left\" aria-hidden=\"true\"></span>&nbsp;Lista Attributi\r\n  </button>\r\n  <!-- lista attributi della classe -->\r\n  <div *ngIf=\"this.mainEditorService.selectedClasse\" class=\"container listaAttributi\">\r\n    <div id=\"listaAttr\" class=\"row collapse\" *ngIf=\"name\">\r\n      Lista attributi\r\n      <ul class=\"list-group\">\r\n        <li class=\"list-group-item\" *ngFor=\"let attr of this.mainEditorService.selectedClasse.getAttributi()\">\r\n          <span>{{attr.name}}: {{attr.type}}\r\n            <button class=\"btn btn-default\" (click)=\"removeAttributo(attr.name)\">\r\n              <span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\" title=\"Rimuovi\"></span>\r\n            </button>\r\n            <!-- icona di modifica che farà apparire un menù a tendina per la modifica attributo-->\r\n            <button class=\"btn btn-default\" data-toggle=\"collapse\" [attr.data-target]=\"'#'+attr.name\" title=\"Modifica\">\r\n              <span class=\"glyphicon glyphicon-pencil\" aria-hidden=\"true\" title=\"Modifica\"></span>\r\n            </button>\r\n          </span>\r\n          <!-- menù a comparsa (collapse) per modificare un attributo-->\r\n          <div class=\"campiAttributo collapse listaModAttr\" attr.id=\"{{attr.name}}\">\r\n            <div class=\"modificaAttributo accessoAttr\">\r\n              <div class=\"aggiungiAttributo staticAttr\">\r\n                <label>Static <input #checkStaticAttMod id=\"staticAttMod\" type=\"checkbox\" name=\"static\" class=\".checkbox-circle\" value=\"Static\" (change)='updateCheckbox(checkStaticAttMod.id)'/></label>\r\n                <label>Final <input #checkFinalAttMod id=\"finalAttMod\" type=\"checkbox\" name=\"final\" class=\"checkbox-circle\" value=\"Final\" (change)='updateCheckbox(checkFinalAttMod.id)'/></label>\r\n              </div>\r\n              <label>Seleziona Visibilità</label>\r\n              <select  #accAttMod [(ngModel)]=\"selectedAccAtt\">\r\n                <option *ngFor=\"let acc of accessoAttr\" [value]=\"acc\">{{ acc }}</option>\r\n              </select>\r\n            </div>\r\n            <div class=\"modificaAttributo selezionaTipo\">\r\n              <label>Seleziona tipo</label>\r\n              <select #tipiAttMod [(ngModel)]=\"selectedTipoAtt\">\r\n                <option value=\"\"></option>\r\n                <option *ngFor=\"let type of types\" [value]=\"type\">{{type}}</option>\r\n              </select>\r\n            </div>\r\n            <div class=\"modificaAttributo nomeAttr\">\r\n              <label>Nome</label>\r\n              <input [disabled]=\"!selectedTipoAtt\" id=\"nome-attributo\" #nomeAttMod\r\n              (keyup.enter)=\"changeAttributo(nomeAtt.value, attr.name)\">\r\n            </div>\r\n            <button class=\"btn btn-default\" [disabled]=\"!selectedTipoAtt\" (click)=\"changeAttributo(nomeAttMod.value, attr.name,tipiAttMod.value, accAttMod.value , checkStaticAttMod.checked , checkFinalAttMod.checked)\">Modifica Attributo</button>\r\n            </div>\r\n        </li>\r\n      </ul>\r\n    </div>\r\n  </div>\r\n  <!-- blocco per aggiungere un metodo alla classe -->\r\n  <div class=\"aggiungiMetodo\">\r\n    <div class=\"row\">\r\n      <button href=\"#addMetodo\" class=\"btn btn-default\" data-toggle=\"collapse\">\r\n        <span class=\"glyphicon glyphicon-plus\" aria-hidden=\"true\"></span>&nbsp;Aggiungi Metodo\r\n      </button>\r\n    </div>\r\n    <div id=\"addMetodo\" class=\"campiMetodo collapse\">\r\n      <!-- blocco per aggiunta parametri metodo -->\r\n      <div class=\"aggiungiMetodo .selezionaTipo\">\r\n        <div class=\"aggiungiAttributo staticAttr\">\r\n          <label>Static <input #staticMet type=\"checkbox\" id=\"static\" name=\"static\" classe=\"checkbox-circle\" value=\"Static\" (change)='updateCheckbox(staticMet.id)'></label>\r\n          <label> Costruttore <input #constructor [(ngModel)]=\"costruttore\" type=\"checkbox\" id=\"constructor\" name=\"constructor\" classe=\"checkbox-circle\" value=\"Constructor\" (change)='updateCheckbox(constructor.id)'></label>\r\n        </div>\r\n        <div class=\"aggiungiMeotdo accessoMetodo\">\r\n          <label>Seleziona Visibilità</label>\r\n          <select #accMetodo [(ngModel)]=\"selectedAccMet\">\r\n            <option *ngFor=\"let acc of accessoAttr\" [value]=\"acc\">{{ acc }}</option>\r\n          </select>\r\n        </div>\r\n        <div [hidden]=\"costruttore\">\r\n          <label>Seleziona tipo di ritorno</label>\r\n          <select #tipiMetodo [(ngModel)]=\"selectedTipoMet\">\r\n            <option value=\"void\"></option>\r\n            <option *ngFor=\"let type of types\" [value]=\"type\">{{type}}</option>\r\n          </select>\r\n        </div>\r\n      </div>\r\n      <div [hidden]=\"costruttore\" class=\"aggiungiMetodo nomeMet\">\r\n        <label>Nome</label>\r\n        <input id=\"nome-metodo\" #nomeMetodo [(ngModel)]=\"nomeMet\">\r\n      </div>\r\n      <div class=\"container-fluid\" [hidden]=\"isAddableMethod()\">\r\n        <div class=\"row clearfix\">\r\n          <div class=\"col-md-12 column\" id=\"tabellaParametri\">\r\n            Parametri attuali\r\n            <table class=\"table table-bordered table-hover\" id=\"tab_logic\">\r\n              <thead>\r\n                <tr>\r\n                  <th class=\"text-center\">Tipo</th>        \r\n                  <th class=\"text-center\">Nome</th>          \r\n                  <th class=\"text-center\"></th>                \r\n                </tr>\r\n              </thead>\r\n              <tbody>\r\n                <tr *ngFor=\"let param of parametriMetodo\" class=\"tipiMetodo\">\r\n                  <td>{{param.getTipo()}}</td>\r\n                  <td>{{param.getNome()}}</td>\r\n                </tr>\r\n                <tr #parametro>\r\n                  <td>\r\n                    <select #tipiParam id=\"tipiParam\" class=\"tipiMetodo\">\r\n                      <option value=\"\"></option>\r\n                      <option *ngFor=\"let type of types\" [value]=\"type\">{{type}}</option>\r\n                    </select>\r\n                  </td>\r\n                  <td>\r\n                    <input #nomeParam id=\"nomeParam\" type=\"text\" placeholder=\"Nome\" class=\"form-control\"/>\r\n                  </td>\r\n                  <td>\r\n                    <button class=\"btn btn-default\" title=\"Aggiungi Parmetro\" (click)=\"addParam(tipiParam.value, nomeParam.value)\">\r\n                      <span class=\"glyphicon glyphicon-plus\" aria-hidden=\"true\"></span>\r\n                    </button>\r\n                  </td>\r\n                </tr>\r\n              </tbody>\r\n            </table>\r\n          </div>\r\n        </div>\r\n      </div>\r\n      <button class=\"btn btn-default\" [disabled]=\"isAddableMethod()\" (click)=\"addMetodo(nomeMetodo.value, staticMet.checked, constructor.checked, tipiMetodo.value, accMetodo.value)\">Aggiungi Metodo</button>\r\n    </div>   \r\n  </div>\r\n  <button href=\"#listaMet\" #listac class=\"btn btn-default\" data-toggle=\"collapse\" (click)='closeCollapsedList(listac)'>\r\n    <span class=\"glyphicon glyphicon-triangle-left\" aria-hidden=\"true\"></span>&nbsp;Lista Metodi\r\n  </button>\r\n  <!-- lista metodi della classe -->\r\n  <div *ngIf=\"this.mainEditorService.selectedClasse\" class=\"container listaAttributi\">\r\n    <div id=\"listaMet\" class=\"row collapse\" *ngIf=\"name\">\r\n      Lista metodi\r\n      <ul class=\"list-group\">\r\n        <li class=\"list-group-item\" *ngFor=\"let met of getMetodi()\">\r\n          <span>{{met.accesso}} {{met.staticString()}} {{met.nome}}({{met.paramToString()}}): {{met.tipoRitorno}}\r\n            <button class=\"btn btn-default\" (click)=\"removeMetodo(met.nome)\">\r\n               <span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\" title=\"Rimuovi\"></span>\r\n            </button>\r\n            <button class=\"btn btn-default\" (click)=\"modifyMetodo(met.nome)\" title=\"Modifica\">\r\n              <span class=\"glyphicon glyphicon-pencil\" aria-hidden=\"true\" title=\"Modifica\"></span>\r\n            </button>\r\n          </span>\r\n        </li>\r\n      </ul>\r\n    </div>\r\n  </div>\r\n  <div class=\"aggiungiMetodo\">\r\n    <div class=\"row\">\r\n      <button [disabled]=\"this.mainEditorService.isThereAMain()\" class=\"btn btn-default\" (click)=\"addMain()\">\r\n        <span class=\"glyphicon glyphicon-asterisk\" aria-hidden=\"true\"></span>&nbsp;Aggiungi Metodo Main\r\n      </button>\r\n    </div>\r\n  </div>\r\n</div>\r\n"
 
 /***/ }),
-/* 315 */
+/* 317 */
 /***/ (function(module, exports) {
 
 module.exports = "<div [hidden]=\"mainEditorService.getActivityModeStatus()\" class=\"container-fluid toolbar classi\">\r\n  <div class=\"tipo\"> Classi </div>\r\n    <div class=\"icona\"><button (click)=\"addClasse()\" class=\"add addClasse\" title=\"Aggiungi classe\"></button></div>\r\n    <div class=\"icona\"><button (click)=\"addInterfaccia()\" class=\"add addInterfaccia\" title=\"Aggiungi interfaccia\"></button></div>\r\n    <div class=\"icona\"><button (click)=\"addAstratta()\" class=\"add addAstratta\" title=\"Aggiungi classe astratta\"></button></div>\r\n\r\n  <div class=\"tipo\"> Connettori </div>\r\n    <div class=\"icona\"><button (click)=\"addImplementazione()\" class=\"add addImplementazione freccia\" title=\"Aggiungi implementazione\"></button></div>\r\n    <div class=\"icona\"><button (click)=\"addGeneralizzazione()\" class=\"add addGeneralizzazione freccia\" title=\"Aggiungi generalizzazione\"></button></div>\r\n\r\n  <div class=\"tipo\"> Commenti </div>\r\n    <div class=\"icona\"><button (click)=\"addCommento()\" class=\"add addCommento\" title=\"Agiungi commento\"></button></div>\r\n    <div class=\"icona\"><button (click)=\"addAssociazione()\" class=\"add addAssociazione freccia\" title=\"Aggiungi associazione\"></button></div>\r\n</div>\r\n<div [hidden]=\"!mainEditorService.getActivityModeStatus()\" class=\"container-fluid toolbar activity\">\r\n  <div class=\"tipo\"> Activity </div>\r\n    <div class=\"icona\"><button [disabled]=\"this.activityService.start()\" (click)=\"addStart()\" class=\"add addStart\" title=\"Aggiungi start\"></button></div>\r\n    <div class=\"icona\"><button (click)=\"addEnd()\" class=\"add addEnd\" title=\"Aggiungi End\"></button></div>\r\n    <div class=\"icona\"><button (click)=\"addActivityShape()\" class=\"add addAttivita\" title=\"Aggiungi azione\"></button></div>\r\n    <div class=\"icona\"><button (click)=\"addActivityForShape()\" class=\"add addAttivitaFor\" title=\"Richiama l'attività/azione \"></button></div>\r\n    <div class=\"icona\"><button (click)=\"addRettangoloAngolo()\" class=\"add addRettangoloAngolo\" title=\"Aggiungi attività \"></button></div>\r\n    <div class=\"icona\"><button (click)=\"addConnector()\" class=\"add addConnettore\" title=\"Aggiungi connettore\"></button></div>\r\n    <div class=\"icona\"><button (click)=\"addDecision()\" class=\"add addDecision\" title=\"Aggiungi decisione\"></button></div>\r\n    <div class=\"icona\"><button (click)=\"addEndDecision()\" class=\"add addEndDecision\" title=\"Aggiungi fine decisione\"></button></div>\r\n</div>\r\n"
 
 /***/ }),
-/* 316 */
+/* 318 */
 /***/ (function(module, exports) {
 
 module.exports = "<div id=\"paper\"></div>\r\n<div class=\"toolbar\">\r\n  <app-toolbar></app-toolbar>\r\n\r\n</div>\r\n<div [hidden]=\"!selectedCell\" class=\"editClass\">\r\n    <class-menu [hidden]=\"mainEditorService.getActivityModeStatus()\"></class-menu>\r\n</div>\r\n<div class=\"editClass\">\r\n  <activity-menu [hidden]=\"!mainEditorService.getActivityModeStatus()\"></activity-menu>\r\n</div>\r\n"
 
 /***/ }),
-/* 317 */
+/* 319 */
 /***/ (function(module, exports) {
 
 module.exports = "<div class=\"dropdown\" #menuFile>\r\n  <button class=\"btn btn-default dropdown-toggle tmp-disable\" type=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">\r\n    File\r\n    <span class=\"caret\"></span>\r\n  </button>\r\n  <ul class=\"dropdown-menu\" aria-labelledby=\"dropdownMenu1\">\r\n    <li><a href=\"#\" >Salva</a></li>\r\n    <li><a (click)=\"esporta()\" href=\"#\" >Esporta</a></li>\r\n    <li>\r\n      <input id=\"upload\" type=\"file\" class=\"custom-file-input\" (change)=\"importa($event)\" placeholder=\"Upload file\" accept=\".json\">\r\n      <a href=\"#\" onclick=\"$('input[id=upload]').click();\">Importa progetto </a>\r\n    </li>\r\n    <li><a href=\"#\" (click)=\"genera()\" >Genera codice</a></li>\r\n    <li><a href=\"#\" >Salva template</a></li>\r\n    <li><a href=\"#\" >Chiudi</a></li>\r\n  </ul>\r\n</div>\r\n\r\n"
 
 /***/ }),
-/* 318 */
+/* 320 */
 /***/ (function(module, exports) {
 
 module.exports = "<div class=\"dropdown\" #menuLayer>\r\n  <button class=\"btn btn-default dropdown-toggle tmp-disable\" type=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">\r\n    Layer\r\n    <span class=\"caret\"></span>\r\n  </button>\r\n  <ul class=\"dropdown-menu\" aria-labelledby=\"dropdownMenu1\">\r\n    <li><a href=\"#\" >Aggiungi laver</a></li>\r\n    <li><a href=\"#\" >Lista layer</a></li>\r\n    <li><a href=\"#\" >Rinomina laver</a></li>\r\n    <li><a href=\"#\" >Elimina layer</a></li>\r\n  </ul>\r\n</div>\r\n"
 
 /***/ }),
-/* 319 */
+/* 321 */
 /***/ (function(module, exports) {
 
 module.exports = "<div class=\"dropdown\" #menuModifica>\r\n  <button class=\"btn btn-default dropdown-toggle tmp-disable\" type=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">\r\n    Modifica\r\n    <span class=\"caret\"></span>\r\n  </button>\r\n  <ul class=\"dropdown-menu\" aria-labelledby=\"dropdownMenu1\">\r\n    <li><a (click)=\"doUndo()\" >Annulla</a></li>\r\n    <li><a  >Ripristina</a></li>\r\n    <li><a (click)=\"doCut()\" >Taglia</a></li>\r\n    <li><a  (click)=\"doCopy()\" >Copia</a></li>\r\n    <li><a  (click)=\"doPaste()\" >Incolla</a></li>\r\n    <li><a (click)=\"doElimina()\" >Elimina</a></li>\r\n    <li><a  (click)=\"doZoomIn()\" >Zoom In</a></li>\r\n    <li><a  (click)=\"doZoomOut()\" >Zoom Out</a></li>\r\n  </ul>\r\n</div>\r\n"
 
 /***/ }),
-/* 320 */
-/***/ (function(module, exports) {
-
-module.exports = "<p>\r\n  edit-email works!\r\n</p>\r\n"
-
-/***/ }),
-/* 321 */
-/***/ (function(module, exports) {
-
-module.exports = "<p>\r\n  edit-psw works!\r\n</p>\r\n"
-
-/***/ }),
 /* 322 */
 /***/ (function(module, exports) {
 
-module.exports = "<p>\r\n  erese-profile works!\r\n</p>\r\n"
+module.exports = "<div class=\"container-fluid\">\r\n      <form name=\"form\"  #changeEmailForm=\"ngForm\" (submit)=\"changeEmail()\">\r\n        <div class=\"form-group has-warning\" >\r\n          <div class=\"input-group\">\r\n            <span class=\"input-group-addon\">\r\n              <i class=\"glyphicon glyphicon-envelope\"></i>\r\n            </span>  \r\n            <input type=\"email\" class=\"form-control\" placeholder=\"Email\" required\r\n            ngModel email\r\n            [(ngModel)]=\"newEmail\" name=\"email\"\r\n            id=\"email\" />\r\n          </div>\r\n          <input type=\"submit\" class=\"btn btn-warning\" value=\"Modifica email\" [disabled]=\"!changeEmailForm.form.valid\"/> \r\n        </div></form>\r\n</div>\r\n"
 
 /***/ }),
 /* 323 */
 /***/ (function(module, exports) {
 
-module.exports = "<p>\r\n  proj-list works!\r\n</p>\r\n"
+module.exports = "<div class=\"container-fluid\">\r\n      <form name=\"form\"  #changePswForm=\"ngForm\" (submit)=\"changePsw()\">\r\n        <div class=\"form-group has-warning\" >\r\n          <div class=\"input-group\">\r\n            <span class=\"input-group-addon\">\r\n              <i class=\"glyphicon glyphicon-lock\"></i>\r\n            </span>  \r\n            <input type=\"password\" class=\"form-control\" name=\"password\" required placeholder=\"Password\"\r\n            [(ngModel)]=\"newPassword\"\r\n            id=\"password\"/>\r\n          </div>\r\n          <input type=\"submit\" class=\"btn btn-warning\" value=\"Modifica passowrd\" [disabled]=\"!changePswForm.form.valid\"/> \r\n        </div></form>\r\n</div>"
 
 /***/ }),
 /* 324 */
 /***/ (function(module, exports) {
 
-module.exports = "<div> \r\n  <i class=\"glyphicon glyphicon-remove-sign close\"></i>\r\n  <p>\r\n    manage-profile works!\r\n  </p>\r\n</div>\r\n\r\n"
+module.exports = "<div class=\"container-fluid\">\r\n      <form name=\"form\"  #changeUsernameForm=\"ngForm\" (submit)=\"changeUsername()\">\r\n        <div class=\"form-group has-warning\" >\r\n          <div class=\"input-group\">\r\n            <span class=\"input-group-addon\">\r\n              <i class=\"glyphicon glyphicon-user\"></i>\r\n            </span>  \r\n            <input type=\"text\" class=\"form-control\" placeholder=\"Username\" required\r\n            [(ngModel)]=\"newUsername\" name=\"username\"\r\n            id=\"username\" />\r\n          </div>\r\n          <input type=\"submit\" class=\"btn btn-warning\" value=\"Modifica username\" [disabled]=\"!changeUsernameForm.form.valid\"/> \r\n        </div></form>\r\n</div>"
 
 /***/ }),
 /* 325 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"dropdown\" #menuProfilo id=\"qwerty\">\r\n  <button class=\"btn btn-default\" data-toggle=\"collapse\" id=\"menuProfilo\" href=\"#manage-profile\">\r\n    Profilo\r\n    <span class=\"caret\"></span>\r\n  </button>\r\n  <div >\r\n  <app-manage-profile class=\"collapse\" id=\"manage-profile\"></app-manage-profile></div>\r\n</div>\r\n"
+module.exports = "<div class=\"container-fluid\">\r\n    <button type=\"button\" class=\"btn btn-warning\" data-toggle=\"collapse\" data-target=\"#confirmation\">Elimina profilo</button>\r\n    <div id=\"confirmation\" class=\"collapse\">\r\n    <div> Sei sicuro?</div>\r\n    <div>\r\n        <button type=\"button\" class=\"btn btn-success choice\" data-toggle=\"collapse\" (click)=deleteProfile()>Si</button>\r\n        <button type=\"button\" class=\"btn btn-danger choice\" data-toggle=\"collapse\" data-target=\"#confirmation\">No</button>\r\n    </div>    \r\n    </div>\r\n</div>"
 
 /***/ }),
 /* 326 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"dropdown\" #menuProgetto>\r\n  <button class=\"btn btn-default dropdown-toggle tmp-disable\" type=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">\r\n    Progetto\r\n    <span class=\"caret\"></span>\r\n  </button>\r\n  <ul class=\"dropdown-menu\" aria-labelledby=\"dropdownMenu1\">\r\n    <li><a href=\"#\" >Nuovo</a></li>\r\n    <li><a href=\"#\" >Apri progetto</a></li>\r\n    <li><a href=\"#\" >Elimina progetto</a></li>\r\n  </ul>\r\n</div>\r\n"
+module.exports = "<p>\r\n  proj-list works!\r\n</p>\r\n"
 
 /***/ }),
 /* 327 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"dropdown\" #menuTemplate>\r\n  <button class=\"btn btn-default dropdown-toggle tmp-disable\" type=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">\r\n    Template\r\n    <span class=\"caret\"></span>\r\n  </button>\r\n  <ul class=\"dropdown-menu\" aria-labelledby=\"dropdownMenu1\">\r\n    <li><a href=\"#\" >Aggiungi template</a></li>\r\n    <li><a href=\"#\" >Elimina template</a></li>\r\n  </ul>\r\n</div>\r\n"
+module.exports = "<div class=\"container-fluid\"> \r\n  <div>\r\n    <i class=\"glyphicon glyphicon-remove-sign close\"></i>\r\n  </div>\r\n  <div class=\"col-md-4 col-xs-4 accountSetting\">\r\n    <div class=\"col\">\r\n      <h3> Gestione profilo</h3>\r\n      <hr/>\r\n      <app-edit-username></app-edit-username>\r\n      <hr/>\r\n      <app-edit-email></app-edit-email>\r\n      <hr/>\r\n      <app-edit-psw></app-edit-psw>\r\n      <hr/>\r\n      <app-erase-profile></app-erase-profile>\r\n      <hr/>     \r\n    </div>\r\n  </div>\r\n  <div class=\"col-md-8 col-xs-8 list\">\r\n    <h3>Lista progetti</h3>\r\n    <app-proj-list></app-proj-list>\r\n  </div>\r\n</div>\r\n\r\n"
 
 /***/ }),
 /* 328 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\".container-fluid barra-menu\">\r\n  <div class=\"rowEdit\">\r\n    <div class=\"logoEdit\">\r\n      <img src=\"assets/images/logo.png\" alt=\"logo\">\r\n      <div class=\"logoText\">SWEDesigner</div>\r\n    </div>\r\n    <div class=\"menu btn\">  <app-file></app-file>  </div>\r\n    <div class=\"menu btn\">  <app-progetto></app-progetto>  </div>\r\n    <div class=\"menu btn\">  <app-modifica></app-modifica>  </div>\r\n    <div class=\"menu btn\">  <app-template></app-template>  </div>\r\n    <div class=\"menu btn\">  <app-layer></app-layer>  </div>\r\n    <div class=\"menu btn\">  <app-profilo></app-profilo>  </div>\r\n    <div class=\"wellcome\"> <i class=\"glyphicon glyphicon-user\"></i> &nbsp;: {{accountService.username}} </div>\r\n  </div>\r\n</div>\r\n"
+module.exports = "<div class=\"dropdown\" #menuProfilo id=\"qwerty\">\r\n  <button class=\"btn btn-default\" data-toggle=\"collapse\" id=\"menuProfilo\" href=\"#manage-profile\">\r\n    <i class=\"glyphicon glyphicon-user\"></i> &nbsp;{{accountService.username}}\r\n    <span class=\"caret\"></span>\r\n  </button>\r\n  <div >\r\n  <app-manage-profile class=\"collapse\" id=\"manage-profile\"></app-manage-profile></div>\r\n</div>\r\n"
 
 /***/ }),
 /* 329 */
 /***/ (function(module, exports) {
 
-module.exports = "<!-- component padre che racchiude gli elementi del menù -->\r\n<div class=\".container-fluid\">\r\n<app-menu></app-menu>\r\n<div class=\"row\">\r\n  <!-- component padre che racchiude gli elementi dell'editor -->\r\n  <div class=\"col-md-9 col-xs-9 editor\">\r\n    <app-editor></app-editor>\r\n  </div>\r\n  <!-- component  che racchiude gli elementi del acrivity frame, la quale rappresenta il flusso del programma -->\r\n  <div class=\"col-md-3 col-xs-3 activityframe\">\r\n    <app-activity-frame></app-activity-frame>\r\n  </div>\r\n</div>\r\n"
+module.exports = "<div class=\"dropdown\" #menuProgetto>\r\n  <button class=\"btn btn-default dropdown-toggle tmp-disable\" type=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">\r\n    Progetto\r\n    <span class=\"caret\"></span>\r\n  </button>\r\n  <ul class=\"dropdown-menu\" aria-labelledby=\"dropdownMenu1\">\r\n    <li><a href=\"#\" >Nuovo</a></li>\r\n    <li><a href=\"#\" >Apri progetto</a></li>\r\n    <li><a href=\"#\" >Elimina progetto</a></li>\r\n  </ul>\r\n</div>\r\n"
 
 /***/ }),
 /* 330 */
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"mainDiv\" class=\"container col-xs-6 col-md-4\">\r\n  <div class=\"sub-container\">\r\n    <div class=\"row\" >      \r\n      <img src=\"assets/images/logo.png\" alt=\"logo\" class=\"col-xs-6\" />\r\n      <span class=\"text\"> SWEDesigner </span>\r\n    </div> \r\n    <div>  \r\n      <h3 class=\"text-warning\">Password dimenticata</h3>\r\n      <form name=\"form\" (submit)=\"tryGetNewPassword($event)\" #forgotPswForm=\"ngForm\">\r\n        <div class=\"form-group has-warning\">\r\n          <label for=\"email\" class=\"control-label\">Email</label>\r\n          <div class=\"input-group\">\r\n            <span class=\"input-group-addon\">\r\n              <i class=\"glyphicon glyphicon-envelope\"></i>\r\n            </span>\r\n            <input type=\"email\" class=\"form-control\" name=\"email\" required placeholder=\"Email\"\r\n            id=\"email\"\r\n            ngModel email\r\n            [(ngModel)]=\"accountService.email\"/>\r\n            <!-- <div class=\"help-block\">Email is required</div> -->\r\n          </div>\r\n        </div>\r\n        <div class=\"form-group\">        \r\n        </div>\r\n        <div class=\"form-group\">\r\n          <input type=\"submit\" class=\"btn btn-warning\" value=\"Invia\" [disabled]=\"!forgotPswForm.form.valid\"/>       \r\n          <button class=\"btn btn-warning\" id=\"back\" (click)='accountService.redirectComponent(\"home\")'>Back</button> \r\n        </div>\r\n      </form>\r\n    </div>    \r\n  </div>\r\n</div>"
+module.exports = "<div class=\"dropdown\" #menuTemplate>\r\n  <button class=\"btn btn-default dropdown-toggle tmp-disable\" type=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">\r\n    Template\r\n    <span class=\"caret\"></span>\r\n  </button>\r\n  <ul class=\"dropdown-menu\" aria-labelledby=\"dropdownMenu1\">\r\n    <li><a href=\"#\" >Aggiungi template</a></li>\r\n    <li><a href=\"#\" >Elimina template</a></li>\r\n  </ul>\r\n</div>\r\n"
 
 /***/ }),
 /* 331 */
 /***/ (function(module, exports) {
 
-module.exports = " <div class=\"container col-xs-6 col-md-4\">\r\n  <div class=\"sub-container\">\r\n    <!-- Logo -->\r\n    <div class=\"row\" >      \r\n      <img src=\"assets/images/logo.png\" alt=\"logo\" class=\"col-xs-6\" />\r\n      <span id=\"content\" class=\"text hide\"> SWEDesigner </span>\r\n    </div> \r\n    <!-- Form -->\r\n    <div class=\"box\">  \r\n      <h2 class=\"text-warning\">Login</h2>\r\n      <form name=\"form\"  #loginForm=\"ngForm\" (submit)=\"loginUserProva()\">\r\n        <div class=\"form-group has-warning\" >\r\n          <label class=\"control-label\" for=\"email\"> Email </label>\r\n          <div class=\"input-group\">\r\n            <span class=\"input-group-addon\">\r\n              <i class=\"glyphicon glyphicon-envelope\"></i>\r\n            </span>  \r\n            <input type=\"email\" class=\"form-control\" placeholder=\"Email\" required\r\n            ngModel email\r\n            [(ngModel)]=\"accountService.email\" name=\"email\"\r\n            id=\"email\" />\r\n          </div>\r\n        </div>\r\n        <div class=\"form-group has-warning\">\r\n          <label for=\"password\" class=\"control-label\">Password</label>\r\n          <div class=\"input-group\">\r\n            <span class=\"input-group-addon\">\r\n              <i class=\"glyphicon glyphicon-lock\"></i>\r\n            </span> \r\n            <input type=\"password\" class=\"form-control\" name=\"password\" required placeholder=\"Password\"\r\n            [(ngModel)]=\"accountService.password\" name=\"password\" value=\"a\"\r\n            id=\"password\"/>\r\n          </div>\r\n        </div>\r\n        <div class=\"form-group\">\r\n          <input type=\"submit\" class=\"btn btn-warning\" value=\"Login\" [disabled]=\"!loginForm.form.valid\"/> \r\n          <a class=\"btn btn-link text-warning .warning\t\" (click)='accountService.redirectComponent(\"registrazione\")'>Registrati</a>\r\n          <a class=\"btn btn-link text-warning\" (click)='accountService.redirectComponent(\"passwordDimenticata\")'>Password dimenticata</a>\r\n        </div>\r\n      </form>\r\n    </div>    \r\n  </div>\r\n</div> \r\n"
+module.exports = "<div class=\".container-fluid barra-menu\">\r\n  <div class=\"rowEdit\">\r\n    <div class=\"logoEdit\">\r\n      <img src=\"assets/images/logo.png\" alt=\"logo\">\r\n      <div class=\"logoText\">SWEDesigner</div>\r\n    </div>\r\n    <div class=\"menu btn\">  <app-file></app-file>  </div>\r\n    <div class=\"menu btn\">  <app-progetto></app-progetto>  </div>\r\n    <div class=\"menu btn\">  <app-modifica></app-modifica>  </div>\r\n    <div class=\"menu btn\">  <app-template></app-template>  </div>\r\n    <div class=\"menu btn\">  <app-layer></app-layer>  </div>\r\n    <div class=\"menu btn\">  <app-profilo></app-profilo>  </div>\r\n  </div>\r\n</div>\r\n"
 
 /***/ }),
 /* 332 */
 /***/ (function(module, exports) {
 
+module.exports = "<!-- component padre che racchiude gli elementi del menù -->\r\n<div class=\".container-fluid\">\r\n<app-menu></app-menu>\r\n<div class=\"row\">\r\n  <!-- component padre che racchiude gli elementi dell'editor -->\r\n  <div class=\"col-md-9 col-xs-9 editor\">\r\n    <app-editor></app-editor>\r\n  </div>\r\n  <!-- component  che racchiude gli elementi del acrivity frame, la quale rappresenta il flusso del programma -->\r\n  <div class=\"col-md-3 col-xs-3 activityframe\">\r\n    <app-activity-frame></app-activity-frame>\r\n  </div>\r\n</div>\r\n"
+
+/***/ }),
+/* 333 */
+/***/ (function(module, exports) {
+
+module.exports = "<div id=\"mainDiv\" class=\"container col-xs-6 col-md-4\">\r\n  <div class=\"sub-container\">\r\n    <div class=\"row\" >      \r\n      <img src=\"assets/images/logo.png\" alt=\"logo\" class=\"col-xs-6\" />\r\n      <span class=\"text\"> SWEDesigner </span>\r\n    </div> \r\n    <div>  \r\n      <h3 class=\"text-warning\">Password dimenticata</h3>\r\n      <form name=\"form\" (submit)=\"tryGetNewPassword($event)\" #forgotPswForm=\"ngForm\">\r\n        <div class=\"form-group has-warning\">\r\n          <label for=\"email\" class=\"control-label\">Email</label>\r\n          <div class=\"input-group\">\r\n            <span class=\"input-group-addon\">\r\n              <i class=\"glyphicon glyphicon-envelope\"></i>\r\n            </span>\r\n            <input type=\"email\" class=\"form-control\" name=\"email\" required placeholder=\"Email\"\r\n            id=\"email\"\r\n            ngModel email\r\n            [(ngModel)]=\"accountService.email\"/>\r\n            <!-- <div class=\"help-block\">Email is required</div> -->\r\n          </div>\r\n        </div>\r\n        <div class=\"form-group\">        \r\n        </div>\r\n        <div class=\"form-group\">\r\n          <input type=\"submit\" class=\"btn btn-warning\" value=\"Invia\" [disabled]=\"!forgotPswForm.form.valid\"/>       \r\n          <button class=\"btn btn-warning\" id=\"back\" (click)='accountService.redirectComponent(\"home\")'>Back</button> \r\n        </div>\r\n      </form>\r\n    </div>    \r\n  </div>\r\n</div>"
+
+/***/ }),
+/* 334 */
+/***/ (function(module, exports) {
+
+module.exports = " <div class=\"container col-xs-6 col-md-4\">\r\n  <div class=\"sub-container\">\r\n    <!-- Logo -->\r\n    <div class=\"row\" >      \r\n      <img src=\"assets/images/logo.png\" alt=\"logo\" class=\"col-xs-6\" />\r\n      <span id=\"content\" class=\"text hide\"> SWEDesigner </span>\r\n    </div> \r\n    <!-- Form -->\r\n    <div class=\"box\">  \r\n      <h2 class=\"text-warning\">Login</h2>\r\n      <form name=\"form\"  #loginForm=\"ngForm\" (submit)=\"loginUser($event)\">\r\n        <div class=\"form-group has-warning\" >\r\n          <label class=\"control-label\" for=\"email\"> Email </label>\r\n          <div class=\"input-group\">\r\n            <span class=\"input-group-addon\">\r\n              <i class=\"glyphicon glyphicon-envelope\"></i>\r\n            </span>  \r\n            <input type=\"email\" class=\"form-control\" placeholder=\"Email\" required\r\n            ngModel email\r\n            [(ngModel)]=\"accountService.email\" name=\"email\"\r\n            id=\"email\" />\r\n          </div>\r\n        </div>\r\n        <div class=\"form-group has-warning\">\r\n          <label for=\"password\" class=\"control-label\">Password</label>\r\n          <div class=\"input-group\">\r\n            <span class=\"input-group-addon\">\r\n              <i class=\"glyphicon glyphicon-lock\"></i>\r\n            </span> \r\n            <input type=\"password\" class=\"form-control\" name=\"password\" required placeholder=\"Password\"\r\n            [(ngModel)]=\"accountService.password\"\r\n            id=\"password\"/>\r\n          </div>\r\n        </div>\r\n        <div class=\"form-group\">\r\n          <input type=\"submit\" class=\"btn btn-warning\" value=\"Login\" [disabled]=\"!loginForm.form.valid\"/> \r\n          <a class=\"btn btn-link text-warning .warning\t\" (click)='accountService.redirectComponent(\"registrazione\")'>Registrati</a>\r\n          <a class=\"btn btn-link text-warning\" (click)='accountService.redirectComponent(\"passwordDimenticata\")'>Password dimenticata</a>\r\n        </div>\r\n      </form>\r\n    </div>    \r\n  </div>\r\n</div> \r\n"
+
+/***/ }),
+/* 335 */
+/***/ (function(module, exports) {
+
 module.exports = "<div id=\"mainDiv\" class=\"container col-xs-6 col-md-4\">\r\n  <div class=\"sub-container\">\r\n    <div class=\"row\" >      \r\n      <img src=\"assets/images/logo.png\" alt=\"logo\" class=\"col-xs-6\" />\r\n      <span class=\"text\"> SWEDesigner </span>\r\n    </div> \r\n    <div>  \r\n      <h2 class=\"text-warning\">Registrazione</h2>\r\n      <form name=\"form\" (submit)=\"tryRegistration($event)\" #registrationForm=\"ngForm\">\r\n        <div class=\"form-group has-warning\">\r\n          <label for=\"username\" class=\"control-label\">Username</label>\r\n          <div class=\"input-group\">\r\n            <span class=\"input-group-addon\">\r\n              <i class=\"glyphicon glyphicon-user\"></i>\r\n            </span>  \r\n            <input type=\"text\" class=\"form-control\" name=\"username\" required placeholder=\"Username\" \r\n            id=\"username\"\r\n            [(ngModel)]=\"accountService.username\"/>      \r\n          </div>\r\n        </div>\r\n        <div class=\"form-group has-warning\">\r\n          <label for=\"email\" class=\"control-label\">Email</label>\r\n          <div class=\"input-group\">\r\n            <span class=\"input-group-addon\">\r\n              <i class=\"glyphicon glyphicon-envelope\"></i>\r\n            </span>  \r\n            <input type=\"email\" class=\"form-control\" placeholder=\"Email\" name=\"email\" required\r\n            id=\"email\"\r\n            ngModel email\r\n            [(ngModel)]=\"accountService.email\"/>\r\n          </div>        \r\n        </div>\r\n        <div class=\"form-group has-warning\">\r\n          <label for=\"password\" class=\"control-label\">Password</label>\r\n          <div class=\"input-group\">\r\n            <span class=\"input-group-addon\">\r\n              <i class=\"glyphicon glyphicon-lock\"></i>\r\n            </span> \r\n            <input type=\"password\" class=\"form-control\" name=\"password\" required placeholder=\"Password\"\r\n            id=\"password\"\r\n            [(ngModel)]=\"accountService.password\"/>\r\n          </div>\r\n        </div>\r\n        <div class=\"form-group\">\r\n          <input type=\"submit\" class=\"btn btn-warning\" value=\"Registrati\" id=\"submit\" [disabled]=\"!registrationForm.form.valid\"/> \r\n          <button class=\"btn btn-warning\" id=\"back\" (click)='accountService.redirectComponent(\"home\")'>Back</button>       \r\n        </div>\r\n      </form>\r\n    </div>    \r\n  </div>\r\n</div>\r\n\r\n\r\n"
 
 /***/ }),
-/* 333 */,
-/* 334 */,
-/* 335 */,
 /* 336 */,
 /* 337 */,
 /* 338 */,
@@ -5002,12 +5152,15 @@ module.exports = "<div id=\"mainDiv\" class=\"container col-xs-6 col-md-4\">\r\n
 /* 368 */,
 /* 369 */,
 /* 370 */,
-/* 371 */
+/* 371 */,
+/* 372 */,
+/* 373 */,
+/* 374 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(124);
+module.exports = __webpack_require__(123);
 
 
 /***/ })
-],[371]);
+],[374]);
 //# sourceMappingURL=main.bundle.js.map

@@ -99,11 +99,32 @@ export class AccountService {
       let response = data.json();
       console.log(response);
       if(response.logged == true){
+        console.log(response);
         this.setUserLoggedIn();
+        this.setUsername(response.username);
         cb(err);
       }
       else{
         console.log("errore nel login");
+      }
+    })
+  }
+  changePwd(username: String, pass: String){
+    let userData = {
+      "username": username,
+      "new_password": pass
+    }
+    this.http.post('/updatePwd', userData,{
+      method: RequestMethod.Post,
+      responseType: ResponseContentType.Text
+    })
+    .subscribe((data)=>{
+      let response = data.text();
+      if(response == "true"){
+        console.log("password cambiata con successo");
+      }
+      else{
+        console.log("password non cambiata");
       }
     })
   }
@@ -126,5 +147,9 @@ export class AccountService {
   redirectComponent(destination:string){
     // location.reload();
     this.router.navigate(['/' + destination ]);
+  }
+  setUsername(usr: String){
+    console.log(usr);
+    this.username = usr;
   }
 }

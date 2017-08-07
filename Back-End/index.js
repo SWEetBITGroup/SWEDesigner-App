@@ -270,8 +270,9 @@ app.listen(port, ()=>{
               console.log("logged");
               var isLogged = {
                 "logged" : true,
-                "username": x.username
+                "username": x[0].username
               }
+              //console.log(isLogged);
               res.json(isLogged);
               //res.send("logged");
             }
@@ -315,11 +316,11 @@ app.listen(port, ()=>{
         mongooseRequest.update_pwd(username, pwd, function(err, x){
           if(err){
             console.log("prolema aggiornamento password");
-            res.send("prolema aggiornamento password");
+            res.send(false);
           }
           else{
             console.log("password aggiornata con successo");
-            res.send("password aggiornata con successo");
+            res.send(true);
           }
         })
       })

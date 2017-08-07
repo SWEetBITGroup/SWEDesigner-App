@@ -19,12 +19,12 @@ export class LoginComponent {
   * @param accountService used to create a new instantiation of AccountService
   */
   constructor(private router: Router, private accountService: AccountService) {
-    Cookie.set('email', 'prova@Mail');
+    /*Cookie.set('email', 'prova@Mail');
     Cookie.set('password', 'provapsw');
     Cookie.set('username', 'gianfrancioschio'); 
     this.accountService.email = Cookie.get('email');
     this.accountService.password = Cookie.get('password');
-    this.accountService.username = Cookie.get('username');
+    this.accountService.username = Cookie.get('username');*/
   }
   
   
