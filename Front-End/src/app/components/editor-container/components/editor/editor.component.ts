@@ -76,6 +76,7 @@ export class EditorComponent implements OnInit {
   undoGraph: any;
   redoGraph: any;
   actualGraph: any;
+  countCopies: any;
 
   flagAdded: any;
   flagRemoved: any;
@@ -133,6 +134,10 @@ export class EditorComponent implements OnInit {
     this.paper.drawGrid("dot");
 
     this.paper.scale(this.xAx,this.xAx);
+
+    window.addEventListener('resize', (event)=> {
+      this.paper.setDimensions($('#paper').width(), $('#paper').height())
+    });
 
     /**
      * This methods allows to recognize when there is a change in the graph
@@ -357,6 +362,7 @@ export class EditorComponent implements OnInit {
     if(this.selectedCell!=null){
           this.copiedElement= this.selectedCell;
           this.flagCut= false;
+          this.countCopies= 0;
     }
     
   }
@@ -370,17 +376,20 @@ export class EditorComponent implements OnInit {
       if(!this.mainEditorService.getActivityModeStatus()){
         if(this.flagCut==false){
           let nome = this.selectedCell.model.getClassName();
-          this.ClassMenuComponent.changeNome(nome+'_copia');
-          if(this.selectedCell.model.attributes.type=='uml.Class') this.mainEditorService.addClass(new Classe(this.copiedElement.model.getClassName()+'_copia'), this.copiedElement.model.clone());
-          if(this.selectedCell.model.attributes.type=='uml.Interface') this.mainEditorService.addClass(new Interface(this.copiedElement.model.getClassName()+'_copia'), this.copiedElement.model.clone());
-          if(this.selectedCell.model.attributes.type=='uml.Abstract') this.mainEditorService.addClass(new ClasseAstratta(this.copiedElement.model.getClassName()+'_copia'), this.copiedElement.model.clone());
+          this.ClassMenuComponent.changeNome(nome+'_copia'+this.countCopies);
+          if(this.selectedCell.model.attributes.type=='uml.Class') this.mainEditorService.addClass(new Classe(this.copiedElement.model.getClassName()+'_copia'+this.countCopies), this.copiedElement.model.clone());
+          if(this.selectedCell.model.attributes.type=='uml.Interface') this.mainEditorService.addClass(new Interface(this.copiedElement.model.getClassName()+'_copia'+this.countCopies), this.copiedElement.model.clone());
+          if(this.selectedCell.model.attributes.type=='uml.Abstract') this.mainEditorService.addClass(new ClasseAstratta(this.copiedElement.model.getClassName()+'_copia'+this.countCopies), this.copiedElement.model.clone());
           this.ClassMenuComponent.changeNome(nome);
+          if(this.countCopies!=null)this.countCopies=1+this.countCopies;
+          else this.countCopies=0;
         }
         else{
           if(this.selectedCell.model.attributes.type=='uml.Class') this.mainEditorService.addClass(new Classe(this.copiedElement.model.getClassName()), this.copiedElement.model.clone());
           if(this.selectedCell.model.attributes.type=='uml.Interface') this.mainEditorService.addClass(new Interface(this.copiedElement.model.getClassName()), this.copiedElement.model.clone());
           if(this.selectedCell.model.attributes.type=='uml.Abstract') this.mainEditorService.addClass(new ClasseAstratta(this.copiedElement.model.getClassName()), this.copiedElement.model.clone());
           this.flagCut=false;
+          this.copiedElement= null;
         }
       }
       else {
@@ -389,9 +398,8 @@ export class EditorComponent implements OnInit {
         if(this.selectedCell.model.attributes.type=='erd.Relationship'&& this.selectedCell.model.attributes.attrs.text.text=='Decision') this.activityService.addIfNode(this.copiedElement.model.clone());
         if(this.selectedCell.model.attributes.type=='basic.Rect') this.activityService.addOperation(this.copiedElement.model.clone());
         if(this.selectedCell.model.attributes.type=='erd.Relationship'&& this.selectedCell.model.attributes.attrs.text.text=='') this.activityService.addEndIfNode(this.copiedElement.model.clone());
+        if(this.flagCut==true)  this.copiedElement= null;
       }
-      if(this.flagCut==true) this.copiedElement= null;
-
     }
   }
 
