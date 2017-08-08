@@ -302,11 +302,11 @@ app.listen(port, ()=>{
         mongooseRequest.update_username(username, newUsername, function(err, x){
           if(err){
             console.log("problema con l'aggiornamento dell'username");
-            res.send("problema con l'aggiornamento dell'username");
+            res.send(false);
           }
           else{
             console.log("username aggiornato");
-            res.send("nuovo username aggiornato");
+            res.send(true);
           }
         })
       })
@@ -330,11 +330,11 @@ app.listen(port, ()=>{
         mongooseRequest.update_mail(username, mail, function(err, x){
           if(err){
             console.log("problema aggiornamento mail");
-            res.send("problema aggiornamento mail");
+            res.send(false);
           }
           else{
             console.log("mail aggiornata correttamente");
-            res.send("mail aggiornata correttamente");
+            res.send(true);
           }
         })
       })

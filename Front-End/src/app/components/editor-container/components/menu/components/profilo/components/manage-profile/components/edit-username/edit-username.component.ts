@@ -27,10 +27,14 @@ export class EditUsernameComponent {
    */
   changeUsername() {
     let oldUsername = this.accountService.username;
-    console.log(oldUsername + ',' + this.newUsername);
-    if (true) {
-      this.newUsername = '';
-      alert("Modifica effettuata");
-    }
+    let newUsername = this.newUsername;
+    this.accountService.changeUsername(oldUsername, newUsername, function(err){
+      if(err){
+        alert("Problema con la modifica dell'username");
+      }
+      else{
+        alert("Username aggiornato con successo");
+      }
+    })
   }
 }

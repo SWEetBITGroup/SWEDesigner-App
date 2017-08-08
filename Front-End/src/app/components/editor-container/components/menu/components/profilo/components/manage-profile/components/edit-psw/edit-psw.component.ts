@@ -26,6 +26,13 @@ export class EditPswComponent {
   changePsw() {
     let username = this.accountService.username;
     let newPwd = this.newPassword;
-    this.accountService.changePwd(username, newPwd);
+    this.accountService.changePwd(username, newPwd, function(err){
+      if(err){
+        alert("Problema con la modifica");
+      }
+      else{
+        alert("Password modificata");
+      }
+    });
   }
 }

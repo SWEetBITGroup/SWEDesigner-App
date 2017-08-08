@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AccountService } from '../../../../../../../../../../services/account.service';
 
 @Component({
   selector: 'app-erase-profile',
@@ -7,12 +8,20 @@ import { Component } from '@angular/core';
 })
 export class EraseProfileComponent {
   
-  constructor() { }
+  constructor(private accountService: AccountService) { }
   /**
   * This function delete the profile and all the project binf to it
   */
   deleteProfile() {
-    console.log("Profilo cancellato");
+    let username = this.accountService.username;
+    this.accountService.deleteAccount(username, function(err){
+      if(err){
+        alert("Problema eliminazione profilo");
+      }
+      else{
+        alert("Profilo eliminato correttament");
+      }
+    })
   }
   
 }

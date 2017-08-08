@@ -110,7 +110,13 @@ export class AccountService {
       }
     })
   }
-  changePwd(username: String, pass: String){
+  /**
+   * This Function send a request of password's change to server and amange its response
+   * @param username 
+   * @param pass 
+   * @param cb 
+   */
+  changePwd(username: String, pass: String, cb: Function){
     let userData = {
       "username": username,
       "new_password": pass
@@ -122,10 +128,78 @@ export class AccountService {
     .subscribe((data)=>{
       let response = data.text();
       if(response == "true"){
-        console.log("password cambiata con successo");
+        cb(false);
       }
       else{
-        console.log("password non cambiata");
+        cb(true);
+      }
+    })
+  }
+  /**
+   * This Function send a request of email's change to server and amange its response
+   * @param username 
+   * @param mail 
+   * @param cb 
+   */
+  changeMail(username: String, mail: String, cb:Function){
+    let userData = {
+      "username": username,
+      "new_mail": mail
+    }
+    this.http.post('/updateMail', userData,{
+      method: RequestMethod.Post,
+      responseType: ResponseContentType.Text
+    })
+    .subscribe((data)=>{
+      let response = data.text();
+      if(response == "true"){
+        cb(false);
+      }
+      else{
+        cb(true);
+      }
+    })
+  }
+  /**
+   * This Function send a request of username's change to server and amange its response
+   * @param username 
+   * @param newUsername 
+   * @param cb 
+   */
+  changeUsername(username: String, newUsername: String, cb: Function){
+    let userData = {
+      "username": username,
+      "new_username": newUsername
+    }
+    this.http.post('/updateUsername', userData, {
+      method: RequestMethod.Post,
+      responseType: ResponseContentType.Text
+    })
+    .subscribe((data)=>{
+      let response = data.text();
+      if(response == "true"){
+        cb(false);
+      }
+      else{
+        cb(true);
+      }
+    })
+  }
+  deleteAccount(username: String, cb: Function){
+    let dataUser = {
+      "username": username
+    }
+    this.http.post('/deleteUsr', dataUser,{
+      method: RequestMethod.Post,
+      responseType: ResponseContentType.Text
+    })
+    .subscribe((data)=>{
+      let response = data.text();
+      if(response == "true"){
+        cb(false);
+      }
+      else{
+        cb(true);
       }
     })
   }

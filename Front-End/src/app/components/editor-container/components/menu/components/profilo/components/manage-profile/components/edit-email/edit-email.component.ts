@@ -24,12 +24,16 @@ export class EditEmailComponent {
   * This function change the username's value and reset the input box to null
   */
   changeEmail() {
-    let oldEmail = this.accountService.email;
-    console.log(oldEmail + ',' + this.newEmail);
-    if(true) {
-      this.newEmail = '';
-      alert("Modifica effettuata");
-    }
+    let mail = this.newEmail;
+    let username = this.accountService.username;
+    this.accountService.changeMail(username, mail, function(err){
+      if(err){
+        alert("Problema modifica e-mail");
+      }
+      else{
+        alert("E-mail modificata con successo");
+      }
+    })
   }
   
 }
