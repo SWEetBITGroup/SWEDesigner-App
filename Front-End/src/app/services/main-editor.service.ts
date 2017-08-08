@@ -153,6 +153,7 @@ export class MainEditorService {
     method.addDiagram(this.editorComp.graph.toJSON());
     this.editorComp.replaceDiagram(this.graph);
     this.activityMode = false;
+    this.editorComp.resetModifica();
   }
 
   /**
@@ -166,7 +167,7 @@ export class MainEditorService {
    */
   addMetodo(staticMet: boolean, costr: boolean, tipo: string, nome:string, acc: string, listArgs?: any) {
     this.selectedClasse.addMetodo(new Metodo(staticMet,costr,nome,acc,tipo,listArgs));
-  }
+}
 
   /**
    * Calls removeMetodo of ´selectedClasse´
@@ -193,6 +194,7 @@ export class MainEditorService {
       this.editorComp.replaceDiagram(metodo.getDiagram());
       this.activityMode = true;
       this.editorComp.selectedCell = null;
+      this.editorComp.resetModifica();
     }
   }
 
