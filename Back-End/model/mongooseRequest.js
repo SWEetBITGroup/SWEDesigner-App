@@ -276,8 +276,16 @@ update_username: function(username, newUsername, cb){
                     }
                     else{
                         if(x){
-                            console.log("progetti e  username aggiornati con successo");
-                            cb(false, nuovo);
+                            proget.update({'username': username}, {'username': newUsername}, {multi: true}, function(err, control){
+                                if(err){
+                                    console.log("prblema aggiornamento progetti e  username");
+                                    cb(false, nuovo);
+                                }
+                                else{
+                                    console.log("progetti e  username aggiornati con successo");
+                                    cb(false, nuovo);
+                                }
+                            })
                         }
                         else{
                             console.log("username aggiornato con successo");
