@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AccountService } from '../../../../../../../../../../services/account.service';
 
 @Component({
   selector: 'app-proj-list',
@@ -6,13 +7,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./proj-list.component.css']
 })
 export class ProjListComponent implements OnInit {
-  arr: string[];
-  constructor() {
-    this.arr = ['todo1','todo2','todo3','todo4','todo5','todo6','todo7','todo8','todo10','todo11','todo12','todo13','todo14',
-  'todo15'];
+  arr: String[];
+  constructor(private accountService: AccountService) {
+    this.arr = [];
   }
 
   ngOnInit() {
+    this.accountService.loadProjectList(this.accountService.username, (projects)=>{
+      projects.forEach(element => {
+        this.arr.push(element.nome_progetto);
+      });
+    })
   }
 
 }

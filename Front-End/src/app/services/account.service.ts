@@ -185,6 +185,11 @@ export class AccountService {
       }
     })
   }
+  /**
+   * This function ask to server a deleting action on account
+   * @param username 
+   * @param cb 
+   */
   deleteAccount(username: String, cb: Function){
     let dataUser = {
       "username": username
@@ -201,6 +206,19 @@ export class AccountService {
       else{
         cb(true);
       }
+    })
+  }
+  loadProjectList(username: String, cb: Function){
+    let userData = {
+      "username": username
+    }
+    this.http.post('/loadProjects', userData, {
+      method: RequestMethod.Post,
+      responseType: ResponseContentType.Json
+    })
+    .subscribe((data)=>{
+      let response = data.json();
+      cb(response);
     })
   }
   /**

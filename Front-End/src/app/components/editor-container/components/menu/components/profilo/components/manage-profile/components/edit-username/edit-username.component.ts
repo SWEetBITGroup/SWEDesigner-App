@@ -35,6 +35,7 @@ export class EditUsernameComponent {
       else{
         alert("Username aggiornato con successo");
         this.accountService.setUsername(newUsername);
+        location.reload();
       }
     })
   }
