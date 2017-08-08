@@ -59,6 +59,9 @@ export class EditorComponent implements OnInit {
    */
   copiedElement: any;
 
+  /**
+   * This flag indicates if the copiedElement is to past for cut o for copy
+   */
   flagCut: boolean;
 
   /**
@@ -66,19 +69,38 @@ export class EditorComponent implements OnInit {
    */
   connettore: any;
   /**
-   * it point to the selected element by the click on it, that will be connect by a link shape
+   * it points to the selected element by the click on it, that will be connect by a link shape
    */
   elementToConnect: any;
   
   /**
-   * They point to the graph after a undo, after a redo and the actual graph
+   * It points to the graph after a undo
    */
   undoGraph: any;
+
+  /**
+   * It points to the graph after a redo
+   */
   redoGraph: any;
+
+  /**
+   * It points to the actual graph
+   */
   actualGraph: any;
+
+  /**
+   * It counts the copies to the same element
+   */
   countCopies: any;
 
+  /**
+   * This flag indicates if you have to listen to the add event of the graph
+   */
   flagAdded: any;
+
+  /**
+   * This flag indicates if you have to listen to the remove event of the graph
+   */
   flagRemoved: any;
 
   /**
@@ -135,6 +157,9 @@ export class EditorComponent implements OnInit {
 
     this.paper.scale(this.xAx,this.xAx);
 
+    /**
+     * This methods allows to recognize when there is a resize of the page
+     */
     window.addEventListener('resize', (event)=> {
       this.paper.setDimensions($('#paper').width(), $('#paper').height())
     });
@@ -159,6 +184,10 @@ export class EditorComponent implements OnInit {
       this.flagRemoved= false;
     });
 
+    
+    /**
+     * This methods allows to recognize when there is a add event in the graph
+     */
     this.graph.on('add', (cell) => {
       if(this.flagAdded!=false){
         if(this.actualGraph==null) {this.actualGraph = new joint.dia.Graph;}
@@ -177,6 +206,10 @@ export class EditorComponent implements OnInit {
       this.flagAdded=true;
     });
 
+
+    /**
+     * This methods allows to recognize when there is a remove event in the graph
+     */
     this.graph.on('remove', (cell) => {
       if(this.flagRemoved==true){
         if(this.actualGraph==null) {this.actualGraph = new joint.dia.Graph; }
@@ -414,6 +447,9 @@ export class EditorComponent implements OnInit {
     }
   }
 
+  /**
+   * This methods delete the selected element
+   */
   elimina(){
     if(this.selectedCell!=null)
       this.deleteElement(this.selectedCell.model);
@@ -445,6 +481,9 @@ export class EditorComponent implements OnInit {
     } 
   }
 
+  /**
+   * This methods redo the last change in the graph
+   */
   redo(){
     if(this.redoGraph!=null){
       this.flagAdded=false;
@@ -470,6 +509,9 @@ export class EditorComponent implements OnInit {
     }
   }
 
+  /**
+   * This methods resets the state of the tasks in "Modifica"
+   */
   resetModifica(){
     this.actualGraph= null;
     this.undoGraph= null;
