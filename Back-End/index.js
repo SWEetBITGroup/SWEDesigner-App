@@ -343,11 +343,11 @@ app.listen(port, ()=>{
         mongooseRequest.delete_usr(username, function(err, x){
           if(err){
             console.log("utente non eliminato");
-            res.send("utente non eliminato");
+            res.send(false);
           }
           else{
             console.log("utente eliminato");
-            res.send("utente eliminato");
+            res.send(true);
           }
         })
       })

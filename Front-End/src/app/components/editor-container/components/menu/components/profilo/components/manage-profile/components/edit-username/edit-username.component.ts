@@ -28,12 +28,13 @@ export class EditUsernameComponent {
   changeUsername() {
     let oldUsername = this.accountService.username;
     let newUsername = this.newUsername;
-    this.accountService.changeUsername(oldUsername, newUsername, function(err){
+    this.accountService.changeUsername(oldUsername, newUsername, (err)=>{
       if(err){
         alert("Problema con la modifica dell'username");
       }
       else{
         alert("Username aggiornato con successo");
+        this.accountService.setUsername(newUsername);
       }
     })
   }

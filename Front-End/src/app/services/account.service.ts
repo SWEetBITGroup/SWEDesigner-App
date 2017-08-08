@@ -223,8 +223,9 @@ export class AccountService {
     this.router.navigate(['/' + destination ]);
   }
   setUsername(usr: String){
-    console.log(usr);
+    //console.log(usr);
     this.username = usr;
+    Cookie.set('username', this.username);
   }
   /**
    * This function make 3 cookie with the 3 user's information
