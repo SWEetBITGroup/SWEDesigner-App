@@ -160,18 +160,21 @@ export class EditorComponent implements OnInit {
     });
 
     this.graph.on('add', (cell) => {
-      if(this.actualGraph==null) {this.actualGraph = new joint.dia.Graph;}
-      if(this.undoGraph==null){ this.undoGraph= new joint.dia.Graph;}
-      this.undoGraph.clear();
-      this.actualGraph.getCells().forEach(element => {
-        this.undoGraph.addCell(element.clone());
-      });
-      console.log(this.actualGraph.getCells().length);
-      this.actualGraph.clear();
-      this.graph.getCells().forEach(element => {
-        this.actualGraph.addCell(element.clone());
-      });
-      console.log("change")
+      if(this.flagAdded!=false){
+        if(this.actualGraph==null) {this.actualGraph = new joint.dia.Graph;}
+        if(this.undoGraph==null){ this.undoGraph= new joint.dia.Graph;}
+        this.undoGraph.clear();
+        this.actualGraph.getCells().forEach(element => {
+          this.undoGraph.addCell(element.clone());
+        });
+        console.log(this.actualGraph.getCells().length);
+        this.actualGraph.clear();
+        this.graph.getCells().forEach(element => {
+          this.actualGraph.addCell(element.clone());
+        });
+        console.log("change")
+      }   
+      this.flagAdded=true;
     });
 
     this.graph.on('remove', (cell) => {
@@ -422,6 +425,7 @@ export class EditorComponent implements OnInit {
   undo(){
     if(this.undoGraph != null){
       this.redoGraph= new joint.dia.Graph;
+      this.redoGraph.clear();
       this.graph.getCells().forEach(element => {
         this.redoGraph.addCell(element.clone());
       });
@@ -443,10 +447,13 @@ export class EditorComponent implements OnInit {
 
   redo(){
     if(this.redoGraph!=null){
+      this.flagAdded=false;
+      if(this.undoGraph==null) this.undoGraph= new joint.dia.Graph;
+      this.undoGraph.clear();
       this.graph.getCells().forEach(element => {
-        if(this.undoGraph==null) this.undoGraph= new joint.dia.Graph;
         this.undoGraph.addCell(element.clone());
       });
+      console.log(this.undoGraph.length);
       this.graph.getCells().forEach(element => {
         this.graph.removeCells(element);
         this.selectedCell= null;
