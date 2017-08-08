@@ -57,6 +57,10 @@ export class MenuService {
     this.selectedGraphService.next('undo');
   }
 
+  redo(){
+    this.selectedGraphService.next('redo');
+  }
+
   elimina(){
     this.selectedGraphService.next('elimina');
   }

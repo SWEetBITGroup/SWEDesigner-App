@@ -5,7 +5,7 @@
   </button>
   <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
     <li><a (click)="doUndo()" >Annulla</a></li>
-    <li><a  >Ripristina</a></li>
+    <li><a  (click)="doRedo()">Ripristina</a></li>
     <li><a (click)="doCut()" >Taglia</a></li>
     <li><a  (click)="doCopy()" >Copia</a></li>
     <li><a  (click)="doPaste()" >Incolla</a></li>

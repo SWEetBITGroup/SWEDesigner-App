@@ -77,6 +77,9 @@ export class EditorComponent implements OnInit {
   redoGraph: any;
   actualGraph: any;
 
+  flagAdded: any;
+  flagRemoved: any;
+
   /**
    *
    */
@@ -108,6 +111,8 @@ export class EditorComponent implements OnInit {
           this.cutElement();
         else if(x=='undo')
           this.undo();
+        else if(x=='redo')
+          this.redo();
         else if(x=='elimina')
           this.elimina();
       }
@@ -145,9 +150,13 @@ export class EditorComponent implements OnInit {
       this.graph.getCells().forEach(element => {
         this.actualGraph.addCell(element.clone());
       });
+      this.flagAdded= false;
+      this.flagRemoved= false;
     });
 
-    this.graph.on('add', function(cell){
+    //ridimensionare graph
+
+    this.graph.on('add', (cell) => {
       if(this.actualGraph==null) this.actualGraph = new joint.dia.Graph;
       this.undoGraph= new joint.dia.Graph;
       this.actualGraph.getCells().forEach(element => {
@@ -159,8 +168,29 @@ export class EditorComponent implements OnInit {
         this.graph.getCells().forEach(element => {
           this.actualGraph.addCell(element.clone());
         });
-   }
+      }
+      this.flagAdded= true;
+      this.flagRemoved= false;
     });
+
+    this.graph.on('remove', (cell) => {
+      if(this.flagAdded==false){
+        if(this.actualGraph==null) this.actualGraph = new joint.dia.Graph;
+        this.undoGraph= new joint.dia.Graph;
+        this.actualGraph.getCells().forEach(element => {
+          this.undoGraph.addCells(element.clone());
+        });
+        this.actualGraph.clear();
+        if(this.graph!= null){
+          console.log("ciao "+this.graph.getCells().length);
+          this.graph.getCells().forEach(element => {
+            this.actualGraph.addCell(element.clone());
+          });
+        }
+        this.flagRemoved= true; 
+      }
+    });
+
     /**
      * This methods allows to the mouse's pointer to recognize when a class is clicked and select it
      */
@@ -326,6 +356,7 @@ export class EditorComponent implements OnInit {
   copyElement(){
     if(this.selectedCell!=null){
           this.copiedElement= this.selectedCell;
+          this.flagCut= false;
     }
     
   }
@@ -359,8 +390,9 @@ export class EditorComponent implements OnInit {
         if(this.selectedCell.model.attributes.type=='basic.Rect') this.activityService.addOperation(this.copiedElement.model.clone());
         if(this.selectedCell.model.attributes.type=='erd.Relationship'&& this.selectedCell.model.attributes.attrs.text.text=='') this.activityService.addEndIfNode(this.copiedElement.model.clone());
       }
+      if(this.flagCut==true) this.copiedElement= null;
+
     }
-    this.copiedElement= null;
   }
 
   /**
@@ -398,6 +430,23 @@ export class EditorComponent implements OnInit {
       this.undoGraph.getCells().forEach(element => {
         this.graph.addCell(element.clone());
       });
+      this.undoGraph= null;
+    }
+  }
+
+  redo(){
+    if(this.redoGraph!=null){
+      this.undoGraph= new joint.dia.Graph;
+      this.graph.getCells().forEach(element => {
+        this.undoGraph.addCell(element.clone());
+      });
+      this.graph.getCells().forEach(element => {
+        this.deleteElement(element);
+      });
+      this.redoGraph.getCells().forEach(element => {
+        this.graph.addCell(element.clone());
+      });
+      this.undoGraph= null;
     }
   }
 
