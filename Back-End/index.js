@@ -351,20 +351,6 @@ app.listen(port, ()=>{
           }
         })
       })
-      app.post("/deleteProj", function(req, res){
-        var username = req.body.username;
-        var name = req.body.nome_progetto;
-        mongooseRequest.delete_proj(username, name, function(err, x){
-          if(err){
-            console.log("progetto non eliminato");
-            res.send("progetto non eliminato");
-          }
-          else{
-            console.log("progetto eliminato");
-            res.send("progetto eliminato");
-          }
-        })
-      })
     //Projects' Query
     app.post("/insProject", function(req, res){
       var name = req.body.nome_progetto;
@@ -438,3 +424,17 @@ app.listen(port, ()=>{
         }
       })
     })
+    app.post("/deleteProj", function(req, res){
+        var username = req.body.username;
+        var name = req.body.nome_progetto;
+        mongooseRequest.delete_proj(username, name, function(err, x){
+          if(err){
+            console.log("progetto non eliminato");
+            res.send("progetto non eliminato");
+          }
+          else{
+            console.log("progetto eliminato");
+            res.send("progetto eliminato");
+          }
+        })
+      })

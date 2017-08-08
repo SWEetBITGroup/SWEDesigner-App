@@ -12,6 +12,10 @@ export class ProjListComponent implements OnInit {
     this.arr = [];
   }
 
+  removeProj(e){
+
+  }
+
   ngOnInit() {
     this.accountService.loadProjectList(this.accountService.username, (projects)=>{
       projects.forEach(element => {

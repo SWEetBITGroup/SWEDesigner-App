@@ -208,6 +208,11 @@ export class AccountService {
       }
     })
   }
+  /**
+   * This function ask to server the project's list of current user
+   * @param username 
+   * @param cb 
+   */
   loadProjectList(username: String, cb: Function){
     let userData = {
       "username": username
@@ -220,6 +225,9 @@ export class AccountService {
       let response = data.json();
       cb(response);
     })
+  }
+  deleteProj(){
+    
   }
   /**
   * Change the authenticatio status of the user
