@@ -1,3 +1,20 @@
-<p>
-  proj-list works!
-</p>
+  <!-- lista progetti della classe -->
+  <div id="listaAttr" class="projList">
+    <ul class="list-group">
+      <li class="list-group-item list-group-item-warning" *ngFor="let proj of this.arr">
+        <div class="left">
+
+          {{proj}}
+        </div>
+        <div class="right">
+        <button class="btn btn-warning" (click)="openProj(proj)">
+          <span class="glyphicon glyphicon-level-up" title="Apri"></span>
+        </button>
+        <button class="btn btn-warning" (click)="removeProj(proj)" type="button">
+          <span class="glyphicon glyphicon-trash" title="Rimuovi"></span>
+        </button>
+
+        </div>
+      </li>
+    </ul>
+  </div>

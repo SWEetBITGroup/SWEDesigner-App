@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css?family=Saira');
+
+.projList {
+  overflow: auto;
+  height: 70vh;
+}
+
+li {
+  padding: 0;
+  height: 60px;
+  border: 1px solid darkgoldenrod;
+}
+
+.left {
+  float: left;
+  font-family: 'Saira', sans-serif;
+  margin-top: 20px;
+  margin-left: 20px;
+  font-size: 18px;
+}
+
+li:hover {
+  background-color: #FFBF66;
+  color: whitesmoke;
+}
+
+li:hover .right {
+  float: right;
+  display: inline-block;
+}
+
+.right {
+  margin-top: 10px;
+  margin-right: 20px;
+  display: none;
+}
+
+button {
+  background-color: #C0C0C0;
+}
+
+button:hover {
+    background-color: dimgray;
+}

@@ -6,8 +6,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./proj-list.component.css']
 })
 export class ProjListComponent implements OnInit {
-
-  constructor() { }
+  arr: string[];
+  constructor() {
+    this.arr = ['todo1','todo2','todo3','todo4','todo5','todo6','todo7','todo8','todo10','todo11','todo12','todo13','todo14',
+  'todo15'];
+  }
 
   ngOnInit() {
   }
