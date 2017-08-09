@@ -20,7 +20,6 @@ export class ProjListComponent implements OnInit {
       });
     })
   }
-
   removeProj(e){
     this.accountService.deleteProj(this.accountService.username, e, (err)=>{
       if(err){
@@ -34,7 +33,7 @@ export class ProjListComponent implements OnInit {
   }
 
   ngOnInit() {
-    
+
   }
 
 }
