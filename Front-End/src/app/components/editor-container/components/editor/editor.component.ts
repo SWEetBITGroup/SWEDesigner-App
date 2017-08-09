@@ -161,7 +161,9 @@ export class EditorComponent implements OnInit {
      * This methods allows to recognize when there is a resize of the page
      */
     window.addEventListener('resize', (event)=> {
-      this.paper.setDimensions($('#paper').width(), $('#paper').height())
+      let height1=window.innerHeight-(window.innerHeight*6)/100;
+      let width1= window.innerWidth-(window.innerWidth*5)/100
+      this.paper.setDimensions(width1, height1);
     });
 
     /**
