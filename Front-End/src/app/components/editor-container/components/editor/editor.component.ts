@@ -103,6 +103,15 @@ export class EditorComponent implements OnInit {
    */
   flagRemoved: any;
 
+
+  addedMethod: any;
+
+  removedMethod: any;
+
+  changeMethod: any;
+
+  noChange: any;
+
   /**
    *
    */
@@ -170,20 +179,28 @@ export class EditorComponent implements OnInit {
      * This methods allows to recognize when there is a change in the graph
      */
     this.graph.on('change', ()=> {
-      if(this.actualGraph!=null){
-        if(this.undoGraph==null){ this.undoGraph= new joint.dia.Graph;}
-        this.undoGraph.clear();
-        this.actualGraph.getCells().forEach(element => {
-        this.undoGraph.addCell(element.clone());
+      if(this.noChange==false||this.noChange==null){
+        console.log(this.noChange);
+        if(this.actualGraph!=null){
+            if(this.undoGraph==null){ this.undoGraph= new joint.dia.Graph;}
+            this.undoGraph.clear();
+            this.actualGraph.getCells().forEach(element => {
+            this.undoGraph.addCell(element.clone());
+            });
+            this.actualGraph.clear();
+        }
+        else this.actualGraph = new joint.dia.Graph;
+        this.graph.getCells().forEach(element => {
+          this.actualGraph.addCell(element.clone());
         });
-        this.actualGraph.clear();
+        console.log("change");
       }
-      else this.actualGraph = new joint.dia.Graph;
-      this.graph.getCells().forEach(element => {
-        this.actualGraph.addCell(element.clone());
-      });
       this.flagAdded= false;
       this.flagRemoved= false;
+      if(this.changeMethod==false||this.changeMethod==null){
+        this.addedMethod= null;
+        this.removedMethod= null;
+      }
     });
 
     
@@ -203,7 +220,6 @@ export class EditorComponent implements OnInit {
         this.graph.getCells().forEach(element => {
           this.actualGraph.addCell(element.clone());
         });
-        console.log("change")
       }   
       this.flagAdded=true;
     });
@@ -341,7 +357,7 @@ export class EditorComponent implements OnInit {
     if(!this.mainEditorService.getActivityModeStatus()){
       this.selectedCell = cellView;
       this.classMenuService.classSelection(cellView.model);
-      this.mainEditorService.selectClasse(cellView.model.attributes.name[0]);
+      this.mainEditorService.selectClasse(cellView.model.attributes.name);
     } else {
       this.selectedCell = cellView;
       this.activityService.setSelectedElement(cellView.model);
@@ -409,9 +425,21 @@ export class EditorComponent implements OnInit {
         if(this.flagCut==false){
           let nome = this.selectedCell.model.getClassName();
           this.ClassMenuComponent.changeNome(nome+'_copia'+this.countCopies);
-          if(this.selectedCell.model.attributes.type=='uml.Class') this.mainEditorService.addClass(new Classe(this.copiedElement.model.getClassName()+'_copia'+this.countCopies), this.copiedElement.model.clone());
+          if(this.selectedCell.model.attributes.type=='uml.Class'){
+            let nomeClasse= new Classe(this.copiedElement.model.getClassName());
+            this.mainEditorService.getSelectedClasse().getMetodi().forEach(element => {
+              nomeClasse.addMetodo(element);
+            });
+            this.mainEditorService.addClass(nomeClasse, this.copiedElement.model.clone());
+          }
           if(this.selectedCell.model.attributes.type=='uml.Interface') this.mainEditorService.addClass(new Interface(this.copiedElement.model.getClassName()+'_copia'+this.countCopies), this.copiedElement.model.clone());
-          if(this.selectedCell.model.attributes.type=='uml.Abstract') this.mainEditorService.addClass(new ClasseAstratta(this.copiedElement.model.getClassName()+'_copia'+this.countCopies), this.copiedElement.model.clone());
+          if(this.selectedCell.model.attributes.type=='uml.Abstract') {
+            let nomeClasse= new ClasseAstratta(this.copiedElement.model.getClassName());
+            this.mainEditorService.getSelectedClasse().getMetodi().forEach(element => {
+              nomeClasse.addMetodo(element);
+            });
+            this.mainEditorService.addClass(nomeClasse, this.copiedElement.model.clone());
+          }
           this.ClassMenuComponent.changeNome(nome);
           if(this.countCopies!=null)this.countCopies=1+this.countCopies;
           else this.countCopies=0;
@@ -462,6 +490,10 @@ export class EditorComponent implements OnInit {
    */
   undo(){
     if(this.undoGraph != null){
+      if(this.addedMethod!=null) {
+        this.mainEditorService.removeMetodo(this.addedMethod.getNome());
+        this.removedMethod= this.addedMethod;
+      }
       this.redoGraph= new joint.dia.Graph;
       this.redoGraph.clear();
       this.graph.getCells().forEach(element => {
@@ -481,6 +513,9 @@ export class EditorComponent implements OnInit {
         this.actualGraph.addCell(element.clone());
       });
     } 
+    this.addedMethod= null;
+    this.changeMethod= false;
+    this.noChange= false;
   }
 
   /**
@@ -488,6 +523,9 @@ export class EditorComponent implements OnInit {
    */
   redo(){
     if(this.redoGraph!=null){
+      if(this.removedMethod!=null) {
+        this.mainEditorService.addMetodo(this.removedMethod.isStatic(), this.removedMethod.isConstructor(), this.removedMethod.getNome(), this.removedMethod.getAccesso(), this.removedMethod.getTipoRitorno(), this.removedMethod.getListaArgomenti());
+      }
       this.flagAdded=false;
       if(this.undoGraph==null) this.undoGraph= new joint.dia.Graph;
       this.undoGraph.clear();
@@ -509,6 +547,8 @@ export class EditorComponent implements OnInit {
         this.actualGraph.addCell(element.clone());
       });
     }
+    this.removedMethod= null;
+    this.changeMethod= false;
   }
 
   /**
@@ -519,6 +559,23 @@ export class EditorComponent implements OnInit {
     this.undoGraph= null;
     this.redoGraph= null;
     this.copiedElement= null;
+  }
+
+  setUndoRedo(){
+    if(this.actualGraph!=null){
+        if(this.undoGraph==null){ this.undoGraph= new joint.dia.Graph;}
+        this.undoGraph.clear();
+        this.actualGraph.getCells().forEach(element => {
+        this.undoGraph.addCell(element.clone());
+        });
+        this.actualGraph.clear();
+    }
+    else this.actualGraph = new joint.dia.Graph;
+    this.graph.getCells().forEach(element => {
+      this.actualGraph.addCell(element.clone());
+    });
+    this.flagAdded= false;
+    this.flagRemoved= false;
   }
 
   selectElementActivity(cell: any) {

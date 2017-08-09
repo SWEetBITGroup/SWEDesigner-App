@@ -84,6 +84,7 @@ export class MainEditorService {
    */
   selectClasse(nome: string) {
     this.project.getClassi().forEach(classe => {
+      console.log(classe.getNome());
       if(classe.getNome() == nome) {
         this.selectedClasse = classe;
       }
@@ -166,7 +167,11 @@ export class MainEditorService {
    * signature of the function
    */
   addMetodo(staticMet: boolean, costr: boolean, tipo: string, nome:string, acc: string, listArgs?: any) {
-    this.selectedClasse.addMetodo(new Metodo(staticMet,costr,nome,acc,tipo,listArgs));
+    this.editorComp.addedMethod= new Metodo(staticMet,costr,nome,acc,tipo,listArgs);
+    this.editorComp.noChange= true;
+    this.editorComp.changeMethod= true;
+    this.selectedClasse.addMetodo(this.editorComp.addedMethod);
+    this.editorComp.setUndoRedo();
 }
 
   /**
