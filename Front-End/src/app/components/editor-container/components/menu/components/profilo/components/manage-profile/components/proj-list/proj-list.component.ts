@@ -9,19 +9,32 @@ import { AccountService } from '../../../../../../../../../../services/account.s
 export class ProjListComponent implements OnInit {
   arr: String[];
   constructor(private accountService: AccountService) {
+    this.initProj();
+  }
+
+  initProj(){
     this.arr = [];
-  }
-
-  removeProj(e){
-
-  }
-
-  ngOnInit() {
     this.accountService.loadProjectList(this.accountService.username, (projects)=>{
       projects.forEach(element => {
         this.arr.push(element.nome_progetto);
       });
     })
+  }
+
+  removeProj(e){
+    this.accountService.deleteProj(this.accountService.username, e, (err)=>{
+      if(err){
+        alert("Problema eliminazione progetto");
+      }
+      else{
+        alert("Progetto eliminato con successo");
+        this.initProj();
+      }
+    })
+  }
+
+  ngOnInit() {
+    
   }
 
 }

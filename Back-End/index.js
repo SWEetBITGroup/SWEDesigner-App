@@ -430,11 +430,11 @@ app.listen(port, ()=>{
         mongooseRequest.delete_proj(username, name, function(err, x){
           if(err){
             console.log("progetto non eliminato");
-            res.send("progetto non eliminato");
+            res.send(false);
           }
           else{
             console.log("progetto eliminato");
-            res.send("progetto eliminato");
+            res.send(true);
           }
         })
       })

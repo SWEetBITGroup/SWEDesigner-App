@@ -226,8 +226,30 @@ export class AccountService {
       cb(response);
     })
   }
-  deleteProj(){
-    
+  /**
+   * This function ask to server to delete a project and manage its response
+   * @param username 
+   * @param nameProj 
+   * @param cb 
+   */
+  deleteProj(username: String, nameProj: String, cb: Function){
+    let userData = {
+      "username": username,
+      "nome_progetto": nameProj
+    }
+    this.http.post('/deleteProj', userData, {
+      method: RequestMethod.Post,
+      responseType: ResponseContentType.Text
+    })
+    .subscribe((data)=>{
+      let response = data.text();
+      if(response == "true"){
+        cb(false);
+      }
+      else{
+        cb(true);
+      }
+    })
   }
   /**
   * Change the authenticatio status of the user
