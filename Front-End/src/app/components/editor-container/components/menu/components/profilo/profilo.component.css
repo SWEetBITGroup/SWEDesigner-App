@@ -1,5 +1,3 @@
-:host {
-}
 .btn {
   border: none;
   border-radius: 0;
@@ -22,19 +20,19 @@ ul {
 }
 
 .dropdown-toggle {
- background-color: transparent;
- border-color: #42413D;
- border-style: solid;
- border-top: none;
- border-right: none;
- border-left: none;
+  background-color: transparent;
+  border-color: #42413D;
+  border-style: solid;
+  border-top: none;
+  border-right: none;
+  border-left: none;
 }
 
 .dropdown-toggle:active, .open .dropdown-toggle {
-      background: #FFCE2B !important;
-      color:#42413D !important;
-      border-style: none;
-  }
+  background: #FFCE2B !important;
+  color:#42413D !important;
+  border-style: none;
+}
 
 .dropdown-menu{
   background-color: #42413D;
