@@ -167,8 +167,8 @@ load_all_usr : function(cb){ //giusta
  * @param {string} usr Username of user
  * @param {function} cb Callback
  */
-load_proj: function(name, usr, cb){ //giusta
-    proget.findOne({'nome_progetto': name, 'username': usr}, 'project', function(err, proj){
+load_proj: function(name, usr, cb){
+    proget.findOne({'nome_progetto': name, 'username': usr}, '-_id nome_progetto project', function(err, proj){
       if(err){
         console.log(err);
         cb(true, "");

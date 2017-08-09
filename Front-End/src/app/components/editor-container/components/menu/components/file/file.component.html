@@ -5,10 +5,10 @@
   </button>
   <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
     <li><a href="#" >Salva</a></li>
-    <li><a (click)="esporta()" href="#" >Esporta</a></li>
+    <li><a (click)="esporta()">Esporta</a></li>
     <li>
       <input id="upload" type="file" class="custom-file-input" (change)="importa($event)" placeholder="Upload file" accept=".json">
-      <a href="#" onclick="$('input[id=upload]').click();">Importa progetto </a>
+      <a onclick="$('input[id=upload]').click();">Importa progetto </a>
     </li>
     <li><a href="#" (click)="genera()" >Genera codice</a></li>
     <li><a href="#" >Salva template</a></li>

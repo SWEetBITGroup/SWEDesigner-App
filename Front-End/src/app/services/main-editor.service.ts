@@ -225,6 +225,7 @@ export class MainEditorService {
   }
 
   importProject(importData) {
+    console.log(importData);
     let proj = JSON.parse(importData._body).data;
     let newProj = new Global();
     newProj.import(JSON.parse(proj));
@@ -233,9 +234,10 @@ export class MainEditorService {
   }
 
   loadProject(project){
-    let proj = JSON.parse(project);
+    //console.log(project);
+    //let proj = JSON.parse(project);
     let newProj = new Global();
-    newProj.import(JSON.parse(proj));
+    newProj.import(project);
     this.project = newProj;
     this.editorComp.replaceDiagram(JSON.parse(newProj.getDiagramma()));
   }
