@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from '../../../../../../../../../../services/account.service';
+import { MainEditorService } from '../../../../../../../../../../services/main-editor.service';
 
 @Component({
   selector: 'app-proj-list',
@@ -8,7 +9,7 @@ import { AccountService } from '../../../../../../../../../../services/account.s
 })
 export class ProjListComponent implements OnInit {
   arr: String[];
-  constructor(private accountService: AccountService) {
+  constructor(private accountService: AccountService, private mainEditorService: MainEditorService) {
     this.initProj();
   }
 
@@ -30,6 +31,12 @@ export class ProjListComponent implements OnInit {
         alert("Progetto eliminato con successo");
         this.initProj();
       }
+    })
+  }
+
+  openProj(e){
+    this.accountService.loadProj(this.accountService.username, e, (project)=>{
+      this.mainEditorService.loadProject(project);
     })
   }
 

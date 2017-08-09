@@ -251,6 +251,20 @@ export class AccountService {
       }
     })
   }
+  loadProj(username: String, nameProj: String, cb: Function){
+    let userData = {
+      "username": username,
+      "nome_progetto": nameProj 
+    }
+    this.http.post('/loadProj', userData, {
+      method: RequestMethod.Post,
+      responseType: ResponseContentType.Json
+    })
+    .subscribe((data)=>{
+      let response = data.json();
+      cb(response);
+    })
+  }
   /**
   * Change the authenticatio status of the user
   */

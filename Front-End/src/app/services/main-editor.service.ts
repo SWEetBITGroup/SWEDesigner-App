@@ -232,6 +232,14 @@ export class MainEditorService {
     this.editorComp.replaceDiagram(JSON.parse(newProj.getDiagramma()));
   }
 
+  loadProject(project){
+    let proj = JSON.parse(project);
+    let newProj = new Global();
+    newProj.import(JSON.parse(proj));
+    this.project = newProj;
+    this.editorComp.replaceDiagram(JSON.parse(newProj.getDiagramma()));
+  }
+
   removeClass(name: string, classe) {
     this.project.removeClass(name);
     this.editorComp.deleteElement(classe);
