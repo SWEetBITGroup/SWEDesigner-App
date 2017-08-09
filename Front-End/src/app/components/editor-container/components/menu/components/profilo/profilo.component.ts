@@ -20,7 +20,7 @@ export class ProfiloComponent {
       $('#manage-profile').width($('.barra-menu').width() - 1);
     });
 
-    $('#menuProfilo').click(function(){
+    $(window).click(function(){
       if (!$('#manage-profile').is(':visible')) {
         $('.tmp-disable').addClass('disabled');
         $('#manage-profile').width($('.barra-menu').width() - 1);
