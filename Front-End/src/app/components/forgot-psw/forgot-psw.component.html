@@ -1,10 +1,10 @@
 <div id="mainDiv" class="container col-xs-6 col-md-4">
   <div class="sub-container">
-    <div class="row" >      
+    <div class="row" >
       <img src="assets/images/logo.png" alt="logo" class="col-xs-6" />
       <span class="text"> SWEDesigner </span>
-    </div> 
-    <div>  
+    </div>
+    <div>
       <h3 class="text-warning">Password dimenticata</h3>
       <form name="form" (submit)="tryGetNewPassword($event)" #forgotPswForm="ngForm">
         <div class="form-group has-warning">
@@ -20,13 +20,13 @@
             <!-- <div class="help-block">Email is required</div> -->
           </div>
         </div>
-        <div class="form-group">        
+        <div class="form-group">
         </div>
         <div class="form-group">
-          <input type="submit" class="btn btn-warning" value="Invia" [disabled]="!forgotPswForm.form.valid"/>       
-          <button class="btn btn-warning" id="back" (click)='accountService.redirectComponent("home")'>Back</button> 
+          <input type="submit" class="btn btn-warning" value="Invia" [disabled]="!forgotPswForm.form.valid"/>
+          <button class="btn btn-warning" id="back" (click)='accountService.redirectComponent("home")'>Indietro</button>
         </div>
       </form>
-    </div>    
+    </div>
   </div>
 </div>

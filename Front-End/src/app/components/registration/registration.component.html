@@ -1,10 +1,10 @@
 <div id="mainDiv" class="container col-xs-6 col-md-4">
   <div class="sub-container">
-    <div class="row" >      
+    <div class="row" >
       <img src="assets/images/logo.png" alt="logo" class="col-xs-6" />
       <span class="text"> SWEDesigner </span>
-    </div> 
-    <div>  
+    </div>
+    <div>
       <h2 class="text-warning">Registrazione</h2>
       <form name="form" (submit)="tryRegistration($event)" #registrationForm="ngForm">
         <div class="form-group has-warning">
@@ -12,10 +12,10 @@
           <div class="input-group">
             <span class="input-group-addon">
               <i class="glyphicon glyphicon-user"></i>
-            </span>  
-            <input type="text" class="form-control" name="username" required placeholder="Username" 
+            </span>
+            <input type="text" class="form-control" name="username" required placeholder="Username"
             id="username"
-            [(ngModel)]="accountService.username"/>      
+            [(ngModel)]="accountService.username"/>
           </div>
         </div>
         <div class="form-group has-warning">
@@ -23,30 +23,30 @@
           <div class="input-group">
             <span class="input-group-addon">
               <i class="glyphicon glyphicon-envelope"></i>
-            </span>  
+            </span>
             <input type="email" class="form-control" placeholder="Email" name="email" required
             id="email"
             ngModel email
             [(ngModel)]="accountService.email"/>
-          </div>        
+          </div>
         </div>
         <div class="form-group has-warning">
           <label for="password" class="control-label">Password</label>
           <div class="input-group">
             <span class="input-group-addon">
               <i class="glyphicon glyphicon-lock"></i>
-            </span> 
+            </span>
             <input type="password" class="form-control" name="password" required placeholder="Password"
             id="password"
             [(ngModel)]="accountService.password"/>
           </div>
         </div>
         <div class="form-group">
-          <input type="submit" class="btn btn-warning" value="Registrati" id="submit" [disabled]="!registrationForm.form.valid"/> 
-          <button class="btn btn-warning" id="back" (click)='accountService.redirectComponent("home")'>Back</button>       
+          <input type="submit" class="btn btn-warning" value="Registrati" id="submit" [disabled]="!registrationForm.form.valid"/>
+          <button class="btn btn-warning" id="back" (click)='accountService.redirectComponent("home")'>Indietro</button>
         </div>
       </form>
-    </div>    
+    </div>
   </div>
 </div>
 
