@@ -6,9 +6,9 @@ import { AccountService } from '../../../../../../services/account.service';
   styleUrls: ['./profilo.component.css']
 })
 export class ProfiloComponent {
-  
+
   constructor(private accountService: AccountService) {}
-  
+
   ngAfterViewInit(){
     // CSS Function
     /**
@@ -23,11 +23,11 @@ export class ProfiloComponent {
       if (!$('#manage-profile').is(':visible')) {
         $('.tmp-disable').addClass('disabled');
         $('#manage-profile').width($(window).width());
-        let y:number = -$("#qwerty").position().left;
+        let y:number = -$("#qwerty").position().left + 1;
         $('#manage-profile').css({left: y});
       }
       else
         $('.tmp-disable').removeClass('disabled');
-    });    
-  } 
+    });
+  }
 }
