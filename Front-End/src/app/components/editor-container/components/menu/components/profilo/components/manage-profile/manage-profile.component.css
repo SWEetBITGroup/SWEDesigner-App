@@ -1,12 +1,12 @@
-:host {
+#q {
   /* height: 93bh; */
-  width: 100px;
+  width: 186vh;
   margin: 0;
   padding: 20px;
-  top: 5vh;
+  top: 6vh;
   left: 0;
   z-index: 20;
-  position: absolute;
+  position: fixed;
   background-color: #636363;
   cursor: default;
   overflow: hidden;
@@ -28,6 +28,7 @@ h3 {
 .icon {
   float: right;
   height: 40px;
+  margin-right: 20px;
 }
 
 .close {

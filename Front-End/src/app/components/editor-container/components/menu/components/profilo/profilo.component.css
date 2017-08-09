@@ -48,7 +48,7 @@ ul {
 
 #manage-profile {
   margin: 0;
-  padding: 0;
   overflow: hidden;
-  height: 94vh;
+  max-height: 94vh;
+  position: absolute;
 }

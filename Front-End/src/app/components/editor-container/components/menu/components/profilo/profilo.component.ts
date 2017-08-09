@@ -14,18 +14,19 @@ export class ProfiloComponent {
     /**
     * This directiove disable all the button in the top menu while the manage profile div is open
     */
-    $(window).resize(function(){
-      let y:number = -$('#qwerty').position().left + 1;
-      $('#manage-profile').css({ left: ( y ) });
-      $('#manage-profile').width($('.barra-menu').width() - 1);
-    });
+    // $(window).resize(function(){
+    //   let y:number = -$('#qwerty').position().left + 1;
+    //   $('#manage-profile').css({ left: ( y ) });
+    //   $('#manage-profile').width($('.barra-menu').width() - 1);
+    // });
 
-    $(window).click(function(){
+    $('#menuProfilo').click(function(){
       if (!$('#manage-profile').is(':visible')) {
         $('.tmp-disable').addClass('disabled');
-        $('#manage-profile').width($('.barra-menu').width() - 1);
-        let y:number = -$('#qwerty').position().left + 1;
-        $('#manage-profile').css({ left: ( y  ) });
+        // $('#manage-profile').width($('.barra-menu').width() - 1);
+        // $('#manage-profile').height($('.toolbar').height() - 1);
+        // let y:number = -$('#qwerty').position().left + 1;
+        // $('#manage-profile').css({ left: ( y  ) });
       }
       else {
         $('.tmp-disable').removeClass('disabled');
