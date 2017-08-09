@@ -1,19 +1,20 @@
 #q {
   /* height: 93bh; */
-  width: 186vh;
   margin: 0;
   padding: 20px;
   top: 6vh;
+  height: 94vh;
+  width: 100vw;
   left: 0;
   z-index: 20;
   position: fixed;
   background-color: #636363;
   cursor: default;
   overflow: hidden;
-  -moz-transition : height 0.5s;
-  -webkit-transition : height 0.5s;
-  -o-transition : height 0.5s;
-  transition : height 0.5s;
+  -moz-transition : height 10ms;
+  -webkit-transition : height 10ms;
+  -o-transition : height 10ms;
+  transition : height 10ms;
   color: #FFCE2B;
 }
 
