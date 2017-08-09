@@ -1,7 +1,8 @@
 #paper {
   position: absolute;
-  width: 105%;
-  height: 100%;
+  width: 73vw;
+  height: 94vh;
+  top: 0;
   margin: 0;
   padding: 0;
   overflow: hidden;
@@ -10,7 +11,7 @@
 .editClass {
   z-index: 10;
   position: absolute;
-  width: 33.4%;
+  width: 27vw;
   margin: 0;
   padding: 0;
   top: 0;

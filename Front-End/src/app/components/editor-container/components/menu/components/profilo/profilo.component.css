@@ -49,10 +49,6 @@ ul {
 }
 
 #manage-profile {
-  /* margin: 0;
-  overflow: hidden;
-  max-height: 94vh;
-  position: absolute; */
   transition: height 0.1s;
 }
 

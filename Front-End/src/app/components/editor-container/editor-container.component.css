@@ -4,14 +4,23 @@
   height: 94vh;
 }
 .editor {
+  position: absolute;
   padding: 0;
+  margin: 0;
   border-left: 1px solid black;
-  height: 100%;
+  width: 73vw;
+  height: 94vh;
+  top: 6vh;
 }
 
 .activityframe {
+  position: absolute;
   padding: 0;
+  margin: 0;
   border-left: 1px solid black;
-  height: 100%;
+  width: 27vw;
+  height: 94vh;
+  top: 6vh;
+  left: 73vw;
   background-color: #03A9F4;
 }
