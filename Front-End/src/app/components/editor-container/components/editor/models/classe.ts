@@ -161,12 +161,12 @@ export class Classe {
      */
     retriveMethod(name: string) {
         let met: Metodo;
+        met= null;
         this.metodi.forEach(metodo => {
             if(metodo.getNome() == name)
                 met = metodo;
-            else
-                throw new Error('Metodo non presente')
         });
+        if(met==null) throw new Error('Metodo non presente')
         return met;
     }
 

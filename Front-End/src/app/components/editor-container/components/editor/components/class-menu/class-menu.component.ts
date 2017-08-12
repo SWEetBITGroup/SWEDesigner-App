@@ -305,8 +305,8 @@ export class ClassMenuComponent implements OnDestroy{
           return element;
       }
     }),1);
-    this.classe.set('attributes',null);
-    this.classe.set('attributes',metodi);
+    this.classe.set('methods',null);
+    this.classe.set('methods',metodi);
     this.mainEditorService.removeMetodo(nome);
   }
 

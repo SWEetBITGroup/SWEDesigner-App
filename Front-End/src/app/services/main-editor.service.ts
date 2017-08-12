@@ -84,7 +84,6 @@ export class MainEditorService {
    */
   selectClasse(nome: string) {
     this.project.getClassi().forEach(classe => {
-      console.log(classe.getNome());
       if(classe.getNome() == nome) {
         this.selectedClasse = classe;
       }
@@ -179,7 +178,18 @@ export class MainEditorService {
    * @param nome is the name of the method to eliminate, is passed as parameter to selectedClasse.removeMetodo
    */
   removeMetodo(nome: string) {
-    this.selectedClasse.removeMetodo(nome);
+    if(this.editorComp.fromUndo==false||this.editorComp.fromUndo==null) {
+      this.editorComp.noChange= true;
+      this.editorComp.changeMethod= true;
+      this.editorComp.classeEliminata= this.editorComp.selectedCell;
+      this.editorComp.rMethod= this.selectedClasse.retriveMethod(nome);
+      this.editorComp.addedMethod= null; 
+      this.editorComp.removedMethod= null;
+      this.editorComp.setUndoRedo();
+      this.selectedClasse.removeMetodo(nome);
+      this.editorComp.setUndoRedo();
+    }
+    else this.selectedClasse.removeMetodo(nome);
   }
 
   /**
