@@ -36,6 +36,14 @@ import { AppRoutingModule } from './app-routing.module';
 // Guard
 import { AuthenticationGuard } from './guards/authentication.guard';
 import { EditUsernameComponent } from './components/editor-container/components/menu/components/profilo/components/manage-profile/components/edit-username/edit-username.component';
+import { EditClassMenuComponent } from './components/editor-container/components/editor/components/edit-class-menu/edit-class-menu.component';
+import { DisplayClassNameComponent } from './components/editor-container/components/editor/components/edit-class-menu/components/display-class-name/display-class-name.component';
+import { ClassAddAttributeComponent } from './components/editor-container/components/editor/components/edit-class-menu/components/class-add-attribute/class-add-attribute.component';
+import { ClassAddMethodComponent } from './components/editor-container/components/editor/components/edit-class-menu/components/class-add-method/class-add-method.component';
+import { ClassListMethodComponent } from './components/editor-container/components/editor/components/edit-class-menu/components/class-list-method/class-list-method.component';
+import { ClassListAttributeComponent } from './components/editor-container/components/editor/components/edit-class-menu/components/class-list-attribute/class-list-attribute.component';
+import { ChangeClassNameComponent } from './components/editor-container/components/editor/components/edit-class-menu/components/change-class-name/change-class-name.component';
+import { ClassAddMainMethodComponent } from './components/editor-container/components/editor/components/edit-class-menu/components/class-add-main-method/class-add-main-method.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +69,15 @@ import { EditUsernameComponent } from './components/editor-container/components/
     EditEmailComponent,
     EraseProfileComponent,
     ProjListComponent,
-    EditUsernameComponent
+    EditUsernameComponent,
+    EditClassMenuComponent,
+    DisplayClassNameComponent,
+    ClassAddAttributeComponent,
+    ClassAddMethodComponent,
+    ClassListMethodComponent,
+    ClassListAttributeComponent,
+    ChangeClassNameComponent,
+    ClassAddMainMethodComponent
   ],
   imports: [
     BrowserModule,

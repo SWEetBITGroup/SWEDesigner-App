@@ -4,7 +4,8 @@
 
 </div>
 <div [hidden]="!selectedCell" class="editClass">
-    <class-menu [hidden]="mainEditorService.getActivityModeStatus()"></class-menu>
+    <app-edit-class-menu [hidden]="mainEditorService.getActivityModeStatus()"></app-edit-class-menu>
+    <!-- <class-menu [hidden]="mainEditorService.getActivityModeStatus()"></class-menu> -->
 </div>
 <div class="editClass">
   <activity-menu [hidden]="!mainEditorService.getActivityModeStatus()"></activity-menu>
