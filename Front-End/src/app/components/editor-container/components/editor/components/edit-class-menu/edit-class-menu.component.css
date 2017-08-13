@@ -1,0 +1,9 @@
+.container-fluid {
+  position: absolute;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: dimgrey;
+  border-left: 1px solid black;
+  text-align: center;
+}

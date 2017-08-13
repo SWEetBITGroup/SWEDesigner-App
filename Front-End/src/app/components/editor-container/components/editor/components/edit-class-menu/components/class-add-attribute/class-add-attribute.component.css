@@ -1,0 +1,40 @@
+.container {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid black;
+  width: 100%;
+}
+
+.checkboxContainer {
+  margin: 10px;
+  margin-bottom: 0px;
+  display: inline-block;
+}
+
+input[type="checkbox"] {
+  display: none;
+}
+
+input[type="checkbox"] + label:before {
+  border: 1px solid #f0ad4e;
+  content: "\00a0";
+  display: inline-block;
+  font: 16px/1em sans-serif;
+  height: 16px;
+  margin: 0 .25em 0 0;
+  padding: 0;
+  vertical-align: top;
+  width: 16px;
+  cursor: pointer;
+}
+
+input[type="checkbox"]:checked + label:before {
+  background: #f0ad4e;
+  color: #333;
+  content: "\2713";
+  text-align: center;
+  cursor: pointer;
+}

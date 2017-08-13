@@ -1,0 +1,40 @@
+<div class="container">
+  <button class="btn btn-warning" data-toggle="collapse" data-target="#aggiungiAttributo">
+    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+    &nbsp; Aggiungi Attributo
+  </button>
+  <div id="aggiungiAttributo" class="collapse">
+    <div>
+      <div class="checkboxContainer">
+        <input id="staticAtt" type="checkbox" (change)='updateCheckbox(checkStaticAtt.id)'/>
+        <label for="staticAtt" > Static </label>
+      </div>
+      <div class="checkboxContainer">
+        <input id="finalAtt" type="checkbox" name="final"  value="Final" (change)='updateCheckbox(checkFinalAtt.id)'/>
+        <label for="finalAtt"> Final </label>
+      </div>
+    </div>
+    <div>
+      <label>Seleziona Visibilità</label>
+      <select #accessoAtt  [(ngModel)]="selectedAccAtt">
+        <option *ngFor="let accesso of accessoAttr" [value]="accesso">{{ accesso }}</option>
+      </select>
+    </div>
+    <div>
+      <label>Seleziona tipo</label>
+      <select #tipiAtt [(ngModel)]="selectedTipoAtt">
+        <option value=""></option>
+        <option *ngFor="let tipo of types" [value]="tipo"> {{ tipo }} </option>
+      </select>
+    </div>
+    <div class="aggiungiAttributo nomeAttr">
+      <label>Nome</label>
+      <input [disabled]="!selectedTipoAtt" id="nome-attributo" #nomeAtt
+      (keyup.enter)="addAttributo(nomeAtt.value)">
+    </div>
+    <button class="btn btn-default" [disabled]="!selectedTipoAtt"
+    (click)="addAttributo(nomeAtt.value, checkStaticAtt.checked, checkFinalAtt.checked, tipiAtt.value, accAtt.value)">
+    Aggiungi Attributo
+  </button>
+</div>
+</div>
