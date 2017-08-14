@@ -1,3 +1,21 @@
-<p>
-  class-list-attribute works!
-</p>
+<div class="container">
+  <button class="btn btn-warning" data-toggle="collapse" data-target="#listaAttributi" (click)="closeCollapsedList(lista)">
+    <span class="glyphicon glyphicon-triangle-left" aria-hidden="true"></span>&nbsp;Lista Attributi
+  </button>
+  <div id="listaAttributi" class="collapse">
+    Lista attributi
+    <ul class="list-group">
+      <li class="list-group-item list-group-item-warning" *ngFor="let attr of this.mainEditorService.selectedClasse.getAttributi()">
+        <span>{{attr.name}}: {{attr.type}}
+          <button class="btn btn-warning btnLista" (click)="removeAttributo(attr.name)">
+            <span class="glyphicon glyphicon-trash" aria-hidden="true" title="Rimuovi"></span>
+          </button>
+          <!-- icona di modifica che farà apparire un menù a tendina per la modifica attributo-->
+          <button class="btn btn-warning btnLista" data-toggle="collapse" [attr.data-target]="'#'+attr.name" title="Modifica">
+            <span class="glyphicon glyphicon-pencil" aria-hidden="true" title="Modifica"></span>
+          </button>
+        </span>
+      </li>
+    </ul>
+  </div>
+</div>
