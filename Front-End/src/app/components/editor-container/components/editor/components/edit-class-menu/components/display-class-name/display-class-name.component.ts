@@ -1,7 +1,6 @@
 import { Component, Input, OnDestroy} from '@angular/core';
 
 import { ClassMenuService } from '../../../../services/class-menu.service';
-import { MainEditorService } from '../../../../../../../../services/main-editor.service';
 import { Subscription } from 'rxjs/Subscription';
 import { Classe } from '../../../../models/classe';
 
@@ -31,8 +30,7 @@ export class DisplayClassNameComponent implements OnDestroy {
    * @param mainEditorService used to create a new instantiation of ClassMenuService
    */
 
-  constructor(private classMenuService: ClassMenuService, 
-              private mainEditorService: MainEditorService) {
+  constructor(private classMenuService: ClassMenuService) {
     this.sub = classMenuService.selectedClass$.subscribe(
       (x) => {
         this.classe = x;
@@ -50,7 +48,7 @@ export class DisplayClassNameComponent implements OnDestroy {
   }
 
   removeClass(name: string) {
-    this.mainEditorService.removeClass(name, this.classe);
+    this.classMenuService.removeClass(name, this.classe);
   }
 
 }

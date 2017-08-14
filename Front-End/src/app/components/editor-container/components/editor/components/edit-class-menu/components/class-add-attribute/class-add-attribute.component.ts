@@ -86,51 +86,7 @@ export class ClassAddAttributeComponent implements OnDestroy {
     * @param nome the neme of the new attribute
     */
     addAttributo(nome: string, staticAtt: boolean, finalAtt: boolean, tipo: string, acc: string) {
-      if (nome && tipo && acc) {
-        try {
-          this.mainEditorService.addAttributo(tipo, nome, acc, staticAtt);
-        } catch (error) {
-          if( error.message == 'NomePresente' ) {
-            alert( 'Non è possibile inserire due attributi con lo stesso nome' );
-            return;
-          }
-        }
-        let attributi = this.classe.attributes.attributes;
-        let vis;
-        // switch per assegnare il giusto simbolo alla visibilità di un attributo
-        switch (acc) {
-          case 'public':
-          vis = '+';
-          break;
-          case 'protected':
-          vis = '#';
-          break;
-          case 'private':
-          vis = '-';
-        }
-        let stat = '';
-        let final = '';
-        if ( staticAtt ) {
-          stat = 'static';
-          attributi.push(vis + ' ' + stat + ' ' + nome + ' : ' + tipo);
-        } else if ( finalAtt ) {
-          final = 'final';
-          attributi.push(vis + ' ' + final + ' ' + nome + ' : ' + tipo);
-        }
-        else {
-          attributi.push(vis+' '+nome+' : '+ tipo);
-        }
-        this.classe.set('attributes',null); // Hack per far funzionare l'event change:attrs
-        this.classe.set('attributes',attributi);
-        // Reset dei campi
-        this.selectedAccAtt = 'public';
-        this.selectedTipoAtt = null;
-        $('#nomeAttributo').val('');
-        $('#finalAtt').prop('checked', false);
-        $('#staticAtt').prop('checked', false);
-      } else {
-        alert('Alcuni capi del form per la creazione del nuovo attributo non sono stati compilati');
-      }
+      this.classMenuService.addAttributo(nome, staticAtt, finalAtt, tipo, acc);
     }
     /**
     * This function allows to be check only one element on the attribute checkbox
