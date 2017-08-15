@@ -216,8 +216,7 @@ export class ClassMenuService {
    * a new method. If one or more parameter isn't present an error will be shown
    * @param nome 
    */
-  addMetodo(nome: string, staticMet: boolean, constructor: boolean, tipo: string, acc: string) {
-    let params = this.parametriMetodo;
+  addMetodo(nome: string, staticMet: boolean, constructor: boolean, tipo: string, acc: string, params: any=null) {
     console.log(nome+' '+tipo+' '+acc);
     if((nome && tipo && acc) || (constructor && acc) ){
       try {
@@ -300,6 +299,10 @@ export class ClassMenuService {
     return this.mainEditorService.getSelectedClasse().getMetodi();
   }
 
+  getAttributi(){
+    return this.mainEditorService.getSelectedClasse().getAttributi();
+  }
+
   removeClass(name: string, cla: Classe) {
     this.mainEditorService.removeClass(name, cla);
   }
@@ -311,7 +314,7 @@ export class ClassMenuService {
 
   addMain() {
     this.addParam('String[]', 'args');
-    this.addMetodo('main', true, false, 'void', 'public');
+    this.addMetodo('main', true, false, 'void', 'public', this.parametriMetodo);
   }
 
 }

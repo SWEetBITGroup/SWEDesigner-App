@@ -1,14 +1,13 @@
 import { Component, Input, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 
 import { ClassMenuService } from '../../../../services/class-menu.service';
-import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-class-add-attribute',
   templateUrl: './class-add-attribute.component.html',
   styleUrls: ['./class-add-attribute.component.css']
 })
-export class ClassAddAttributeComponent implements OnDestroy {
+export class ClassAddAttributeComponent{
   /**
   * Create an instantiation of ClassMenuComponent and sets the properties ´classe´ and ´name´
   * by subscription from classMenuService
@@ -16,18 +15,6 @@ export class ClassAddAttributeComponent implements OnDestroy {
   * @param mainEditorService used to create a new instantiation of ClassMenuService
   */
   constructor(private classMenuService: ClassMenuService){}
-  /**
-  * The current selected class in the class diagram of the EditorComponent
-  */
-  classe: any;
-  /**
-  * The name of the current selected class in the class diagram of the EditorComponent
-  */
-  name: String = '';
-  /**
-  * Subscription to the osservable object which is the selected class in the editor
-  */
-  sub: Subscription; // Subscription all'ossevable di tipo elemento-classe selezionato dal grafico
 
   /**
   * Array of primitive data types
@@ -61,12 +48,6 @@ export class ClassAddAttributeComponent implements OnDestroy {
   @ViewChild('checkFinalAttMod') checkFinalAttMod: ElementRef;
 
 
-    /**
-    * Used to unsubscribe from the observable to prevent memory leak
-    */
-    ngOnDestroy() {
-      this.sub.unsubscribe();
-    }
 
     /**
     * Retrives information from the template HTML of this component to build
