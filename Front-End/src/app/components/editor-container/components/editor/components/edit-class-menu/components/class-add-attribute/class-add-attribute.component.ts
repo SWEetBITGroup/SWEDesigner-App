@@ -1,10 +1,7 @@
 import { Component, Input, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 
 import { ClassMenuService } from '../../../../services/class-menu.service';
-import { MainEditorService } from '../../../../../../../../services/main-editor.service';
-import { ActivityService } from '../../../../services/activity.service'
 import { Subscription } from 'rxjs/Subscription';
-import { Classe } from '../../../../models/classe';
 
 @Component({
   selector: 'app-class-add-attribute',
@@ -12,6 +9,13 @@ import { Classe } from '../../../../models/classe';
   styleUrls: ['./class-add-attribute.component.css']
 })
 export class ClassAddAttributeComponent implements OnDestroy {
+  /**
+  * Create an instantiation of ClassMenuComponent and sets the properties ´classe´ and ´name´
+  * by subscription from classMenuService
+  * @param classMenuService used to create a new instantiation of ClassMenuService
+  * @param mainEditorService used to create a new instantiation of ClassMenuService
+  */
+  constructor(private classMenuService: ClassMenuService){}
   /**
   * The current selected class in the class diagram of the EditorComponent
   */
@@ -56,22 +60,6 @@ export class ClassAddAttributeComponent implements OnDestroy {
   */
   @ViewChild('checkFinalAttMod') checkFinalAttMod: ElementRef;
 
-  /**
-  * Create an instantiation of ClassMenuComponent and sets the properties ´classe´ and ´name´
-  * by subscription from classMenuService
-  * @param classMenuService used to create a new instantiation of ClassMenuService
-  * @param mainEditorService used to create a new instantiation of ClassMenuService
-  */
-  constructor(private classMenuService: ClassMenuService,
-    private mainEditorService: MainEditorService,
-    private activityService: ActivityService) {
-      this.sub = classMenuService.selectedClass$.subscribe(
-        (x) => {
-          this.classe = x;
-          this.name = x.getClassName();
-        }
-      );
-    }
 
     /**
     * Used to unsubscribe from the observable to prevent memory leak
