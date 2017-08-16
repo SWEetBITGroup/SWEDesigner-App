@@ -39,7 +39,18 @@ input[type="checkbox"]:checked + label:before {
   cursor: pointer;
 }
 
-/* table {
-  position: relative;
-  width: 25vw;
-} */
+.tabella {
+  overflow-y: auto;
+  max-height: 200px;
+}
+
+.display {
+  text-align: left;
+}
+
+.remove {
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  float: right;
+}

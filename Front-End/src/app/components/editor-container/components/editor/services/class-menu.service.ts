@@ -39,6 +39,10 @@ export class ClassMenuService {
   */
   types = ['byte','short','int','long','float','double','boolean','char','String'];
   /**
+  * Array of primitive data types
+  */
+  MethodTypes = ['void','byte','short','int','long','float','double','boolean','char','String'];
+  /**
   * Array of visibility
   */
   accessoAttr = ['public','protected','private'];
@@ -53,23 +57,23 @@ export class ClassMenuService {
   /**
   * Used to store the selected visibility to build a new attribute
   */
-  selectedAccAtt: string = 'public';
+  selectedAccAtt: String = 'public';
   /**
   * Used to store the selected visibility to edit the attribute
   */
-  selectedAccAttEdit: string = 'public';
+  selectedAccAttEdit: String = 'public';
   /**
   * Used to store the selected return type to build a new method.
   */
-  selectedTipoMet: string = 'void';
+  selectedTipoMet: String = 'void';
   /**
   * Used to store the new method's name
   */
-  nomeMet: string;
+  nomeMet: String;
   /**
   * Used to store the selected visibility to build a new method
   */
-  selectedAccMet: string = 'public';
+  selectedAccMet: String = 'public';
   /**
   * Used to store an array of parameters to build a new method
   */
@@ -203,28 +207,10 @@ export class ClassMenuService {
     this.addAttributo(name, stat, final, tipo, acc);
   }
   /**
-   * This method return the class's attributes list
-   */
+  * This method return the class's attributes list
+  */
   getAttributi() {
     return this.mainEditorService.getSelectedClasse().getAttributi();
-  }
-  /**
-  * Adds a new parameter into the array parametriMetodo
-  */
-  addParam(type: string, name: string) {
-    let sameName = false;
-    this.parametriMetodo.forEach(param => {
-      if(param.getNome() == name)
-        sameName = true;
-    });
-    if(!sameName)
-      {
-      this.parametriMetodo.push(new Param(type,name));
-      $('#tipiParam').val("");
-      $('#nomeParam').val("");
-    }
-    else
-      alert("Non è possibile inserire due o più parametri con lo stesso nome");
   }
   /**
   * Retrives information from the template HTML of this component to build
@@ -242,6 +228,7 @@ export class ClassMenuService {
       } catch (error) {
         if (error.message == 'NomePresente') {
           alert('Non è possibile inserire due o più metodi con lo stesso nome');
+          return;
         }
       }
       let metodi = this.classe.attributes.methods;
@@ -272,7 +259,7 @@ export class ClassMenuService {
       this.classe.set('methods', metodi);
       this.selectedAccMet = 'public';
       this.selectedTipoMet = 'void';
-      $('#nome-metodo').val('');
+      $('#nomeMetodo').val('');
       this.staticMetCheckbox.nativeElement.checked = false;
       this.constructorCheckbox.nativeElement.checked = false;
       $('#tipiParam').val('');
@@ -309,13 +296,13 @@ export class ClassMenuService {
     this.activityService.setSelectedMethod(this.mainEditorService.getSelectedClasse().retriveMethod(nome));
   }
   /**
-   * This methos return the class's method list
-   * @memberof ClassMenuService
-   */
+  * This methos return the class's method list
+  * @memberof ClassMenuService
+  */
   getMetodi() {
     return this.mainEditorService.getSelectedClasse().getMetodi();
   }
- /**
+  /**
   * This method remove the selected class
   * @param {string} name name of the class
   * @param {Classe} classe
@@ -324,13 +311,20 @@ export class ClassMenuService {
   removeClass(name: string, classe: Classe) {
     this.mainEditorService.removeClass(name, classe);
   }
-  isAddableMethod() {
-    if(!this.costruttore && !this.nomeMet)
+  /**
+  * This method return true only if the method is addable by logic
+  * @memberof ClassMenuService
+  */
+  isMethodAddable() {
+    if(!this.costruttore && !this.nomeMet) {
       return true;
+    } else {
+      return false;
+    }
   }
 
   addMain() {
-    this.addParam('String[]', 'args');
+    this.parametriMetodo.push( new Param ('String[]', 'args') );
     this.addMetodo('main', true, false, 'void', 'public', this.parametriMetodo);
   }
 

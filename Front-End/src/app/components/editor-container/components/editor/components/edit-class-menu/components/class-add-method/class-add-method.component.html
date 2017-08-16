@@ -6,36 +6,35 @@
     <div>
       <!-- checkbox -->
       <div class="checkboxContainer">
-        <input id="staticAtt" type="checkbox" (change)='updateCheckbox(staticAtt.id)' #staticAtt/>
-        <label for="staticAtt"> Static </label>
+        <input id="staticMet" type="checkbox" (change)='justOneCheckbox(staticMet.id)' #staticMet/>
+        <label for="staticMet"> Static </label>
       </div>
       <div class="checkboxContainer">
-        <input id="constructor" type="checkbox" (change)='updateCheckbox(constructor.id)' #constructor [(ngModel)]="costruttore"/>
+        <input id="constructor" type="checkbox" (change)='justOneCheckbox(constructor.id)' #constructor [(ngModel)]="costruttore"/>
         <label for="constructor"> Costruttore </label>
       </div>
     </div>
     <!-- visibilità -->
     <div>
       <label>Seleziona Visibilità</label>
-      <select #accessoAtt  [(ngModel)]="selectedAccAtt">
-        <option *ngFor="let accesso of accessoAttr" [value]="accesso">{{ accesso }}</option>
+      <select #accessoMetodo  [(ngModel)]="this.classMenuService.selectedAccMet">
+        <option *ngFor="let accesso of this.classMenuService.accessoAttr" [value]="accesso">{{ accesso }}</option>
       </select>
     </div>
     <!-- tipo di ritorno -->
-    <div [hidden]="costruttore">
+    <div [hidden]="this.classMenuService.costruttore">
       <label>Seleziona tipo di ritorno</label>
-      <select #tipiMetodo [(ngModel)]="selectedTipoMet">
-        <option value="void"></option>
-        <option *ngFor="let type of types" [value]="type">{{type}}</option>
+      <select #tipiMetodo [(ngModel)]="this.classMenuService.selectedTipoMet">
+        <option *ngFor="let type of this.classMenuService.MethodTypes" [value]="type">{{type}}</option>
       </select>
     </div>
     <!-- nome metodo -->
-    <div class="nomeMetodo" [hidden]="costruttore">
+    <div class="nomeMetodo" [hidden]="this.classMenuService.costruttore">
       <label>Nome</label>
-      <input [disabled]="!selectedTipoAtt" id="nomeMetodo" [(ngModel)]="nomeMet">
+      <input [disabled]="!this.classMenuService.selectedTipoMet" id="nomeMetodo" [(ngModel)]="this.classMenuService.nomeMet" #nomeMetodo>
     </div>
     <!-- Parametri attuali -->
-    <div class="container">
+    <div class="tabella">
       Parametri attuali
       <table class="table">
         <thead>
@@ -45,15 +44,18 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let param of parametriMetodo" class="tipiMetodo">
+          <tr *ngFor="let param of this.classMenuService.parametriMetodo" class="display">
             <td>{{param.getTipo()}}</td>
-            <td>{{param.getNome()}}</td>
+            <td>{{param.getNome()}}
+              <button class="btn btn-warning remove" type="button" (click)="removeParam(param.getTipo(),param.getNome())">
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+              </button>
+            </td>
           </tr>
           <tr class="warning" #parametro>
             <td>
-              <select #tipiParam id="tipiParam" class="tipiMetodo">
-                <option value=""></option>
-                <option *ngFor="let type of types" [value]="type">{{type}}</option>
+              <select #tipiParam id="tipiParam" >
+                <option *ngFor="let type of this.classMenuService.MethodTypes" [value]="type">{{type}}</option>
               </select>
             </td>
             <td>
@@ -70,8 +72,8 @@
         </tbody>
       </table>
     </div>
-    <button class="btn btn-warning" [disabled]="isAddableMethod()"
-    (click)="addMetodo(nomeMetodo.value, staticMet.checked, constructor.checked, tipiMetodo.value, accMetodo.value)">
+    <button class="btn btn-warning" [disabled]="this.classMenuService.isMethodAddable()"
+    (click)="addMetodo(nomeMetodo.value, staticMet.checked, constructor.checked, tipiMetodo.value, accessoMetodo.value)">
     Aggiungi Metodo
   </button>
   <!-- fine -->
