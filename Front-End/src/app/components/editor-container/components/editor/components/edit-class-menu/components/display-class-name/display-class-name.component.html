@@ -1,6 +1,6 @@
 <div class="container">
-&nbsp;&nbsp;{{name}}&nbsp;
-  <button class="btn btn-warning" (click)="removeClass(name)" title="Rimuovi classe">
+{{this.classMenuService.name}}
+  <button class="btn btn-warning" (click)="removeClass(this.classMenuService.name)" title="Rimuovi classe">
     <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
   </button>
 </div>
