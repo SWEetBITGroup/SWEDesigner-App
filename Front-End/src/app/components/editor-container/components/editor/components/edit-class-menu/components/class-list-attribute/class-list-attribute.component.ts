@@ -25,44 +25,56 @@ export class ClassListAttributeComponent{
   @ViewChild('checkFinalAttMod') checkFinalAttMod: ElementRef;
 
   /**
-   * Removes an attribute of the given name from the class element and from the class object of type Classe
-   * @param nome name of the attribute to removes
-   */
+  * Removes an attribute of the given name from the class element and from the class object of type Classe
+  * @param nome name of the attribute to removes
+  */
   removeAttributo(nome: string) {
     this.classMenuService.removeAttributo(nome);
   }
-
-  updateCheckbox(event: any) {
-    //attributi
-    if (this.checkStaticAtt.nativeElement.checked && this.checkFinalAtt.nativeElement.checked && event == 'staticAtt')
-        this.checkFinalAtt.nativeElement.checked = false;
-    if (this.checkStaticAtt.nativeElement.checked && this.checkFinalAtt.nativeElement.checked && event == 'finalAtt')
-        this.checkStaticAtt.nativeElement.checked = false;
-    //attributi di lista modificata
-    if (this.checkStaticAttMod.nativeElement.checked && this.checkFinalAttMod.nativeElement.checked && event == 'staticAttMod')
-        this.checkFinalAttMod.nativeElement.checked = false;
-    if (this.checkStaticAttMod.nativeElement.checked && this.checkFinalAttMod.nativeElement.checked && event == 'finalAttMod')
-        this.checkStaticAttMod.nativeElement.checked = false;
+  /**
+  * Mododify the properties of an attribute
+  * @param newName name of the attribute to modify
+  * @param oldName old name of the attribute
+  * @param tipo tipe of the attribute to modify
+  * @param acc type of access of the attribute to modify
+  * @param stat check if the attribute is static
+  * @param final check if the attribute is final
+  */
+  changeAttributo(newName: string, oldName: string, tipo: string, acc: string , stat: boolean, final: boolean) {
+    this.classMenuService.removeAttributo(oldName);
+    this.classMenuService.addAttributo(newName,stat,final,tipo,acc);
   }
- /**
+    /**
+  * This function allows to be check only one element on the attribute checkbox
+  * @param event name of id element
+  */
+  justOneCheckbox(event: any) {
+    if ( event === 'staticAttEdit') {
+      $('#finalAttEdit').prop('checked', false);
+    }
+    if ( event === 'finalAttEdit') {
+      $('#staticAttEdit').prop('checked', false);
+    }
+  }
+  /**
   * This function closes all the collapsed div except the selected one
   * @param event name of element reference
   */
   closeCollapsedList(event:any) {
     if (!$(event).hasClass("listaAttr")) {
       if ($('#listaAttr').attr("aria-expanded"))
-          $('#listaAttr').removeClass("in");
+        $('#listaAttr').removeClass("in");
     }
   }
   /**
-   * This funcion closes all the collapsed div
-   */
+  * This funcion closes all the collapsed div
+  */
   closeCollapsedAllList () {
     if ($('#listaAttr').attr("aria-expanded"))
-          $('#listaAttr').removeClass("in");
+      $('#listaAttr').removeClass("in");
     if ($('#addAttr').attr("aria-expanded"))
-       $('#addAttr').removeClass("in");
+      $('#addAttr').removeClass("in");
     if ($('.listaModAttr').attr("aria-expanded"))
-       $('.listaModAttr').removeClass("in");
+      $('.listaModAttr').removeClass("in");
   }
 }

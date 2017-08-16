@@ -23,19 +23,49 @@
 }
 
 li {
-  padding: 0;
-  height: 60px;
   border: 1px solid darkgoldenrod;
 }
 
-li:hover {
+/* li:hover {
   background-color: #FFBF66;
   color: whitesmoke;
-}
+} */
+
 button .btnLista {
   background-color: #C0C0C0;
 }
 
 button .btnLista:hover {
   background-color: dimgray;
+}
+
+.checkboxContainer {
+  margin: 10px;
+  margin-bottom: 0px;
+  display: inline-block;
+}
+
+input[type="checkbox"] {
+  display: none;
+}
+
+input[type="checkbox"] + label:before {
+  border: 1px solid #f0ad4e;
+  content: "\00a0";
+  display: inline-block;
+  font: 16px/1em sans-serif;
+  height: 16px;
+  margin: 0 .25em 0 0;
+  padding: 0;
+  vertical-align: top;
+  width: 16px;
+  cursor: pointer;
+}
+
+input[type="checkbox"]:checked + label:before {
+  background: #f0ad4e;
+  color: #333;
+  content: "\2713";
+  text-align: center;
+  cursor: pointer;
 }

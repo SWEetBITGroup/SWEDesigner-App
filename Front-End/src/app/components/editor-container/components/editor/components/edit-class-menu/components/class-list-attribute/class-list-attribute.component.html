@@ -2,53 +2,53 @@
   <button class="btn btn-warning" data-toggle="collapse" data-target="#listaAttributi" (click)="closeCollapsedList(lista)">
     <span class="glyphicon glyphicon-triangle-left" aria-hidden="true"></span>&nbsp;Lista Attributi
   </button>
-  <div id="listaAttributi" class="collapse">
+  <div id="listaAttributi" class="collapse" *ngIf="this.classMenuService.name">
     Lista attributi
     <ul class="list-group">
-      <li class="list-group-item list-group-item-warning" *ngFor="let attributo of this.classMenuService.selectedClasse.getAttributi()">
+      <li class="list-group-item list-group-item-warning" *ngFor="let attributo of this.classMenuService.getAttributi()">
         <span>{{attributo.name}}: {{attributo.type}}
           <button class="btn btn-warning btnLista" (click)="removeAttributo(attributo.name)">
             <span class="glyphicon glyphicon-trash" aria-hidden="true" title="Rimuovi"></span>
           </button>
           <!-- icona di modifica che farà apparire un menù a tendina per la modifica attributo-->
-          <button class="btn btn-warning btnLista" data-toggle="collapse" [attr.data-target]="'#'+attributo.name">
+          <button class="btn btn-warning btnLista" data-toggle="collapse" [attr.data-target]= "'#'+ attributo.name ">
             <span class="glyphicon glyphicon-pencil" aria-hidden="true" title="Modifica"></span>
           </button>
           <!--  menù a scomparsa per modifica dell'attributo -->
           <div attr.id="{{attributo.name}}" class="collapse">
             <div>
               <div class="checkboxContainer">
-                <input id="staticAtt" type="checkbox" (change)='updateCheckbox(staticAtt.id)' #staticAtt/>
-                <label for="staticAtt"> Static </label>
+                <input id="staticAttEdit" type="checkbox" (change)='justOneCheckbox(staticAttEdit.id)' #staticAttEdit/>
+                <label for="staticAttEdit"> Static </label>
               </div>
               <div class="checkboxContainer">
-                <input id="finalAtt" type="checkbox" (change)='updateCheckbox(finalAtt.id)' #finalAtt/>
-                <label for="finalAtt"> Final </label>
+                <input id="finalAttEdit" type="checkbox" (change)='justOneCheckbox(finalAttEdit.id)' #finalAttEdit/>
+                <label for="finalAttEdit"> Final </label>
               </div>
             </div>
             <div>
               <label>Seleziona Visibilità</label>
-              <select #accessoAtt  [(ngModel)]="selectedAccAtt">
-                <option *ngFor="let accesso of accessoAttr" [value]="accesso">{{ accesso }}</option>
+              <select #accessoAttEdit  [(ngModel)]="this.classMenuService.selectedAccAttEdit">
+                <option *ngFor="let accesso of this.classMenuService.accessoAttr" [value]="accesso">{{ accesso }}</option>
               </select>
             </div>
             <div>
               <label>Seleziona tipo</label>
-              <select #tipiAtt [(ngModel)]="selectedTipoAtt">
+              <select #tipiAttEdit [(ngModel)]="this.classMenuService.selectedTipoAttEdit">
                 <option value=""></option>
-                <option *ngFor="let tipo of types" [value]="tipo"> {{ tipo }} </option>
+                <option *ngFor="let tipo of this.classMenuService.types" [value]="tipo"> {{ tipo }} </option>
               </select>
             </div>
-            <div class="aggiungiAttributo nomeAttr">
+            <div>
               <label>Nome</label>
-              <input [disabled]="!selectedTipoAtt" id="nomeAttributo" #nomeAtt>
+              <input [disabled]="!this.classMenuService.selectedTipoAttEdit" id="nomeAttributo" #nomeAttEdit>
             </div>
-            <button class="btn btn-warning" [disabled]="nomeAtt"
-            (click)="changeAttributo(nomeAttMod.value, attributo.name,tipiAttMod.value, accAttMod.value , checkStaticAttMod.checked , checkFinalAttMod.checked)">
+            <button class="btn btn-warning" [disabled]="!this.classMenuService.selectedTipoAttEdit"
+            (click)="changeAttributo(nomeAttEdit.value, attributo.name, tipiAttEdit.value, accessoAttEdit.value , staticAttEdit.checked , finalAttEdit.checked)">
             Modifica Attributo
           </button>
         </div>
-      </span>
+        </span>
     </li>
   </ul>
 </div>

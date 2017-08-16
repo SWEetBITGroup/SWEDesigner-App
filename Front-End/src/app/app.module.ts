@@ -15,7 +15,6 @@ import { LayerComponent } from './components/editor-container/components/menu/co
 import { ToolbarComponent } from './components/editor-container/components/editor/components/toolbar/toolbar.component';
 import { EditorComponent } from './components/editor-container/components/editor/editor.component';
 import { ActivityFrameComponent } from './components/editor-container/components/activity-frame/activity-frame.component';
-import { ClassMenuComponent } from './components/editor-container/components/editor/components/class-menu/class-menu.component';
 import { ActivityMenuComponent } from './components/editor-container/components/editor/components/activity-menu/activity-menu.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegistrationComponent } from './components/registration/registration.component';
@@ -58,7 +57,6 @@ import { ClassAddMainMethodComponent } from './components/editor-container/compo
     ToolbarComponent,
     EditorComponent,
     ActivityFrameComponent,
-    ClassMenuComponent,
     ActivityMenuComponent,
     LoginComponent,
     RegistrationComponent,
