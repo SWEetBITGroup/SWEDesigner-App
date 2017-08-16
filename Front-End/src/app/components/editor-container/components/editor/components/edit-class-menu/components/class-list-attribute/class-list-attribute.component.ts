@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { ClassMenuService } from '../../../../services/class-menu.service';
 
@@ -10,20 +10,6 @@ import { ClassMenuService } from '../../../../services/class-menu.service';
 export class ClassListAttributeComponent{
 
   constructor(private classMenuService: ClassMenuService){}
-  @ViewChild('staticAtt') checkStaticAtt: ElementRef;
-  /**
-  * Used to point to a HTML checkbox element
-  */
-  @ViewChild('finalAtt') checkFinalAtt: ElementRef;
-  /**
-  * Used to point to a HTML checkbox element
-  */
-  @ViewChild('checkStaticAttMod') checkStaticAttMod: ElementRef;
-  /**
-  * Used to point to a HTML checkbox element
-  */
-  @ViewChild('checkFinalAttMod') checkFinalAttMod: ElementRef;
-
   /**
   * Removes an attribute of the given name from the class element and from the class object of type Classe
   * @param nome name of the attribute to removes
@@ -43,7 +29,7 @@ export class ClassListAttributeComponent{
   changeAttributo(newName: string, oldName: string, tipo: string, acc: string , stat: boolean, final: boolean) {
     this.classMenuService.changeAttributo(newName, oldName, tipo, acc, stat, final);
   }
-    /**
+  /**
   * This function allows to be check only one element on the attribute checkbox
   * @param event name of id element
   */
@@ -53,6 +39,14 @@ export class ClassListAttributeComponent{
     }
     if ( event === 'finalAttEdit') {
       $('#staticAttEdit').prop('checked', false);
+    }
+  }
+  /**
+  * This function closes all the collapsed div except the selected one
+  */
+  closeCollapsedList() {
+    if ( $('#listaAttributi').attr('aria-expanded') ) {
+      $('#listaMetodi').removeClass('in');
     }
   }
   /**

@@ -83,6 +83,10 @@ export class ClassMenuService {
   */
   costruttore: boolean;
   /**
+  * Used to store the information if main method is added
+  */
+  isThereAMain: boolean = false;
+  /**
   * Used to point to a HTML checkbox element
   */
   @ViewChild('staticMet') staticMetCheckbox: ElementRef;
@@ -217,14 +221,14 @@ export class ClassMenuService {
   * a new method. If one or more parameter isn't present an error will be shown
   * @param nome
   */
-  addMetodo(nome: string, staticMet: boolean, constructor: boolean, tipo: string, acc: string, params: any=null) {
+  addMetodo(nome: string, staticMet: boolean, constructor: boolean, tipo: string, acc: string, params: any = null) {
     if((nome && tipo && acc) || (constructor && acc) ) {
       try {
         if (constructor == true) {
           nome = this.name;
           tipo = this.name;
         }
-        this.mainEditorService.addMetodo(staticMet,constructor,tipo, nome, acc, params);
+        this.mainEditorService.addMetodo(staticMet, constructor, tipo, nome, acc, params);
       } catch (error) {
         if (error.message == 'NomePresente') {
           alert('Non è possibile inserire due o più metodi con lo stesso nome');
@@ -243,10 +247,10 @@ export class ClassMenuService {
         case 'private':
         vis = '-';
       }
-      let parametri: string = '';
+      let parametri: String = '';
       for (let ind = 0; ind < params.length; ind++) {
         parametri += params[ind].getNome() + ' : ' + params[ind].getTipo();
-        if (ind!=params.length-1) {
+        if (ind != params.length - 1 ) {
           parametri += ', ';
         }
       }
@@ -286,6 +290,9 @@ export class ClassMenuService {
     this.classe.set('methods', null);
     this.classe.set('methods', metodi);
     this.mainEditorService.removeMetodo(nome);
+    if ( nome == 'main') {
+      this.isThereAMain = false;
+    }
   }
   /**
   * Set the editor in activity mode to modify the behavior of the method of the given name
@@ -321,11 +328,6 @@ export class ClassMenuService {
     } else {
       return false;
     }
-  }
-
-  addMain() {
-    this.parametriMetodo.push( new Param ('String[]', 'args') );
-    this.addMetodo('main', true, false, 'void', 'public', this.parametriMetodo);
   }
 
 }

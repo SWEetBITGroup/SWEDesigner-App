@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { ClassMenuService } from '../../../../services/class-menu.service';
+import { Classe } from '../../../../models/classe';
+import { Param } from '../../../../models/param';
 
 @Component({
   selector: 'app-class-add-main-method',
@@ -11,11 +13,14 @@ export class ClassAddMainMethodComponent {
   /**
   * @param classMenuService used to create a new instantiation of ClassMenuService
   */
-  constructor(private classMenuService: ClassMenuService) 
-  { }
-
- addMain() {
-    this.classMenuService.addMain();
+  constructor(private classMenuService: ClassMenuService) {}
+  /**
+  * This function add the main function to the target class
+  */
+  addMain() {
+    this.classMenuService.isThereAMain = true;
+    this.classMenuService.parametriMetodo.push( new Param ('string[]', 'args') );
+    this.classMenuService.addMetodo('main', true, false, 'void', 'public', this.classMenuService.parametriMetodo);
   }
 
 }
