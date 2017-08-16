@@ -455,7 +455,7 @@ import * as joint from 'jointjs';
             if(!this.mainEditorService.getActivityModeStatus()){
               if(this.flagCut==false){
                 let nome = this.selectedCell.model.getClassName();
-                this.classMenuService.changeNome(nome+'_copia'+this.countCopies);
+                this.classMenuService.changeClassName(nome+'_copia'+this.countCopies);
                 if(this.selectedCell.model.attributes.type=='uml.Class'){
                   let nomeClasse= new Classe(this.copiedElement.model.getClassName());
                   this.mainEditorService.getSelectedClasse().getMetodi().forEach(element => {
@@ -471,7 +471,7 @@ import * as joint from 'jointjs';
                   });
                   this.mainEditorService.addClass(nomeClasse, this.copiedElement.model.clone());
                 }
-                this.classMenuService.changeNome(nome);
+                this.classMenuService.changeClassName(nome);
                 if(this.countCopies!=null)this.countCopies=1+this.countCopies;
                 else this.countCopies=0;
               }

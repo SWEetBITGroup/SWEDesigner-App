@@ -41,8 +41,7 @@ export class ClassListAttributeComponent{
   * @param final check if the attribute is final
   */
   changeAttributo(newName: string, oldName: string, tipo: string, acc: string , stat: boolean, final: boolean) {
-    this.classMenuService.removeAttributo(oldName);
-    this.classMenuService.addAttributo(newName,stat,final,tipo,acc);
+    this.classMenuService.changeAttributo(newName, oldName, tipo, acc, stat, final);
   }
     /**
   * This function allows to be check only one element on the attribute checkbox
@@ -57,19 +56,9 @@ export class ClassListAttributeComponent{
     }
   }
   /**
-  * This function closes all the collapsed div except the selected one
-  * @param event name of element reference
-  */
-  closeCollapsedList(event:any) {
-    if (!$(event).hasClass("listaAttr")) {
-      if ($('#listaAttr').attr("aria-expanded"))
-        $('#listaAttr').removeClass("in");
-    }
-  }
-  /**
   * This funcion closes all the collapsed div
   */
-  closeCollapsedAllList () {
+  closeAllCollapsedList () {
     if ($('#listaAttr').attr("aria-expanded"))
       $('#listaAttr').removeClass("in");
     if ($('#addAttr').attr("aria-expanded"))
