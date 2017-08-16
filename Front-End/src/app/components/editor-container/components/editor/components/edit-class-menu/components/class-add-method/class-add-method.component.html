@@ -1,3 +1,79 @@
-<p>
-  class-add-method works!
-</p>
+<div class="container">
+  <button class="btn btn-warning" data-toggle="collapse" data-target="#aggiungiMetodo">
+    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> &nbsp; Aggiungi Metodo
+  </button>
+  <div id="aggiungiMetodo" class="collapse">
+    <div>
+      <!-- checkbox -->
+      <div class="checkboxContainer">
+        <input id="staticAtt" type="checkbox" (change)='updateCheckbox(staticAtt.id)' #staticAtt/>
+        <label for="staticAtt"> Static </label>
+      </div>
+      <div class="checkboxContainer">
+        <input id="constructor" type="checkbox" (change)='updateCheckbox(constructor.id)' #constructor [(ngModel)]="costruttore"/>
+        <label for="constructor"> Costruttore </label>
+      </div>
+    </div>
+    <!-- visibilità -->
+    <div>
+      <label>Seleziona Visibilità</label>
+      <select #accessoAtt  [(ngModel)]="selectedAccAtt">
+        <option *ngFor="let accesso of accessoAttr" [value]="accesso">{{ accesso }}</option>
+      </select>
+    </div>
+    <!-- tipo di ritorno -->
+    <div [hidden]="costruttore">
+      <label>Seleziona tipo di ritorno</label>
+      <select #tipiMetodo [(ngModel)]="selectedTipoMet">
+        <option value="void"></option>
+        <option *ngFor="let type of types" [value]="type">{{type}}</option>
+      </select>
+    </div>
+    <!-- nome metodo -->
+    <div class="nomeMetodo" [hidden]="costruttore">
+      <label>Nome</label>
+      <input [disabled]="!selectedTipoAtt" id="nomeMetodo" [(ngModel)]="nomeMet">
+    </div>
+    <!-- Parametri attuali -->
+    <div class="container">
+      Parametri attuali
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Tipo</th>
+            <th>Nome</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let param of parametriMetodo" class="tipiMetodo">
+            <td>{{param.getTipo()}}</td>
+            <td>{{param.getNome()}}</td>
+          </tr>
+          <tr class="warning" #parametro>
+            <td>
+              <select #tipiParam id="tipiParam" class="tipiMetodo">
+                <option value=""></option>
+                <option *ngFor="let type of types" [value]="type">{{type}}</option>
+              </select>
+            </td>
+            <td>
+              <div class="input-group">
+                <input type="text" class="form-control" placeholder="Nome" #nomeParam id="nomeParam">
+                <span class="input-group-btn">
+                  <button class="btn btn-warning" type="button" (click)="addParam(tipiParam.value, nomeParam.value)">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                  </button>
+                </span>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <button class="btn btn-warning" [disabled]="isAddableMethod()"
+    (click)="addMetodo(nomeMetodo.value, staticMet.checked, constructor.checked, tipiMetodo.value, accMetodo.value)">
+    Aggiungi Metodo
+  </button>
+  <!-- fine -->
+</div>
+</div>

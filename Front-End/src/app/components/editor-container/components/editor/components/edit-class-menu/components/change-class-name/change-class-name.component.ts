@@ -50,9 +50,9 @@ export class ChangeClassNameComponent implements OnDestroy {
 
   /**
    * Change the name of the selected class and resets the input value into the HTML template
-   * @param name 
+   * @param name
    */
-  changeNome(name: string) {
+  changeClassName(name: string) {
     if (name != '') {
       this.classe.set('name',name);
       this.name = name;

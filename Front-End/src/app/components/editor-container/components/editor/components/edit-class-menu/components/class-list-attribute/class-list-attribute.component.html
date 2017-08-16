@@ -5,17 +5,51 @@
   <div id="listaAttributi" class="collapse">
     Lista attributi
     <ul class="list-group">
-      <li class="list-group-item list-group-item-warning" *ngFor="let attr of this.mainEditorService.selectedClasse.getAttributi()">
-        <span>{{attr.name}}: {{attr.type}}
-          <button class="btn btn-warning btnLista" (click)="removeAttributo(attr.name)">
+      <li class="list-group-item list-group-item-warning" *ngFor="let attributo of this.mainEditorService.selectedClasse.getAttributi()">
+        <span>{{attributo.name}}: {{attributo.type}}
+          <button class="btn btn-warning btnLista" (click)="removeAttributo(attributo.name)">
             <span class="glyphicon glyphicon-trash" aria-hidden="true" title="Rimuovi"></span>
           </button>
           <!-- icona di modifica che farà apparire un menù a tendina per la modifica attributo-->
-          <button class="btn btn-warning btnLista" data-toggle="collapse" [attr.data-target]="'#'+attr.name" title="Modifica">
+          <button class="btn btn-warning btnLista" data-toggle="collapse" [attr.data-target]="'#'+attributo.name">
             <span class="glyphicon glyphicon-pencil" aria-hidden="true" title="Modifica"></span>
           </button>
-        </span>
-      </li>
-    </ul>
-  </div>
+          <!--  menù a scomparsa per modifica dell'attributo -->
+          <div attr.id="{{attributo.name}}" class="collapse">
+            <div>
+              <div class="checkboxContainer">
+                <input id="staticAtt" type="checkbox" (change)='updateCheckbox(staticAtt.id)' #staticAtt/>
+                <label for="staticAtt"> Static </label>
+              </div>
+              <div class="checkboxContainer">
+                <input id="finalAtt" type="checkbox" (change)='updateCheckbox(finalAtt.id)' #finalAtt/>
+                <label for="finalAtt"> Final </label>
+              </div>
+            </div>
+            <div>
+              <label>Seleziona Visibilità</label>
+              <select #accessoAtt  [(ngModel)]="selectedAccAtt">
+                <option *ngFor="let accesso of accessoAttr" [value]="accesso">{{ accesso }}</option>
+              </select>
+            </div>
+            <div>
+              <label>Seleziona tipo</label>
+              <select #tipiAtt [(ngModel)]="selectedTipoAtt">
+                <option value=""></option>
+                <option *ngFor="let tipo of types" [value]="tipo"> {{ tipo }} </option>
+              </select>
+            </div>
+            <div class="aggiungiAttributo nomeAttr">
+              <label>Nome</label>
+              <input [disabled]="!selectedTipoAtt" id="nomeAttributo" #nomeAtt>
+            </div>
+            <button class="btn btn-warning" [disabled]="nomeAtt"
+            (click)="changeAttributo(nomeAttMod.value, attributo.name,tipiAttMod.value, accAttMod.value , checkStaticAttMod.checked , checkFinalAttMod.checked)">
+            Modifica Attributo
+          </button>
+        </div>
+      </span>
+    </li>
+  </ul>
+</div>
 </div>

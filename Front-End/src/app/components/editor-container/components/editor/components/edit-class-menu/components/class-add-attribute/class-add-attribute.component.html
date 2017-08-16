@@ -26,11 +26,11 @@
         <option *ngFor="let tipo of types" [value]="tipo"> {{ tipo }} </option>
       </select>
     </div>
-    <div class="aggiungiAttributo nomeAttr">
+    <div class="nomeAttributo">
       <label>Nome</label>
       <input [disabled]="!selectedTipoAtt" id="nomeAttributo" #nomeAtt>
     </div>
-    <button class="btn btn-default" [disabled]="false"
+    <button class="btn btn-warning" [disabled]="!selectedTipoAtt"
     (click)="addAttributo(nomeAtt.value, staticAtt.checked, finalAtt.checked, tipiAtt.value, accessoAtt.value)">
     Aggiungi Attributo
   </button>
