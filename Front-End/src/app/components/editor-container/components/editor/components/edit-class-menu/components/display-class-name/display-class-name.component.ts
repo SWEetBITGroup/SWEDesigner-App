@@ -12,7 +12,6 @@ export class DisplayClassNameComponent {
    * Create an instantiation of ClassMenuComponent and sets the properties ´classe´ and ´name´
    * by subscription from classMenuService
    * @param classMenuService used to create a new instantiation of ClassMenuService
-   * @param mainEditorService used to create a new instantiation of ClassMenuService
    */
   constructor(private classMenuService: ClassMenuService) {
   }

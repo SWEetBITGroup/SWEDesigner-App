@@ -25,7 +25,7 @@ export class ClassMenuService {
    */
   name: string = '';
   /**
-   * A boolean flag which is put at true if the name of a new added attribut has the same name 
+   * A boolean flag which is put at true if the name of a new added attribut has the same name
    * of an attribute presents in the selected class
    */
   nomeAttributoUguale: boolean;
@@ -68,14 +68,14 @@ export class ClassMenuService {
 
   costruttore: boolean;
    /**
-   * Used to point to a HTML checkbox element 
+   * Used to point to a HTML checkbox element
    */
   @ViewChild('staticMet') staticMetCheckbox: ElementRef;
   /**
-   * Used to point to a HTML checkbox element 
+   * Used to point to a HTML checkbox element
    */
   @ViewChild('constructor') constructorCheckbox: ElementRef;
- 
+
 
   /**
    * Create an instantiation of ClassMenuComponent and sets the properties ´classe´ and ´name´
@@ -91,7 +91,7 @@ export class ClassMenuService {
         this.name = x.getClassName();
       }
     );
-  } 
+  }
 
 
    // Service message commands
@@ -99,22 +99,20 @@ export class ClassMenuService {
     this.selectedClassSource.next(classe);
     this.classe= classe;
   }
-
-  // Funzione per aggiungere un attributo alla classe selezionata
   /**
-   * Retrives information from the template HTML of this component to build 
-   * a new attribute. If one or more parameter isn't present an error will be shown 
+   * Retrives information from the template HTML of this component to build
+   * a new attribute. If one or more parameter isn't present an error will be shown
    * @param nome the neme of the new attribute
    */
   addAttributo(nome: string, staticAtt: boolean, finalAtt: boolean, tipo: string, acc: string) {
-    console.log(nome+' '+tipo+' '+acc);
-    if(nome && tipo && acc){
+    if (nome && tipo && acc) {
       try {
         this.mainEditorService.addAttributo(tipo, nome, acc, staticAtt);
       } catch (error) {
-        if(error.message == 'NomePresente')
-          // TODO: segnalare l'errore sul menu! Eliminare il console log
-          console.log('Non è possibile inserire due attributi con lo stesso nome');
+        if( error.message == 'NomePresente') {
+          alert('Non è possibile inserire due attributi con lo stesso nome');
+          return;
+        }
       }
       let attributi = this.classe.attributes.attributes;
       let vis;
@@ -138,16 +136,19 @@ export class ClassMenuService {
        else if(finalAtt)
         {
           final = 'final';
-          attributi.push(vis+' '+final+' '+nome+' : '+ tipo);  
+          attributi.push(vis+' '+final+' '+nome+' : '+ tipo);
         }
       else
         attributi.push(vis+' '+nome+' : '+ tipo);
 
       this.classe.set('attributes',null); // Hack per far funzionare l'event change:attrs
       this.classe.set('attributes',attributi);
+      // Reset input field
       this.selectedAccAtt = 'public';
       this.selectedTipoAtt = null;
-      $('#nome-attributo').val("");
+      $('#nomeAttributo').val('');
+      $('#finalAtt').prop('checked', false);
+      $('#staticAtt').prop('checked', false);
       } else {
         alert('Alcuni capi del form per la creazione del nuovo attributo non sono stati compilati');
     }
@@ -162,7 +163,7 @@ export class ClassMenuService {
     attributi.splice(attributi.findIndex(element => {
       let att = element.split(' ');
       for(let i=0; i<att.length; i++)
-        if(att[i] == nome) 
+        if(att[i] == nome)
           return element;
     }),1);
     this.classe.set('attributes',null);
@@ -184,7 +185,7 @@ export class ClassMenuService {
 
   /**
    * Change the name of the selected class and resets the input value into the HTML template
-   * @param name 
+   * @param name
    */
   changeNome(name: string) {
       this.classe.set('name',name);
@@ -200,21 +201,21 @@ export class ClassMenuService {
       if(param.getNome() == name)
         sameName = true;
     });
-    if(!sameName) 
+    if(!sameName)
     {
       this.parametriMetodo.push(new Param(type,name));
       $('#tipiParam').val("");
       $('#nomeParam').val("");
     }
-    else  
+    else
       alert("Non è possibile inserire due o più parametri con lo stesso nome");
   }
 
   // Funzione per aggiungere un metodo alla classe selezionata
   /**
-   * Retrives information from the template HTML of this component to build 
+   * Retrives information from the template HTML of this component to build
    * a new method. If one or more parameter isn't present an error will be shown
-   * @param nome 
+   * @param nome
    */
   addMetodo(nome: string, staticMet: boolean, constructor: boolean, tipo: string, acc: string, params: any=null) {
     console.log(nome+' '+tipo+' '+acc);
@@ -223,7 +224,7 @@ export class ClassMenuService {
         if(constructor == true){
           nome = this.name;
           tipo = this.name;
-        }          
+        }
         this.mainEditorService.addMetodo(staticMet,constructor,tipo, nome, acc, params);
       } catch (error) {
         if(error.message == 'NomePresente')
@@ -270,14 +271,14 @@ export class ClassMenuService {
   //Rimuove il metodo
   /**
    * Removes a method of the given name from the class element and from the class object of type Classe
-   * @param nome 
+   * @param nome
    */
   removeMetodo(nome: string) {
     let metodi = this.classe.attributes.methods;
     metodi.splice(metodi.findIndex(element => {
-      let met = element.split(' ');        
+      let met = element.split(' ');
       for(let i=0; i<met.length; i++){
-        if(met[i] == nome) 
+        if(met[i] == nome)
           return element;
       }
     }),1);

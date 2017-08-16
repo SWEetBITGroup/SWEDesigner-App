@@ -10,24 +10,6 @@ import { ClassMenuService } from '../../../../services/class-menu.service';
 export class ClassListAttributeComponent{
 
   constructor(private classMenuService: ClassMenuService){}
-
-  /**
-  * Array of primitive data types
-  */
-  types = ['byte', 'short', 'int', 'long', 'float', 'double', 'boolean', 'char', 'String'];
-  /**
-  * Array of visibility
-  */
-  accessoAttr = ['public', 'protected', 'private'];
-  /**
-  * Used to store the selected type for the constructor of a new attribute.
-  */
-  selectedTipoAtt: string;
-  /**
-  * Used to store the selected visibility to build a new attribute
-  */
-  selectedAccAtt: string = 'public';
-
   @ViewChild('staticAtt') checkStaticAtt: ElementRef;
   /**
   * Used to point to a HTML checkbox element
@@ -41,6 +23,7 @@ export class ClassListAttributeComponent{
   * Used to point to a HTML checkbox element
   */
   @ViewChild('checkFinalAttMod') checkFinalAttMod: ElementRef;
+
   /**
    * Removes an attribute of the given name from the class element and from the class object of type Classe
    * @param nome name of the attribute to removes
@@ -48,17 +31,18 @@ export class ClassListAttributeComponent{
   removeAttributo(nome: string) {
     this.classMenuService.removeAttributo(nome);
   }
+
   updateCheckbox(event: any) {
-    //attributi 
+    //attributi
     if (this.checkStaticAtt.nativeElement.checked && this.checkFinalAtt.nativeElement.checked && event == 'staticAtt')
         this.checkFinalAtt.nativeElement.checked = false;
     if (this.checkStaticAtt.nativeElement.checked && this.checkFinalAtt.nativeElement.checked && event == 'finalAtt')
         this.checkStaticAtt.nativeElement.checked = false;
-    //attributi di lista modificata    
+    //attributi di lista modificata
     if (this.checkStaticAttMod.nativeElement.checked && this.checkFinalAttMod.nativeElement.checked && event == 'staticAttMod')
         this.checkFinalAttMod.nativeElement.checked = false;
     if (this.checkStaticAttMod.nativeElement.checked && this.checkFinalAttMod.nativeElement.checked && event == 'finalAttMod')
-        this.checkStaticAttMod.nativeElement.checked = false;             
+        this.checkStaticAttMod.nativeElement.checked = false;
   }
  /**
   * This function closes all the collapsed div except the selected one
@@ -77,8 +61,8 @@ export class ClassListAttributeComponent{
     if ($('#listaAttr').attr("aria-expanded"))
           $('#listaAttr').removeClass("in");
     if ($('#addAttr').attr("aria-expanded"))
-       $('#addAttr').removeClass("in");     
+       $('#addAttr').removeClass("in");
     if ($('.listaModAttr').attr("aria-expanded"))
-       $('.listaModAttr').removeClass("in");        
+       $('.listaModAttr').removeClass("in");
   }
 }

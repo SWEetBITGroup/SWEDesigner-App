@@ -5,32 +5,32 @@
   <div id="aggiungiAttributo" class="collapse">
     <div>
       <div class="checkboxContainer">
-        <input id="staticAtt" type="checkbox" (change)='updateCheckbox(staticAtt.id)' #staticAtt/>
+        <input id="staticAtt" type="checkbox" (change)='justOneCheckbox(staticAtt.id)' #staticAtt/>
         <label for="staticAtt"> Static </label>
       </div>
       <div class="checkboxContainer">
-        <input id="finalAtt" type="checkbox" (change)='updateCheckbox(finalAtt.id)' #finalAtt/>
+        <input id="finalAtt" type="checkbox" (change)='justOneCheckbox(finalAtt.id)' #finalAtt/>
         <label for="finalAtt"> Final </label>
       </div>
     </div>
     <div>
       <label>Seleziona Visibilità</label>
-      <select #accessoAtt  [(ngModel)]="selectedAccAtt">
-        <option *ngFor="let accesso of accessoAttr" [value]="accesso">{{ accesso }}</option>
+      <select #accessoAtt  [(ngModel)]="this.classMenuService.selectedAccAtt">
+        <option *ngFor="let accesso of this.classMenuService.accessoAttr" [value]="accesso">{{ accesso }}</option>
       </select>
     </div>
     <div>
       <label>Seleziona tipo</label>
-      <select #tipiAtt [(ngModel)]="selectedTipoAtt">
+      <select #tipiAtt [(ngModel)]="this.classMenuService.selectedTipoAtt">
         <option value=""></option>
-        <option *ngFor="let tipo of types" [value]="tipo"> {{ tipo }} </option>
+        <option *ngFor="let tipo of this.classMenuService.types" [value]="tipo"> {{ tipo }} </option>
       </select>
     </div>
     <div class="nomeAttributo">
       <label>Nome</label>
-      <input [disabled]="!selectedTipoAtt" id="nomeAttributo" #nomeAtt>
+      <input [disabled]="!this.classMenuService.selectedTipoAtt" id="nomeAttributo" #nomeAtt>
     </div>
-    <button class="btn btn-warning" [disabled]="!selectedTipoAtt"
+    <button class="btn btn-warning" [disabled]="!this.classMenuService.selectedTipoAtt"
     (click)="addAttributo(nomeAtt.value, staticAtt.checked, finalAtt.checked, tipiAtt.value, accessoAtt.value)">
     Aggiungi Attributo
   </button>
