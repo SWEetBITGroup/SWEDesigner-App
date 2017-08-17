@@ -73,26 +73,4 @@ export class ClassAddMethodComponent {
         this.classMenuService.costruttore = true;
       }
     }
-    /**
-    * This function closes all the collapsed div except the selected one
-    * @param event name of element reference
-    */
-    closeCollapsedList(event:any) {
-      if (!$(event).hasClass("listaAttr")) {
-        if ($('#listaAttr').attr("aria-expanded"))
-          $('#listaAttr').removeClass("in");
-      }
-      else
-        if ($('#listaMet').attr("aria-expanded"))
-          $('#listaMet').removeClass("in");
-    }
-    /**
-    * This funcion closes all the collapsed div
-    */
-    closeCollapsedAllList () {
-      if ($('#listaMet').attr("aria-expanded"))
-        $('#listaMet').removeClass("in");
-      if ($('#addMetodo').attr("aria-expanded"))
-        $('#addMetodo').removeClass("in");
-    }
   }

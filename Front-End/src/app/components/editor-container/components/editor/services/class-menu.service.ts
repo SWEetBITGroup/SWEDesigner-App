@@ -326,6 +326,21 @@ export class ClassMenuService {
       return false;
     }
   }
+  // JQUERY FUNCTION
+  closeAllCollapsedList() {
+    if ( $('#listaMetodi').attr('aria-expanded') ) {
+      $('#listaMetodi').removeClass('in');
+    }
+    if ( $('#listaAttributi').attr('aria-expanded') ) {
+      $('#listaAttributi').removeClass('in');
+    }
+    if ( $('#aggiungiMetodo').attr('aria-expanded') ) {
+      $('#aggiungiMetodo').removeClass('in');
+    }
+    if ( $('#aggiungiAttributo').attr('aria-expanded') ) {
+      $('#aggiungiAttributo').removeClass('in');
+    }
+  }
 
 }
 

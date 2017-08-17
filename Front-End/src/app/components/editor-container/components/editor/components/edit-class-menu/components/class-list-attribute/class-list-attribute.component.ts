@@ -49,15 +49,4 @@ export class ClassListAttributeComponent{
       $('#listaMetodi').removeClass('in');
     }
   }
-  /**
-  * This funcion closes all the collapsed div
-  */
-  closeAllCollapsedList () {
-    if ($('#listaAttr').attr("aria-expanded"))
-      $('#listaAttr').removeClass("in");
-    if ($('#addAttr').attr("aria-expanded"))
-      $('#addAttr').removeClass("in");
-    if ($('.listaModAttr').attr("aria-expanded"))
-      $('.listaModAttr').removeClass("in");
-  }
 }
