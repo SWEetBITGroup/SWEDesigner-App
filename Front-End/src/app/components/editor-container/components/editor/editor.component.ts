@@ -172,6 +172,7 @@ export class EditorComponent implements OnInit {
             this.elimina();
         }
       );
+      this.mainEditorService.checkrefresh();
     }
 
 

@@ -40,6 +40,7 @@ export class MainEditorService {
 
   varCode: string[];
 
+
   constructor() {
   }
 
@@ -276,6 +277,14 @@ export class MainEditorService {
 
   setCode(vars: string[]) {
     this.varCode = vars;
+  }
+
+  checkrefresh(){
+    window.onbeforeunload = function(e){
+      var text = "PAGINA REFRESHATA";
+      e.returnValue = text;
+      return text;
+    }
   }
 
 }
