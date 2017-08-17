@@ -102,20 +102,41 @@ import * as joint from 'jointjs';
     */
     flagRemoved: any;
 
-
+    /**
+     * It indicates to undo method if a method are added 
+     */
     addedMethod: any;
-
+    /**
+     * It indicates to undo method if a method are removed 
+     */
     removedMethod: any;
-
+    /**
+     * It indicates to redo method if a method are removed 
+     */
     rMethod: any;
+    /**
+     * It indicates to redo method if a method are added 
+     */
     aMethod: any;
+    /**
+     * It indicates to redo the class that was deleted 
+     */
     classeEliminata: any;
-
+    /**
+     * It indicates if the undo method call others methods
+     */
     fromUndo: any;
-
+    /**
+     * It indicates if the event "change" had to be listened
+     */
     changeMethod: any;
-
+    /**
+     * It indicates if the event "change" had to be listened
+     */
     noChange: any;
+    /**
+     * It indicates if the event "change" had to be listened
+     */
     bloccaChange: any;
 
     /**
@@ -461,6 +482,9 @@ import * as joint from 'jointjs';
                   this.mainEditorService.getSelectedClasse().getMetodi().forEach(element => {
                     nomeClasse.addMetodo(element);
                   });
+                  this.mainEditorService.getSelectedClasse().getAttributi().forEach(element => {
+                    nomeClasse.addAttributo(element.getTipo(), element.getNome(), element.getAccesso(), element.getStatic());
+                  });
                   this.mainEditorService.addClass(nomeClasse, this.copiedElement.model.clone());
                 }
                 if(this.selectedCell.model.attributes.type=='uml.Interface') this.mainEditorService.addClass(new Interface(this.copiedElement.model.getClassName()+'_copia'+this.countCopies), this.copiedElement.model.clone());
@@ -468,6 +492,9 @@ import * as joint from 'jointjs';
                   let nomeClasse= new ClasseAstratta(this.copiedElement.model.getClassName());
                   this.mainEditorService.getSelectedClasse().getMetodi().forEach(element => {
                     nomeClasse.addMetodo(element);
+                  });
+                  this.mainEditorService.getSelectedClasse().getAttributi().forEach(element => {
+                    nomeClasse.addAttributo(element.getTipo(), element.getNome(), element.getAccesso(), element.getStatic());
                   });
                   this.mainEditorService.addClass(nomeClasse, this.copiedElement.model.clone());
                 }
@@ -495,7 +522,7 @@ import * as joint from 'jointjs';
         }
 
         /**
-        * This methods cut the selected element
+        * This method cut the selected element
         */
         cutElement(){
           if(this.selectedCell!=null){
@@ -509,7 +536,7 @@ import * as joint from 'jointjs';
         }
 
         /**
-        * This methods delete the selected element
+        * This method delete the selected element
         */
         elimina(){
           if(this.selectedCell!=null)
@@ -517,7 +544,7 @@ import * as joint from 'jointjs';
         }
 
         /**
-        * This methods undo the last change in the graph
+        * This method undo the last change in the graph
         */
         undo(){
           this.fromUndo= true;
@@ -560,7 +587,7 @@ import * as joint from 'jointjs';
         }
 
         /**
-        * This methods redo the last change in the graph
+        * This method redo the last change in the graph
         */
         redo(){
           if(this.redoGraph!=null){
@@ -603,7 +630,7 @@ import * as joint from 'jointjs';
         }
 
         /**
-        * This methods resets the state of the tasks in "Modifica"
+        * This method resets the state of the tasks in "Modifica"
         */
         resetModifica(){
           this.actualGraph= null;
@@ -611,7 +638,9 @@ import * as joint from 'jointjs';
           this.redoGraph= null;
           this.copiedElement= null;
         }
-
+        /**
+         * This method update the actualGraph and undoGraph
+         */
         setUndoRedo(){
           if(this.actualGraph!=null){
             if(this.undoGraph==null){ this.undoGraph= new joint.dia.Graph;}

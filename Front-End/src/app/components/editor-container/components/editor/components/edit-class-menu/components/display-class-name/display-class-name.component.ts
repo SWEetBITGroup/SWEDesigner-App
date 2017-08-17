@@ -16,6 +16,10 @@ export class DisplayClassNameComponent {
   constructor(private classMenuService: ClassMenuService) {
   }
 
+  /**
+   * This method removes the selected class
+   * @param name used to find the name of the class to delete
+   */
   removeClass(name: string) {
     this.classMenuService.removeClass(name, this.classMenuService.classe);
   }

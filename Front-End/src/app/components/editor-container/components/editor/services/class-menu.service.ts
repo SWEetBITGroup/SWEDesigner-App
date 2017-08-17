@@ -26,11 +26,6 @@ export class ClassMenuService {
   */
   name: string = '';
   /**
-  * A boolean flag which is put at true if the name of a new added attribut has the same name
-  * of an attribute presents in the selected class
-  */
-  nomeAttributoUguale: boolean;
-  /**
   * Subscription to the osservable object which is the selected class in the editor
   */
   sub: Subscription; // Subscription all'ossevable di tipo elemento-classe selezionato dal grafico
@@ -264,8 +259,10 @@ export class ClassMenuService {
       this.selectedAccMet = 'public';
       this.selectedTipoMet = 'void';
       $('#nomeMetodo').val('');
-      this.staticMetCheckbox.nativeElement.checked = false;
-      this.constructorCheckbox.nativeElement.checked = false;
+      if(this.staticMetCheckbox!= null)
+        this.staticMetCheckbox.nativeElement.checked = false;
+      if(this.constructorCheckbox!= null)
+        this.constructorCheckbox.nativeElement.checked = false;
       $('#tipiParam').val('');
       $('#nomeParam').val('');
       this.parametriMetodo = new Array<Param>(); // Cleans the array of params

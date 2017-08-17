@@ -11,6 +11,13 @@ export class Attributo extends Param {
     }
 
     /**
+     * This method return true if the attribute is static
+     */
+    getStatic() {
+        return this.staticAtt;
+    }
+
+    /**
      * This method return the attribute's visibility
      */
     getAccesso() {

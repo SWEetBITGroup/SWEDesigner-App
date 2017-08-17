@@ -9,11 +9,10 @@ import { ClassMenuService } from '../../../../services/class-menu.service';
 })
 export class ChangeClassNameComponent {
   /**
-   * Create an instantiation of ClassMenuComponent and sets the properties ´classe´ and ´name´
-   * by subscription from classMenuService
    * @param classMenuService used to create a new instantiation of ClassMenuService
    */
   constructor(private classMenuService: ClassMenuService) {}
+  
   /**
    * Change the name of the selected class and resets the input value into the HTML template
    * @param newName
