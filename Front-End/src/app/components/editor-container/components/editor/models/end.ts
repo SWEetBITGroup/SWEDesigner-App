@@ -1,5 +1,5 @@
 import {Shape}  from "./shape";
-import {allShape} from './all-shape';
+import {AllShape} from './all-shape';
 
 export class End extends Shape{
 
@@ -11,10 +11,8 @@ export class End extends Shape{
     return 'End';
   }
 
-  toCode(sh: allShape){
-    console.log('End');
-    sh.getAllShape().forEach(element => {
-        element.setPrinted(false);
-    });
+  toCode(sh: AllShape, code: string){
+    code += 'END';
+    sh.setCode(code);
   }
 }

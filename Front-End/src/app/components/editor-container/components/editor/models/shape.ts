@@ -1,4 +1,4 @@
-import { allShape } from './all-shape';
+import { AllShape } from './all-shape';
 
 /**
 * Rappresents a base class and is used to rappresent the base info
@@ -10,8 +10,6 @@ export abstract class Shape{
 
   private succ: string;
 
-  private succElse: string;
-
   private body: string;
 
   private printed : boolean;
@@ -20,13 +18,6 @@ export abstract class Shape{
 
   constructor(id : string){
     this.id = id;
-    /*
-    if(body)
-      this.body = body;
-    if(succ)
-      this.succ = succ;
-    if(succElse)
-      this.succElse = succElse;*/
   }
 
   setId(id : string){
@@ -39,10 +30,6 @@ export abstract class Shape{
 
   setSucc(succ: string){
     this.succ = succ;
-  }
-
-  setSuccElse(succElse: string){
-    this.succElse = succElse;
   }
 
   setIfPassed(pas: string[]){
@@ -67,10 +54,6 @@ export abstract class Shape{
       return this.succ;
   }
 
-  getSuccElse(){
-      return this.succElse;
-  }
-
   getIfPassed(){
     return this.ifPassed;
   }
@@ -81,6 +64,6 @@ export abstract class Shape{
 
   abstract getType() : string;
 
-  abstract toCode(allShap : allShape) : void;
+  abstract toCode(allShap : AllShape, code: string) : void;
 
 }

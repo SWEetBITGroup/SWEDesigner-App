@@ -1,23 +1,29 @@
-import {Shape}  from "./shape";
-import {allShape} from './all-shape';
+import { Shape } from "./shape";
+import { AllShape } from './all-shape';
 
-export class operation extends Shape{
+export class Operation extends Shape {
 
-  constructor(id : string){
+  constructor(id: string) {
     super(id);
-  } 
+  }
+
+  operationType : string;
+  
+  setOperationType(t: string) {
+    this.operationType = t;
+  }
+
+  getOperationType() {
+    return this.operationType;
+  }
 
   getType() {
-    return 'operation';
+    return 'Operation';
   }
 
-  toCode(sh: allShape){
-    if(!(this.getPrinted())){
-      this.setPrinted(true);
-      console.log(this.getBody());
-      console.log(";");
-      if(this.getSucc())
-        sh.printSucc(this.getSucc());
-    }
+  toCode(sh: AllShape, code: string) {
+    code += this.getBody() + ';\n';
+    sh.getElementById(this.getSucc()).toCode(sh, code);
   }
+
 }

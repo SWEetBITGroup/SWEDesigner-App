@@ -1,15 +1,34 @@
 import {Shape}  from "./shape";
 
 
-export class allShape{
+export class AllShape{
+
   private allShap = new Array<Shape>();
 
-  public getAllShape(){
+  private statements = new Array<string>();
+
+  private merges = new Array<string>();
+
+  private code = '';
+
+  addMerge(id: string) {
+    this.merges.push(id);
+  }
+
+  addShape(shap: Shape){
+    this.allShap.push(shap);
+  }
+
+  addStatement(id: string) {
+    this.statements.push(id);
+  }
+
+  getAllShape(){
     return this.allShap;
   }
 
   getElementById(id: string) {
-    let element;
+    let element: Shape;
     this.allShap.forEach(el => {
       if(el.getId() == id)
         element = el;
@@ -17,28 +36,43 @@ export class allShape{
     return element;
   }
 
-  addShape(shap: Shape){
-    this.allShap.push(shap);
-  }
-  //V Verifica di essere all'interno di un loop
-  existMyLoop(id: string){
-    this.allShap.forEach(a => {
-      if(a.getSucc() == id || a.getSuccElse() == id ){
-        a.getIfPassed().forEach(a1 => {
-          if(a1 == id)
-            return true;
-        });
-      }
+  getElementByType(type: string) {
+    let start: Shape;
+    this.allShap.forEach(el => {
+      if(el.getType() == type)
+        start = el;
     });
-    return false;
+    if(!start) 
+      throw new Error('no '+type);
+    return start;
   }
-  // Stampa il nodo successivo
-  printSucc(id: string){
-    this.allShap.forEach(a =>{
-      if(a.getId() == id){
-        a.toCode(this);
-      }
-    });
+
+  getMerges() {
+    return this.merges;
+  }
+
+  getStatements() {
+    return this.statements;
+  }
+
+  setCode(cd: string) {
+    this.code = cd;
+  }
+
+  toCode() {
+    try {
+      var start = this.getElementByType('Start');
+      var end = this.getElementByType('End');    
+    } catch (error) {
+      console.log(error.message);
+    }
+    if(start && end) {
+      start.toCode(this,'');
+      console.log(this.code);
+      return this.code;
+    }
+    else 
+      return '';
   }
 
 }

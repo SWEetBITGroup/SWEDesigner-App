@@ -10,7 +10,7 @@ import { ActivityService } from '../../services/activity.service';
 })
 export class ActivityMenuComponent{
 
-  decisions = ['for', 'while','if'];
+  decisions = ['for','while','if'];
   dec: string;
 
   operators = ['<','<=','>','>=','==','!=']
@@ -42,5 +42,7 @@ export class ActivityMenuComponent{
     this.activityService.setDecisione(this.dec);
     this.mainEditorService.setCode([this.nomeInd,this.valInd,this.maxInd]);
   }
+
+
 
 }

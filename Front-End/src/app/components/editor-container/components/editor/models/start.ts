@@ -1,5 +1,5 @@
 import {Shape}  from "./shape";
-import {allShape} from './all-shape';
+import {AllShape} from './all-shape';
 
 export class Start extends Shape{
 
@@ -11,8 +11,9 @@ export class Start extends Shape{
     return 'Start';
   }
 
-  toCode(sh: allShape){
-    console.log('start');
-    sh.printSucc(this.getSucc());
+  toCode(sh: AllShape, code: string){
+    code += 'START\n';
+    sh.getElementById(this.getSucc()).toCode(sh, code);
   }
+  
 }

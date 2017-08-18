@@ -1,43 +1,44 @@
-import {Shape}  from "./shape";
-import {allShape} from './all-shape';
+import { Shape } from "./shape";
+import { AllShape } from './all-shape';
 
-export class ifNode extends Shape{
+export class IfNode extends Shape {
 
-  constructor(id : string){
-      super(id);
+  private succElse: string;
+
+  constructor(id: string) {
+    super(id);
+  }
+
+  getSuccElse() {
+    return this.succElse;
+  }
+
+  setSuccElse(succElse: string) {
+    this.succElse = succElse;
   }
 
   getType() {
-      return 'ifNode';
+    return 'IfNode';
   }
 
-  toCode(sh: allShape){
-    if(!(this.getPrinted())){
+  toCode(sh: AllShape, code: string) {
+    if (!this.getPrinted()) {
       this.setPrinted(true);
-      if(sh.existMyLoop(this.getId())){
-        console.log("while(");
-        console.log(this.getBody());
-        console.log("){");
-        sh.printSucc(this.getSucc());
+      if (this.getSucc()) {
+        code += 'if( ' + this.getBody() + ' ) {\n';
+        sh.addStatement(this.getId());
+        sh.getElementById(this.getSucc()).toCode(sh, code);
       }
-      else{
-        if(this.getSucc()){
-          console.log("if(");
-          console.log(this.getBody());
-          console.log("){");
-          sh.printSucc(this.getSucc());
-        }
-        if(this.getSuccElse()){
-          console.log("else(");
-          console.log(this.getBody());
-          console.log("){");
-          sh.printSucc(this.getSuccElse());
-        }
+    } else {
+      if (this.getSuccElse()) {
+        code += 'else {\n';
+        sh.getElementById(this.getSuccElse()).toCode(sh, code);
       }
-    }
-    else{
-      console.log("}");
-      sh.printSucc(this.getSuccElse());
+      else if (sh.getMerges().length) {
+        let merge = sh.getMerges().pop();
+        let mergeSuccID = sh.getElementById(merge).getSucc();
+        sh.getElementById(mergeSuccID).toCode(sh, code);
+      }
     }
   }
 
