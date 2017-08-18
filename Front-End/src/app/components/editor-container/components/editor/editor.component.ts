@@ -188,7 +188,7 @@ export class EditorComponent implements OnInit {
       this.paper.drawGrid("dot");
       this.paper.scale(this.xAx,this.xAx);
       /**
-      * This methods allows to recognize when there is a resize of the page
+      * This method allows to recognize when there is a resize of the page
       */
       window.addEventListener('resize', (event)=> {
         let height1=window.innerHeight-(window.innerHeight)/100;
@@ -196,7 +196,7 @@ export class EditorComponent implements OnInit {
         this.paper.setDimensions(width1, height1);
       });
       /**
-      * This methods allows to recognize when there is a change in the graph
+      * This method allows to recognize when there is a change in the graph
       */
       this.graph.on('change', ()=> {
         if(this.noChange==false||this.noChange==null){
@@ -244,7 +244,7 @@ export class EditorComponent implements OnInit {
         this.noChange= false;
       });
       /**
-      * This methods allows to recognize when there is a add event in the graph
+      * This method allows to recognize when there is a add event in the graph
       */
       this.graph.on('add', (cell) => {
         if(this.noChange==false||this.noChange==null){
@@ -267,7 +267,7 @@ export class EditorComponent implements OnInit {
       });
 
       /**
-      * This methods allows to recognize when there is a remove event in the graph
+      * This method allows to recognize when there is a remove event in the graph
       */
       this.graph.on('remove', (cell) => {
         if(this.noChange==null||this.noChange==false) {
@@ -289,7 +289,7 @@ export class EditorComponent implements OnInit {
       });
 
       /**
-      * This methods allows to the mouse's pointer to recognize when a class is clicked and select it
+      * This method allows to the mouse's pointer to recognize when a class is clicked and select it
       */
       this.paper.on('cell:pointerdown', (cellView) => {
         if(!this.connettore) {
@@ -307,7 +307,7 @@ export class EditorComponent implements OnInit {
           this.selectElementActivity(cellView);
       });
       /**
-      * This methods allows to the mouse's pointer to recognize when the class is unselected by click outside that shape
+      * This method allows to the mouse's pointer to recognize when the class is unselected by click outside that shape
       */
       this.paper.on('blank:pointerdown', () => {
         if(this.selectedCell){
@@ -326,7 +326,7 @@ export class EditorComponent implements OnInit {
     pulisce this.graph e lo ripopola tramite il JSON fornito in ingresso
     */
     /**
-    *  This methods is used to replace the editor with a new windows with the contents in the JSON file
+    *  This method is used to replace the editor with a new windows with the contents in the JSON file
     *  @param graph
     */
     replaceDiagram(graph: JSON) {
@@ -339,7 +339,7 @@ export class EditorComponent implements OnInit {
     }
 
     /**
-    * This methods is used to select the element to be connectted by the connector
+    * This method is used to select the element to be connectted by the connector
     * @param cell
     */
     selectElementsToConnect(cell: any) {
@@ -379,7 +379,7 @@ export class EditorComponent implements OnInit {
         }
       }
       /**
-      * This methods add a link to the class
+      * This method add a link to the class
       * @param connettore
       */
       addConnettore(connettore: any) {
@@ -387,7 +387,7 @@ export class EditorComponent implements OnInit {
       }
 
       /**
-      * This methods select a shape in the editor
+      * This method select a shape in the editor
       * @param cellView
       */
       elementSelection(cellView: any) {
@@ -407,7 +407,7 @@ export class EditorComponent implements OnInit {
 
       // Aggiunta classe
       /**
-      * This methods add to the editor an element
+      * This method add to the editor an element
       * @param element
       */
       addElement(element: any) {
@@ -415,7 +415,7 @@ export class EditorComponent implements OnInit {
       }
 
       /**
-      * This methods increase the scale of the editor
+      * This method increase the scale of the editor
       */
       zoomIn(){
         this.xAx+=(0.05);
@@ -423,7 +423,7 @@ export class EditorComponent implements OnInit {
       }
 
       /**
-      * This methods decrease the scale of the editor
+      * This method decrease the scale of the editor
       */
       zoomOut(){
         this.xAx-=(0.05);
@@ -431,7 +431,7 @@ export class EditorComponent implements OnInit {
       }
 
       /**
-      * This methods clone the selected element
+      * This method clone the selected element
       */
       cloneElement() {
         let clone = this.selectedCell.model.clone();
@@ -446,7 +446,7 @@ export class EditorComponent implements OnInit {
       }
 
       /**
-      * This methods copy the selected element
+      * This method copy the selected element
       */
       copyElement(){
         if(this.selectedCell!=null){
@@ -457,7 +457,7 @@ export class EditorComponent implements OnInit {
       }
 
       /**
-      * This methods pastes the element copied earlier
+      * This method pastes the element copied earlier
       */
       pasteElement(){
         if(this.copiedElement!= null){
@@ -504,7 +504,7 @@ export class EditorComponent implements OnInit {
             if(this.selectedCell.model.attributes.type=='uml.EndState') this.activityService.addEnd(this.copiedElement.model.clone());
             if(this.selectedCell.model.attributes.type=='erd.Relationship'&& this.selectedCell.model.attributes.attrs.text.text=='Decision') this.activityService.addIfNode(this.copiedElement.model.clone());
             if(this.selectedCell.model.attributes.type=='basic.Rect') this.activityService.addOperation(this.copiedElement.model.clone());
-            if(this.selectedCell.model.attributes.type=='erd.Relationship'&& this.selectedCell.model.attributes.attrs.text.text=='') this.activityService.addEndIfNode(this.copiedElement.model.clone());
+            if(this.selectedCell.model.attributes.type=='erd.Relationship'&& this.selectedCell.model.attributes.attrs.text.text=='') this.activityService.addMergeNode(this.copiedElement.model.clone());
             if(this.flagCut==true)  this.copiedElement= null;
           }
         }
