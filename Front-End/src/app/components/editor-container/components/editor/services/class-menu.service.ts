@@ -36,7 +36,7 @@ export class ClassMenuService {
   /**
   * Array of primitive data types
   */
-  MethodTypes = ['void','byte','short','int','long','float','double','boolean','char','String'];
+  methodTypes = ['void','byte','short','int','long','float','double','boolean','char','String'];
   /**
   * Array of visibility
   */
