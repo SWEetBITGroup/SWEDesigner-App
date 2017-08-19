@@ -25,7 +25,7 @@
     <div [hidden]="this.classMenuService.costruttore">
       <label>Seleziona tipo di ritorno</label>
       <select #tipiMetodo [(ngModel)]="this.classMenuService.selectedTipoMet">
-        <option *ngFor="let type of this.classMenuService.MethodTypes" [value]="type">{{type}}</option>
+        <option *ngFor="let type of this.classMenuService.methodTypes" [value]="type">{{type}}</option>
       </select>
     </div>
     <!-- nome metodo -->
@@ -55,7 +55,7 @@
           <tr class="warning" #parametro>
             <td>
               <select #tipiParam id="tipiParam" >
-                <option *ngFor="let type of this.classMenuService.MethodTypes" [value]="type">{{type}}</option>
+                <option *ngFor="let type of this.classMenuService.types" [value]="type">{{type}}</option>
               </select>
             </td>
             <td>
