@@ -74,12 +74,7 @@ export class ActivityService {
   }
 
   selectShape(id: string) {
-    this.shapeList.getAllShape().forEach(shape => {
-      if (shape.getId() == id) {
-        this.selectedShape = shape;
-      }
-    });
-
+    this.selectedShape = this.shapeList.getElementById(id);
     if (!this.selectedShape)
       console.log('Shape mancante'); // TODO: spend a moment to code it as a real warning
   }
@@ -159,9 +154,20 @@ export class ActivityService {
     return false;
   }
 
+  isVarDeclaration() {
+    if (this.selectShape) {
+      if (this.selectedShape.getType() == 'Operation' &&
+          (<Operation>this.selectedShape).getOperationType() == 'VarDecl')
+        return true;
+    }
+  }
+
   setDecisione(dec: string) {
     this.selectedElement.attr('text/text', dec);
   }
 
-
+  setOperationType(opType: string) {
+    if(this.selectedShape.getType() == 'Operation')
+      (<Operation>this.selectedShape).setOperationType(opType);
+  }
 }

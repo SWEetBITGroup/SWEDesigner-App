@@ -11,9 +11,21 @@
     </button>
   </div>
   <div [hidden]="!this.activityService.isOperation()">
-    <div class="container-fluid">
+    <div class="container-fluid" [hidden]="this.activityService.isVarDeclaration()">
       <div class="row changeNome">
         <label>Corpo operazione</label>
+        <input #corpo id="changeName"
+        (keyup.enter)="modBody(corpo.value)">
+        <button class="btn btn-default" (click)="modBody(corpo.value)">
+          <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div [hidden]="!this.activityService.isVarDeclaration()">
+    <div class="container-fluid">
+      <div class="row changeNome">
+        <label>Nome variabile</label>
         <input #corpo id="changeName"
         (keyup.enter)="modBody(corpo.value)">
         <button class="btn btn-default" (click)="modBody(corpo.value)">

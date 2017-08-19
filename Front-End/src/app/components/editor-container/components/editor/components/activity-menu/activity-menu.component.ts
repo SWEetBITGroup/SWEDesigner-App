@@ -12,8 +12,10 @@ export class ActivityMenuComponent{
 
   decisions = ['for','while','if'];
   dec: string;
+  params: string[];
 
-  operators = ['<','<=','>','>=','==','!=']
+  operators = ['<','<=','>','>=','==','!='];
+  types = ['byte','short','int','long','float','double','boolean','char','String']
 
   nomeInd: string = '';
   valInd: string = '';
