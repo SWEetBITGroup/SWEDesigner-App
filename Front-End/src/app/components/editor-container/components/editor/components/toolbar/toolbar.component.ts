@@ -295,14 +295,17 @@ export class ToolbarComponent implements OnInit {
                 height: 100
             },
             attrs: {
+                text: {
+                    text: 'ciao'
+                },
                 image: {
-                    width: 1024,
-                    height: 768,
+                    'ref-x': 2, 'ref-y': 2, ref: 'image', width: 16, height: 16,
                     'xlink:href': 'data:image/svg+xml;utf8,' + encodeURIComponent(svgFile),
                     preserveAspectRatio: 'none'
                 }
             }
         });
+        this.mainEditorService.addShape(start);
     }
 
     addConnector() {

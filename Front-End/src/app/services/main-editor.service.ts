@@ -121,8 +121,12 @@ export class MainEditorService {
    * @param nome is the name of the attribute to add as parameter to addAttributo
    * @param acc is the visibility of the attribute to add as parameter to addAttributo
    */
-  addAttributo(tipo: string, nome:string, acc: string, stat: boolean) {
-    this.selectedClasse.addAttributo(tipo,nome,acc,stat);
+  addAttributo(tipo: string, nome:string, acc: string, stat: boolean, fin: boolean) {
+    this.editorComp.copiaAttr(tipo, nome, acc, stat, fin);
+    this.editorComp.noChange= true;
+    this.editorComp.changeMethod= true;
+    this.selectedClasse.addAttributo(tipo,nome,acc,stat, fin);
+    this.editorComp.setUndoRedo();
   }
 
   /**
@@ -130,6 +134,11 @@ export class MainEditorService {
    * @param nome is the name of the attribute to remove which is passed to the removeAttr method
    */
   removeAttributo(nome: string) {
+    if(this.editorComp.fromUndo==true||this.editorComp.fromUndo==null) {
+      this.editorComp.noChange= true;
+      this.selectedClasse.removeAttr(nome);
+      this.editorComp.setUndoRedo();
+    }
     this.selectedClasse.removeAttr(nome);
   }
 

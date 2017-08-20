@@ -126,7 +126,7 @@ export class ClassMenuService {
   addAttributo(nome: string, staticAtt: boolean, finalAtt: boolean, tipo: string, acc: string) {
     if (nome && tipo && acc) {
       try {
-        this.mainEditorService.addAttributo(tipo, nome, acc, staticAtt);
+        this.mainEditorService.addAttributo(tipo, nome, acc, staticAtt, finalAtt);
       } catch (error) {
         if( error.message == 'NomePresente') {
           alert('Non è possibile inserire due attributi con lo stesso nome');

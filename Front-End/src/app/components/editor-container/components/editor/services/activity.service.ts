@@ -28,6 +28,8 @@ export class ActivityService {
   private selectedElement: any;
 
   private startID: string;
+  
+  private endID: string;
 
   constructor(private mainEditorService: MainEditorService) { }
 
@@ -59,6 +61,7 @@ export class ActivityService {
   }
 
   addEnd(graphElement: any) {
+    this.endID = graphElement.id;
     this.mainEditorService.addShape(graphElement);
     this.shapeList.addShape(new End(graphElement.id));
   }
@@ -85,6 +88,13 @@ export class ActivityService {
       x = true;
     }
     return x;
+  }
+
+  end() {
+    if(this.endID){
+      return true;
+    }
+    return false;
   }
 
   deselectElement() {
