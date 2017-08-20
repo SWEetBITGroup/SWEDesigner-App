@@ -8,21 +8,23 @@ import { ActivityService } from '../../services/activity.service';
   templateUrl: './activity-menu.component.html',
   styleUrls: ['./activity-menu.component.css']
 })
-export class ActivityMenuComponent{
+export class ActivityMenuComponent {
 
-  decisions = ['for','while','if'];
+  decisions = ['for', 'while', 'if'];
   dec: string;
   params: string[];
 
-  operators = ['<','<=','>','>=','==','!='];
-  types = ['byte','short','int','long','float','double','boolean','char','String']
+  operators = ['<', '<=', '>', '>=', '==', '!='];
+  types = ['byte', 'short', 'int', 'long', 'float', 'double', 'boolean', 'char', 'String'];
 
+  nomeVar: string = '';
+  tipoVar: string = '';
   nomeInd: string = '';
   valInd: string = '';
   maxInd: string = '';
 
-  constructor(private mainEditorService : MainEditorService,
-              private activityService: ActivityService) { }
+  constructor(private mainEditorService: MainEditorService,
+    private activityService: ActivityService) { }
 
   enterClassMode() {
     this.mainEditorService.enterClassMode(this.activityService.getSelectedMethod());
@@ -42,9 +44,25 @@ export class ActivityMenuComponent{
 
   generaDecisione() {
     this.activityService.setDecisione(this.dec);
-    this.mainEditorService.setCode([this.nomeInd,this.valInd,this.maxInd]);
+    this.mainEditorService.setCode([this.nomeInd, this.valInd, this.maxInd]);
   }
 
+  setNomeVar(name: string) {
+    this.nomeVar = name;
+  }
+
+  declareVar(value: string) {
+    if (this.nomeVar && this.tipoVar) {
+      // let inz = this.nomeVar.charAt(0);
+      let re = new RegExp('^[0-9]*^a*');
+      if (re.test(this.nomeVar))
+        console.log('Il nome della variabile non può iniziare con un numero');
+      var code = this.tipoVar + ' ' + this.nomeVar + ' = ' + value;
+    }
+    else
+      alert('Tipo o/e nome della variabile assente/i');
+    console.log(code);
+  }
 
 
 }

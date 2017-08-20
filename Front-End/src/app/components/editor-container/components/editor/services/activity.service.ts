@@ -34,7 +34,6 @@ export class ActivityService {
   constructor(private mainEditorService: MainEditorService) { }
 
 
-
   getShapeList() {
     return this.shapeList.getAllShape();
   }
@@ -158,17 +157,19 @@ export class ActivityService {
   }
   isOperation() {
     if (this.selectedShape) {
-      if (this.selectedShape.getType() == 'Operation')
+      if (this.selectedShape.getType() == 'Operation') {
         return true;
+      }
     }
     return false;
   }
 
   isVarDeclaration() {
-    if (this.selectShape) {
+    if (this.selectedShape) {
       if (this.selectedShape.getType() == 'Operation' &&
-          (<Operation>this.selectedShape).getOperationType() == 'VarDecl')
-        return true;
+         (<Operation>this.selectedShape).getOperationType() == 'VarDecl') {
+          return true;
+      }
     }
   }
 
@@ -176,8 +177,9 @@ export class ActivityService {
     this.selectedElement.attr('text/text', dec);
   }
 
-  setOperationType(opType: string) {
-    if(this.selectedShape.getType() == 'Operation')
-      (<Operation>this.selectedShape).setOperationType(opType);
+  setOperationType(opType: string, id: string) {
+    let op = this.shapeList.getElementById(id);
+    if(op.getType() == 'Operation')
+      (<Operation>op).setOperationType(opType);
   }
 }

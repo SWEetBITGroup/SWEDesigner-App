@@ -364,7 +364,7 @@ export class ToolbarComponent implements OnInit {
             }
         });
         this.activityService.addOperation(rettVar);
-        this.activityService.setOperationType('VarDecl');
+        this.activityService.setOperationType('VarDecl', rettVar.id);
     }
     
 }
