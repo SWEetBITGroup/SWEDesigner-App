@@ -256,15 +256,16 @@ export class AccountService {
       "username": username,
       "nome_progetto": nameProj 
     }
+    //console.log("DATI: " + JSON.stringify(userData));
     this.http.post('/loadProj', userData, {
       method: RequestMethod.Post,
       responseType: ResponseContentType.Json
     })
     .subscribe((data)=>{
-      let response = data.json();
-      console.log(JSON.parse(response));
+      let response = JSON.parse(data[0]);
+      console.log("PROVA" + response);
       //console.log("data" + data);
-      cb(JSON.parse(response));
+      cb(response);
     })
   }
   /**

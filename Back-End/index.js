@@ -390,7 +390,7 @@ app.listen(port, ()=>{
         }
         else{
           console.log("progetto caricato: "+x);
-          res.json(x);
+          res.send(x);
         }
       })
     })

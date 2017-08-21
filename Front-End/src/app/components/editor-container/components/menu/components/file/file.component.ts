@@ -32,7 +32,7 @@ export class FileComponent implements OnInit {
   
   esporta() {
     this.mainEditorService.retriveGraph();
-    //console.log("progetto " + JSON.parse(this.mainEditorService.getProject().toJSON(this.accountService.username)));
+    //console.log("progetto " + (this.mainEditorService.getProject().toJSON(this.accountService.username)));
     this.menuService.encrypt(JSON.parse(this.mainEditorService.getProject().toJSON(this.accountService.username)));
   }
 
