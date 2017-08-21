@@ -5,6 +5,7 @@ export class Operation extends Shape {
 
   constructor(id: string) {
     super(id);
+    this.operationType = 'Standard';
   }
 
   operationType : string;

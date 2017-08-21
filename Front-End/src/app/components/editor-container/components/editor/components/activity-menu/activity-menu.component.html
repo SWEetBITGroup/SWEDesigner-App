@@ -1,77 +1,103 @@
 <div [hidden]="selemetedMethod" class="container-fluid menu">
-  <div class="row selezionato">
-    <span class="glyphicon glyphicon-wrench iconaMirrow" aria-hidden="true"></span>&nbsp;&nbsp;{{this.activityService.getNameMethod()}}
-  </div>
-  <div class="row changeNome">
-    Modifica nome metodo:
-    <input #changeName id="changeName"
-    (keyup.enter)="changeNome(changeName.value)">
-    <button class="btn btn-default" (click)="changeNome(changeName.value)">
+	<div class="row selezionato">
+		<span class="glyphicon glyphicon-wrench iconaMirrow" aria-hidden="true"></span>&nbsp;&nbsp;{{this.activityService.getNameMethod()}}
+	</div>
+	<div class="row changeNome">
+		Modifica nome metodo:
+		<input #changeName id="changeName" (keyup.enter)="changeNome(changeName.value)">
+		<button class="btn btn-default" (click)="changeNome(changeName.value)">
       <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
     </button>
-  </div>
-  <div [hidden]="!this.activityService.isOperation()">
-    <div class="container-fluid" [hidden]="this.activityService.isVarDeclaration()">
-      <div class="row changeNome">
-        <label>Corpo operazione</label>
-        <input #corpo id="changeName"
-        (keyup.enter)="modBody(corpo.value)">
-        <button class="btn btn-default" (click)="modBody(corpo.value)">
+	</div>
+	<div [hidden]="!this.activityService.isOperation()">
+		<div class="container-fluid" [hidden]="this.activityService.isVarDeclaration()">
+			<div class="row changeNome">
+				<label>Corpo operazione</label>
+				<input #corpo id="changeName" (keyup.enter)="modBody(corpo.value)">
+				<button class="btn btn-default" (click)="modBody(corpo.value)">
           <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
         </button>
-      </div>
-    </div>
-  </div>
-  <div [hidden]="!this.activityService.isVarDeclaration()">
-    <div class="container-fluid">
-      <h3>Dichiarazione variabile</h3>
-      <div>
-        <label>Seleziona tipo</label>
-        <select [(ngModel)]="tipoVar">
+			</div>
+		</div>
+	</div>
+	<div [hidden]="!this.activityService.isVarDeclaration()">
+		<div class="container-fluid">
+			<h3>Dichiarazione variabile</h3>
+			<div>
+				<label>Seleziona tipo</label>
+				<select [(ngModel)]="tipoVar">
           <option *ngFor="let t of types">{{t}}</option>
         </select>
-      </div>
-      <div class="row changeNome">
-        <label>Nome variabile</label>
-        <input #nomeV id="nameVar" [(ngModel)]="nomeVar"
-        (keyup.enter)="setNomeVar(nomeV.value)"><br />
-        <label>Valore</label>
-        <input #valoreV id="valVar"
-        (keyup.enter)="setNomeVar(nomeV.value)">
-        <button class="btn btn-default" (click)="declareVar(valoreV.value)">
+			</div>
+			<div class="row changeNome">
+				<label>Nome variabile</label>
+				<input #nomeV id="nameVar" [(ngModel)]="nomeVar" (keyup.enter)="declareVar()"><br />
+				<label>Valore</label>
+				<input #valoreV id="valVar" [(ngModel)]="valVar" (keyup.enter)="declareVar()">
+				<button class="btn btn-default" (click)="declareVar()">
           <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
         </button>
-      </div>
-    </div>
-  </div>
-  <div [hidden]="!this.activityService.isDecision()">
-    <div class="container-fluid">
-      <div class="row changeNome">
-        <label>Tipo decisione</label><br />
-        <select [(ngModel)]="dec">
+			</div>
+		</div>
+	</div>
+	<div [hidden]="!this.activityService.isDecision()">
+		<div class="container-fluid">
+			<div class="row changeNome">
+				<label>Tipo decisione</label><br />
+				<select [(ngModel)]="dec">
           <option *ngFor="let dec of decisions" [value]="dec">{{ dec }}</option>
         </select>
-      </div>
-      <div [hidden]="dec != 'for'" class="row changeNome">
-        <label>Nome indice</label>
-        <input [(ngModel)]="nomeInd"  /><br />
-        <label>Valore iniziale indice</label>
-        <input [(ngModel)]="valInd" /><br />
-        <label>Guardia indice</label>
-        <input [(ngModel)]="maxInd"/><br />
-        <label>Operatore guardia</label>
-        <select>
+			</div>
+			<div [hidden]="dec != 'for'" class="row changeNome">
+				<label>Nome indice</label>
+				<input [(ngModel)]="nomeInd" /><br />
+				<label>Valore iniziale indice</label>
+				<input type="number" [(ngModel)]="valInd" /><br />
+				<label>Operatore guardia</label>
+				<select [(ngModel)]="op">
           <option *ngFor="let op of operators" [value]="op">{{ op }}</option>
         </select><br />
-        <button class="btn btn-default" (click)="generaDecisione()">
+				<label>Valore di guardia indice</label>
+				<input type="number" [(ngModel)]="maxInd" /><br />
+				<button class="btn btn-default" (click)="generaFor()">
           Genera decisione
         </button>
-      </div>
-    </div>
-  </div>
-  <div>
-    <button class="btn btn-default" (click)="enterClassMode()">
+			</div>
+			<!-- WHILE -->
+			<div [hidden]="dec != 'while'" class="row changeNome">
+				<label>Nome indice</label>
+				<input [(ngModel)]="nomeInd" /><br />
+				<label>Valore iniziale indice</label>
+				<input type="number" [(ngModel)]="valInd" /><br />
+				<label>Operatore guardia</label>
+				<select [(ngModel)]="op">
+          <option *ngFor="let op of operators">{{ op }}</option>
+        </select><br />
+				<label>Valore di guardia indice</label>
+				<input type="number" [(ngModel)]="maxInd" /><br />
+				<button class="btn btn-default" (click)="generaFor()">
+          Genera decisione
+        </button>
+			</div>
+			<!-- IF -->
+			<div [hidden]="dec != 'if'" class="row changeNome">
+				<label>Variabile</label>
+				<select [(ngModel)]="va">
+          <option *ngFor="let v of vars" [value]="va">{{ v }}</option>
+        </select><br />
+				<label>Operatore guardia</label>
+				<select [(ngModel)]="op">
+          <option *ngFor="let op of operators">{{ op }}</option>
+        </select><br />
+				<button class="btn btn-default" (click)="generaIf()">
+          Genera decisione
+        </button>
+			</div>
+		</div>
+	</div>
+	<div>
+		<button class="btn btn-default" (click)="enterClassMode()">
       <span class="glyphicon glyphicon-arrow-left freccia"></span>
       Diagramma delle Classi</button>
-  </div>
+	</div>
 </div>

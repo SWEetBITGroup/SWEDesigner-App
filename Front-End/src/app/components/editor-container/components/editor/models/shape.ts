@@ -5,65 +5,69 @@ import { AllShape } from './all-shape';
 * for the shape on the activity diagram.
 */
 
-export abstract class Shape{
+export abstract class Shape {
   private id: string;
 
   private succ: string;
 
   private body: string;
 
-  private printed : boolean;
+  private printed: boolean;
 
   private ifPassed = new Array<string>();
 
-  constructor(id : string){
+  constructor(id: string) {
     this.id = id;
   }
 
-  setId(id : string){
+  setId(id: string) {
     this.id = id;
   }
 
-  setBody(body: string){
+  setBody(body: string) {
     this.body = body;
   }
 
-  setSucc(succ: string){
+  setSucc(succ: string) {
     this.succ = succ;
   }
 
-  setIfPassed(pas: string[]){
+  setIfPassed(pas: string[]) {
     pas.forEach(element => {
       this.ifPassed.push(element);
     });
   }
 
-  setPrinted(printed: boolean){
+  setPrinted(printed: boolean) {
     this.printed = printed;
   }
 
-  getId(){
+  getId() {
     return this.id;
   }
 
-  getBody(){
+  getBody() {
     return this.body;
   }
 
-  getSucc(){
-      return this.succ;
+  getSucc() {
+    return this.succ;
   }
 
-  getIfPassed(){
+  getIfPassed() {
     return this.ifPassed;
   }
 
-  getPrinted(){
+  getPrinted() {
     return this.printed;
   }
 
-  abstract getType() : string;
+  addBody(b: string) {
+    this.body = b;
+  }
 
-  abstract toCode(allShap : AllShape, code: string) : void;
+  abstract getType(): string;
+
+  abstract toCode(allShap: AllShape, code: string): void;
 
 }

@@ -1,7 +1,7 @@
-import {Shape}  from "./shape";
+import { Shape } from "./shape";
 
 
-export class AllShape{
+export class AllShape {
 
   private allShap = new Array<Shape>();
 
@@ -15,7 +15,7 @@ export class AllShape{
     this.merges.push(id);
   }
 
-  addShape(shap: Shape){
+  addShape(shap: Shape) {
     this.allShap.push(shap);
   }
 
@@ -23,14 +23,14 @@ export class AllShape{
     this.statements.push(id);
   }
 
-  getAllShape(){
+  getAllShape() {
     return this.allShap;
   }
 
   getElementById(id: string) {
     let element: Shape;
     this.allShap.forEach(el => {
-      if(el.getId() == id)
+      if (el.getId() == id)
         element = el;
     });
     return element;
@@ -39,11 +39,11 @@ export class AllShape{
   getElementByType(type: string) {
     let start: Shape;
     this.allShap.forEach(el => {
-      if(el.getType() == type)
+      if (el.getType() == type)
         start = el;
     });
-    if(!start) 
-      throw new Error('no '+type);
+    if (!start)
+      throw new Error('no ' + type);
     return start;
   }
 
@@ -59,19 +59,26 @@ export class AllShape{
     this.code = cd;
   }
 
+  removeShape(id: string) {
+    this.allShap.forEach((e,index) => {
+      if (e.getId() == id)
+        this.allShap.splice(index,1);
+    });
+  }
+
   toCode() {
     try {
       var start = this.getElementByType('Start');
-      var end = this.getElementByType('End');    
+      var end = this.getElementByType('End');
     } catch (error) {
       console.log(error.message);
     }
-    if(start && end) {
-      start.toCode(this,'');
+    if (start && end) {
+      start.toCode(this, '');
       console.log(this.code);
       return this.code;
     }
-    else 
+    else
       return '';
   }
 

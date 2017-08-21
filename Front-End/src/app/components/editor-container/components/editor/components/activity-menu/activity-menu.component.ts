@@ -4,65 +4,102 @@ import { MainEditorService } from '../../../../../../services/main-editor.servic
 import { ActivityService } from '../../services/activity.service';
 
 @Component({
-  selector: 'activity-menu',
-  templateUrl: './activity-menu.component.html',
-  styleUrls: ['./activity-menu.component.css']
+	selector: 'activity-menu',
+	templateUrl: './activity-menu.component.html',
+	styleUrls: ['./activity-menu.component.css']
 })
 export class ActivityMenuComponent {
 
-  decisions = ['for', 'while', 'if'];
-  dec: string;
-  params: string[];
+	decisions = ['if', 'for', 'while'];
+	dec: string = '';
+	params: string[];
 
-  operators = ['<', '<=', '>', '>=', '==', '!='];
-  types = ['byte', 'short', 'int', 'long', 'float', 'double', 'boolean', 'char', 'String'];
+	operators = ['<', '<=', '>', '>=', '==', '!='];
+	types = ['short', 'int', 'long', 'float', 'double', 'boolean', 'char', 'String'];
 
-  nomeVar: string = '';
-  tipoVar: string = '';
-  nomeInd: string = '';
-  valInd: string = '';
-  maxInd: string = '';
 
-  constructor(private mainEditorService: MainEditorService,
-    private activityService: ActivityService) { }
+	// Variabili visibili
+	vars = new Array<string>();
 
-  enterClassMode() {
-    this.mainEditorService.enterClassMode(this.activityService.getSelectedMethod());
-  }
+	// Valori dichiarazione variabile
+	nomeVar: string = '';
+	tipoVar: string = '';
+	valVar: string = '';
 
-  modBody(text: string) {
-    this.activityService.modBody(text);
-  }
+	// Valori if
+	variables = new Map<string, string>();
+	va: string = '';
 
-  generaCodice() {
-    this.activityService.generaCodice();
-  }
+	// Valori for & while
+	nomeInd: string = '';
+	valInd: number = 0;
+	maxInd: number = 0;
+	op: string = '';
 
-  changeName(name: string) {
-    this.activityService.changeName(name);
-  }
+	constructor(private mainEditorService: MainEditorService,
+		private activityService: ActivityService) { }
 
-  generaDecisione() {
-    this.activityService.setDecisione(this.dec);
-    this.mainEditorService.setCode([this.nomeInd, this.valInd, this.maxInd]);
-  }
+	enterClassMode() {
+		this.mainEditorService.enterClassMode(this.activityService.getSelectedMethod());
+	}
 
-  setNomeVar(name: string) {
-    this.nomeVar = name;
-  }
+	modBody(text: string) {
+		this.activityService.modBody(text);
+	}
 
-  declareVar(value: string) {
-    if (this.nomeVar && this.tipoVar) {
-      // let inz = this.nomeVar.charAt(0);
-      let re = new RegExp('^[0-9]*^a*');
-      if (re.test(this.nomeVar))
-        console.log('Il nome della variabile non può iniziare con un numero');
-      var code = this.tipoVar + ' ' + this.nomeVar + ' = ' + value;
-    }
-    else
-      alert('Tipo o/e nome della variabile assente/i');
-    console.log(code);
-  }
+	generaCodice() {
+		this.activityService.generaCodice();
+	}
+
+	changeName(name: string) {
+		this.activityService.changeName(name);
+	}
+
+	generaIf() {
+		let re = new RegExp('^[0-9]+| +');
+		this.nomeInd.trim();
+		this.activityService.setDecisione(this.dec, 'code');
+	}
+
+	generaFor() {
+		this.valInd = parseInt(this.valInd.toFixed(0));
+		this.maxInd = parseInt(this.maxInd.toFixed(0));
+		this.nomeInd.trim();
+		let re = new RegExp('^[0-9]+| +');
+		if (re.test(this.nomeInd))
+			alert("Il nome dell'indice non può contenere spazi o iniziare con un numero");
+		else if (this.nomeInd && this.valInd && this.maxInd)
+			var code = 'int ' + this.nomeInd + ' = ' + this.valInd + '; ' + this.nomeInd + ' ' + this.op + '; ' +
+				this.nomeInd + '++';
+		this.activityService.setDecisione(this.dec, code);
+	}
+
+	setNomeVar(name: string) {
+		this.nomeVar = name;
+	}
+
+	declareVar() {
+		this.valVar = this.valVar.trim();
+		this.nomeVar = this.nomeVar.trim();
+		if (this.nomeVar && this.tipoVar) {
+			let re = new RegExp('^[0-9]+| +');
+			if (re.test(this.nomeVar))
+				alert('Il nome della variabile non può iniziare con un numero o contenere spazi al suo interno');
+			else
+				if (this.valVar)
+					var code = this.tipoVar + ' ' + this.nomeVar + ' = ' + this.valVar;
+				else
+					var code = this.tipoVar + ' ' + this.nomeVar;
+		}
+		else
+			alert('Tipo o/e nome della variabile assente/i');
+		this.activityService.modBody(code);
+		this.variables.set(this.activityService.getSelectedShapeId(), this.nomeVar);
+		this.vars.push(this.nomeVar);
+		this.tipoVar = '';
+		this.valVar = '';
+		this.nomeVar = '';
+	}
 
 
 }

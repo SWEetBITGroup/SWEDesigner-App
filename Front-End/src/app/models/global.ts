@@ -112,9 +112,8 @@ export class Global {
   // I campi devono ritornare come string
   toJSON(usr: String){
     let global = '{\"username\":\"'+usr+'\",\"nome_progetto\":\"'+this.nome_progetto+
-                  '\",\"project":{\"graph\":'+ JSON.stringify(this.diagramma) +
+                  '\",\"project\":{\"graph\":'+ JSON.stringify(this.diagramma) +
                   ',\"classi\":'+JSON.stringify(this.classi)+'}}';
-    //console.log(global);
     return global;
   }
 

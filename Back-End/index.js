@@ -355,7 +355,8 @@ app.listen(port, ()=>{
     app.post("/insProject", function(req, res){
       var name = req.body.nome_progetto
       var usr = req.body.username;
-      var proj = JSON.stringify(req.body.project);
+      var proj = req.body.project;
+      console.log(proj);
       mongooseRequest.ins_proj(name, usr, proj, function(err, x){
         if(err){
           console.log("problema con l'inserimento di un progetto");
@@ -390,6 +391,7 @@ app.listen(port, ()=>{
         }
         else{
           console.log("progetto caricato: "+x);
+          console.log(x);
           res.json(x);
         }
       })

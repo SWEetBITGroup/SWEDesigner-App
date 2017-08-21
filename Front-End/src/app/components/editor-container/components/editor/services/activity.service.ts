@@ -21,18 +21,21 @@ export class ActivityService {
 
   private shapeList: AllShape;
 
-  private selectedShape: any;
+  private selectedShape: Shape;
 
   private selectedMethod: Metodo;
 
   private selectedElement: any;
 
   private startID: string;
-  
+
   private endID: string;
 
   constructor(private mainEditorService: MainEditorService) { }
 
+  getSelectedShapeId() {
+    return this.selectedShape.getId();
+  }
 
   getShapeList() {
     return this.shapeList.getAllShape();
@@ -90,7 +93,7 @@ export class ActivityService {
   }
 
   end() {
-    if(this.endID){
+    if (this.endID) {
       return true;
     }
     return false;
@@ -139,9 +142,7 @@ export class ActivityService {
 
   modBody(text: string) {
     this.selectedElement.attr('text/text', text);
-    let elShape = this.shapeList.getElementById(this.selectedElement.id);
-    elShape.setBody(text);
-    console.log(elShape);
+    this.selectedShape.setBody(text);
   }
 
   generaCodice() {
@@ -167,19 +168,24 @@ export class ActivityService {
   isVarDeclaration() {
     if (this.selectedShape) {
       if (this.selectedShape.getType() == 'Operation' &&
-         (<Operation>this.selectedShape).getOperationType() == 'VarDecl') {
-          return true;
+        (<Operation>this.selectedShape).getOperationType() == 'VarDecl') {
+        return true;
       }
     }
   }
 
-  setDecisione(dec: string) {
+  setDecisione(dec: string, code: string) {
     this.selectedElement.attr('text/text', dec);
   }
 
   setOperationType(opType: string, id: string) {
     let op = this.shapeList.getElementById(id);
-    if(op.getType() == 'Operation')
+    if (op.getType() == 'Operation')
       (<Operation>op).setOperationType(opType);
+  }
+
+  modVariable(code: string) {
+    if (code)
+      this.selectedShape.addBody(code);
   }
 }

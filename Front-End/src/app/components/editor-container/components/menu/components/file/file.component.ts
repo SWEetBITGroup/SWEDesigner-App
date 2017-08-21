@@ -20,7 +20,10 @@ export class FileComponent implements OnInit {
 
   salva(){
     this.mainEditorService.retriveGraph();
-    this.menuService.saveData(JSON.parse(this.mainEditorService.getProject().toJSON(this.accountService.username)), function(err){
+    let fileJSON = JSON.parse(this.mainEditorService.getProject().toJSON(this.accountService.username));
+    fileJSON.project = JSON.stringify(fileJSON.project);
+    console.log(fileJSON);
+    this.menuService.saveData(fileJSON, function(err){
       if(err){
         alert("Progetto non salvato");
       }
