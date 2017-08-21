@@ -1,5 +1,5 @@
 import { Param } from './param';
-import { allShape } from './all-shape'
+import { AllShape } from './all-shape'
 
 import * as joint from 'jointjs';
 
@@ -28,7 +28,7 @@ export class Metodo {
      */
     diagramma: JSON;
 
-    shapeList = new allShape();
+    shapeList = new AllShape();
 
     costruttore: boolean;
     statico: boolean;

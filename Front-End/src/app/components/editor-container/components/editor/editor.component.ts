@@ -10,6 +10,8 @@ import { ActivityService } from './services/activity.service';
 import { Classe } from './models/classe';
 import { Interface } from './models/interface';
 import { ClasseAstratta } from './models/classe-astratta';
+import { Attributo } from './models/attributo';
+
 
 declare var $:JQueryStatic;
 import * as _ from 'lodash';
@@ -138,6 +140,18 @@ export class EditorComponent implements OnInit {
   * It indicates if the event "change" had to be listened
   */
   bloccaChange: any;
+  /**
+   * It indicates to undo the attribute that was added
+   */
+  addedAttribute: any;
+  /**
+   * It indicates to redo the attribute that was removed
+   */
+  removedAttribute: any;
+  /**
+   * It points to the element to select after a called of undo method
+   */
+  puntElement: any;
 
   /**
   * this constructor bind this class with the services use for callback function and draw the grid in the canvas
@@ -188,7 +202,7 @@ export class EditorComponent implements OnInit {
       this.paper.drawGrid("dot");
       this.paper.scale(this.xAx,this.xAx);
       /**
-      * This methods allows to recognize when there is a resize of the page
+      * This method allows to recognize when there is a resize of the page
       */
       window.addEventListener('resize', (event)=> {
         let height1=window.innerHeight-(window.innerHeight)/100;
@@ -196,55 +210,57 @@ export class EditorComponent implements OnInit {
         this.paper.setDimensions(width1, height1);
       });
       /**
-      * This methods allows to recognize when there is a change in the graph
+      * This method allows to recognize when there is a change in the graph
       */
       this.graph.on('change', ()=> {
-        if(this.noChange==false||this.noChange==null){
-          if(this.actualGraph!=null){
-            if(this.aMethod!=null&&this.bloccaChange==true){
-              this.bloccaChange= false;
-              this.aMethod= null;
-              let metodi = this.classMenuService.classe.attributes.methods;
-              metodi.splice(metodi.findIndex(element => {
-                let met = element.split(' ');
+          if(this.noChange==false||this.noChange==null){
+            if(this.actualGraph!=null){
+              if(this.aMethod!=null&&this.bloccaChange==true){
                 this.bloccaChange= false;
-                for(let i=0; i<met.length; i++){
-                  if(met[i] == this.aMethod.getNome())
-                    return element;
-                }
-              }),1);
-              this.classMenuService.classe.set('methods',null);
-              this.classMenuService.classe.set('methods',metodi);
-              this.aMethod= null;
-              this.bloccaChange= false;
+                this.aMethod= null;
+                let metodi = this.classMenuService.classe.attributes.methods;
+                metodi.splice(metodi.findIndex(element => {
+                  let met = element.split(' ');
+                  this.bloccaChange= false;
+                  for(let i=0; i<met.length; i++){
+                    if(met[i] == this.aMethod.getNome())
+                      return element;
+                  }
+                }),1);
+                this.classMenuService.classe.set('methods',null);
+                this.classMenuService.classe.set('methods',metodi);
+                this.aMethod= null;
+                this.bloccaChange= false;
+              }
+              else{
+                if(this.undoGraph==null){ this.undoGraph= new joint.dia.Graph;}
+                this.undoGraph.clear();
+                this.actualGraph.getCells().forEach(element => {
+                  this.undoGraph.addCell(element.clone());
+                });
+                this.actualGraph.clear();
+                this.redoGraph= null;
+              }
             }
-            else{
-              if(this.undoGraph==null){ this.undoGraph= new joint.dia.Graph;}
-              this.undoGraph.clear();
-              this.actualGraph.getCells().forEach(element => {
-                this.undoGraph.addCell(element.clone());
-              });
-              this.actualGraph.clear();
-              this.redoGraph= null;
-            }
+            else this.actualGraph = new joint.dia.Graph;
+            this.graph.getCells().forEach(element => {
+              this.actualGraph.addCell(element.clone());
+            });
           }
-          else this.actualGraph = new joint.dia.Graph;
-          this.graph.getCells().forEach(element => {
-            this.actualGraph.addCell(element.clone());
-          });
-        }
-        this.flagAdded= false;
-        this.flagRemoved= false;
-        if(this.changeMethod==false||this.changeMethod==null){
-          this.addedMethod= null;
-          this.removedMethod= null;
-          this.rMethod= null;
-          this.bloccaChange= false;
-        }
-        this.noChange= false;
-      });
+          this.flagAdded= false;
+          this.flagRemoved= false;
+          if(this.changeMethod==false||this.changeMethod==null){
+            this.addedMethod= null;
+            this.addedAttribute= null;
+            this.removedAttribute= null;
+            this.removedMethod= null;
+            this.rMethod= null;
+            this.bloccaChange= false;
+          }
+          this.noChange= false;
+        });
       /**
-      * This methods allows to recognize when there is a add event in the graph
+      * This method allows to recognize when there is a add event in the graph
       */
       this.graph.on('add', (cell) => {
         if(this.noChange==false||this.noChange==null){
@@ -267,7 +283,7 @@ export class EditorComponent implements OnInit {
       });
 
       /**
-      * This methods allows to recognize when there is a remove event in the graph
+      * This method allows to recognize when there is a remove event in the graph
       */
       this.graph.on('remove', (cell) => {
         if(this.noChange==null||this.noChange==false) {
@@ -289,7 +305,7 @@ export class EditorComponent implements OnInit {
       });
 
       /**
-      * This methods allows to the mouse's pointer to recognize when a class is clicked and select it
+      * This method allows to the mouse's pointer to recognize when a class is clicked and select it
       */
       this.paper.on('cell:pointerdown', (cellView) => {
         if(!this.connettore) {
@@ -307,7 +323,7 @@ export class EditorComponent implements OnInit {
           this.selectElementActivity(cellView);
       });
       /**
-      * This methods allows to the mouse's pointer to recognize when the class is unselected by click outside that shape
+      * This method allows to the mouse's pointer to recognize when the class is unselected by click outside that shape
       */
       this.paper.on('blank:pointerdown', () => {
         if(this.selectedCell){
@@ -326,7 +342,7 @@ export class EditorComponent implements OnInit {
     pulisce this.graph e lo ripopola tramite il JSON fornito in ingresso
     */
     /**
-    *  This methods is used to replace the editor with a new windows with the contents in the JSON file
+    *  This method is used to replace the editor with a new windows with the contents in the JSON file
     *  @param graph
     */
     replaceDiagram(graph: JSON) {
@@ -339,7 +355,7 @@ export class EditorComponent implements OnInit {
     }
 
     /**
-    * This methods is used to select the element to be connectted by the connector
+    * This method is used to select the element to be connectted by the connector
     * @param cell
     */
     selectElementsToConnect(cell: any) {
@@ -379,7 +395,7 @@ export class EditorComponent implements OnInit {
         }
       }
       /**
-      * This methods add a link to the class
+      * This method add a link to the class
       * @param connettore
       */
       addConnettore(connettore: any) {
@@ -387,7 +403,7 @@ export class EditorComponent implements OnInit {
       }
 
       /**
-      * This methods select a shape in the editor
+      * This method select a shape in the editor
       * @param cellView
       */
       elementSelection(cellView: any) {
@@ -407,7 +423,7 @@ export class EditorComponent implements OnInit {
 
       // Aggiunta classe
       /**
-      * This methods add to the editor an element
+      * This method add to the editor an element
       * @param element
       */
       addElement(element: any) {
@@ -415,7 +431,7 @@ export class EditorComponent implements OnInit {
       }
 
       /**
-      * This methods increase the scale of the editor
+      * This method increase the scale of the editor
       */
       zoomIn(){
         this.xAx+=(0.05);
@@ -423,7 +439,7 @@ export class EditorComponent implements OnInit {
       }
 
       /**
-      * This methods decrease the scale of the editor
+      * This method decrease the scale of the editor
       */
       zoomOut(){
         this.xAx-=(0.05);
@@ -431,7 +447,7 @@ export class EditorComponent implements OnInit {
       }
 
       /**
-      * This methods clone the selected element
+      * This method clone the selected element
       */
       cloneElement() {
         let clone = this.selectedCell.model.clone();
@@ -446,7 +462,7 @@ export class EditorComponent implements OnInit {
       }
 
       /**
-      * This methods copy the selected element
+      * This method copy the selected element
       */
       copyElement(){
         if(this.selectedCell!=null){
@@ -457,7 +473,7 @@ export class EditorComponent implements OnInit {
       }
 
       /**
-      * This methods pastes the element copied earlier
+      * This method pastes the element copied earlier
       */
       pasteElement(){
         if(this.copiedElement!= null){
@@ -472,7 +488,7 @@ export class EditorComponent implements OnInit {
                   nomeClasse.addMetodo(element);
                 });
                 this.mainEditorService.getSelectedClasse().getAttributi().forEach(element => {
-                  nomeClasse.addAttributo(element.getTipo(), element.getNome(), element.getAccesso(), element.getStatic());
+                  nomeClasse.addAttributo(element.getTipo(), element.getNome(), element.getAccesso(), element.isStatic(), element.isFinal());
                 });
                 this.mainEditorService.addClass(nomeClasse, this.copiedElement.model.clone());
               }
@@ -483,7 +499,7 @@ export class EditorComponent implements OnInit {
                   nomeClasse.addMetodo(element);
                 });
                 this.mainEditorService.getSelectedClasse().getAttributi().forEach(element => {
-                  nomeClasse.addAttributo(element.getTipo(), element.getNome(), element.getAccesso(), element.getStatic());
+                  nomeClasse.addAttributo(element.getTipo(), element.getNome(), element.getAccesso(), element.isStatic(), element.isFinal());
                 });
                 this.mainEditorService.addClass(nomeClasse, this.copiedElement.model.clone());
               }
@@ -504,7 +520,7 @@ export class EditorComponent implements OnInit {
             if(this.selectedCell.model.attributes.type=='uml.EndState') this.activityService.addEnd(this.copiedElement.model.clone());
             if(this.selectedCell.model.attributes.type=='erd.Relationship'&& this.selectedCell.model.attributes.attrs.text.text=='Decision') this.activityService.addIfNode(this.copiedElement.model.clone());
             if(this.selectedCell.model.attributes.type=='basic.Rect') this.activityService.addOperation(this.copiedElement.model.clone());
-            if(this.selectedCell.model.attributes.type=='erd.Relationship'&& this.selectedCell.model.attributes.attrs.text.text=='') this.activityService.addEndIfNode(this.copiedElement.model.clone());
+            if(this.selectedCell.model.attributes.type=='erd.Relationship'&& this.selectedCell.model.attributes.attrs.text.text=='') this.activityService.addMergeNode(this.copiedElement.model.clone());
             if(this.flagCut==true)  this.copiedElement= null;
           }
         }
@@ -538,6 +554,12 @@ export class EditorComponent implements OnInit {
       undo(){
         this.fromUndo= true;
         if(this.undoGraph != null){
+          if(this.addedAttribute!=null){
+            this.puntElement= this.selectedCell;
+            this.classMenuService.removeAttributo(this.addedAttribute.getNome());
+            this.noChange= true;
+            this.removedAttribute= this.addedAttribute;
+          }else
           if(this.addedMethod!=null) {
             this.mainEditorService.removeMetodo(this.addedMethod.getNome());
             this.removedMethod= this.addedMethod;
@@ -549,7 +571,6 @@ export class EditorComponent implements OnInit {
             this.classeEliminata= null;
           }
           this.redoGraph= new joint.dia.Graph;
-          this.redoGraph.clear();
           if(this.rMethod==null) this.aMethod= null;
           this.graph.getCells().forEach(element => {
             this.redoGraph.addCell(element.clone());
@@ -581,8 +602,14 @@ export class EditorComponent implements OnInit {
       redo(){
         if(this.redoGraph!=null){
           if(this.changeMethod==false)
+            if(this.removedAttribute!=null){
+              this.noChange= true;
+              this.classMenuService.addAttributo(this.removedAttribute.getNome(),this.removedAttribute.isStatic(), this.removedAttribute.isFinal, this.removedAttribute.getTipo(), this.removedAttribute.getAccesso());
+            }
             if(this.removedMethod!=null) {
             this.noChange= true;
+            this.elementSelection(this.puntElement);
+            this.puntElement= null;
             this.mainEditorService.addMetodo(this.removedMethod.isStatic(), this.removedMethod.isConstructor(), this.removedMethod.getTipoRitorno(), this.removedMethod.getNome(), this.removedMethod.getAccesso(),  this.removedMethod.getListaArgomenti());
           }
           else if(this.aMethod!= null) {
@@ -595,7 +622,7 @@ export class EditorComponent implements OnInit {
           this.actualGraph.getCells().forEach(element => {
             this.undoGraph.addCell(element.clone());
           });
-          if(this.aMethod==null){
+          if(this.aMethod==null&&this.removedAttribute==null){
             this.graph.getCells().forEach(element => {
               this.graph.removeCells(element);
               this.selectedCell= null;
@@ -614,19 +641,18 @@ export class EditorComponent implements OnInit {
           });
         }
         this.removedMethod= null;
+        this.removedAttribute= null;
         this.changeMethod= false;
         this.fromUndo= false;
       }
 
       /**
-      * This method resets the state of the tasks in "Modifica"
-      */
-      resetModifica(){
-        this.actualGraph= null;
-        this.undoGraph= null;
-        this.redoGraph= null;
-        this.copiedElement= null;
+       * This function copies the newly created attribute 
+       */
+      copiaAttr(tipo: string, nome:string, acc: string, stat: boolean, fin: boolean){
+        this.addedAttribute= new Attributo(tipo, nome, acc, stat, fin);
       }
+
       /**
       * This method update the actualGraph and undoGraph
       */
@@ -645,6 +671,15 @@ export class EditorComponent implements OnInit {
         });
         this.flagAdded= false;
         this.flagRemoved= false;
+      }
+      /**
+      * This method resets the state of the tasks in "Modifica"
+      */
+      resetModifica(){
+        this.actualGraph= null;
+        this.undoGraph= null;
+        this.redoGraph= null;
+        this.copiedElement= null;
       }
 
 

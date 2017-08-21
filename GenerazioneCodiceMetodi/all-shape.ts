@@ -69,10 +69,7 @@ export class AllShape{
     if(start && end) {
       start.toCode(this,'');
       console.log(this.code);
-      return this.code;
     }
-    else 
-      return '';
   }
 
 }

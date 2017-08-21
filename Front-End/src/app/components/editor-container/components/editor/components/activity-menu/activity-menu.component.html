@@ -3,7 +3,7 @@
     <span class="glyphicon glyphicon-wrench iconaMirrow" aria-hidden="true"></span>&nbsp;&nbsp;{{this.activityService.getNameMethod()}}
   </div>
   <div class="row changeNome">
-    Modifica nome:
+    Modifica nome metodo:
     <input #changeName id="changeName"
     (keyup.enter)="changeNome(changeName.value)">
     <button class="btn btn-default" (click)="changeNome(changeName.value)">
@@ -11,12 +11,34 @@
     </button>
   </div>
   <div [hidden]="!this.activityService.isOperation()">
-    <div class="container-fluid">
+    <div class="container-fluid" [hidden]="this.activityService.isVarDeclaration()">
       <div class="row changeNome">
         <label>Corpo operazione</label>
         <input #corpo id="changeName"
         (keyup.enter)="modBody(corpo.value)">
         <button class="btn btn-default" (click)="modBody(corpo.value)">
+          <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div [hidden]="!this.activityService.isVarDeclaration()">
+    <div class="container-fluid">
+      <h3>Dichiarazione variabile</h3>
+      <div>
+        <label>Seleziona tipo</label>
+        <select [(ngModel)]="tipoVar">
+          <option *ngFor="let t of types">{{t}}</option>
+        </select>
+      </div>
+      <div class="row changeNome">
+        <label>Nome variabile</label>
+        <input #nomeV id="nameVar" [(ngModel)]="nomeVar"
+        (keyup.enter)="setNomeVar(nomeV.value)"><br />
+        <label>Valore</label>
+        <input #valoreV id="valVar"
+        (keyup.enter)="setNomeVar(nomeV.value)">
+        <button class="btn btn-default" (click)="declareVar(valoreV.value)">
           <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
         </button>
       </div>

@@ -7,16 +7,6 @@ export class Operation extends Shape {
     super(id);
   }
 
-  operationType : string;
-  
-  setOperationType(t: string) {
-    this.operationType = t;
-  }
-
-  getOperationType() {
-    return this.operationType;
-  }
-
   getType() {
     return 'Operation';
   }

@@ -106,7 +106,7 @@ export class Global {
 
   generateAttributes(classe: Classe, attributi) {
     attributi.forEach(att => {
-      classe.addAttributo(att.type,att.name,att.visibility,att.staticAtt);
+      classe.addAttributo(att.type,att.name,att.visibility,att.staticAtt, att.finalAtt);
     });
   }
 

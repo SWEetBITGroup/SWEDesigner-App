@@ -3,18 +3,24 @@ import { Param } from './param';
 export class Attributo extends Param {
     private visibility: string;
     private staticAtt: boolean;
+    private finalAtt: boolean;
 
-    constructor (tipo: string, nome: string, acc: string, sta: boolean) {
+    constructor (tipo: string, nome: string, acc: string, sta: boolean, fin: boolean) {
         super(tipo,nome);
         this.visibility = acc;
         this.staticAtt = sta;
+        this.finalAtt= fin;
     }
 
     /**
      * This method return true if the attribute is static
      */
-    getStatic() {
+    isStatic() {
         return this.staticAtt;
+    }
+
+    isFinal() {
+        return this.finalAtt;
     }
 
     /**
