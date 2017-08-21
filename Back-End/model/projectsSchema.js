@@ -19,9 +19,9 @@ var proget= new Schema({
 		required: true
 	},
 	project:{
-        $type: Schema.Types.Mixed,
+        $type: String,
 		require: true,
-		get: function(project) {
+		/*get: function(project) {
 			try{
 				return JSON.parse(project);
 			}catch(e){
@@ -30,7 +30,7 @@ var proget= new Schema({
 		},
 		set: function(project){
 			return JSON.stringify(project);
-		}
+		}*/
 	}
 }, {typeKey: '$type'});
 

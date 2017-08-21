@@ -35,8 +35,7 @@ export class ProjListComponent implements OnInit {
 
   openProj(e){
     this.accountService.loadProj(this.accountService.username, e, (project)=>{
-      //console.log("openProj" + project);
-      //this.mainEditorService.loadProject(project);
+      this.mainEditorService.loadProject(project);
     })
   }
 

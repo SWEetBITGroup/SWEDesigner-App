@@ -71,9 +71,6 @@ export class Global {
   }
 
   import(proj: any) {
-    console.log("Nome progetto: "+ proj.nome_progetto);
-    console.log("progetto: " + proj.project);
-    console.log("grafico: " + proj.project.graph);
     this.setName(proj.nome_progetto);
     this.setDiagramma(JSON.stringify(proj.project.graph));
     this.generateClassArray(proj.project.classi);

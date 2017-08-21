@@ -262,10 +262,7 @@ export class AccountService {
       responseType: ResponseContentType.Json
     })
     .subscribe((data)=>{
-      let response = JSON.parse(data[0]);
-      console.log("PROVA" + response);
-      //console.log("data" + data);
-      cb(response);
+      cb(data);
     })
   }
   /**
