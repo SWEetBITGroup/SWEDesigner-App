@@ -65,6 +65,22 @@ export class MenuService {
     this.selectedGraphService.next('elimina');
   }
 
+  saveData(proj: JSON, cb: Function){
+    this.http.post('/insProject', proj, {
+      method: RequestMethod.Post,
+      responseType: ResponseContentType.Text
+    })
+    .subscribe((data)=>{
+      let response = data.text();
+      if(response == "true"){
+        cb(false);
+      }
+      else{
+        cb(true);
+      }
+    })
+  }
+
   encrypt(proj: JSON) {
     // let headers = new Headers({ 'Content-Type': 'application/json' });
     // let options = new RequestOptions({ headers: headers });
@@ -144,21 +160,3 @@ export class MenuService {
     })
   }
 }
-
-
- /*code() {
-    let var1 = this.mainEditorService.varCode;
-    let code = 'import javafx.application.Application; import javafx.event.ActionEvent; import javafx.event.EventHandler; import javafx.scene.Scene ; import javafx.scene.control.Button ; import javafx.scene.layout.StackPane ; import javafx.stage.Stage ; class Hello{ private String text ; public int i ; protected String prova ; public static void main(String Args[]) { for ( int '+var1[0]+' = '+var1[1]+' ; '+var1[0]+' < '+var1[2]+' ; '+var1[0]+'++ ) { System.out.println( '+var1[0]+' ) ; } } }'
-    let blob = new Blob([code], {type: 'text/plain'});
-    var filename = 'hello.java';
-    FileSaver.saveAs(blob,filename);
-    let proj = this.toCode('10');
-    this.http.post('/parsing',proj,{
-              method: RequestMethod.Post,
-              responseType: ResponseContentType.Blob,
-              headers: new Headers({'Content-Type': 'application/json; charset=UTF-8'})})
-             .subscribe((data) => {
-               console.log('code generated')
-              },
-              error => {console.log(JSON.stringify(error));});
-  }*/

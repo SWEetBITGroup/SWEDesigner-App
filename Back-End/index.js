@@ -353,17 +353,17 @@ app.listen(port, ()=>{
       })
     //Projects' Query
     app.post("/insProject", function(req, res){
-      var name = req.body.nome_progetto;
+      var name = req.body.nome_progetto
       var usr = req.body.username;
       var proj = req.body.project;
       mongooseRequest.ins_proj(name, usr, proj, function(err, x){
         if(err){
           console.log("problema con l'inserimento di un progetto");
-          res.send("problema con l'inserimento di un progetto");
+          res.send(false);
         }
         else{
           console.log("progetto inserito correttamente: "+x);
-          res.send("progetto inserito correttamente: "+x);
+          res.send(true);
         }
       })
     })
@@ -390,7 +390,7 @@ app.listen(port, ()=>{
         }
         else{
           console.log("progetto caricato: "+x);
-          res.send(x);
+          res.json(x);
         }
       })
     })

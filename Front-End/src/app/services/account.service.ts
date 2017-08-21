@@ -262,7 +262,9 @@ export class AccountService {
     })
     .subscribe((data)=>{
       let response = data.json();
-      cb(response);
+      console.log(JSON.parse(response));
+      //console.log("data" + data);
+      cb(JSON.parse(response));
     })
   }
   /**

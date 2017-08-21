@@ -20,7 +20,17 @@ var proget= new Schema({
 	},
 	project:{
         $type: Schema.Types.Mixed,
-        require: true
+		require: true,
+		get: function(project) {
+			try{
+				return JSON.parse(project);
+			}catch(e){
+				return project;
+			}
+		},
+		set: function(project){
+			return JSON.stringify(project);
+		}
 	}
 }, {typeKey: '$type'});
 
