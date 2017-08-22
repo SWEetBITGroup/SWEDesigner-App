@@ -251,6 +251,12 @@ export class AccountService {
       }
     })
   }
+  /**
+   * This function load a single project from user's project list
+   * @param username 
+   * @param nameProj 
+   * @param cb 
+   */
   loadProj(username: String, nameProj: String, cb: Function){
     let userData = {
       "username": username,

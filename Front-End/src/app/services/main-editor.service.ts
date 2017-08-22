@@ -258,6 +258,10 @@ export class MainEditorService {
     this.editorComp.replaceDiagram(JSON.parse(newProj.getDiagramma()));
   }
 
+  /**
+   * This function load a project from database into editor.
+   * @param project 
+   */
   loadProject(project){ 
     console.log(project._body);
     let proj = project._body;
