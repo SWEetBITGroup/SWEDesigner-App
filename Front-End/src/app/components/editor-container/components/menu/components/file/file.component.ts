@@ -18,6 +18,9 @@ export class FileComponent implements OnInit {
   ngOnInit() {
   }
 
+  /**
+   * This function save a project into database
+   */
   salva(){
     this.mainEditorService.retriveGraph();
     let fileJSON = JSON.parse(this.mainEditorService.getProject().toJSON(this.accountService.username));

@@ -13,6 +13,9 @@ export class ProjListComponent implements OnInit {
     this.initProj();
   }
 
+  /**
+   * This function initialize the user's project list
+   */
   initProj(){
     this.arr = [];
     this.accountService.loadProjectList(this.accountService.username, (projects)=>{
@@ -21,6 +24,11 @@ export class ProjListComponent implements OnInit {
       });
     })
   }
+
+  /**
+   * This function remove an existing project
+   * @param e 
+   */
   removeProj(e){
     this.accountService.deleteProj(this.accountService.username, e, (err)=>{
       if(err){
@@ -33,6 +41,10 @@ export class ProjListComponent implements OnInit {
     })
   }
 
+  /**
+   * This function open an existing project
+   * @param e 
+   */
   openProj(e){
     this.accountService.loadProj(this.accountService.username, e, (project)=>{
       this.mainEditorService.loadProject(project);

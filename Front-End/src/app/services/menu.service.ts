@@ -65,6 +65,11 @@ export class MenuService {
     this.selectedGraphService.next('elimina');
   }
 
+  /**
+   * This function request to server a save data of current project into database
+   * @param proj 
+   * @param cb 
+   */
   saveData(proj: JSON, cb: Function){
     this.http.post('/insProject', proj, {
       method: RequestMethod.Post,
