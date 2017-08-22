@@ -29,6 +29,7 @@ export class Metodo {
     diagramma: JSON;
 
     shapeList = new AllShape();
+    mapVarVisibili = new Map<string, string>();
 
     costruttore: boolean;
     statico: boolean;
@@ -139,6 +140,10 @@ export class Metodo {
 
     getShapeList() {
         return this.shapeList;
+    }
+
+    getMapVars() {
+        return this.mapVarVisibili;
     }
 
     isConstructor() {
