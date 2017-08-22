@@ -19,173 +19,197 @@ import * as joint from 'jointjs';
 @Injectable()
 export class ActivityService {
 
-  private shapeList: AllShape;
+	private shapeList: AllShape;
 
-  private selectedShape: Shape;
+	private selectedShape: Shape;
 
-  private selectedMethod: Metodo;
+	private selectedMethod: Metodo;
 
-  private selectedElement: any;
+	private selectedElement: any;
 
-  private startID: string;
+	private startID: string;
 
-  private endID: string;
+	private endID: string;
 
-  constructor(private mainEditorService: MainEditorService) { }
+	private varibles: Map<string, string>;
+	private vars: string[];
 
-  getSelectedShapeId() {
-    return this.selectedShape.getId();
-  }
+	constructor(private mainEditorService: MainEditorService) { }
 
-  getShapeList() {
-    return this.shapeList.getAllShape();
-  }
+	getSelectedShapeId() {
+		return this.selectedShape.getId();
+	}
 
-  addIfNode(graphElement: any) {
-    this.mainEditorService.addShape(graphElement);
-    this.shapeList.addShape(new IfNode(graphElement.id));
-  }
+	getShapeList() {
+		return this.shapeList.getAllShape();
+	}
 
-  addOperation(graphElement: any) {
-    this.mainEditorService.addShape(graphElement);
-    this.shapeList.addShape(new Operation(graphElement.id));
-  }
+	addIfNode(graphElement: any) {
+		this.mainEditorService.addShape(graphElement);
+		this.shapeList.addShape(new IfNode(graphElement.id));
+	}
 
-  addMergeNode(graphElement: any) {
-    this.mainEditorService.addShape(graphElement);
-    this.shapeList.addShape(new MergeNode(graphElement.id));
-  }
+	addOperation(graphElement: any) {
+		this.mainEditorService.addShape(graphElement);
+		this.shapeList.addShape(new Operation(graphElement.id));
+	}
 
-  addStart(graphElement: any) {
-    this.startID = graphElement.id;
-    this.mainEditorService.addShape(graphElement);
-    this.shapeList.addShape(new Start(graphElement.id));
-  }
+	addMergeNode(graphElement: any) {
+		this.mainEditorService.addShape(graphElement);
+		this.shapeList.addShape(new MergeNode(graphElement.id));
+	}
 
-  addEnd(graphElement: any) {
-    this.endID = graphElement.id;
-    this.mainEditorService.addShape(graphElement);
-    this.shapeList.addShape(new End(graphElement.id));
-  }
+	addStart(graphElement: any) {
+		this.startID = graphElement.id;
+		this.mainEditorService.addShape(graphElement);
+		this.shapeList.addShape(new Start(graphElement.id));
+	}
 
-  setSelectedMethod(metodo: Metodo) {
-    this.selectedMethod = metodo;
-    this.shapeList = metodo.getShapeList();
-  }
+	addEnd(graphElement: any) {
+		this.endID = graphElement.id;
+		this.mainEditorService.addShape(graphElement);
+		this.shapeList.addShape(new End(graphElement.id));
+	}
 
-  setSelectedElement(element: any) {
-    this.selectedElement = element;
-    this.selectShape(element.id);
-  }
+	addLocalVar(id: string, name: string) {
+		this.varibles.set(id, name);
+		this.vars.push(name);
+	}
 
-  selectShape(id: string) {
-    this.selectedShape = this.shapeList.getElementById(id);
-    if (!this.selectedShape)
-      console.log('Shape mancante'); // TODO: spend a moment to code it as a real warning
-  }
+	setSelectedMethod(metodo: Metodo) {
+		this.selectedMethod = metodo;
+		this.shapeList = metodo.getShapeList();
+		this.varibles = metodo.getMapVars();
+		this.vars = new Array<string>();
+		this.varibles.forEach(val => {
+			this.vars.push(val);
+		});
+	}
 
-  start() {
-    let x = false;
-    if (this.startID) {
-      x = true;
-    }
-    return x;
-  }
+	setSelectedElement(element: any) {
+		this.selectedElement = element;
+		this.selectShape(element.id);
+	}
 
-  end() {
-    if (this.endID) {
-      return true;
-    }
-    return false;
-  }
+	selectShape(id: string) {
+		this.selectedShape = this.shapeList.getElementById(id);
+		if (!this.selectedShape)
+			console.log('Shape mancante'); // TODO: spend a moment to code it as a real warning
+	}
 
-  deselectElement() {
-    this.selectedElement = null;
-    this.selectedShape = null;
-  }
+	start() {
+		let x = false;
+		if (this.startID) {
+			x = true;
+		}
+		return x;
+	}
 
-  addBody(body: string) {
-    this.selectedShape.addBody(body);
-  }
+	end() {
+		if (this.endID) {
+			return true;
+		}
+		return false;
+	}
 
-  getSelectedMethod() {
-    return this.selectedMethod;
-  }
-  getSelectedElement() {
-    return this.selectedElement;
-  }
-  getNameMethod() {
-    if (this.selectedMethod)
-      return this.selectedMethod.getNome();
-  }
-  changeName(name: string) {
-    this.selectedMethod.changeNome(name);
-  }
+	deselectElement() {
+		this.selectedElement = null;
+		this.selectedShape = null;
+	}
 
-  connect(elementCon) {
-    this.mainEditorService.addConnettore(elementCon);
-  }
+	addBody(body: string) {
+		this.selectedShape.addBody(body);
+	}
 
-  setConnector(ids: string[]) {
-    let first = this.shapeList.getElementById(ids[0]);
-    let last = this.shapeList.getElementById(ids[1]);
-    if (first.getSucc() && first.getType() == 'IfNode')
-      (<IfNode>first).setSuccElse(ids[1]);
-    else
-      first.setSucc(ids[1]);
-    last.setIfPassed(first.getIfPassed());
-    if (first.getType() == 'ifNode') {
-      last.getIfPassed().push(ids[0]);
-    }
-    console.log(last);
-  }
+	getSelectedMethod() {
+		return this.selectedMethod;
+	}
+	getSelectedElement() {
+		return this.selectedElement;
+	}
+	getNameMethod() {
+		if (this.selectedMethod)
+			return this.selectedMethod.getNome();
+	}
+	getVarVis() {
+		return this.vars;
+	}
 
-  modBody(text: string) {
-    this.selectedElement.attr('text/text', text);
-    this.selectedShape.setBody(text);
-  }
+	changeName(name: string) {
+		this.selectedMethod.changeNome(name);
+	}
 
-  generaCodice() {
-    return this.shapeList.toCode();
-  }
+	connect(elementCon) {
+		this.mainEditorService.addConnettore(elementCon);
+	}
 
-  isDecision() {
-    if (this.selectedShape) {
-      if (this.selectedShape.getType() == 'IfNode')
-        return true;
-    }
-    return false;
-  }
-  isOperation() {
-    if (this.selectedShape) {
-      if (this.selectedShape.getType() == 'Operation') {
-        return true;
-      }
-    }
-    return false;
-  }
+	setConnector(ids: string[]) {
+		let first = this.shapeList.getElementById(ids[0]);
+		let last = this.shapeList.getElementById(ids[1]);
+		if (first.getSucc() && first.getType() == 'IfNode')
+			(<IfNode>first).setSuccElse(ids[1]);
+		else
+			first.setSucc(ids[1]);
+		last.setIfPassed(first.getIfPassed());
+		if (first.getType() == 'ifNode') {
+			last.getIfPassed().push(ids[0]);
+		}
+		console.log(last);
+	}
 
-  isVarDeclaration() {
-    if (this.selectedShape) {
-      if (this.selectedShape.getType() == 'Operation' &&
-        (<Operation>this.selectedShape).getOperationType() == 'VarDecl') {
-        return true;
-      }
-    }
-  }
+	modBody(text: string) {
+		this.selectedElement.attr('text/text', text);
+		this.selectedShape.setBody(text);
+	}
 
-  setDecisione(dec: string, code: string) {
-    this.selectedElement.attr('text/text', dec);
-  }
+	generaCodice() {
+		return this.shapeList.toCode();
+	}
 
-  setOperationType(opType: string, id: string) {
-    let op = this.shapeList.getElementById(id);
-    if (op.getType() == 'Operation')
-      (<Operation>op).setOperationType(opType);
-  }
+	isDecision() {
+		if (this.selectedShape) {
+			if (this.selectedShape.getType() == 'IfNode')
+				return true;
+		}
+		return false;
+	}
+	isOperation() {
+		if (this.selectedShape) {
+			if (this.selectedShape.getType() == 'Operation') {
+				return true;
+			}
+		}
+		return false;
+	}
 
-  modVariable(code: string) {
-    if (code)
-      this.selectedShape.addBody(code);
-  }
+	isVarDeclaration() {
+		if (this.selectedShape) {
+			if (this.selectedShape.getType() == 'Operation' &&
+				(<Operation>this.selectedShape).getOperationType() == 'VarDecl') {
+				return true;
+			}
+		}
+	}
+
+	setDecisione(dec: string, code: string) {
+		this.selectedElement.attr('text/text', dec);
+	}
+
+	setOperationType(opType: string, id: string) {
+		let op = this.shapeList.getElementById(id);
+		if (op.getType() == 'Operation')
+			(<Operation>op).setOperationType(opType);
+	}
+
+	modVariable(code: string) {
+		if (code)
+			this.selectedShape.addBody(code);
+	}
+
+	deleteVar(id: string) {
+		this.shapeList.removeShape(id);
+		if (this.varibles.delete(id)) {
+			console.log('variabile eliminata correttamente');
+		}
+	}
 }
