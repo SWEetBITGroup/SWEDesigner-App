@@ -61,10 +61,12 @@ export class AllShape {
   }
 
   removeShape(id: string) {
+		let ind;
     this.allShap.forEach((e,index) => {
-      if (e.getId() == id)
-        this.allShap.splice(index,1);
-    });
+			if (e.getId() == id)
+				ind = index;
+		});
+		this.allShap.splice(ind,1);		
     this.allShap.forEach(el => {
       if(el.getSucc() == id) {
 				el.setSucc('');

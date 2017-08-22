@@ -36,7 +36,7 @@ export class ActivityMenuComponent {
 		private activityService: ActivityService) { }
 
 	enterClassMode() {
-		this.mainEditorService.enterClassMode(this.activityService.getSelectedMethod());
+		this.activityService.salvaMetodo();
 	}
 
 	modBody(text: string) {
@@ -81,11 +81,12 @@ export class ActivityMenuComponent {
 			let re = new RegExp('^[0-9]+| +');
 			if (re.test(this.nomeVar))
 				alert('Il nome della variabile non può iniziare con un numero o contenere spazi al suo interno');
-			else
+			else {
 				if (this.valVar)
 					var code = this.tipoVar + ' ' + this.nomeVar + ' = ' + this.valVar;
 				else
 					var code = this.tipoVar + ' ' + this.nomeVar;
+			}
 		}
 		else
 			alert('Tipo o/e nome della variabile assente/i');
@@ -96,5 +97,10 @@ export class ActivityMenuComponent {
 		this.nomeVar = '';
 	}
 
+	deleteVar(id: string) {
+		if (id) {
+			this.activityService.deleteVar(id);
+		}
+	}
 
 }
