@@ -208,8 +208,20 @@ export class ActivityService {
 
 	deleteVar(id: string) {
 		this.shapeList.removeShape(id);
+		let nomeVar = this.varibles.get(id);
+		let ind;
+    this.vars.forEach((e,index) => {
+			if (e == nomeVar)
+				ind = index;
+		});
+		this.vars.splice(ind,1);
 		if (this.varibles.delete(id)) {
 			console.log('variabile eliminata correttamente');
 		}
+	}
+
+	salvaMetodo() {
+		this.selectedMethod.setVars(this.varibles);
+		this.mainEditorService.enterClassMode(this.selectedMethod);
 	}
 }

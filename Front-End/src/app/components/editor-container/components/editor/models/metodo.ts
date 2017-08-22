@@ -3,9 +3,9 @@ import { AllShape } from './all-shape'
 
 import * as joint from 'jointjs';
 
-  /**
-   * it define the class's method
-   */
+/**
+ * it define the class's method
+ */
 export class Metodo {
     /**
      * it define the method's name
@@ -42,7 +42,7 @@ export class Metodo {
      * @param tipo
      * @param listaArg
      */
-    constructor(stat: boolean, costr: boolean,nome: string, acc: string, tipo: string, listaArg?: Param[]) {
+    constructor(stat: boolean, costr: boolean, nome: string, acc: string, tipo: string, listaArg?: Param[]) {
         this.statico = stat;
         this.costruttore = costr;
         this.nome = nome;
@@ -50,7 +50,7 @@ export class Metodo {
         this.tipoRitorno = tipo;
         this.diagramma = (new joint.dia.Graph).toJSON();
         if (listaArg)
-          this.listaArgomenti = listaArg;
+            this.listaArgomenti = listaArg;
     }
 
     /**
@@ -90,7 +90,7 @@ export class Metodo {
      * @param arg
      */
     addArgomento(arg: Param) {
-        if(!this.listaArgomenti)
+        if (!this.listaArgomenti)
             this.listaArgomenti = new Array<Param>();
         this.listaArgomenti.push(arg);
     }
@@ -154,19 +154,22 @@ export class Metodo {
     }
     staticString() {
         let sta = '';
-        if(this.statico){
+        if (this.statico) {
             sta = 'static';
         }
         return sta;
     }
+    setVars(vars: Map<string, string>) {
+        this.mapVarVisibili = vars;
+    }
 
     paramToString() {
         let params = this.listaArgomenti;
-        if(this.listaArgomenti) {
+        if (this.listaArgomenti) {
             var paramString: string = '';
-            for(let i = 0; i<params.length; i++){
-                paramString += params[i].getNome()+' : '+params[i].getTipo();
-                if(i!=params.length-1)
+            for (let i = 0; i < params.length; i++) {
+                paramString += params[i].getNome() + ' : ' + params[i].getTipo();
+                if (i != params.length - 1)
                     paramString += ', ';
             }
         }
