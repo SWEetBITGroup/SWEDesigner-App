@@ -75,7 +75,7 @@ export class AccountService {
     })
     .subscribe((data)=>{
       let response = data.text();
-      console.log(response);
+      alert("Password: " + response);
     })
   }
   /**
@@ -86,7 +86,6 @@ export class AccountService {
   * @param cb
   */
   checkLogin(email: String, pass: String, cb: Function){
-    var err = false;
     let usr = {
       "mail" : email,
       "pass" : pass
@@ -103,10 +102,10 @@ export class AccountService {
         this.setUserLoggedIn();
         this.setUsername(response.username);
         this.makeCokie();
-        cb(err);
+        cb(false);
       }
       else{
-        console.log("errore nel login");
+        cb(true);
       }
     })
   }

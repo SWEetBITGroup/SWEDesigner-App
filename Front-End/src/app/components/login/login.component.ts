@@ -55,6 +55,9 @@ export class LoginComponent {
           this.router.navigate(['/editor']);
         }
       }
+      else{
+        alert("Problema con le credenziali!!")
+      }
     });
   }
 
