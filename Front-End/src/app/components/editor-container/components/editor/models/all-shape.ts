@@ -1,4 +1,5 @@
 import { Shape } from "./shape";
+import { IfNode } from "./if-node"
 
 
 export class AllShape {
@@ -64,6 +65,14 @@ export class AllShape {
       if (e.getId() == id)
         this.allShap.splice(index,1);
     });
+    this.allShap.forEach(el => {
+      if(el.getSucc() == id) {
+				el.setSucc('');
+			}
+			if(el.getType() == 'if' && (<IfNode>el).getSuccElse() == id) {
+				(<IfNode>el).setSuccElse('');
+			}
+		});
   }
 
   toCode() {

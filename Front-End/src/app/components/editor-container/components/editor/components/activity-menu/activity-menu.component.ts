@@ -18,16 +18,12 @@ export class ActivityMenuComponent {
 	types = ['short', 'int', 'long', 'float', 'double', 'boolean', 'char', 'String'];
 
 
-	// Variabili visibili
-	vars = new Array<string>();
-
 	// Valori dichiarazione variabile
 	nomeVar: string = '';
 	tipoVar: string = '';
 	valVar: string = '';
 
 	// Valori if
-	variables = new Map<string, string>();
 	va: string = '';
 
 	// Valori for & while
@@ -94,8 +90,7 @@ export class ActivityMenuComponent {
 		else
 			alert('Tipo o/e nome della variabile assente/i');
 		this.activityService.modBody(code);
-		this.variables.set(this.activityService.getSelectedShapeId(), this.nomeVar);
-		this.vars.push(this.nomeVar);
+		this.activityService.addLocalVar(this.activityService.getSelectedShapeId(), this.nomeVar);
 		this.tipoVar = '';
 		this.valVar = '';
 		this.nomeVar = '';

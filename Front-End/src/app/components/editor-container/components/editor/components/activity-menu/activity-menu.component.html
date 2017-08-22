@@ -83,7 +83,7 @@
 			<div [hidden]="dec != 'if'" class="row changeNome">
 				<label>Variabile</label>
 				<select [(ngModel)]="va">
-          <option *ngFor="let v of vars" [value]="va">{{ v }}</option>
+          <option *ngFor="let v of this.activityService.getVarVis()" [value]="va">{{ v }}</option>
         </select><br />
 				<label>Operatore guardia</label>
 				<select [(ngModel)]="op">
