@@ -51,23 +51,6 @@
     cb(false);
   }
 
-  //baro demo
-  /*var myMU = {
-      "name": "Persona",
-      "private" : true,
-      "attrP": [
-          {"typeP": "string", "varP": "nome"},
-          {"typeP": "string", "varP": "cognome"},
-          {"typeP": "int", "varP": "eta"}
-           ],
-      "public" : true,
-      "methodsPU": [
-        {"main": "true", "corpoM": null}
-      ]
-    
-  }*/
-
-
 //Init Server
 const server = require('./serverLoader'); // function loading server
 

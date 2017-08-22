@@ -226,6 +226,16 @@ forgot_password: function(mail, cb){
     })
 },
 //AGGIORNAMENTO
+/**
+ * @function update_proj
+ * @description
+ * This  function update a project's body
+ * @param {string} projName name of project
+ * @param {string} usr username of user
+ * @param {JSON} proj json object that represent the project's body
+ * @param {function} cb Callback
+ * @return {void}
+ */
 update_proj: function(projName, usr, proj, cb){
     proget.update({ 'nome_progetto': projName, 'username': usr }, { 'progetto':proj}, function(err, nuovo){
         if(err){
@@ -244,6 +254,16 @@ update_proj: function(projName, usr, proj, cb){
         }
     })
 },
+/**
+ * @function update_nameProj
+ * @description
+ * This  function update a project's name
+ * @param {string} projName name of project
+ * @param {string} usr username of user
+ * @param {string} newName string of new project's name
+ * @param {function} cb Callback
+ * @return {void}
+ */
 update_nameProj: function(projName, usr, newName, cb){
     proget.update({'nome_progetto': projName, 'username': usr}, {'nome_progetto': newName}, function(err, nuovo){
         if(err){
@@ -262,6 +282,15 @@ update_nameProj: function(projName, usr, newName, cb){
         }
     })
 },
+/**
+ * @function update_username
+ * @description
+ * This  function update a user's username and, on cascade, update the user's project list
+ * @param {string} username old username
+ * @param {string} newUsername new username
+ * @param {function} cb Callback
+ * @return {void}
+ */
 update_username: function(username, newUsername, cb){
     user.update({'username': username}, {'username': newUsername}, (err, nuovo)=>{
         if(err){
@@ -301,6 +330,15 @@ update_username: function(username, newUsername, cb){
         }
     })
 },
+/**
+ * @function update_password
+ * @description
+ * This  function update a user's password
+ * @param {string} username user's username
+ * @param {string} password new password
+ * @param {function} cb Callback
+ * @return {void}
+ */
 update_pwd: function(username, password, cb){
     user.update({'username': username}, {'pass': password}, function(err, nuovo){
         if(err){
@@ -319,6 +357,15 @@ update_pwd: function(username, password, cb){
         }
     })
 },
+/**
+ * @function update_mail
+ * @description
+ * This  function update a user's mail
+ * @param {string} username user's username
+ * @param {string} mail new mail
+ * @param {function} cb Callback
+ * @return {void}
+ */
 update_mail: function(username, mail, cb){
     user.update({'username': username}, {'email': mail}, function(err, nuovo){
         if(err){
@@ -338,6 +385,15 @@ update_mail: function(username, mail, cb){
     })
 },
 //ELIMINAZIONI
+/**
+ * @function delete_proj
+ * @description
+ * This  function delete a project
+ * @param {string} username user's username
+ * @param {string} projName project's name
+ * @param {function} cb Callback
+ * @return {void}
+ */
 delete_proj: function(username, projName, cb){
     proget.findOneAndRemove({'nome_progetto': projName, 'username': username}, function(err, deleted){
         if(err){
@@ -350,6 +406,14 @@ delete_proj: function(username, projName, cb){
         }
     })
 },
+/**
+ * @function delete_usr
+ * @description
+ * This  function delete a user
+ * @param {string} username user's username
+ * @param {function} cb Callback
+ * @return {void}
+ */
 delete_usr: function(username, cb){
     user.findOneAndRemove({'username': username}, function(err, progetti){
         proget.find({'username': username}).remove(function(err, progetti){
