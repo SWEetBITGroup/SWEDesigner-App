@@ -1,8 +1,8 @@
 <div class="container">
-  <button class="btn btn-warning" data-toggle="collapse" data-target="#aggiungiAttributo">
+  <button class="btn btn-warning" [disabled]="this.classMenuService.mainEditorService.selectedClasse.isInterface()" data-toggle="collapse" data-target="#aggiungiAttributo">
     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> &nbsp; Aggiungi Attributo
   </button>
-  <div id="aggiungiAttributo" class="collapse">
+  <div id="aggiungiAttributo"  class="collapse">
     <div>
       <div class="checkboxContainer">
         <input id="staticAtt" type="checkbox" (change)='justOneCheckbox(staticAtt.id)' #staticAtt/>

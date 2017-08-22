@@ -10,7 +10,7 @@
                 <button class="btn btn-warning" (click)="removeMetodo(met.nome)">
                    <span class="glyphicon glyphicon-trash" aria-hidden="true" title="Rimuovi"></span>
                 </button>
-                <button class="btn btn-warning" (click)="modifyMetodo(met.nome)" title="Modifica">
+                <button class="btn btn-warning" [disabled]="this.classMenuService.mainEditorService.selectedClasse.isInterface()" (click)="modifyMetodo(met.nome)" title="Modifica">
                   <span class="glyphicon glyphicon-pencil" aria-hidden="true" title="Modifica"></span>
                 </button>
               </span>

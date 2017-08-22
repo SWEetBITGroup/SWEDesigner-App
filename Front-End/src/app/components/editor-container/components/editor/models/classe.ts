@@ -177,6 +177,10 @@ export class Classe {
         return this.classePadre;
     }
 
+    isInterface(){
+        return false;
+    }
+
     /**
      * Override of the toJSON function
      */

@@ -6,12 +6,12 @@
     <div>
       <!-- checkbox -->
       <div class="checkboxContainer">
-        <input id="staticMet" type="checkbox" (change)='justOneCheckbox(staticMet.id)' #staticMet/>
-        <label for="staticMet"> Static </label>
+        <input id="staticMet" [hidden]="this.classMenuService.mainEditorService.selectedClasse.isInterface()" type="checkbox" (change)='justOneCheckbox(staticMet.id)' #staticMet/>
+        <label for="staticMet" [hidden]="this.classMenuService.mainEditorService.selectedClasse.isInterface()"> Static </label>
       </div>
       <div class="checkboxContainer">
-        <input id="constructor" type="checkbox" (change)='justOneCheckbox(constructor.id)' #constructor [(ngModel)]="costruttore"/>
-        <label for="constructor"> Costruttore </label>
+        <input id="constructor" [hidden]="this.classMenuService.mainEditorService.selectedClasse.isInterface()" type="checkbox" (change)='justOneCheckbox(constructor.id)' #constructor [(ngModel)]="costruttore"/>
+        <label for="constructor" [hidden]="this.classMenuService.mainEditorService.selectedClasse.isInterface()"> Costruttore </label>
       </div>
     </div>
     <!-- visibilità -->
