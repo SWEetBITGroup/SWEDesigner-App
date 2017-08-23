@@ -4,24 +4,26 @@
     <span class="caret"></span>
   </button>
   <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
-    <li><a id="save" (click)="apriPopup()">Salva</a></li>
-    <li><a (click)="esporta()">Esporta</a></li>
+    <li><a id="save" (click)="openPopup()">Salva</a></li>
+    <li><a (click)="export()">Esporta</a></li>
     <li>
-      <input id="upload" type="file" class="custom-file-input" (change)="importa($event)" placeholder="Upload file" accept=".json">
+      <input id="upload" type="file" class="custom-file-input" (change)="import($event)" placeholder="Upload file" accept=".json">
       <a onclick="$('input[id=upload]').click();">Importa progetto </a>
     </li>
-    <li><a href="#" (click)="genera()" >Genera codice</a></li>
+    <li><a href="#" (click)="generate()" >Genera codice</a></li>
     <!-- <li><a href="#" >Salva template</a></li> -->
     <li><a href="#" >Chiudi</a></li>
   </ul>
-
 </div>
-<div id="popup" class="card" style="width: 20rem;">
+
+<div id="popup">
+  <div id="blob" class="card">
     <div class="card-body">
       <h4 class="card-title">Nome Progetto:</h4>
-      <p class="card-text"><input #projName type="text" [value]="nome_progetto"/></p>
-      <button type="submit" (click)="this.salva(projName.value)">Salva</button>
-      <button type="submit" (click)="this.chiudiPopup()">Annulla</button>
+      <p class="card-text"><input #projName type="text" [value]="nome_progetto" /></p>
+      <button type="button" class="btn"(click)="this.save(projName.value)">Salva</button>
+      <button type="button" class="btn"(click)="this.closePopup()">Annulla</button>
     </div>
   </div>
+</div>
 

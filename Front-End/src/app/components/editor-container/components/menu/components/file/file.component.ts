@@ -23,12 +23,12 @@ export class FileComponent implements OnInit {
     /**
     * This function save a project into database
     */
-    salva(projName: string){
-      this.nome_progetto = projName;
+    save(projName: string){
       this.mainEditorService.retriveGraph();
       let fileJSON = JSON.parse(this.mainEditorService.getProject().toJSON(this.accountService.username, projName));
       fileJSON.project = JSON.stringify(fileJSON.project);
-      console.log(fileJSON);
+      // console.log(fileJSON);
+      this.nome_progetto = projName;
       this.menuService.saveData(fileJSON, function(err){
         if(err){
           alert("Progetto non salvato");
@@ -40,25 +40,25 @@ export class FileComponent implements OnInit {
       });
     }
 
-    esporta() {
+    export() {
       this.mainEditorService.retriveGraph();
       //console.log("progetto " + (this.mainEditorService.getProject().toJSON(this.accountService.username)));
       this.menuService.encrypt(JSON.parse(this.mainEditorService.getProject().toJSON(this.accountService.username, this.nome_progetto)));
     }
 
-    importa(event) {
+    import(event) {
       this.menuService.import(event);
     }
 
-    genera() {
+    generate() {
       this.menuService.code();
     }
 
     // JQUERY Function
-    apriPopup() {
+    openPopup() {
       $('#popup').show();
     }
-    chiudiPopup() {
+    closePopup() {
       $('#popup').hide();
     }
   }
