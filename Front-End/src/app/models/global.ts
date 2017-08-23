@@ -110,7 +110,7 @@ export class Global {
   }
 
   // I campi devono ritornare come string
-  toJSON(usr: String, projName?: string){
+  toJSON(usr: String, projName: string){
     if (projName) {
       this.nome_progetto = projName;
     }
