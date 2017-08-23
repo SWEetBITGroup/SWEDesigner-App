@@ -26,17 +26,11 @@ li {
   border: 1px solid darkgoldenrod;
 }
 
-/* li:hover {
-  background-color: #FFBF66;
-  color: whitesmoke;
-} */
-
-button .btnLista {
-  background-color: #C0C0C0;
-}
-
-button .btnLista:hover {
-  background-color: dimgray;
+.btnLista {
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  margin-left: 5px;
 }
 
 .checkboxContainer {
@@ -68,13 +62,6 @@ input[type="checkbox"]:checked + label:before {
   content: "\2713";
   text-align: center;
   cursor: pointer;
-}
-
-li button {
-  width: 20px;
-  height: 20px;
-  padding: 0;
-  margin-left: 5px;
 }
 
 .text {

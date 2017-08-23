@@ -39,7 +39,7 @@ export class ToolbarComponent implements OnInit {
         let nomeClasse = 'Classe#' + this.classCouter++;
         let uml = joint.shapes.uml;
         let classe = new uml.Class({
-            position: { x: 300, y: 300 },
+            position: { x: 100, y: 300 },
             size: { width: 300, height: 100 },
             name: [nomeClasse],
             attributes: [''],
@@ -82,7 +82,7 @@ export class ToolbarComponent implements OnInit {
         let nomeInterf = 'Interfaccia#' + this.interCounter++;
         let uml = joint.shapes.uml;
         let interfaccia = new uml.Interface({
-            position: { x: 50, y: 30 },
+            position: { x: 100, y: 30 },
             size: { width: 300, height: 100 },
             name: [nomeInterf],
             attributes: [''],
@@ -366,5 +366,5 @@ export class ToolbarComponent implements OnInit {
         this.activityService.addOperation(rettVar);
         this.activityService.setOperationType('VarDecl', rettVar.id);
     }
-    
+
 }
