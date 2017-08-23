@@ -4,10 +4,22 @@
   padding: 0;
   padding-top: 10px;
   padding-bottom: 10px;
-  border-bottom: 1px solid black;
-  width: 100%;
+  border-bottom: 1px solid white;
+  width: 27vw;
+  text-align: center;
 }
 
 .className {
   color: #ffce2b;
+  position: relative;
+  margin-left: 4vw;
+}
+
+button {
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  /* float: right; */
+  margin-left: 20px;
+  margin-right: 20px;
 }

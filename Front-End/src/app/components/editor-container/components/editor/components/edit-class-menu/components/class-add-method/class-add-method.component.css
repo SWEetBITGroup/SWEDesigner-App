@@ -4,8 +4,9 @@
   padding: 0;
   padding-top: 10px;
   padding-bottom: 10px;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid white;
   width: 100%;
+  color: darkorange;
 }
 
 .checkboxContainer {
@@ -40,12 +41,14 @@ input[type="checkbox"]:checked + label:before {
 }
 
 .tabella {
+  margin-top: 10px;
   overflow-y: auto;
   max-height: 200px;
 }
 
 .display {
   text-align: left;
+  color: darkorange;
 }
 
 .remove {
@@ -53,4 +56,16 @@ input[type="checkbox"]:checked + label:before {
   height: 20px;
   padding: 0;
   float: right;
+}
+
+select {
+  color: #333;
+}
+
+input {
+  color: #333;
+}
+
+table {
+  color: #333;
 }

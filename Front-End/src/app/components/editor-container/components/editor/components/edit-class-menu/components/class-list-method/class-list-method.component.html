@@ -1,21 +1,23 @@
 <div class="container" *ngIf="this.classMenuService.selectedClass">
-    <button class="btn btn-warning" data-toggle="collapse" data-target="#listaMetodi" (click)='closeCollapsedList()'>
-        <span class="glyphicon glyphicon-triangle-left" aria-hidden="true"></span>&nbsp;Lista Metodi
-      </button>
-        <div id="listaMetodi" class="collapse" *ngIf="this.classMenuService.name">
-          Lista metodi
-          <ul class="list-group">
-            <li class="list-group-item list-group-item-warning" *ngFor="let met of this.classMenuService.getMetodi()">
-              <span>{{met.accesso}} {{met.staticString()}} {{met.nome}}({{met.paramToString()}}): {{met.tipoRitorno}}
-                <button class="btn btn-warning" (click)="removeMetodo(met.nome)">
-                   <span class="glyphicon glyphicon-trash" aria-hidden="true" title="Rimuovi"></span>
-                </button>
-                <button class="btn btn-warning" [disabled]="this.classMenuService.mainEditorService.selectedClasse.isInterface()" (click)="modifyMetodo(met.nome)" title="Modifica">
-                  <span class="glyphicon glyphicon-pencil" aria-hidden="true" title="Modifica"></span>
-                </button>
-              </span>
-            </li>
-          </ul>
-        </div>
+  <button class="btn btn-warning" data-toggle="collapse" data-target="#listaMetodi" (click)='closeCollapsedList()'>
+    <span class="glyphicon glyphicon-triangle-left" aria-hidden="true"></span>&nbsp;Lista Metodi
+  </button>
+  <div id="listaMetodi" class="collapse" *ngIf="this.classMenuService.name">
+    <span class="titolo">
+      Lista metodi
+    </span>
+    <ul class="list-group">
+      <li class="list-group-item list-group-item-warning" *ngFor="let met of this.classMenuService.getMetodi()">
+        <span class="text">{{met.accesso}} {{met.staticString()}} {{met.nome}}({{met.paramToString()}}): {{met.tipoRitorno}}
+          <button class="btn btn-warning" (click)="removeMetodo(met.nome)">
+            <span class="glyphicon glyphicon-trash" aria-hidden="true" title="Rimuovi"></span>
+          </button>
+          <button class="btn btn-warning" [disabled]="this.classMenuService.mainEditorService.selectedClasse.isInterface()" (click)="modifyMetodo(met.nome)" title="Modifica">
+            <span class="glyphicon glyphicon-pencil" aria-hidden="true" title="Modifica"></span>
+          </button>
+        </span>
+      </li>
+    </ul>
+  </div>
 
 </div>

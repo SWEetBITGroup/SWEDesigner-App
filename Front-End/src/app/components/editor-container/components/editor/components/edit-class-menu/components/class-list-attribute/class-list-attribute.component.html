@@ -3,10 +3,12 @@
     <span class="glyphicon glyphicon-triangle-left" aria-hidden="true"></span>&nbsp;Lista Attributi
   </button>
   <div id="listaAttributi" class="collapse" *ngIf="this.classMenuService.name">
-    Lista attributi
+    <span class="titolo">
+      Lista attributi
+    </span>
     <ul class="list-group">
       <li class="list-group-item list-group-item-warning" *ngFor="let attributo of this.classMenuService.getAttributi()">
-        <span>{{attributo.name}}: {{attributo.type}}
+        <span class="text">{{attributo.name}}: {{attributo.type}}
           <button class="btn btn-warning btnLista" (click)="removeAttributo(attributo.name)">
             <span class="glyphicon glyphicon-trash" aria-hidden="true" title="Rimuovi"></span>
           </button>
@@ -48,7 +50,7 @@
             Modifica Attributo
           </button>
         </div>
-        </span>
+      </span>
     </li>
   </ul>
 </div>

@@ -4,8 +4,9 @@
   padding: 0;
   padding-top: 10px;
   padding-bottom: 10px;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid white;
   width: 100%;
+  color: darkorange;
 }
 
 .checkboxContainer {
@@ -37,4 +38,12 @@ input[type="checkbox"]:checked + label:before {
   content: "\2713";
   text-align: center;
   cursor: pointer;
+}
+
+select {
+  color: #333;
+}
+
+input {
+  color: #333;
 }

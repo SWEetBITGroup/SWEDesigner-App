@@ -34,7 +34,7 @@
       <input [disabled]="!this.classMenuService.selectedTipoMet" id="nomeMetodo" [(ngModel)]="this.classMenuService.nomeMet" #nomeMetodo>
     </div>
     <!-- Parametri attuali -->
-    <div class="tabella">
+    <div class="tabella" [hidden]="this.classMenuService.isMethodAddable()">
       Parametri attuali
       <table class="table">
         <thead>

@@ -4,7 +4,7 @@
   padding: 0;
   padding-top: 10px;
   padding-bottom: 10px;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid white;
   width: 100%;
 }
 
@@ -24,4 +24,21 @@
 
 li {
   border: 1px solid darkgoldenrod;
+}
+
+li button {
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  margin-left: 5px;
+  /* float: right; */
+}
+
+.text {
+  font-size: 10px;
+}
+
+.titolo {
+  margin: auto 5px;
+  color: darkorange;
 }
