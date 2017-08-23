@@ -33,6 +33,13 @@ export class ClasseAstratta extends Classe {
     }
 
     /**
+     * Returns true if the object is an abstract, else return false
+     */
+    isAbstarct(){
+        return true;
+    }
+
+    /**
      * This method parse the selected class and transform it into a JSON format
      */
     toJSON() {

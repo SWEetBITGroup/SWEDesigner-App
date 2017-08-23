@@ -152,6 +152,10 @@ export class EditorComponent implements OnInit {
    * It points to the element to select after a called of undo method
    */
   puntElement: any;
+  /**
+   * It save the methods of interface after a association
+   */
+  interfaceMethods: any;
 
   /**
   * this constructor bind this class with the services use for callback function and draw the grid in the canvas
@@ -364,6 +368,10 @@ export class EditorComponent implements OnInit {
           this.mainEditorService.addSuperclass(this.elementToConnect.model.attributes.name,
             cell.model.attributes.name);
           }
+          this.elementSelection(cell);
+          this.interfaceMethods.forEach(element => {
+            this.mainEditorService.addMetodo(element.isStatic(), false, element.getTipoRitorno(), element.getNome(), element.getAccesso(), element.getListaArgomenti());
+          });
           let element1 = this.elementToConnect;
           let freccia = new this.connettore.constructor({
             source: { id: element1.model.id },
@@ -382,6 +390,9 @@ export class EditorComponent implements OnInit {
           });
           this.elementToConnect = this.connettore = null;
         } else {
+          if(cell.model.attributes.type== 'uml.Interface'){
+            this.interfaceMethods = this.classMenuService.getMetodi();
+          }
           this.elementToConnect = cell;
           cell.highlight(null/* defaults to cellView.el */, {
             highlighter: {

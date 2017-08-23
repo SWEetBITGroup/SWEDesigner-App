@@ -177,7 +177,17 @@ export class Classe {
         return this.classePadre;
     }
 
+    /**
+     * Returns true if the object is an interface, else return false
+     */
     isInterface(){
+        return false;
+    }
+
+    /**
+     * Returns true if the object is an abstract, else return false
+     */
+    isAbstract(){
         return false;
     }
 
