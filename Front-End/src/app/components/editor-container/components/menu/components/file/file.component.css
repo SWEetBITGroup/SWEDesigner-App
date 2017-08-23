@@ -49,3 +49,12 @@ ul {
 #upload {
   display: none;
 }
+
+#popup {
+  background-color: darkorange;
+  position: absolute;
+  display: none;
+  top: 10vh;
+  left: 25vw;
+  z-index: 9999;
+}

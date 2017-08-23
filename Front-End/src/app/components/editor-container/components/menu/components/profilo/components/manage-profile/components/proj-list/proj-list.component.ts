@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from '../../../../../../../../../../services/account.service';
 import { MainEditorService } from '../../../../../../../../../../services/main-editor.service';
-
+import { FileComponent } from '../../../../../file/file.component';
 @Component({
   selector: 'app-proj-list',
   templateUrl: './proj-list.component.html',
@@ -12,7 +12,6 @@ export class ProjListComponent implements OnInit {
   constructor(private accountService: AccountService, private mainEditorService: MainEditorService) {
     this.initProj();
   }
-
   /**
    * This function initialize the user's project list
    */
@@ -27,7 +26,7 @@ export class ProjListComponent implements OnInit {
 
   /**
    * This function remove an existing project
-   * @param e 
+   * @param e
    */
   removeProj(e){
     this.accountService.deleteProj(this.accountService.username, e, (err)=>{
@@ -43,11 +42,12 @@ export class ProjListComponent implements OnInit {
 
   /**
    * This function open an existing project
-   * @param e 
+   * @param e
    */
   openProj(e){
     this.accountService.loadProj(this.accountService.username, e, (project)=>{
       this.mainEditorService.loadProject(project);
+      alert("Progetto cariato");
     })
   }
 

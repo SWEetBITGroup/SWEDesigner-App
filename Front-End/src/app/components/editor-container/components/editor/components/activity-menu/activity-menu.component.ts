@@ -48,7 +48,8 @@ export class ActivityMenuComponent {
 	}
 
 	changeName(name: string) {
-		this.activityService.changeName(name);
+    this.activityService.changeName(name);
+    $('#newName').val('');
 	}
 
 	generaIf() {

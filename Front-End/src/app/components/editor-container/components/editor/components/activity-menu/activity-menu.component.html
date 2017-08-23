@@ -1,17 +1,17 @@
 <div [hidden]="selemetedMethod" class="container-fluid menu">
 	<div class="row selezionato">
-		<span class="glyphicon glyphicon-wrench iconaMirrow" aria-hidden="true"></span>&nbsp;&nbsp;{{this.activityService.getNameMethod()}}
+		{{ this.activityService.getNameMethod() }}
 	</div>
-	<div class="row changeNome">
+	<div class="row">
 		Modifica nome metodo:
-		<input #changeName id="changeName" (keyup.enter)="changeNome(changeName.value)">
-		<button class="btn btn-default" (click)="changeNome(changeName.value)">
+		<input #newName id="newName" >
+		<button class="btn btn-default" (click)="this.changeName(newName.value)">
       <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
     </button>
 	</div>
 	<div [hidden]="!this.activityService.isOperation()">
 		<div class="container-fluid" [hidden]="this.activityService.isVarDeclaration()">
-			<div class="row changeNome">
+			<div class="row">
 				<label>Corpo operazione</label>
 				<input #corpo id="changeName" (keyup.enter)="modBody(corpo.value)">
 				<button class="btn btn-default" (click)="modBody(corpo.value)">
@@ -29,7 +29,7 @@
           <option *ngFor="let t of types">{{t}}</option>
         </select>
 			</div>
-			<div class="row changeNome">
+			<div class="row">
 				<label>Nome variabile</label>
 				<input #nomeV id="nameVar" [(ngModel)]="nomeVar" (keyup.enter)="declareVar()"><br />
 				<label>Valore</label>
@@ -42,13 +42,13 @@
 	</div>
 	<div [hidden]="!this.activityService.isDecision()">
 		<div class="container-fluid">
-			<div class="row changeNome">
+			<div class="row">
 				<label>Tipo decisione</label><br />
 				<select [(ngModel)]="dec">
           <option *ngFor="let dec of decisions" [value]="dec">{{ dec }}</option>
         </select>
 			</div>
-			<div [hidden]="dec != 'for'" class="row changeNome">
+			<div [hidden]="dec != 'for'" class="row">
 				<label>Nome indice</label>
 				<input [(ngModel)]="nomeInd" /><br />
 				<label>Valore iniziale indice</label>
@@ -64,7 +64,7 @@
         </button>
 			</div>
 			<!-- WHILE -->
-			<div [hidden]="dec != 'while'" class="row changeNome">
+			<div [hidden]="dec != 'while'" class="row">
 				<label>Nome indice</label>
 				<input [(ngModel)]="nomeInd" /><br />
 				<label>Valore iniziale indice</label>
@@ -80,7 +80,7 @@
         </button>
 			</div>
 			<!-- IF -->
-			<div [hidden]="dec != 'if'" class="row changeNome">
+			<div [hidden]="dec != 'if'" class="row">
 				<label>Variabile</label>
 				<select [(ngModel)]="va">
           <option *ngFor="let v of this.activityService.getVarVis()" [value]="va">{{ v }}</option>

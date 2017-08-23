@@ -8,7 +8,7 @@ import { Param }      from '../components/editor-container/components/editor/mod
  * to retrive it's inforations
  */
 export class Global {
-  private nome_progetto = "Proj";
+  private nome_progetto = 'Proj';
   private diagramma: string;
   private classi = new Array<Classe>();
   private main = false;
@@ -66,7 +66,7 @@ export class Global {
   removeClass(name: string) {
     for(let i=0;i<this.classi.length;i++){
       if(this.classi[i].getNome() == name)
-        this.classi.splice(i,1); 
+        this.classi.splice(i,1);
     }
   }
 
@@ -110,7 +110,10 @@ export class Global {
   }
 
   // I campi devono ritornare come string
-  toJSON(usr: String){
+  toJSON(usr: String, projName?: string){
+    if (projName) {
+      this.nome_progetto = projName;
+    }
     let global = '{\"username\":\"'+usr+'\",\"nome_progetto\":\"'+this.nome_progetto+
                   '\",\"project\":{\"graph\":'+ JSON.stringify(this.diagramma) +
                   ',\"classi\":'+JSON.stringify(this.classi)+'}}';
