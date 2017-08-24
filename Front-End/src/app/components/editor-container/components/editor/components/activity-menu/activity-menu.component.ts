@@ -55,7 +55,8 @@ export class ActivityMenuComponent {
 	generaIf() {
 		let re = new RegExp('^[0-9]+| +');
 		this.nomeInd.trim();
-		this.activityService.setDecisione(this.dec, 'code');
+		let code = this.va + ' ' + this.op + ' ' + this.maxInd;
+		this.activityService.setDecisione(this.dec, code);
 	}
 
 	generaFor() {

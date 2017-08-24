@@ -11,6 +11,7 @@ import { Shape } from '../models/shape';
 import { Start } from '../models/start';
 import { End } from '../models/end';
 import { MergeNode } from '../models/merge-node';
+import { WhileNode } from '../models/while-node';
 
 
 import * as joint from 'jointjs';
@@ -57,6 +58,10 @@ export class ActivityService {
 	addMergeNode(graphElement: any) {
 		this.mainEditorService.addShape(graphElement);
 		this.shapeList.addShape(new MergeNode(graphElement.id));
+	}
+
+	addLoopNode(id: string) {
+		this.shapeList.addShape(new WhileNode(id));
 	}
 
 	addStart(graphElement: any) {
@@ -162,6 +167,18 @@ export class ActivityService {
 		this.selectedShape.setBody(text);
 	}
 
+	hasBody() {
+		if(this.selectedShape && this.selectedShape.getBody())
+			return true;
+		return false;
+	}
+
+	getBody() {
+		if(this.selectedShape)
+			return this.selectedShape.getBody();
+		return '';
+	}
+
 	generaCodice() {
 		return this.shapeList.toCode();
 	}
@@ -193,6 +210,21 @@ export class ActivityService {
 
 	setDecisione(dec: string, code: string) {
 		this.selectedElement.attr('text/text', dec);
+		if (dec == 'if') {
+			this.addBody(code);
+		}
+		else {
+			let id = this.selectedShape.getId();
+			let succ = this.selectedShape.getSucc();
+			this.shapeList.removeShape(id);
+			this.addLoopNode(id);
+			this.selectedShape = this.shapeList.getElementById(id);
+			if (succ)
+				this.selectedShape.setSucc(succ);
+			if (dec == 'for')
+				(<WhileNode>this.selectedShape).setFor(true);
+			this.selectedShape.addBody(code);
+		}
 	}
 
 	setOperationType(opType: string, id: string) {
@@ -210,11 +242,11 @@ export class ActivityService {
 		this.shapeList.removeShape(id);
 		let nomeVar = this.varibles.get(id);
 		let ind;
-    this.vars.forEach((e,index) => {
+		this.vars.forEach((e, index) => {
 			if (e == nomeVar)
 				ind = index;
 		});
-		this.vars.splice(ind,1);
+		this.vars.splice(ind, 1);
 		if (this.varibles.delete(id)) {
 			console.log('variabile eliminata correttamente');
 		}

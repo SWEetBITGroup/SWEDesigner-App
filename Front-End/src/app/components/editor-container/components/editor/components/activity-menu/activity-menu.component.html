@@ -53,14 +53,14 @@
 				<input [(ngModel)]="nomeInd" /><br />
 				<label>Valore iniziale indice</label>
 				<input type="number" [(ngModel)]="valInd" /><br />
-				<label>Operatore guardia</label>
+				<label>Operatore relazionale</label>
 				<select [(ngModel)]="op">
           <option *ngFor="let op of operators" [value]="op">{{ op }}</option>
         </select><br />
-				<label>Valore di guardia indice</label>
+				<label>Valore obiettivo indice</label>
 				<input type="number" [(ngModel)]="maxInd" /><br />
 				<button class="btn btn-default" (click)="generaFor()">
-          Genera decisione
+          Genera FOR
         </button>
 			</div>
 			<!-- WHILE -->
@@ -69,29 +69,37 @@
 				<input [(ngModel)]="nomeInd" /><br />
 				<label>Valore iniziale indice</label>
 				<input type="number" [(ngModel)]="valInd" /><br />
-				<label>Operatore guardia</label>
+				<label>Operatore relazionale</label>
 				<select [(ngModel)]="op">
           <option *ngFor="let op of operators">{{ op }}</option>
         </select><br />
-				<label>Valore di guardia indice</label>
+				<label>Valore obiettivo</label>
 				<input type="number" [(ngModel)]="maxInd" /><br />
 				<button class="btn btn-default" (click)="generaFor()">
-          Genera decisione
+          Genera WHILE
         </button>
 			</div>
 			<!-- IF -->
 			<div [hidden]="dec != 'if'" class="row">
+				<div	[hidden]="!this.activityService.hasBody()">
+					<h4>Corpo IF: {{ this.activityService.getBody() }}</h4>
+				</div>
 				<label>Variabile</label>
 				<select [(ngModel)]="va">
-          <option *ngFor="let v of this.activityService.getVarVis()" [value]="va">{{ v }}</option>
+          <option *ngFor="let va of this.activityService.getVarVis()" [value]="va">{{ va }}</option>
         </select><br />
-				<label>Operatore guardia</label>
+				<label>Operatore relazionale</label>
 				<select [(ngModel)]="op">
           <option *ngFor="let op of operators">{{ op }}</option>
-        </select><br />
-				<button class="btn btn-default" (click)="generaIf()">
-          Genera decisione
-        </button>
+				</select><br />
+				<label>Valore obiettivo</label>
+				<input type="text" [(ngModel)]="maxInd" /><br />
+				<span [hidden]="this.activityService.hasBody()"><button class="btn btn-default" (click)="generaIf()">
+          Genera IF
+				</button></span>
+				<span [hidden]="!this.activityService.hasBody()"><button class="btn btn-default" (click)="modificaIf()">
+					Modifica IF
+				</button></span>
 			</div>
 		</div>
 	</div>
