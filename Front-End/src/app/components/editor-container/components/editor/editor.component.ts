@@ -156,6 +156,16 @@ export class EditorComponent implements OnInit {
    * It save the methods of interface after a association
    */
   interfaceMethods: any;
+  /**
+   * It save the attributes of class after a generalization
+   */
+  extendedAttributes: any;
+  /**
+   * It save the methods of class after a generalization
+   */
+  extendedMethods: any;
+  
+  
 
   /**
   * this constructor bind this class with the services use for callback function and draw the grid in the canvas
@@ -364,9 +374,16 @@ export class EditorComponent implements OnInit {
     */
     selectElementsToConnect(cell: any) {
       if(this.elementToConnect) {
-        if(this.connettore.attributes.type === 'uml.Generalization') {
+        if((this.connettore.attributes.type === 'uml.Generalization')&&(this.selectedCell.model.attributes.type!='uml.Interface')) {
+          this.elementSelection(cell);
           this.mainEditorService.addSuperclass(this.elementToConnect.model.attributes.name,
             cell.model.attributes.name);
+          this.extendedAttributes.forEach(element => {
+            this.mainEditorService.addAttributo(element.getTipo(), element.getNome(), element.getAccesso(), element.isStatic(), element.isFinal());
+          });  
+          this.extendedMethods.forEach(element => {
+            this.mainEditorService.addMetodo(element.isStatic(), element.isConstructor(), element.getTipoRitorno(), element.getNome(), element.getAccesso(), element.getListaArgomenti())
+          });
         }
         else{
           if(this.interfaceMethods!=null){
@@ -376,6 +393,16 @@ export class EditorComponent implements OnInit {
             });
           }
         }
+        $('.freccia').blur();
+        this.elementToConnect.unhighlight(null/* defaults to cellView.el */, {
+          highlighter: {
+            name: 'stroke',
+            options: {
+              width: 3,
+              color: '#885500'
+            }
+          }
+        });
         if((cell.model.attributes.type != 'uml.Interface')||((this.connettore.attributes.type === 'uml.Implementation')&&(this.interfaceMethods!=null))){
             let element1 = this.elementToConnect;
             let freccia = new this.connettore.constructor({
@@ -383,16 +410,6 @@ export class EditorComponent implements OnInit {
               target: { id: cell.model.id }
             });
             this.graph.addCells([freccia]);
-            $('.freccia').blur();
-            this.elementToConnect.unhighlight(null/* defaults to cellView.el */, {
-              highlighter: {
-                name: 'stroke',
-                options: {
-                  width: 3,
-                  color: '#885500'
-                }
-              }
-            });
             this.elementToConnect = this.connettore = null;
           }
           else {
@@ -403,26 +420,52 @@ export class EditorComponent implements OnInit {
             this.selectedCell = null;
             this.activityService.deselectElement();
             this.connettore= null;
+            this.elementToConnect= null;
           }
-        } else {
+        } 
+        else {
           this.interfaceMethods= null;
           this.elementToConnect = cell;
           this.elementSelection(cell);
           if(this.connettore.attributes.type === 'uml.Implementation'){
             if(cell.model.attributes.type == 'uml.Interface'){
               this.interfaceMethods = this.classMenuService.getMetodi();
-            }
-            cell.highlight(null/* defaults to cellView.el */, {
-              highlighter: {
-                name: 'stroke',
-                options: {
-                  width: 3,
-                  color: '#885500'
+              cell.highlight(null/* defaults to cellView.el */, {
+                highlighter: {
+                  name: 'stroke',
+                  options: {
+                    width: 3,
+                    color: '#885500'
+                  }
                 }
+              });
+            }
+            else {
+              this.elementToConnect= null;
+              if(this.selectedCell){
+                this.selectedCell.unhighlight();
+                this.classMenuService.closeAllCollapsedList();
               }
-            });
+              this.selectedCell = null;
+              this.activityService.deselectElement();
+              this.connettore= null;
+              $('.freccia').blur();
+            }
           }
-          else if(cell.model.attributes.type == 'uml.Interface') this.elementToConnect= null;
+          else if(cell.model.attributes.type == 'uml.Interface') {
+            this.elementToConnect= null;
+            if(this.selectedCell){
+              this.selectedCell.unhighlight();
+              this.classMenuService.closeAllCollapsedList();
+            }
+            this.selectedCell = null;
+            this.activityService.deselectElement();
+            this.connettore= null;
+          }
+          else{
+            this.extendedMethods = this.classMenuService.getMetodi();
+            this.extendedAttributes = this.classMenuService.getAttributi();
+          }
         }
       }
       /**
