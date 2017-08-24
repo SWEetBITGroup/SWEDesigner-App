@@ -48,20 +48,36 @@
           <option *ngFor="let dec of decisions" [value]="dec">{{ dec }}</option>
         </select>
 			</div>
+			<!-- FOR -->
 			<div [hidden]="dec != 'for'" class="row">
-				<label>Nome indice</label>
-				<input [(ngModel)]="nomeInd" /><br />
-				<label>Valore iniziale indice</label>
-				<input type="number" [(ngModel)]="valInd" /><br />
-				<label>Operatore relazionale</label>
-				<select [(ngModel)]="op">
-          <option *ngFor="let op of operators" [value]="op">{{ op }}</option>
-        </select><br />
-				<label>Valore obiettivo indice</label>
-				<input type="number" [(ngModel)]="maxInd" /><br />
-				<button class="btn btn-default" (click)="generaFor()">
-          Genera FOR
-        </button>
+				<div	[hidden]="!this.activityService.hasBody()">
+					<h4>for ( {{ this.activityService.getBody() }} )</h4>
+				</div>
+				<button class="btn btn-default" (click)="toggleModPro()">
+					{{mod}}
+				</button>
+				<div [hidden]="modPro">
+					<label>Nome indice</label>
+					<input [(ngModel)]="nomeInd" /><br />
+					<label>Valore iniziale indice</label>
+					<input type="number" [(ngModel)]="valInd" /><br />
+					<label>Operatore relazionale</label>
+					<select [(ngModel)]="op">
+						<option *ngFor="let op of operators" [value]="op">{{ op }}</option>
+					</select><br />
+					<label>Valore obiettivo indice</label>
+					<input type="number" [(ngModel)]="maxInd" /><br />
+				</div>
+				<div [hidden]="!modPro">
+					<label>Scrivi corpo FOR</label>
+					<input type="text" [(ngModel)]="nomeInd" /><br />
+				</div>
+				<span [hidden]="this.activityService.hasBody()"><button class="btn btn-default" (click)="generaFor()">
+					Genera FOR
+				</button></span>
+				<span [hidden]="!this.activityService.hasBody()"><button class="btn btn-default" (click)="modificaFor()">
+					Modifica FOR
+				</button></span>
 			</div>
 			<!-- WHILE -->
 			<div [hidden]="dec != 'while'" class="row">
@@ -82,18 +98,27 @@
 			<!-- IF -->
 			<div [hidden]="dec != 'if'" class="row">
 				<div	[hidden]="!this.activityService.hasBody()">
-					<h4>Corpo IF: {{ this.activityService.getBody() }}</h4>
+					<h4>if ( {{ this.activityService.getBody() }} )</h4>
 				</div>
-				<label>Variabile</label>
-				<select [(ngModel)]="va">
-          <option *ngFor="let va of this.activityService.getVarVis()" [value]="va">{{ va }}</option>
-        </select><br />
-				<label>Operatore relazionale</label>
-				<select [(ngModel)]="op">
-          <option *ngFor="let op of operators">{{ op }}</option>
-				</select><br />
-				<label>Valore obiettivo</label>
-				<input type="text" [(ngModel)]="maxInd" /><br />
+				<button class="btn btn-default" (click)="toggleModPro()">
+					{{mod}}
+				</button>
+				<div [hidden]="modPro">
+					<label>Variabile</label>
+					<select [(ngModel)]="va">
+						<option *ngFor="let va of this.activityService.getVarVis()" [value]="va">{{ va }}</option>
+					</select><br />
+					<label>Operatore relazionale</label>
+					<select [(ngModel)]="op">
+						<option *ngFor="let op of operators">{{ op }}</option>
+					</select><br />
+					<label>Valore obiettivo</label>
+					<input type="text" [(ngModel)]="operando" /><br />
+				</div>
+				<div [hidden]="!modPro">
+					<label>Scrivi corpo IF</label>
+					<input type="text" [(ngModel)]="va" /><br />
+				</div>
 				<span [hidden]="this.activityService.hasBody()"><button class="btn btn-default" (click)="generaIf()">
           Genera IF
 				</button></span>
