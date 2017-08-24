@@ -345,6 +345,12 @@ export class EditorComponent implements OnInit {
           this.classMenuService.closeAllCollapsedList();
         }
         this.selectedCell = null;
+        this.elementToConnect= null;
+        this.extendedAttributes= null;
+        this.extendedMethods= null;
+        this.interfaceMethods= null;
+        this.connettore= null;
+        $('.freccia').blur();
         this.activityService.deselectElement();
       });
 
