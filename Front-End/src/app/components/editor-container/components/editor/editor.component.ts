@@ -453,6 +453,7 @@ export class EditorComponent implements OnInit {
             }
           }
           else if(cell.model.attributes.type == 'uml.Interface') {
+            $('.freccia').blur();
             this.elementToConnect= null;
             if(this.selectedCell){
               this.selectedCell.unhighlight();
