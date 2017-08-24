@@ -164,7 +164,16 @@ export class EditorComponent implements OnInit {
    * It save the methods of class after a generalization
    */
   extendedMethods: any;
-  
+  /**
+   * It save the methods to delete after that a association was delate
+   */
+  methodsToDelete: any;
+  /**
+   * It save the attributes to delete after that a association eas delate
+   */
+  attributesToDelete: any;
+
+  flagCell: any;
   
 
   /**
@@ -300,6 +309,43 @@ export class EditorComponent implements OnInit {
       * This method allows to recognize when there is a remove event in the graph
       */
       this.graph.on('remove', (cell) => {
+        if((cell.attributes.type=='uml.Implementation')||(cell.attributes.type=='uml.Generalization')){
+          this.flagCell= true;
+          let z= null;
+          this.graph.getCells().forEach(element => {
+            if(element.id===cell.get('source').id) this.elementSelection1(element);
+          });
+          this.methodsToDelete= this.mainEditorService.getSelectedClasse().getMetodi();
+          this.attributesToDelete= this.mainEditorService.getSelectedClasse().getAttributi();
+          if(this.selectedCell){
+            this.classMenuService.closeAllCollapsedList();
+          }
+          this.selectedCell = null;
+          this.activityService.deselectElement();
+          this.connettore= null;
+          this.graph.getCells().forEach(element => {
+            if(element.id===cell.get('target').id) this.elementSelection1(element);
+            
+          });
+          if(cell.attributes.type=='uml.Implementation') 
+            this.methodsToDelete.forEach(element => {
+              this.classMenuService.removeMetodo(element.getNome());
+            });
+          else 
+            this.methodsToDelete.forEach(element => {
+              this.mainEditorService.removeMetodo(element.getNome());
+            });
+          this.attributesToDelete.forEach(element => {
+            this.mainEditorService.removeAttributo(element.getNome());
+          });
+          if(this.selectedCell){
+            this.classMenuService.closeAllCollapsedList();
+          }
+          this.selectedCell = null;
+          this.activityService.deselectElement();
+          this.connettore= null;
+          this.flagCell= false;
+        }
         if(this.noChange==null||this.noChange==false) {
           if(this.flagRemoved==true){
             if(this.actualGraph==null) {this.actualGraph = new joint.dia.Graph; }
@@ -317,6 +363,7 @@ export class EditorComponent implements OnInit {
         }
         this.noChange= false;
       });
+      
 
       /**
       * This method allows to the mouse's pointer to recognize when a class is clicked and select it
@@ -417,6 +464,15 @@ export class EditorComponent implements OnInit {
             });
             this.graph.addCells([freccia]);
             this.elementToConnect = this.connettore = null;
+            cell.unhighlight(null/* defaults to cellView.el */, {
+              highlighter: {
+                name: 'stroke',
+                options: {
+                  width: 3,
+                  color: '#885500'
+                }
+              }
+            });
           }
           else {
             if(this.selectedCell){
@@ -472,6 +528,15 @@ export class EditorComponent implements OnInit {
           else{
             this.extendedMethods = this.classMenuService.getMetodi();
             this.extendedAttributes = this.classMenuService.getAttributi();
+            cell.highlight(null/* defaults to cellView.el */, {
+              highlighter: {
+                name: 'stroke',
+                options: {
+                  width: 3,
+                  color: '#885500'
+                }
+              }
+            });
           }
         }
       }
@@ -491,7 +556,7 @@ export class EditorComponent implements OnInit {
         if (this.selectedCell){
           this.selectedCell.unhighlight();
         }
-        cellView.highlight();
+        if((this.flagCell==undefined)||(this.flagCell==false)) cellView.highlight();
         if(!this.mainEditorService.getActivityModeStatus()){
           this.selectedCell = cellView;
           this.classMenuService.classSelection(cellView.model);
@@ -499,6 +564,18 @@ export class EditorComponent implements OnInit {
         } else {
           this.selectedCell = cellView;
           this.activityService.setSelectedElement(cellView.model);
+        }
+      }
+
+      /**
+      * This method select a shape in the editor
+      * @param cellView
+      */
+      elementSelection1(cellView: any) {
+        if(!this.mainEditorService.getActivityModeStatus()){
+          this.selectedCell = cellView;
+          this.classMenuService.classSelection(cellView);
+          this.mainEditorService.selectClasse(cellView.attributes.name);
         }
       }
 
