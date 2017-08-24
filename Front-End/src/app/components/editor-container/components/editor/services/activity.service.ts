@@ -139,6 +139,9 @@ export class ActivityService {
 	getVarVis() {
 		return this.vars;
 	}
+	getShapeType() {
+		return this.selectedShape.getType();
+	}
 
 	changeName(name: string) {
 		this.selectedMethod.changeNome(name);
