@@ -1,8 +1,8 @@
 <div class="dropdown" #menuProfilo id="qwerty">
-  <button class="btn btn-default" data-toggle="collapse" id="menuProfilo" href="#manage-profile">
+  <button class="btn btn-default" data-toggle="collapse" id="menuProfilo" href="#manage-profile" (click)="callRefresh()">
     <i class="glyphicon glyphicon-user"></i> &nbsp; {{accountService.username}}
     <span class="caret"></span>
   </button>
   <div >
-  <app-manage-profile class="collapse" id="manage-profile" style="height: 0px; width:0px; border: 0px;" ></app-manage-profile></div>
+  <app-manage-profile class="collapse" #manageProfile id="manage-profile" style="height: 0px; width:0px; border: 0px;"></app-manage-profile></div>
 </div>

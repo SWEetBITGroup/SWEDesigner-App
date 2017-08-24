@@ -1,13 +1,16 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, ViewChild } from '@angular/core';
 
 // Services
 import { AccountService } from '../../../../../../../../services/account.service';
+import { ProjListComponent } from './components/proj-list/proj-list.component';
 @Component({
   selector: 'app-manage-profile',
   templateUrl: './manage-profile.component.html',
   styleUrls: ['./manage-profile.component.css']
 })
 export class ManageProfileComponent {
+  @ViewChild('projLista') proj: ProjListComponent;
+
   constructor(private accountService: AccountService) { }
   ngAfterViewInit() {
     /**
@@ -17,6 +20,10 @@ export class ManageProfileComponent {
       $('#manage-profile').removeClass("in");
       $('.tmp-disable').removeClass('disabled');
     });
+
+  }
+  refreshList() {
+    this.proj.initProj();
   }
 
 }
