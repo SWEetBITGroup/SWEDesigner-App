@@ -31,6 +31,7 @@ export class FileComponent implements OnInit {
       fileJSON.project = JSON.stringify(fileJSON.project);
       // console.log(fileJSON);
       this.nome_progetto = projName;
+      this.accountService.notOpenedProj = false;
       this.menuService.saveData(fileJSON, function(err){
         if(err){
           alert("Progetto non salvato");
