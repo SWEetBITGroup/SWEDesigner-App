@@ -374,8 +374,8 @@ export class EditorComponent implements OnInit {
     */
     selectElementsToConnect(cell: any) {
       if(this.elementToConnect) {
+        this.elementSelection(cell);
         if((this.connettore.attributes.type === 'uml.Generalization')&&(this.selectedCell.model.attributes.type!='uml.Interface')) {
-          this.elementSelection(cell);
           this.mainEditorService.addSuperclass(this.elementToConnect.model.attributes.name,
             cell.model.attributes.name);
           this.extendedAttributes.forEach(element => {
