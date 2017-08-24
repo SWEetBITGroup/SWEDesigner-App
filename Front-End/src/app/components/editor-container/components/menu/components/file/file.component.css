@@ -80,3 +80,13 @@ ul {
   border-color: gold;
   color: black;
 }
+
+#update{
+  background:none;
+  color:inherit;
+  border:none; 
+  padding:0;
+  font: inherit;
+  border-bottom:1px solid #444; 
+  cursor: pointer;
+}

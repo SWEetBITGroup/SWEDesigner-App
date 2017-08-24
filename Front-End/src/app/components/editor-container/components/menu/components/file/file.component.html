@@ -4,7 +4,8 @@
     <span class="caret"></span>
   </button>
   <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
-    <li><a id="save" (click)="openPopup()">Salva</a></li>
+    <li><a id="save" (click)="openPopup()">Salva con nome</a></li>
+    <li><button id="update" (click)="updateProj()" [disabled]="getOpen()">Salva</button></li>
     <li><a (click)="export()">Esporta</a></li>
     <li>
       <input id="upload" type="file" class="custom-file-input" (change)="import($event)" placeholder="Upload file" accept=".json">

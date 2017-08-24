@@ -85,7 +85,25 @@ export class MenuService {
       }
     })
   }
-
+  updateData(proj: JSON, cb: Function){
+    this.http.post('/updateProj', proj, {
+      method: RequestMethod.Post,
+      responseType: ResponseContentType.Text
+    })
+    .subscribe((data)=>{
+      let response = data.text();
+      if(response == "true"){
+        cb(false);
+      }
+      else{
+        cb(true);
+      }
+    })
+  }
+  /**
+   * This function request to server an encrypt service
+   * @param proj 
+   */
   encrypt(proj: JSON) {
     // let headers = new Headers({ 'Content-Type': 'application/json' });
     // let options = new RequestOptions({ headers: headers });
@@ -100,7 +118,12 @@ export class MenuService {
               },
               error => {console.log(JSON.stringify(error));});
   }
-            
+  
+  /**
+   * This function read an external file 
+   * @param file 
+   * @param onloadCallBack 
+   */
   readFile(file, onloadCallBack){
     var reader = new FileReader();
     reader.readAsText(file, "UTF-8");
@@ -108,6 +131,10 @@ export class MenuService {
   }
 
 
+  /**
+   * This function import an external file
+   * @param event 
+   */
   import(event) {
     var file = event.srcElement.files[0];
     if(file){
@@ -139,6 +166,9 @@ export class MenuService {
   }
 
   //servizio di download
+  /**
+   * This function request to server the service of parsing and download
+   */
   donwload(){
     //robo da inviare
     let j ={
@@ -157,6 +187,9 @@ export class MenuService {
     })
   }
 
+  /**
+   * This function call the download function
+   */
   code() {
     this.donwload().subscribe(res =>{
       FileSaver.saveAs(res, "progetto.zip");

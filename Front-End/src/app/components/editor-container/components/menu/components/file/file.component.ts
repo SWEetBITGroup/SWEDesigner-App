@@ -18,7 +18,9 @@ export class FileComponent implements OnInit {
     private accountService: AccountService) {
       this.nome_progetto = this.mainEditorService.getProject().getTitolo();
     }
-    ngOnInit() {}
+    ngOnInit() {
+      this.getOpen();
+    }
 
     /**
     * This function save a project into database
@@ -38,6 +40,26 @@ export class FileComponent implements OnInit {
           alert("Progetto salvato correttamente");
         }
       });
+    }
+    /**
+     * This function update an existing project
+     */
+    updateProj(){
+      this.mainEditorService.retriveGraph();
+      let fileJSON = JSON.parse(this.mainEditorService.getProject().toJSON(this.accountService.username, this.accountService.projName));
+      fileJSON.project = JSON.stringify(fileJSON.project);
+      //this.nome_progetto = projName;
+      this.menuService.updateData(fileJSON, function(err){
+        if(err){
+          alert("Problema aggiornamnto progetto");
+        }
+        else{
+          alert("Progetto aggiornato con successo!");
+        }
+      })
+    }
+    getOpen(){
+      return this.accountService.notOpenedProj;
     }
 
     export() {

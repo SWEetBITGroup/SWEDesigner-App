@@ -27,6 +27,14 @@ export class AccountService {
   */
   email;
   /**
+   * boolean that control if project is opened
+   */
+  notOpenedProj: boolean;
+  /**
+   * This is the name of opened project
+   */
+  projName: string;
+  /**
   * Create an instantiation of AuthenticationGuard
   * @param isUserLoggedIn to default that variable is set to false
   * @param router used to create a new instantiation of Router
@@ -34,6 +42,7 @@ export class AccountService {
   */
   constructor(private router: Router,private http: Http) {
     this.isUserLoggedIn = false;
+    this.notOpenedProj = true;
   }
   /**
   * Send, by POST, data to server and catch its response.
@@ -256,7 +265,8 @@ export class AccountService {
    * @param nameProj 
    * @param cb 
    */
-  loadProj(username: String, nameProj: String, cb: Function){
+  loadProj(username: String, nameProj: string, cb: Function){
+    this.projName = nameProj;
     let userData = {
       "username": username,
       "nome_progetto": nameProj 
@@ -267,6 +277,7 @@ export class AccountService {
       responseType: ResponseContentType.Json
     })
     .subscribe((data)=>{
+      this.notOpenedProj = false;
       cb(data);
     })
   }

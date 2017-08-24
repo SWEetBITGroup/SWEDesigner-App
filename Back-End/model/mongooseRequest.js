@@ -237,9 +237,9 @@ forgot_password: function(mail, cb){
  * @return {void}
  */
 update_proj: function(projName, usr, proj, cb){
-    proget.update({ 'nome_progetto': projName, 'username': usr }, { 'progetto':proj}, function(err, nuovo){
+    proget.update({ 'nome_progetto': projName, 'username': usr }, {'project': proj}, function(err, nuovo){
         if(err){
-            console.log("errore nell'aggiornamento di un progetto");
+            console.log("errore nell'aggiornamento di un progetto (primo if)");
             cb(true, "");
         }
         else{

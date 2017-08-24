@@ -380,17 +380,19 @@ app.listen(port, ()=>{
       })
     })
     app.post("/updateProj", function(req, res){
+      console.log("ENTRATA DIO CANE NELLA FUNZIONE DEL PORCO DIO. MADONNA LADRA.")
       var name = req.body.nome_progetto;
       var usr = req.body.username;
       var proj = req.body.project;
+      console.log("nome Proj: " + name + "username: " + usr + "body: " + proj);
       mongooseRequest.update_proj(name, usr, proj, function(err, x){
         if(err){
           console.log("problemi con l'update di un progetto");
-          res.send("problemi con l'update di un progetto");
+          res.send(false);
         }
         else{
           console.log("progetto aggiornato");
-          res.send("progetto aggiornato");
+          res.send(true);
         }
       })
     })
