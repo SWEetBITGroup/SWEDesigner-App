@@ -429,21 +429,35 @@ export class EditorComponent implements OnInit {
     selectElementsToConnect(cell: any) {
       if(this.elementToConnect) {
         this.elementSelection(cell);
-        if((this.connettore.attributes.type === 'uml.Generalization')&&(this.selectedCell.model.attributes.type!='uml.Interface')) {
+        if((this.connettore.attributes.type == 'uml.Generalization') && 
+           (this.selectedCell.model.attributes.type!='uml.Interface')) {
           this.mainEditorService.addSuperclass(this.elementToConnect.model.attributes.name,
             cell.model.attributes.name);
           this.extendedAttributes.forEach(element => {
-            this.mainEditorService.addAttributo(element.getTipo(), element.getNome(), element.getAccesso(), element.isStatic(), element.isFinal());
+            this.mainEditorService.addAttributo(element.getTipo(), 
+                                                element.getNome(), 
+                                                element.getAccesso(), 
+                                                element.isStatic(), 
+                                                element.isFinal());
           });  
           this.extendedMethods.forEach(element => {
-            this.mainEditorService.addMetodo(element.isStatic(), element.isConstructor(), element.getTipoRitorno(), element.getNome(), element.getAccesso(), element.getListaArgomenti())
+            this.mainEditorService.addMetodo(element.isStatic(), 
+                                             element.isConstructor(), 
+                                             element.getTipoRitorno(), 
+                                             element.getNome(), 
+                                             element.getAccesso(), 
+                                             element.getListaArgomenti())
           });
         }
         else{
           if(this.interfaceMethods!=null){
             this.elementSelection(cell);
             this.interfaceMethods.forEach(element => {
-              this.classMenuService.addMetodo(element.getNome(), element.isStatic(), false, element.getTipoRitorno(), element.getAccesso(), element.getListaArgomenti());
+              this.classMenuService.addMetodo(element.getNome(), 
+                                              element.isStatic(), 
+                                              false, element.getTipoRitorno(), 
+                                              element.getAccesso(), 
+                                              element.getListaArgomenti());
             });
           }
         }
@@ -457,7 +471,9 @@ export class EditorComponent implements OnInit {
             }
           }
         });
-        if((cell.model.attributes.type != 'uml.Interface')||((this.connettore.attributes.type === 'uml.Implementation')&&(this.interfaceMethods!=null))){
+        if((cell.model.attributes.type != 'uml.Interface') || 
+            ((this.connettore.attributes.type === 'uml.Implementation') && 
+            (this.interfaceMethods!=null))) {
             let element1 = this.elementToConnect;
             let freccia = new this.connettore.constructor({
               source: { id: element1.model.id },
