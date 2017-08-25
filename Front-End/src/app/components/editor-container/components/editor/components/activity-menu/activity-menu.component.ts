@@ -29,7 +29,7 @@ export class ActivityMenuComponent {
 	// Valori if
 	va: string = '';
 	operando: string = '';
-	
+
 	// Valori for & while
 	nomeInd: string = '';
 	valInd: number = 0;
@@ -74,8 +74,8 @@ export class ActivityMenuComponent {
 				alert("Il nome dell'indice non può contenere spazi o iniziare con un numero");
 			else if (this.nomeInd && this.valInd && this.maxInd)
 				var code = 'int ' + this.nomeInd + ' = ' + this.valInd + '; ' + this.nomeInd + ' ' + this.op +
-			 		' ' + this.maxInd +'; ' + this.nomeInd + '++';
-		} else 
+					' ' + this.maxInd + '; ' + this.nomeInd + '++';
+		} else
 			var code = this.nomeInd;
 		this.activityService.setDecisione('for', code);
 		this.nomeInd = this.op = '';
@@ -126,12 +126,17 @@ export class ActivityMenuComponent {
 	}
 
 	modificaIf() {
-		if (!this.modPro)
-			var code = this.va + ' ' + this.op + ' ' + this.operando;
-		else
-			var code = this.va;
-		this.activityService.modBody(code, false);
-		this.va = this.operando = this.op = '';
+		if (this.activityService.getShapeType() != 'if')
+			this.generaIf();
+		else {
+			if (!this.modPro)
+				var code = this.va + ' ' + this.op + ' ' + this.operando;
+			else
+				var code = this.va;
+			this.activityService.modBody(code, false);
+			this.va = this.operando = this.op = '';
+		}
+		console.log(this.activityService.getShapeType());
 	}
 
 	modificaFor() {
@@ -148,11 +153,11 @@ export class ActivityMenuComponent {
 				else if (this.nomeInd && this.valInd && this.maxInd)
 					var code = 'int ' + this.nomeInd + ' = ' + this.valInd + '; ' + this.nomeInd + ' ' + this.op + '; ' +
 						this.nomeInd + '++';
-			} else 
+			} else
 				var code = this.nomeInd;
 			this.activityService.modBody(code, false);
-			console.log('modificato');
 		}
+		console.log(this.activityService.getShapeType());
 	}
 
 }

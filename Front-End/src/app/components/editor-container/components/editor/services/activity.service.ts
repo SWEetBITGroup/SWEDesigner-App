@@ -215,7 +215,18 @@ export class ActivityService {
 	setDecisione(dec: string, code: string) {
 		this.selectedElement.attr('text/text', dec);
 		if (dec == 'if') {
-			this.addBody(code);
+			if (this.selectedShape.getType() == 'IfNode')
+				this.addBody(code);
+			else {
+				let id = this.selectedShape.getId();
+				let succ = this.selectedShape.getSucc();
+				this.shapeList.removeShape(id);
+				this.shapeList.addShape(new IfNode(id));
+				this.selectedShape = this.shapeList.getElementById(id);
+				if (succ)
+					this.selectedShape.setSucc(succ);
+				this.selectedShape.addBody(code);
+			}
 		}
 		else {
 			let id = this.selectedShape.getId();
