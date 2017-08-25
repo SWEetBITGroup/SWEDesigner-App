@@ -4,6 +4,8 @@ import { EditorComponent } from '../components/editor-container/components/edito
 import { Classe } from '../components/editor-container/components/editor/models/classe';
 import { Global } from '../models/global';
 import { Metodo } from '../components/editor-container/components/editor/models/metodo';
+import { Attributo } from '../components/editor-container/components/editor/models/attributo';
+
 
 /**
  * 'MainEditorservice' stores information about the editor's canvas, the project 
@@ -126,6 +128,7 @@ export class MainEditorService {
     this.editorComp.noChange= true;
     this.editorComp.changeMethod= true;
     this.selectedClasse.addAttributo(tipo,nome,acc,stat, fin);
+    if(this.editorComp.flagFigli!=true) this.editorComp.aggiornaFigli(false, this.selectedClasse, new Attributo(tipo, nome, acc, stat, fin), null, nome, null)
     this.editorComp.setUndoRedo();
   }
 
@@ -140,6 +143,7 @@ export class MainEditorService {
       this.editorComp.setUndoRedo();
     }
     this.selectedClasse.removeAttr(nome);
+    if(this.editorComp.flagFigli!=true) this.editorComp.aggiornaFigli(true, this.selectedClasse, null, null, nome, null)
   }
 
   changeAttributo(oldName: string, name: string, type: string, acc: string) {
@@ -180,6 +184,7 @@ export class MainEditorService {
     this.editorComp.noChange= true;
     this.editorComp.changeMethod= true;
     this.selectedClasse.addMetodo(this.editorComp.addedMethod);
+    if(this.editorComp.flagFigli!=true) this.editorComp.aggiornaFigli(false, this.selectedClasse, null, this.editorComp.addedMethod, null, null);
     this.editorComp.setUndoRedo();
 }
 
@@ -200,6 +205,7 @@ export class MainEditorService {
       this.editorComp.setUndoRedo();
     }
     else this.selectedClasse.removeMetodo(nome);
+    if(this.editorComp.flagFigli!=true) this.editorComp.aggiornaFigli(true, this.selectedClasse, null, null, null, nome);
   }
 
   /**

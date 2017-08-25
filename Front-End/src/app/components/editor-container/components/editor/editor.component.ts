@@ -174,6 +174,8 @@ export class EditorComponent implements OnInit {
   attributesToDelete: any;
 
   flagCell: any;
+
+  flagFigli: any;
   
 
   /**
@@ -311,7 +313,6 @@ export class EditorComponent implements OnInit {
       this.graph.on('remove', (cell) => {
         if((cell.attributes.type=='uml.Implementation')||(cell.attributes.type=='uml.Generalization')){
           this.flagCell= true;
-          let z= null;
           this.graph.getCells().forEach(element => {
             if(element.id===cell.get('source').id) this.elementSelection1(element);
           });
@@ -556,7 +557,7 @@ export class EditorComponent implements OnInit {
         if (this.selectedCell){
           this.selectedCell.unhighlight();
         }
-        if((this.flagCell==undefined)||(this.flagCell==false)) cellView.highlight();
+        if((this.flagCell!=true)||(this.flagFigli!=true)) cellView.highlight();
         if(!this.mainEditorService.getActivityModeStatus()){
           this.selectedCell = cellView;
           this.classMenuService.classSelection(cellView.model);
@@ -578,6 +579,60 @@ export class EditorComponent implements OnInit {
           this.mainEditorService.selectClasse(cellView.attributes.name);
         }
       }
+
+      aggiornaFigli(removed: boolean, dad: any, attr: any, met: any, nomeAtt: string, nomeMet: string){
+        this.flagFigli= true;
+        let padre;
+        this.graph.getCells().forEach(el => {
+          if(el.attributes.name==dad.getNome()) padre= el;
+        });
+        let links= this.graph.getConnectedLinks(padre);
+        links.forEach(element => {
+          this.graph.getCells().forEach(cell => {
+            if((cell.id==element.get('target').id&&(padre.id==element.get('source').id))) {
+              if(this.selectedCell){
+                this.selectedCell.unhighlight();
+                this.classMenuService.closeAllCollapsedList();
+              }
+              this.selectedCell = null;
+              this.activityService.deselectElement();
+              this.elementSelection1(cell);
+              if(attr!=null||nomeAtt!=null){
+                if(removed==true){
+                  if(element.attributes.type=='uml.Implementation')
+                    this.classMenuService.removeAttributo(nomeAtt);
+                  else  
+                    this.mainEditorService.removeAttributo(nomeAtt);
+                }
+                else{
+                  if(element.attributes.type=='uml.Implementation') 
+                    this.classMenuService.addAttributo(attr.getNome(), attr.isStatic(), attr.isFinal(), attr.getTipo(), attr.getAccesso());
+                  else
+                    this.mainEditorService.addAttributo(attr.getTipo(), attr.getNome(), attr.getAccesso(), attr.isStatic(), attr.isFinal());
+                }
+              }
+              else{
+                if(removed==true){
+                  if(element.attributes.type=='uml.Implementation')
+                    this.classMenuService.removeMetodo(nomeMet);
+                  else
+                    this.mainEditorService.removeMetodo(nomeMet);
+                }
+                else{
+                  if(element.attributes.type=='uml.Implementation')
+                    {this.classMenuService.addMetodo(met.getNome(), met.isStatic(), met.isConstructor(), met.getTipoRitorno(), met.getAccesso(), met.getListaArgomenti());console.log("si")}
+                  else  
+                    {this.mainEditorService.addMetodo(met.isStatic(), met.isConstructor(), met.getTipoRitorno(), met.getNome(), met.getAccesso(), met.getListaArgomenti()); console.log("non")}
+                }
+              }
+            }
+          });
+        });
+        this.flagFigli= false;
+        this.selectedCell = null;
+        this.activityService.deselectElement();
+      }
+
 
       // Aggiunta classe
       /**
