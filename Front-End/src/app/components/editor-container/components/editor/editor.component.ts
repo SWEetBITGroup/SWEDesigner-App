@@ -629,8 +629,6 @@ export class EditorComponent implements OnInit {
           });
         });
         this.flagFigli= false;
-        this.selectedCell = null;
-        this.activityService.deselectElement();
       }
 
 
