@@ -57,6 +57,7 @@
 					{{mod}}
 				</button>
 				<div [hidden]="modPro">
+					<h4>Modalità Guidata</h4>
 					<label>Nome indice</label>
 					<input [(ngModel)]="nomeInd" /><br />
 					<label>Valore iniziale indice</label>
@@ -69,6 +70,7 @@
 					<input type="number" [(ngModel)]="maxInd" /><br />
 				</div>
 				<div [hidden]="!modPro">
+					<h4>Modalità Libera</h4>
 					<label>Scrivi corpo FOR</label>
 					<input type="text" [(ngModel)]="nomeInd" /><br />
 				</div>
@@ -81,29 +83,14 @@
 			</div>
 			<!-- WHILE -->
 			<div [hidden]="dec != 'while'" class="row">
-				<label>Nome indice</label>
-				<input [(ngModel)]="nomeInd" /><br />
-				<label>Valore iniziale indice</label>
-				<input type="number" [(ngModel)]="valInd" /><br />
-				<label>Operatore relazionale</label>
-				<select [(ngModel)]="op">
-          <option *ngFor="let op of operators">{{ op }}</option>
-        </select><br />
-				<label>Valore obiettivo</label>
-				<input type="number" [(ngModel)]="maxInd" /><br />
-				<button class="btn btn-default" (click)="generaFor()">
-          Genera WHILE
-        </button>
-			</div>
-			<!-- IF -->
-			<div [hidden]="dec != 'if'" class="row">
 				<div	[hidden]="!this.activityService.hasBody()">
-					<h4>if ( {{ this.activityService.getBody() }} )</h4>
+					<h4>while ( {{ this.activityService.getBody() }} )</h4>
 				</div>
 				<button class="btn btn-default" (click)="toggleModPro()">
 					{{mod}}
 				</button>
 				<div [hidden]="modPro">
+					<h4>Modalità Guidata</h4>
 					<label>Variabile</label>
 					<select [(ngModel)]="va">
 						<option *ngFor="let va of this.activityService.getVarVis()" [value]="va">{{ va }}</option>
@@ -116,6 +103,40 @@
 					<input type="text" [(ngModel)]="operando" /><br />
 				</div>
 				<div [hidden]="!modPro">
+					<h4>Modalità Libera</h4>
+					<label>Scrivi corpo WHILE</label>
+					<input type="text" [(ngModel)]="va" /><br />
+				</div>
+				<span [hidden]="this.activityService.hasBody()"><button class="btn btn-default" (click)="generaWhile()">
+          Genera WHILE
+				</button></span>
+				<span [hidden]="!this.activityService.hasBody()"><button class="btn btn-default" (click)="modificaWhile()">
+					Modifica WHILE
+				</button></span>
+			</div>
+			<!-- IF -->
+			<div [hidden]="dec != 'if'" class="row">
+				<div	[hidden]="!this.activityService.hasBody()">
+					<h4>if ( {{ this.activityService.getBody() }} )</h4>
+				</div>
+				<button class="btn btn-default" (click)="toggleModPro()">
+					{{mod}}
+				</button>
+				<div [hidden]="modPro">
+					<h4>Modalità Guidata</h4>
+					<label>Variabile</label>
+					<select [(ngModel)]="va">
+						<option *ngFor="let va of this.activityService.getVarVis()" [value]="va">{{ va }}</option>
+					</select><br />
+					<label>Operatore relazionale</label>
+					<select [(ngModel)]="op">
+						<option *ngFor="let op of operators">{{ op }}</option>
+					</select><br />
+					<label>Valore obiettivo</label>
+					<input type="text" [(ngModel)]="operando" /><br />
+				</div>
+				<div [hidden]="!modPro">
+					<h4>Modalità Libera</h4>
 					<label>Scrivi corpo IF</label>
 					<input type="text" [(ngModel)]="va" /><br />
 				</div>

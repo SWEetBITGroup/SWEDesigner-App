@@ -18,7 +18,7 @@ export class ActivityMenuComponent {
 	types = ['short', 'int', 'long', 'float', 'double', 'boolean', 'char', 'String'];
 
 	modPro: boolean = false;
-	mod: string = 'Scrivi Corpo';
+	mod: string = 'Cambia Modalità';
 
 
 	// Valori dichiarazione variabile
@@ -82,6 +82,16 @@ export class ActivityMenuComponent {
 		this.valInd = this.maxInd = 0;
 	}
 
+	generaWhile() {
+		if (!this.modPro) {
+			var code = this.va + ' ' + this.op + ' ' + this.operando;
+		} else {
+			var code = this.va;
+		}
+		this.activityService.setDecisione('while', code);
+		this.va = this.operando = this.op = '';
+	}
+
 	setNomeVar(name: string) {
 		this.nomeVar = name;
 	}
@@ -117,10 +127,8 @@ export class ActivityMenuComponent {
 
 	toggleModPro() {
 		if (this.modPro) {
-			this.mod = 'Modalità Libera';
 			this.modPro = false;
 		} else {
-			this.mod = 'Modalità Guidata';
 			this.modPro = true;
 		}
 	}
@@ -156,6 +164,20 @@ export class ActivityMenuComponent {
 			} else
 				var code = this.nomeInd;
 			this.activityService.modBody(code, false);
+		}
+		console.log(this.activityService.getShapeType());
+	}
+
+	modificaWhile() {
+		if (this.activityService.getShapeType() != 'while')
+			this.generaWhile();
+		else {
+			if (!this.modPro)
+				var code = this.va + ' ' + this.op + ' ' + this.operando;
+			else
+				var code = this.va;
+			this.activityService.modBody(code, false);
+			this.va = this.operando = this.op = '';
 		}
 		console.log(this.activityService.getShapeType());
 	}

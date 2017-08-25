@@ -140,7 +140,17 @@ export class ActivityService {
 		return this.vars;
 	}
 	getShapeType() {
-		return this.selectedShape.getType();
+		if (this.selectedShape.getType() != 'IfNode' &&
+			this.selectedShape.getType() != 'WhileNode')
+			return this.selectedShape.getType();
+		else {
+			if (this.selectedShape.getType() == 'IfNode')
+				return 'if';
+			else if ((<WhileNode>this.selectedShape).isFor())
+				return 'for';
+			else
+				return 'while';
+		}
 	}
 
 	changeName(name: string) {
