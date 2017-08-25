@@ -43,10 +43,6 @@ export class ActivityMenuComponent {
 		this.activityService.salvaMetodo();
 	}
 
-	modBody(text: string) {
-		this.activityService.modBody(text);
-	}
-
 	generaCodice() {
 		this.activityService.generaCodice();
 	}
@@ -84,7 +80,6 @@ export class ActivityMenuComponent {
 		this.activityService.setDecisione('for', code);
 		this.nomeInd = this.op = '';
 		this.valInd = this.maxInd = 0;
-		console.log('generato');
 	}
 
 	setNomeVar(name: string) {
@@ -107,7 +102,7 @@ export class ActivityMenuComponent {
 		}
 		else
 			alert('Tipo o/e nome della variabile assente/i');
-		this.activityService.modBody(code);
+		this.activityService.modBody(code, true);
 		this.activityService.addLocalVar(this.activityService.getSelectedShapeId(), this.nomeVar);
 		this.tipoVar = '';
 		this.valVar = '';
@@ -135,7 +130,7 @@ export class ActivityMenuComponent {
 			var code = this.va + ' ' + this.op + ' ' + this.operando;
 		else
 			var code = this.va;
-		this.activityService.modBody(code);
+		this.activityService.modBody(code, false);
 		this.va = this.operando = this.op = '';
 	}
 
@@ -155,7 +150,7 @@ export class ActivityMenuComponent {
 						this.nomeInd + '++';
 			} else 
 				var code = this.nomeInd;
-			this.activityService.modBody(code);
+			this.activityService.modBody(code, false);
 			console.log('modificato');
 		}
 	}

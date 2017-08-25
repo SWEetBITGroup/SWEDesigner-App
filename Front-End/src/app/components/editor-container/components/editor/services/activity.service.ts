@@ -165,19 +165,20 @@ export class ActivityService {
 		console.log(last);
 	}
 
-	modBody(text: string) {
-		this.selectedElement.attr('text/text', text);
+	modBody(text: string, modText: boolean) {
+		if (modText)
+			this.selectedElement.attr('text/text', text);
 		this.selectedShape.setBody(text);
 	}
 
 	hasBody() {
-		if(this.selectedShape && this.selectedShape.getBody())
+		if (this.selectedShape && this.selectedShape.getBody())
 			return true;
 		return false;
 	}
 
 	getBody() {
-		if(this.selectedShape)
+		if (this.selectedShape)
 			return this.selectedShape.getBody();
 		return '';
 	}
@@ -188,7 +189,7 @@ export class ActivityService {
 
 	isDecision() {
 		if (this.selectedShape) {
-			if (this.selectedShape.getType() == 'IfNode')
+			if (this.selectedShape.getType() == 'IfNode' || this.selectedShape.getType() == 'WhileNode')
 				return true;
 		}
 		return false;
