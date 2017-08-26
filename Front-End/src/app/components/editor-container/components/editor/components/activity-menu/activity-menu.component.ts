@@ -24,7 +24,7 @@ export class ActivityMenuComponent {
 	// Valori dichiarazione variabile
 	nomeVar: string = '';
 	tipoVar: string = '';
-	valVar: string = '';
+	valVar: any = '';
 
 	// Valori if
 	va: string = '';
@@ -60,7 +60,7 @@ export class ActivityMenuComponent {
 
 	generaOp(corpo: string) {
 		corpo = corpo.trim();
-		this.activityService.addBody(corpo)
+		this.activityService.addBody(corpo);
 	}
 
 	generaIf() {
@@ -113,30 +113,64 @@ export class ActivityMenuComponent {
 		return false;
 	}
 
-	declareVar() {
-		if (typeof (this.valVar) == 'string')
-			this.valVar = this.valVar.trim();
-		this.nomeVar = this.nomeVar.trim();
-		if (this.nomeVar && this.tipoVar) {
-			let re = new RegExp('^[0-9]+| +');
-			if (re.test(this.nomeVar))
-				alert('Il nome della variabile non può iniziare con un numero o contenere spazi al suo interno');
-			else {
-				if (this.valVar)
-					var code = this.tipoVar + ' ' + this.nomeVar + ' = ' + this.valVar;
-				else
-					var code = this.tipoVar + ' ' + this.nomeVar;
-			}
+	confezionaVar() {
+		switch (this.tipoVar) {
+			case 'int':
+				this.valVar.toFixed();
+				break;
+			case 'short':
+				this.valVar.toFixed();
+				if (this.valVar > 32767) {
+					this.valVar = 32767;
+					alert('Valore massimo del tipo short superato, verrà salvato con valore 32767');
+				}
+				else if (this.valVar < -32768) {
+					alert('Valore minimo del tipo short superato, verrà salvato con valore -32768');
+					this.valVar = -32768;
+				}
+				break;
+			case 'long':
+				this.valVar.toFixed();
+				break;
+			case 'String':
+				this.valVar = '"' + this.valVar + '"';
+				break;
+			case 'char':
+				this.valVar = "'" + this.valVar + "'";
+				break;
 		}
-		else
-			alert('Tipo o/e nome della variabile assente/i');
+	}
+
+	declareVar() {
+		if (!this.modPro) {
+			if (typeof (this.valVar) == 'string')
+				this.valVar = this.valVar.trim();
+			this.nomeVar = this.nomeVar.trim();
+			if (this.nomeVar && this.tipoVar) {
+				let re = new RegExp('^[0-9]+| +');
+				if (re.test(this.nomeVar))
+					alert('Il nome della variabile non può iniziare con un numero o contenere spazi al suo interno');
+				else {
+					if (this.valVar) {
+						this.confezionaVar();
+						var code = this.tipoVar + ' ' + this.nomeVar + ' = ' + this.valVar;
+					}
+					else
+						var code = this.tipoVar + ' ' + this.nomeVar;
+				}
+			}
+			else
+				alert('Tipo o/e nome della variabile assente/i');
+		} else {
+			var code = this.nomeVar;
+		}
 		if (code) {
 			this.activityService.modBody(code, true);
 			this.activityService.addLocalVar(this.activityService.getSelectedShapeId(), this.nomeVar);
+			this.tipoVar = '';
+			this.valVar = '';
+			this.nomeVar = '';
 		}
-		this.tipoVar = '';
-		this.valVar = '';
-		this.nomeVar = '';
 	}
 
 	deleteVar(id: string) {
