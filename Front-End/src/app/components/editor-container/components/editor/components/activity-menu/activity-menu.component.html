@@ -7,7 +7,7 @@
   <!-- Modifica il nome del metodo -->
   <div class="row">
     <label> Modifica nome metodo: </label>
-    <div class="input-group linea">
+    <div class="input-group linea textInput">
       <input type="text" class="form-control" #newName>
       <span class="input-group-btn">
         <button class="btn btn-warning" type="button" (click)="this.changeName(newName.value)">
@@ -20,7 +20,7 @@
 	<!-- OPERAZIONE -->
 	<div class="row" *ngIf="this.activityService.isOperation() && !this.activityService.isVarDeclaration()">
     <label>Corpo operazione</label>
-    <div class="input-group">
+    <div class="input-group textInput">
       <input type="text" class="form-control" #corpo (keyup.enter)="this.activityService.modBody(corpo.value)">
       <span class="input-group-btn">
         <button class="btn btn-warning" type="button" (click)="this.activityService.modBody(corpo.value)">
@@ -179,7 +179,7 @@
 		</div>
 	</div>
 	<div>
-		<button type="button" class="btn btn-warning btnGenera" (click)="enterClassMode()">
+		<button type="button" class="btn btn-warning btnGenera back" (click)="enterClassMode()">
       <span class="glyphicon glyphicon-arrow-left freccia"></span>
       Diagramma delle Classi</button>
   </div>

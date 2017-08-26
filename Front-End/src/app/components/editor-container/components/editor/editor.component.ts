@@ -176,7 +176,7 @@ export class EditorComponent implements OnInit {
   flagCell: any;
 
   flagFigli: any;
-  
+
 
   /**
   * this constructor bind this class with the services use for callback function and draw the grid in the canvas
@@ -326,13 +326,13 @@ export class EditorComponent implements OnInit {
           this.connettore= null;
           this.graph.getCells().forEach(element => {
             if(element.id===cell.get('target').id) this.elementSelection1(element);
-            
+
           });
-          if(cell.attributes.type=='uml.Implementation') 
+          if(cell.attributes.type=='uml.Implementation')
             this.methodsToDelete.forEach(element => {
               this.classMenuService.removeMetodo(element.getNome());
             });
-          else 
+          else
             this.methodsToDelete.forEach(element => {
               this.mainEditorService.removeMetodo(element.getNome());
             });
@@ -364,7 +364,7 @@ export class EditorComponent implements OnInit {
         }
         this.noChange= false;
       });
-      
+
 
       /**
       * This method allows to the mouse's pointer to recognize when a class is clicked and select it
@@ -429,23 +429,23 @@ export class EditorComponent implements OnInit {
     selectElementsToConnect(cell: any) {
       if(this.elementToConnect) {
         this.elementSelection(cell);
-        if((this.connettore.attributes.type == 'uml.Generalization') && 
+        if((this.connettore.attributes.type == 'uml.Generalization') &&
            (this.selectedCell.model.attributes.type!='uml.Interface')) {
           this.mainEditorService.addSuperclass(this.elementToConnect.model.attributes.name,
             cell.model.attributes.name);
           this.extendedAttributes.forEach(element => {
-            this.mainEditorService.addAttributo(element.getTipo(), 
-                                                element.getNome(), 
-                                                element.getAccesso(), 
-                                                element.isStatic(), 
+            this.mainEditorService.addAttributo(element.getTipo(),
+                                                element.getNome(),
+                                                element.getAccesso(),
+                                                element.isStatic(),
                                                 element.isFinal());
-          });  
+          });
           this.extendedMethods.forEach(element => {
-            this.mainEditorService.addMetodo(element.isStatic(), 
-                                             element.isConstructor(), 
-                                             element.getTipoRitorno(), 
-                                             element.getNome(), 
-                                             element.getAccesso(), 
+            this.mainEditorService.addMetodo(element.isStatic(),
+                                             element.isConstructor(),
+                                             element.getTipoRitorno(),
+                                             element.getNome(),
+                                             element.getAccesso(),
                                              element.getListaArgomenti())
           });
         }
@@ -453,10 +453,10 @@ export class EditorComponent implements OnInit {
           if(this.interfaceMethods!=null){
             this.elementSelection(cell);
             this.interfaceMethods.forEach(element => {
-              this.classMenuService.addMetodo(element.getNome(), 
-                                              element.isStatic(), 
-                                              false, element.getTipoRitorno(), 
-                                              element.getAccesso(), 
+              this.classMenuService.addMetodo(element.getNome(),
+                                              element.isStatic(),
+                                              false, element.getTipoRitorno(),
+                                              element.getAccesso(),
                                               element.getListaArgomenti());
             });
           }
@@ -471,8 +471,8 @@ export class EditorComponent implements OnInit {
             }
           }
         });
-        if((cell.model.attributes.type != 'uml.Interface') || 
-            ((this.connettore.attributes.type === 'uml.Implementation') && 
+        if((cell.model.attributes.type != 'uml.Interface') ||
+            ((this.connettore.attributes.type === 'uml.Implementation') &&
             (this.interfaceMethods!=null))) {
             let element1 = this.elementToConnect;
             let freccia = new this.connettore.constructor({
@@ -501,7 +501,7 @@ export class EditorComponent implements OnInit {
             this.connettore= null;
             this.elementToConnect= null;
           }
-        } 
+        }
         else {
           this.interfaceMethods= null;
           this.elementToConnect = cell;
@@ -617,11 +617,11 @@ export class EditorComponent implements OnInit {
                 if(removed==true){
                   if(element.attributes.type=='uml.Implementation')
                     this.classMenuService.removeAttributo(nomeAtt);
-                  else  
+                  else
                     this.mainEditorService.removeAttributo(nomeAtt);
                 }
                 else{
-                  if(element.attributes.type=='uml.Implementation') 
+                  if(element.attributes.type=='uml.Implementation')
                     this.classMenuService.addAttributo(attr.getNome(), attr.isStatic(), attr.isFinal(), attr.getTipo(), attr.getAccesso());
                   else
                     this.mainEditorService.addAttributo(attr.getTipo(), attr.getNome(), attr.getAccesso(), attr.isStatic(), attr.isFinal());
@@ -637,7 +637,7 @@ export class EditorComponent implements OnInit {
                 else{
                   if(element.attributes.type=='uml.Implementation')
                     {this.classMenuService.addMetodo(met.getNome(), met.isStatic(), met.isConstructor(), met.getTipoRitorno(), met.getAccesso(), met.getListaArgomenti());console.log("si")}
-                  else  
+                  else
                     {this.mainEditorService.addMetodo(met.isStatic(), met.isConstructor(), met.getTipoRitorno(), met.getNome(), met.getAccesso(), met.getListaArgomenti()); console.log("non")}
                 }
               }
@@ -874,7 +874,7 @@ export class EditorComponent implements OnInit {
       }
 
       /**
-       * This function copies the newly created attribute 
+       * This function copies the newly created attribute
        */
       copiaAttr(tipo: string, nome:string, acc: string, stat: boolean, fin: boolean){
         this.addedAttribute= new Attributo(tipo, nome, acc, stat, fin);

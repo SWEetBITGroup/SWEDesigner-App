@@ -18,8 +18,13 @@
   top: 6vh;
   width: 27vw;
   background-color: dimgrey;
-  border-left: 1px solid black;
-  border-bottom: 1px solid black;
+  /* border-left: 1px solid black;
+  border-bottom: 1px solid black; */
+}
+
+ul {
+  padding: 5px;
+  margin-bottom: 0px;
 }
 
 li {

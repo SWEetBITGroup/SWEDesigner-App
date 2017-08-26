@@ -1,6 +1,7 @@
 .barra-menu {
   background: #42413D;
-  height: 6vh; 
+  height: 6vh;
+  width: 100vw;
 }
 
 .rowEdit {

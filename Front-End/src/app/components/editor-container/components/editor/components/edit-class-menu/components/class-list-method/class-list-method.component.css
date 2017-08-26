@@ -3,7 +3,7 @@
   margin: 0;
   padding: 0;
   padding-top: 10px;
-  padding-bottom: 10px;
+  padding-bottom: 0px;
   border-bottom: 1px solid white;
   width: 100%;
 }
@@ -18,8 +18,13 @@
   top: 6vh;
   width: 27vw;
   background-color: dimgrey;
-  border-left: 1px solid black;
-  border-bottom: 1px solid black;
+  /* border-left: 1px solid black;
+  border-bottom: 1px solid black; */
+}
+
+ul {
+  padding: 5px;
+  margin-bottom: 0px;
 }
 
 li {
@@ -41,4 +46,8 @@ li button {
 .titolo {
   margin: auto 5px;
   color: darkorange;
+}
+
+.list {
+  margin-bottom: 10px;
 }

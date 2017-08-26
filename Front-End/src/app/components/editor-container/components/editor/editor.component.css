@@ -1,9 +1,9 @@
 #paper {
   position: absolute;
-  width: calc(73vw - 95px);
+  width: 92vw;
   height: 94vh;
   top: 0;
-  left: 95px;
+  left: 8vw;
   margin: 0;
   padding: 0;
   overflow: hidden;
@@ -16,13 +16,13 @@
   margin: 0;
   padding: 0;
   top: 0;
-  left: 100%;
+  left: 73vw;
 }
 
 .toolbar {
   position: absolute;
-  width: 95px;
-  height: 100%;
+  width: 8vw;
+  height: 94vh;
   margin: 0;
   padding: 0;
   top: 0;

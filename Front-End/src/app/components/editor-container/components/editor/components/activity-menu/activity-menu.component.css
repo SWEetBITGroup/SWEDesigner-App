@@ -1,7 +1,7 @@
 .menu {
   background-color: dimgrey;
-  border-left: 1px solid black;
-  border-bottom: 1px solid black;
+  /* border-left: 1px solid black;
+  border-bottom: 1px solid black; */
   font-weight: bold;
   font-size: 14px;
   text-align: center;
@@ -43,4 +43,12 @@ table {
 
 .btnGenera {
   margin-top: 10px;
+}
+
+.back {
+  margin-bottom:5px;
+}
+
+.textInput {
+  margin: 10px;
 }
