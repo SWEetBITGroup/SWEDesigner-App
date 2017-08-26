@@ -1,8 +1,9 @@
 #paper {
   position: absolute;
-  width: 73vw;
+  width: calc(73vw - 95px);
   height: 94vh;
   top: 0;
+  left: 95px;
   margin: 0;
   padding: 0;
   overflow: hidden;
