@@ -124,6 +124,7 @@ export class ActivityService {
 
 	addBody(body: string) {
 		this.selectedShape.addBody(body);
+		this.changeTextElement(body);
 	}
 
 	getSelectedMethod() {
