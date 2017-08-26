@@ -6,9 +6,33 @@
   font-size: 14px;
   text-align: center;
   border-top: none;
+  color: darkorange;
 }
 
-h4 {
-  color: white;
+.nomeMetodo {
+  color: #ffce2b;
 }
 
+.row {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid white;
+}
+
+select {
+  color: #333;
+}
+
+input {
+  color: #333;
+}
+
+table {
+  color: #333;
+}
+
+.prova {
+  display: table-cell;
+  vertical-align: middle;
+  padding: 5px 10px 10px 10px;
+}
