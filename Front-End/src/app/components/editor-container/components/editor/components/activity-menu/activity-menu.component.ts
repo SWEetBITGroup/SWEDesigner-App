@@ -236,4 +236,8 @@ export class ActivityMenuComponent {
 		console.log(this.activityService.getShapeType());
 	}
 
+	getParams() {
+		return this.activityService.getParams();
+	}
+
 }

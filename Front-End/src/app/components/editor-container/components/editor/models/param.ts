@@ -50,4 +50,8 @@ export class Param {
     changeNome(nome: string) {
         this.name = nome;
     }
+
+    toString() {
+        return this.type + ' ' + this.name;
+    }
 }

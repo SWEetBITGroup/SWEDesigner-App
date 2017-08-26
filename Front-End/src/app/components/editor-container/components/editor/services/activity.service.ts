@@ -4,6 +4,7 @@ import { MainEditorService } from '../../../../../services/main-editor.service';
 import { Classe } from '../models/classe';
 import { Global } from '../../../../../models/global';
 import { Metodo } from '../models/metodo';
+import { Param } from '../models/param';
 import { AllShape } from '../models/all-shape';
 import { IfNode } from '../models/if-node';
 import { Operation } from '../models/operation';
@@ -32,6 +33,7 @@ export class ActivityService {
 
 	private endID: string;
 
+	private params: Param[];
 	private varibles: Map<string, string>;
 	private vars: string[];
 
@@ -88,6 +90,10 @@ export class ActivityService {
 		this.vars = new Array<string>();
 		this.varibles.forEach(val => {
 			this.vars.push(val);
+		});
+		this.params = metodo.getListaArgomenti();
+		this.params.forEach(e => {
+			this.vars.push(e.getNome());
 		});
 	}
 
@@ -152,6 +158,9 @@ export class ActivityService {
 			else
 				return 'while';
 		}
+	}
+	getParams() {
+		return this.params;
 	}
 
 	changeName(name: string) {
@@ -273,6 +282,7 @@ export class ActivityService {
 				ind = index;
 		});
 		this.vars.splice(ind, 1);
+		this.varibles.delete(id);
 		if (this.varibles.delete(id)) {
 			console.log('variabile eliminata correttamente');
 		}

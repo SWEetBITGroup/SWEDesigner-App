@@ -2,7 +2,7 @@
   <!-- Visualizza il nome del metodo -->
   <div class="row nomeMetodo">
 		{{ this.activityService.getNameMethod() }}
-  </div>
+	</div>
 
   <!-- Modifica il nome del metodo -->
   <div class="row" [hidden]="isMain()">
@@ -15,7 +15,15 @@
         </button>
       </span>
     </div>
-  </div>
+	</div>
+	
+	<!-- Lista Parametri -->
+	<div [hidden]="!getParams()">
+		<h3>Lista parametri in ingresso</h3>
+		<ul>
+			<li *ngFor="let p of this.getParams()">{{p.toString()}}</li>
+		</ul>
+	</div>
 
 	<!-- OPERAZIONE -->
 	<div class="row" *ngIf="this.activityService.isOperation() && !this.activityService.isVarDeclaration()">
