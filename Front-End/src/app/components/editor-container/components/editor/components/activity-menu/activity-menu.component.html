@@ -81,7 +81,7 @@
 				<div	[hidden]="!this.activityService.hasBody()">
 					<h4>for ( {{ this.activityService.getBody() }} )</h4>
 				</div>
-				<button class="btn btn-default" (click)="toggleModPro()">
+				<button class="btn btn-warning" (click)="toggleModPro()">
 					{{mod}}
 				</button>
 				<div [hidden]="modPro">
@@ -102,10 +102,10 @@
 					<label>Scrivi corpo FOR</label>
 					<input type="text" [(ngModel)]="nomeInd" /><br />
 				</div>
-				<span [hidden]="this.activityService.hasBody()"><button class="btn btn-default" (click)="generaFor()">
+				<span [hidden]="this.activityService.hasBody()"><button class="btn btn-warning" (click)="generaFor()">
 					Genera FOR
 				</button></span>
-				<span [hidden]="!this.activityService.hasBody()"><button class="btn btn-default" (click)="modificaFor()">
+				<span [hidden]="!this.activityService.hasBody()"><button class="btn btn-warning" (click)="modificaFor()">
 					Modifica FOR
 				</button></span>
 			</div>
@@ -114,7 +114,7 @@
 				<div	[hidden]="!this.activityService.hasBody()">
 					<h4>while ( {{ this.activityService.getBody() }} )</h4>
 				</div>
-				<button class="btn btn-default" (click)="toggleModPro()">
+				<button class="btn btn-warning" (click)="toggleModPro()">
 					{{mod}}
 				</button>
 				<div [hidden]="modPro">
@@ -135,10 +135,10 @@
 					<label>Scrivi corpo WHILE</label>
 					<input type="text" [(ngModel)]="va" /><br />
 				</div>
-				<span [hidden]="this.activityService.hasBody()"><button class="btn btn-default" (click)="generaWhile()">
+				<span [hidden]="this.activityService.hasBody()"><button class="btn btn-warning" (click)="generaWhile()">
           Genera WHILE
 				</button></span>
-				<span [hidden]="!this.activityService.hasBody()"><button class="btn btn-default" (click)="modificaWhile()">
+				<span [hidden]="!this.activityService.hasBody()"><button class="btn btn-warning" (click)="modificaWhile()">
 					Modifica WHILE
 				</button></span>
 			</div>
@@ -147,7 +147,7 @@
 				<div	[hidden]="!this.activityService.hasBody()">
 					<h4>if ( {{ this.activityService.getBody() }} )</h4>
 				</div>
-				<button class="btn btn-default" (click)="toggleModPro()">
+				<button class="btn btn-warning" (click)="toggleModPro()">
 					{{mod}}
 				</button>
 				<div [hidden]="modPro">
@@ -168,17 +168,17 @@
 					<label>Scrivi corpo IF</label>
 					<input type="text" [(ngModel)]="va" /><br />
 				</div>
-				<span [hidden]="this.activityService.hasBody()"><button class="btn btn-default" (click)="generaIf()">
+				<span [hidden]="this.activityService.hasBody()"><button class="btn btn-warning" (click)="generaIf()">
           Genera IF
 				</button></span>
-				<span [hidden]="!this.activityService.hasBody()"><button class="btn btn-default" (click)="modificaIf()">
+				<span [hidden]="!this.activityService.hasBody()"><button class="btn btn-warning" (click)="modificaIf()">
 					Modifica IF
 				</button></span>
 			</div>
 		</div>
 	</div>
 	<div>
-		<button class="btn btn-default" (click)="enterClassMode()">
+		<button type="button" class="btn btn-warning" (click)="enterClassMode()">
       <span class="glyphicon glyphicon-arrow-left freccia"></span>
       Diagramma delle Classi</button>
     </div>
