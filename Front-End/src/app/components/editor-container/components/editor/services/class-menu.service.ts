@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { Injectable } from '@angular/core';
-import { Subject }    from 'rxjs/Subject';
+import { Subject } from 'rxjs/Subject';
 import { MainEditorService } from '../../../../../services/main-editor.service';
 import { ActivityService } from '../services/activity.service'
 import { Subscription } from 'rxjs/Subscription';
@@ -32,15 +32,15 @@ export class ClassMenuService {
   /**
   * Array of primitive data types
   */
-  types = ['byte','short','int','long','float','double','boolean','char','String'];
+  types = ['byte', 'short', 'int', 'long', 'float', 'double', 'boolean', 'char', 'String'];
   /**
   * Array of primitive data types
   */
-  methodTypes = ['void','byte','short','int','long','float','double','boolean','char','String'];
+  methodTypes = ['void', 'byte', 'short', 'int', 'long', 'float', 'double', 'boolean', 'char', 'String'];
   /**
   * Array of visibility
   */
-  accessoAttr = ['public','protected','private'];
+  accessoAttr = ['public', 'protected', 'private'];
   /**
   * Used to store the selected type for the constructor of a new attribute.
   */
@@ -96,11 +96,11 @@ export class ClassMenuService {
   * @param mainEditorService used to create a new instantiation of ClassMenuService
   */
   constructor(private mainEditorService: MainEditorService,
-    private activityService: ActivityService){
-      this.sub = this.selectedClass.subscribe( (x) => {
-        this.classe = x;
-        this.name = x.getClassName();
-      }
+    private activityService: ActivityService) {
+    this.sub = this.selectedClass.subscribe((x) => {
+      this.classe = x;
+      this.name = x.getClassName();
+    }
     );
   }
   /**
@@ -109,7 +109,7 @@ export class ClassMenuService {
   */
   classSelection(classe: any) {
     this.selectedClassSource.next(classe);
-    this.classe= classe;
+    this.classe = classe;
   }
   /**
   * Change the name of the selected class and resets the input value into the HTML template
@@ -129,31 +129,29 @@ export class ClassMenuService {
       let vis;
       switch (acc) {  // switch per assegnare il giusto simbolo alla visibilità di un attributo
         case 'public':
-        vis = '+';
-        break;
+          vis = '+';
+          break;
         case 'protected':
-        vis = '#';
-        break;
+          vis = '#';
+          break;
         case 'private':
-        vis = '-';
+          vis = '-';
       }
       let stat = '';
       let final = '';
-      if(staticAtt)
-        {
+      if (staticAtt) {
         stat = 'static';
-        attributi.push(vis+' '+stat+' '+nome+' : '+ tipo);
+        attributi.push(vis + ' ' + stat + ' ' + nome + ' : ' + tipo);
       }
-      else if(finalAtt)
-        {
+      else if (finalAtt) {
         final = 'final';
-        attributi.push(vis+' '+final+' '+nome+' : '+ tipo);
+        attributi.push(vis + ' ' + final + ' ' + nome + ' : ' + tipo);
       }
       else {
-        attributi.push(vis+' '+nome+' : '+ tipo);
+        attributi.push(vis + ' ' + nome + ' : ' + tipo);
       }
-      this.classe.set('attributes',null); // Hack per far funzionare l'event change:attrs
-      this.classe.set('attributes',attributi);
+      this.classe.set('attributes', null); // Hack per far funzionare l'event change:attrs
+      this.classe.set('attributes', attributi);
       // Reset input field
       this.selectedAccAtt = 'public';
       this.selectedAccAttEdit = 'public';
@@ -165,14 +163,14 @@ export class ClassMenuService {
     } else {
       alert('Alcuni capi del form per la creazione del nuovo attributo non sono stati compilati');
     }
-      try {
-        this.mainEditorService.addAttributo(tipo, nome, acc, staticAtt, finalAtt);
-      } catch (error) {
-        if( error.message == 'NomePresente') {
-          alert('Non è possibile inserire due attributi con lo stesso nome');
-          return;
-        }
+    try {
+      this.mainEditorService.addAttributo(tipo, nome, acc, staticAtt, finalAtt);
+    } catch (error) {
+      if (error.message == 'NomePresente') {
+        alert('Non è possibile inserire due attributi con lo stesso nome');
+        return;
       }
+    }
   }
   /**
   * Removes an attribute of the given name from the class element and from the class object of type Classe
@@ -183,13 +181,13 @@ export class ClassMenuService {
     attributi.splice(attributi.findIndex(element => {
       let att = element.split(' ');
       for (let i = 0; i < att.length; i++) {
-        if ( att[i] == nome ) {
+        if (att[i] == nome) {
           return element;
         }
       }
     }), 1);
-    this.classe.set('attributes',null);
-    this.classe.set('attributes',attributi);
+    this.classe.set('attributes', null);
+    this.classe.set('attributes', attributi);
     this.mainEditorService.removeAttributo(nome);
   }
   /**
@@ -201,7 +199,7 @@ export class ClassMenuService {
   * @param stat check if the attribute is static
   * @param final check if the attribute is final
   */
-  changeAttributo(name: string, oldName: string, tipo: string, acc: string , stat: boolean, final: boolean) {
+  changeAttributo(name: string, oldName: string, tipo: string, acc: string, stat: boolean, final: boolean) {
     this.removeAttributo(oldName);
     this.addAttributo(name, stat, final, tipo, acc);
   }
@@ -217,23 +215,23 @@ export class ClassMenuService {
   * @param nome
   */
   addMetodo(nome: string, staticMet: boolean, constructor: boolean, tipo: string, acc: string, params: any = null) {
-    if((nome && tipo && acc) || (constructor && acc) ) {
+    if ((nome && tipo && acc) || (constructor && acc)) {
       let metodi = this.classe.attributes.methods;
       let vis;
       switch (acc) {  // switch per assegnare il giusto simbolo alla visibilità di un attributo
         case 'public':
-        vis = '+';
-        break;
+          vis = '+';
+          break;
         case 'protected':
-        vis = '#';
-        break;
+          vis = '#';
+          break;
         case 'private':
-        vis = '-';
+          vis = '-';
       }
       let parametri: String = '';
       for (let ind = 0; ind < params.length; ind++) {
         parametri += params[ind].getNome() + ' : ' + params[ind].getTipo();
-        if (ind != params.length - 1 ) {
+        if (ind != params.length - 1) {
           parametri += ', ';
         }
       }
@@ -247,9 +245,9 @@ export class ClassMenuService {
       this.selectedAccMet = 'public';
       this.selectedTipoMet = 'void';
       $('#nomeMetodo').val('');
-      if(this.staticMetCheckbox!= null)
+      if (this.staticMetCheckbox != null)
         this.staticMetCheckbox.nativeElement.checked = false;
-      if(this.constructorCheckbox!= null)
+      if (this.constructorCheckbox != null)
         this.constructorCheckbox.nativeElement.checked = false;
       $('#tipiParam').val('');
       $('#nomeParam').val('');
@@ -257,18 +255,18 @@ export class ClassMenuService {
     } else {
       alert('Alcuni capi del form per la creazione del nuovo metodo non sono stati compilati');
     }
-      try {
-        if (constructor == true) {
-          nome = this.name;
-          tipo = this.name;
-        }
-        this.mainEditorService.addMetodo(staticMet, constructor, tipo, nome, acc, params);
-      } catch (error) {
-        if (error.message == 'NomePresente') {
-          alert('Non è possibile inserire due o più metodi con lo stesso nome');
-          return;
-        }
+    try {
+      if (constructor == true) {
+        nome = this.name;
+        tipo = this.name;
       }
+      this.mainEditorService.addMetodo(staticMet, constructor, tipo, nome, acc, params);
+    } catch (error) {
+      if (error.message == 'NomePresente') {
+        alert('Non è possibile inserire due o più metodi con lo stesso nome');
+        return;
+      }
+    }
   }
   /**
   * Removes a method of the given name from the class element and from the class object of type Classe
@@ -287,7 +285,7 @@ export class ClassMenuService {
     this.classe.set('methods', null);
     this.classe.set('methods', metodi);
     this.mainEditorService.removeMetodo(nome);
-    if ( nome == 'main') {
+    if (nome == 'main') {
       this.isThereAMain = false;
     }
   }
@@ -320,7 +318,7 @@ export class ClassMenuService {
   * @memberof ClassMenuService
   */
   isMethodAddable() {
-    if(!this.costruttore && !this.nomeMet) {
+    if (!this.costruttore && !this.nomeMet) {
       return true;
     } else {
       return false;
@@ -328,16 +326,16 @@ export class ClassMenuService {
   }
   // JQUERY FUNCTION
   closeAllCollapsedList() {
-    if ( $('#listaMetodi').attr('aria-expanded') ) {
+    if ($('#listaMetodi').attr('aria-expanded')) {
       $('#listaMetodi').removeClass('in');
     }
-    if ( $('#listaAttributi').attr('aria-expanded') ) {
+    if ($('#listaAttributi').attr('aria-expanded')) {
       $('#listaAttributi').removeClass('in');
     }
-    if ( $('#aggiungiMetodo').attr('aria-expanded') ) {
+    if ($('#aggiungiMetodo').attr('aria-expanded')) {
       $('#aggiungiMetodo').removeClass('in');
     }
-    if ( $('#aggiungiAttributo').attr('aria-expanded') ) {
+    if ($('#aggiungiAttributo').attr('aria-expanded')) {
       $('#aggiungiAttributo').removeClass('in');
     }
   }

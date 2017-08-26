@@ -5,7 +5,7 @@
   </div>
 
   <!-- Modifica il nome del metodo -->
-  <div class="row">
+  <div class="row" [hidden]="isMain()">
     <label> Modifica nome metodo: </label>
     <div class="input-group linea textInput">
       <input type="text" class="form-control" #newName>
@@ -19,11 +19,14 @@
 
 	<!-- OPERAZIONE -->
 	<div class="row" *ngIf="this.activityService.isOperation() && !this.activityService.isVarDeclaration()">
+		<span [hidden]="!this.activityService.hasBody()">
+			<h4>{{ this.activityService.getBody() }}</h4>
+		</span>
     <label>Corpo operazione</label>
     <div class="input-group textInput">
-      <input type="text" class="form-control" #corpo (keyup.enter)="this.activityService.modBody(corpo.value)">
+      <input type="text" class="form-control" #corpo (keyup.enter)="generaOp(corpo.value)">
       <span class="input-group-btn">
-        <button class="btn btn-warning" type="button" (click)="this.activityService.modBody(corpo.value)">
+        <button class="btn btn-warning" type="button" (click)="generaOp(corpo.value)">
           <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
         </button>
       </span>
@@ -31,7 +34,10 @@
   </div>
 
 	<!-- VARIABILE -->
-	<div class="row" [hidden]="!this.activityService.isVarDeclaration()">
+	<div class="row" *ngIf="this.activityService.isVarDeclaration()">
+			<span [hidden]="!this.activityService.hasBody()">
+				<h4>{{ this.activityService.getBody() }}</h4>
+			</span>
     <h4>Dichiarazione variabile</h4>
     <div class="table">
       <label>Seleziona tipo</label>

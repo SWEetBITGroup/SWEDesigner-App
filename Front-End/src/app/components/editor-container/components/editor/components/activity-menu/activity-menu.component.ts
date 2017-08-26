@@ -52,6 +52,17 @@ export class ActivityMenuComponent {
 		$('#newName').val('');
 	}
 
+	isMain() {
+		if (this.activityService.getNameMethod() == 'main')
+			return true;
+		return false;
+	}
+
+	generaOp(corpo: string) {
+		corpo = corpo.trim();
+		this.activityService.addBody(corpo)
+	}
+
 	generaIf() {
 		if (!this.modPro) {
 			// let re = new RegExp('^[0-9]+| +');
@@ -103,7 +114,7 @@ export class ActivityMenuComponent {
 	}
 
 	declareVar() {
-		if (typeof(this.valVar) == 'string')
+		if (typeof (this.valVar) == 'string')
 			this.valVar = this.valVar.trim();
 		this.nomeVar = this.nomeVar.trim();
 		if (this.nomeVar && this.tipoVar) {
@@ -119,8 +130,10 @@ export class ActivityMenuComponent {
 		}
 		else
 			alert('Tipo o/e nome della variabile assente/i');
-		this.activityService.modBody(code, true);
-		this.activityService.addLocalVar(this.activityService.getSelectedShapeId(), this.nomeVar);
+		if (code) {
+			this.activityService.modBody(code, true);
+			this.activityService.addLocalVar(this.activityService.getSelectedShapeId(), this.nomeVar);
+		}
 		this.tipoVar = '';
 		this.valVar = '';
 		this.nomeVar = '';

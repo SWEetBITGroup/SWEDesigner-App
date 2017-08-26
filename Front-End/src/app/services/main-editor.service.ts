@@ -18,56 +18,56 @@ export class MainEditorService {
   /**
    * 'project' is used to store and retrive information about the current project
    */
-  private project = new Global();
+	private project = new Global();
   /**
    * 'selectedClass' stores the corresponding class of tipe ´Classe´ of the
    * selected class in the editor's canvas
    */
-  private selectedClasse: Classe;
+	private selectedClasse: Classe;
   /**
    * 'editorComponent' is used to access directly the EditorComponent
    */
-  private editorComp: EditorComponent;
+	private editorComp: EditorComponent;
   /**
    * 'graph' is used to store the editor's graph
    */
-  private graph: JSON;
+	private graph: JSON;
 
   /**
    * 'activityMode' is a flag which indicates if the activity diagram is in use
    */
-  private activityMode = false;
+	private activityMode = false;
 
-  private mainExist = false;
+	private mainExist = false;
 
-  varCode: string[];
+	varCode: string[];
 
 
-  constructor() {
-  }
+	constructor() {
+	}
 
   /**
    * This method is used to set the instantiation of the EditorComponent as
    * internal property of this class
    * @param editCmp the EditorComponent instance
    */
-  setEditorComp(editCmp: EditorComponent) {
-    this.editorComp = editCmp;
-  }
+	setEditorComp(editCmp: EditorComponent) {
+		this.editorComp = editCmp;
+	}
 
   /**
    * This method is used to retrive the array of classes present in the project
    */
-  getClassList() {
-    return this.project.getClassi();
-  }
+	getClassList() {
+		return this.project.getClassi();
+	}
 
   /**
    * This method returns the selected class of type ´Classe´
    */
-  getSelectedClasse() {
-    return this.selectedClasse;
-  }
+	getSelectedClasse() {
+		return this.selectedClasse;
+	}
 
   /**
    * Add an object of type Classe into the project's collection
@@ -75,47 +75,47 @@ export class MainEditorService {
    * of the parameter graphelement.
    * @param graphElement this is an element of the graphical library JointJS
    */
-  addClass(classe: Classe, graphElement: any) {
-    this.project.getClassi().push(classe);
-    this.editorComp.addElement(graphElement);
-  }
+	addClass(classe: Classe, graphElement: any) {
+		this.project.getClassi().push(classe);
+		this.editorComp.addElement(graphElement);
+	}
 
   /**
    * Search for a class, in the project's collection of classes,
    * which have the same name as the one given as parameter.
    * @param nome name of the class to search
    */
-  selectClasse(nome: string) {
-    this.project.getClassi().forEach(classe => {
-      if(classe.getNome() == nome) {
-        this.selectedClasse = classe;
-      }
-    });
+	selectClasse(nome: string) {
+		this.project.getClassi().forEach(classe => {
+			if (classe.getNome() == nome) {
+				this.selectedClasse = classe;
+			}
+		});
 
-    if(!this.selectedClasse)
-      console.log('Classe mancante'); // TODO: spend a moment to code it as a real warning
-  }
+		if (!this.selectedClasse)
+			console.log('Classe mancante'); // TODO: spend a moment to code it as a real warning
+	}
 
   /**
    * Sets the flag activityMode to true
    */
-  setActivityMode() {
-    this.activityMode = true;
-  }
+	setActivityMode() {
+		this.activityMode = true;
+	}
   /**
    * Sets the flas activityMode to false
    */
-  setClassMode() {
-    this.activityMode = false;
-  }
+	setClassMode() {
+		this.activityMode = false;
+	}
   /**
    * Returns the current value of the flag activityMode
    * @returns if the status is true the activity mode is activated,
    * if it's false the class mode is active.
    */
-  getActivityModeStatus() {
-    return this.activityMode;
-  }
+	getActivityModeStatus() {
+		return this.activityMode;
+	}
 
   /**
    * Calls the addAttribute method of the ´selectedClasse´
@@ -123,52 +123,52 @@ export class MainEditorService {
    * @param nome is the name of the attribute to add as parameter to addAttributo
    * @param acc is the visibility of the attribute to add as parameter to addAttributo
    */
-  addAttributo(tipo: string, nome:string, acc: string, stat: boolean, fin: boolean) {
-    this.editorComp.copiaAttr(tipo, nome, acc, stat, fin);
-    this.editorComp.noChange= true;
-    this.editorComp.changeMethod= true;
-    this.selectedClasse.addAttributo(tipo,nome,acc,stat, fin);
-    if(this.editorComp.flagFigli!=true) this.editorComp.aggiornaFigli(false, this.selectedClasse, new Attributo(tipo, nome, acc, stat, fin), null, nome, null)
-    this.editorComp.setUndoRedo();
-  }
+	addAttributo(tipo: string, nome: string, acc: string, stat: boolean, fin: boolean) {
+		this.editorComp.copiaAttr(tipo, nome, acc, stat, fin);
+		this.editorComp.noChange = true;
+		this.editorComp.changeMethod = true;
+		this.selectedClasse.addAttributo(tipo, nome, acc, stat, fin);
+		if (this.editorComp.flagFigli != true) this.editorComp.aggiornaFigli(false, this.selectedClasse, new Attributo(tipo, nome, acc, stat, fin), null, nome, null)
+		this.editorComp.setUndoRedo();
+	}
 
   /**
    * Calls the removeAttr method of the ´selectedClasse´
    * @param nome is the name of the attribute to remove which is passed to the removeAttr method
    */
-  removeAttributo(nome: string) {
-    if(this.editorComp.fromUndo==true||this.editorComp.fromUndo==null) {
-      this.editorComp.noChange= true;
-      this.selectedClasse.removeAttr(nome);
-      this.editorComp.setUndoRedo();
-    }
-    this.selectedClasse.removeAttr(nome);
-    if(this.editorComp.flagFigli!=true) this.editorComp.aggiornaFigli(true, this.selectedClasse, null, null, nome, null)
-  }
+	removeAttributo(nome: string) {
+		if (this.editorComp.fromUndo == true || this.editorComp.fromUndo == null) {
+			this.editorComp.noChange = true;
+			this.selectedClasse.removeAttr(nome);
+			this.editorComp.setUndoRedo();
+		}
+		this.selectedClasse.removeAttr(nome);
+		if (this.editorComp.flagFigli != true) this.editorComp.aggiornaFigli(true, this.selectedClasse, null, null, nome, null)
+	}
 
-  changeAttributo(oldName: string, name: string, type: string, acc: string) {
-    this.selectedClasse.changeAttr(oldName,type,name,acc);
-  }
+	changeAttributo(oldName: string, name: string, type: string, acc: string) {
+		this.selectedClasse.changeAttr(oldName, type, name, acc);
+	}
 
   /**
    * This method stores into the ´this.graph´ properties the graph given
    * @param graph Is a graph given in JSON format
    */
-  storeGraph(graph: JSON) {
-    this.graph = graph;
-  }
+	storeGraph(graph: JSON) {
+		this.graph = graph;
+	}
 
   /**
    * Is used to restore the class diagram from the store graph, it calls
    * the replaceDiagram method of the EditorComponent and then sets
    * ´this.activityMode´ to false
    */
-  enterClassMode(method: Metodo){
-    method.addDiagram(this.editorComp.graph.toJSON());
-    this.editorComp.replaceDiagram(this.graph);
-    this.activityMode = false;
-    this.editorComp.resetModifica();
-  }
+	enterClassMode(method: Metodo) {
+		method.addDiagram(this.editorComp.graph.toJSON());
+		this.editorComp.replaceDiagram(this.graph);
+		this.activityMode = false;
+		this.editorComp.resetModifica();
+	}
 
   /**
    * Calls the methods addMetodo of ´this.selectedClasse´ to add a new method into
@@ -179,34 +179,34 @@ export class MainEditorService {
    * @param listArgs this parameter is optional, 'listArgs' is the list of parameters which defines the
    * signature of the function
    */
-  addMetodo(staticMet: boolean, costr: boolean, tipo: string, nome:string, acc: string, listArgs?: any) {
-    this.editorComp.addedMethod= new Metodo(staticMet,costr,nome,acc,tipo,listArgs);
-    this.editorComp.noChange= true;
-    this.editorComp.changeMethod= true;
-    this.selectedClasse.addMetodo(this.editorComp.addedMethod);
-    if(this.editorComp.flagFigli!=true) this.editorComp.aggiornaFigli(false, this.selectedClasse, null, this.editorComp.addedMethod, null, null);
-    this.editorComp.setUndoRedo();
-}
+	addMetodo(staticMet: boolean, costr: boolean, tipo: string, nome: string, acc: string, listArgs?: any) {
+		this.editorComp.addedMethod = new Metodo(staticMet, costr, nome, acc, tipo, listArgs);
+		this.editorComp.noChange = true;
+		this.editorComp.changeMethod = true;
+		this.selectedClasse.addMetodo(this.editorComp.addedMethod);
+		if (this.editorComp.flagFigli != true) this.editorComp.aggiornaFigli(false, this.selectedClasse, null, this.editorComp.addedMethod, null, null);
+		this.editorComp.setUndoRedo();
+	}
 
   /**
    * Calls removeMetodo of ´selectedClasse´
    * @param nome is the name of the method to eliminate, is passed as parameter to selectedClasse.removeMetodo
    */
-  removeMetodo(nome: string) {
-    if(this.editorComp.fromUndo==false||this.editorComp.fromUndo==null) {
-      this.editorComp.noChange= true;
-      this.editorComp.changeMethod= true;
-      this.editorComp.classeEliminata= this.editorComp.selectedCell;
-      this.editorComp.rMethod= this.selectedClasse.retriveMethod(nome);
-      this.editorComp.addedMethod= null; 
-      this.editorComp.removedMethod= null;
-      this.editorComp.setUndoRedo();
-      this.selectedClasse.removeMetodo(nome);
-      this.editorComp.setUndoRedo();
-    }
-    else this.selectedClasse.removeMetodo(nome);
-    if(this.editorComp.flagFigli!=true) this.editorComp.aggiornaFigli(true, this.selectedClasse, null, null, null, nome);
-  }
+	removeMetodo(nome: string) {
+		if (this.editorComp.fromUndo == false || this.editorComp.fromUndo == null) {
+			this.editorComp.noChange = true;
+			this.editorComp.changeMethod = true;
+			this.editorComp.classeEliminata = this.editorComp.selectedCell;
+			this.editorComp.rMethod = this.selectedClasse.retriveMethod(nome);
+			this.editorComp.addedMethod = null;
+			this.editorComp.removedMethod = null;
+			this.editorComp.setUndoRedo();
+			this.selectedClasse.removeMetodo(nome);
+			this.editorComp.setUndoRedo();
+		}
+		else this.selectedClasse.removeMetodo(nome);
+		if (this.editorComp.flagFigli != true) this.editorComp.aggiornaFigli(true, this.selectedClasse, null, null, null, nome);
+	}
 
   /**
    * This method search for a method into the selectedClasse and retrives it's diagram
@@ -214,97 +214,97 @@ export class MainEditorService {
    * Then sets the flag ´this.activityMode´ to true
    * @param name name of the method to find
    */
-  enterActivityMode(name: string) {
-    try {
-      var metodo = this.selectedClasse.retriveMethod(name);
-    } catch (e) {
-      if(e.message == 'Metodo non presente')
-        console.log('Il metodo non è presente nella classe')
-    }
-    if(!this.activityMode && metodo) {
-      this.editorComp.replaceDiagram(metodo.getDiagram());
-      this.activityMode = true;
-      this.editorComp.selectedCell = null;
-      this.editorComp.resetModifica();
-    }
-  }
+	enterActivityMode(name: string) {
+		try {
+			var metodo = this.selectedClasse.retriveMethod(name);
+		} catch (e) {
+			if (e.message == 'Metodo non presente')
+				console.log('Il metodo non è presente nella classe')
+		}
+		if (!this.activityMode && metodo) {
+			this.editorComp.replaceDiagram(metodo.getDiagram());
+			this.activityMode = true;
+			this.editorComp.selectedCell = null;
+			this.editorComp.resetModifica();
+		}
+	}
 
-  isThereAMain() {
-    return this.mainExist;
-  }
+	isThereAMain() {
+		return this.mainExist;
+	}
 
-  addConnettore(connettore: any) {
-    this.editorComp.addConnettore(connettore);
-  }
+	addConnettore(connettore: any) {
+		this.editorComp.addConnettore(connettore);
+	}
 
-  addSuperclass(subclassName: string, superclassName: string) {
-    console.log(subclassName);
-    let subclass = this.getClass(subclassName);
-    subclass.addSuperclass(superclassName);
-  }
+	addSuperclass(subclassName: string, superclassName: string) {
+		console.log(subclassName);
+		let subclass = this.getClass(subclassName);
+		subclass.addSuperclass(superclassName);
+	}
 
-  getClass(name: string) {
-    return this.project.getClasse(name);
-  }
+	getClass(name: string) {
+		return this.project.getClasse(name);
+	}
 
-  getProject() {
-    return this.project;
-  }
+	getProject() {
+		return this.project;
+	}
 
-  retriveGraph() {
-    this.project.setDiagramma(this.editorComp.graph.toJSON());
-  }
+	retriveGraph() {
+		this.project.setDiagramma(this.editorComp.graph.toJSON());
+	}
 
-  importProject(importData) {
-    let proj = JSON.parse(importData._body).data;
-    console.log(JSON.parse(proj));
-    let newProj = new Global();
-    newProj.import(JSON.parse(proj));
-    this.project = newProj;
-    this.editorComp.replaceDiagram(JSON.parse(newProj.getDiagramma()));
-  }
+	importProject(importData) {
+		let proj = JSON.parse(importData._body).data;
+		console.log(JSON.parse(proj));
+		let newProj = new Global();
+		newProj.import(JSON.parse(proj));
+		this.project = newProj;
+		this.editorComp.replaceDiagram(JSON.parse(newProj.getDiagramma()));
+	}
 
   /**
    * This function load a project from database into editor.
    * @param project 
    */
-  loadProject(project){ 
-    console.log(project._body);
-    let proj = project._body;
-    let newProj = new Global();
-    proj.project = JSON.parse(proj.project);
-    newProj.import(proj);
-    this.project = newProj;
-    this.editorComp.replaceDiagram(JSON.parse(newProj.getDiagramma()));
-  }
+	loadProject(project) {
+		console.log(project._body);
+		let proj = project._body;
+		let newProj = new Global();
+		proj.project = JSON.parse(proj.project);
+		newProj.import(proj);
+		this.project = newProj;
+		this.editorComp.replaceDiagram(JSON.parse(newProj.getDiagramma()));
+	}
 
-  removeClass(name: string, classe) {
-    this.project.removeClass(name);
-    this.editorComp.deleteElement(classe);
-  }
+	removeClass(name: string, classe) {
+		this.project.removeClass(name);
+		this.editorComp.deleteElement(classe);
+	}
 
-  addShape(cell) {
-    this.editorComp.addElement(cell);
-  }
+	addShape(cell) {
+		this.editorComp.addElement(cell);
+	}
 
-  connetActivity(con: any) {
-    this.editorComp.addConnettore(con);
-  }
+	connetActivity(con: any) {
+		this.editorComp.addConnettore(con);
+	}
 
-  setConnetionActivity(ids: string[]) {
-    console.log(ids);
-  }
+	setConnetionActivity(ids: string[]) {
+		console.log(ids);
+	}
 
-  setCode(vars: string[]) {
-    this.varCode = vars;
-  }
+	setCode(vars: string[]) {
+		this.varCode = vars;
+	}
 
-  checkrefresh(){
-    window.onbeforeunload = function(e){
-      var text = "PAGINA REFRESHATA";
-      e.returnValue = text;
-      return text;
-    }
-  }
+	checkrefresh() {
+		window.onbeforeunload = function (e) {
+			var text = "PAGINA REFRESHATA";
+			e.returnValue = text;
+			return text;
+		}
+	}
 
 }

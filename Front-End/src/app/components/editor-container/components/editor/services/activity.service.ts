@@ -177,7 +177,7 @@ export class ActivityService {
 
 	modBody(text: string, modText: boolean) {
 		if (modText)
-			this.selectedElement.attr('text/text', text);
+			this.changeTextElement(text);
 		this.selectedShape.setBody(text);
 	}
 
@@ -280,5 +280,12 @@ export class ActivityService {
 	salvaMetodo() {
 		this.selectedMethod.setVars(this.varibles);
 		this.mainEditorService.enterClassMode(this.selectedMethod);
+	}
+
+	changeTextElement(text: string) {
+		if (text.length > 18)
+			this.selectedElement.attr('text/text', text.substr(0,17)+'...');
+		else
+			this.selectedElement.attr('text/text', text);
 	}
 }
