@@ -219,8 +219,8 @@ export class EditorComponent implements OnInit {
       this.graph = new joint.dia.Graph;
       this.paper = new joint.dia.Paper({
         el: $("#paper"),
-        width: $('#paper').width(),
-        height: $('#paper').height(),
+        width: $('#editor').width(),
+        height: $('#editor').height(),
         gridSize: 10,
         model: this.graph
       });
@@ -230,8 +230,8 @@ export class EditorComponent implements OnInit {
       * This method allows to recognize when there is a resize of the page
       */
       window.addEventListener('resize', (event)=> {
-        let height1=window.innerHeight-(window.innerHeight)/100;
-        let width1= window.innerWidth-(window.innerWidth)/100
+        let height1= $('#editor').height();
+        let width1= $('#editor').width();
         this.paper.setDimensions(width1, height1);
       });
       /**
