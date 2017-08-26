@@ -68,16 +68,17 @@
   </div>
 
 	<!-- DECISIONE -->
-	<div [hidden]="!this.activityService.isDecision()">
+	<div class="row" [hidden]="!this.activityService.isDecision()">
 		<div class="container-fluid">
-			<div class="row">
+			<div class="upRow">
 				<label>Tipo decisione</label><br />
 				<select [(ngModel)]="dec">
+          <option value=""></option>
           <option *ngFor="let dec of decisions" [value]="dec">{{ dec }}</option>
         </select>
 			</div>
 			<!-- FOR -->
-			<div [hidden]="dec != 'for'" class="row">
+			<div [hidden]="dec != 'for'" >
 				<div	[hidden]="!this.activityService.hasBody()">
 					<h4>for ( {{ this.activityService.getBody() }} )</h4>
 				</div>
@@ -102,15 +103,15 @@
 					<label>Scrivi corpo FOR</label>
 					<input type="text" [(ngModel)]="nomeInd" /><br />
 				</div>
-				<span [hidden]="this.activityService.hasBody()"><button class="btn btn-warning" (click)="generaFor()">
+				<span [hidden]="this.activityService.hasBody()"><button class="btn btn-warning btnGenera" (click)="generaFor()">
 					Genera FOR
 				</button></span>
-				<span [hidden]="!this.activityService.hasBody()"><button class="btn btn-warning" (click)="modificaFor()">
+				<span [hidden]="!this.activityService.hasBody()"><button class="btn btn-warning btnGenera" (click)="modificaFor()">
 					Modifica FOR
 				</button></span>
 			</div>
 			<!-- WHILE -->
-			<div [hidden]="dec != 'while'" class="row">
+			<div [hidden]="dec != 'while'" >
 				<div	[hidden]="!this.activityService.hasBody()">
 					<h4>while ( {{ this.activityService.getBody() }} )</h4>
 				</div>
@@ -135,15 +136,15 @@
 					<label>Scrivi corpo WHILE</label>
 					<input type="text" [(ngModel)]="va" /><br />
 				</div>
-				<span [hidden]="this.activityService.hasBody()"><button class="btn btn-warning" (click)="generaWhile()">
+				<span [hidden]="this.activityService.hasBody()"><button class="btn btn-warning btnGenera" (click)="generaWhile()">
           Genera WHILE
 				</button></span>
-				<span [hidden]="!this.activityService.hasBody()"><button class="btn btn-warning" (click)="modificaWhile()">
+				<span [hidden]="!this.activityService.hasBody()"><button class="btn btn-warning btnGenera" (click)="modificaWhile()">
 					Modifica WHILE
 				</button></span>
 			</div>
 			<!-- IF -->
-			<div [hidden]="dec != 'if'" class="row">
+			<div [hidden]="dec != 'if'">
 				<div	[hidden]="!this.activityService.hasBody()">
 					<h4>if ( {{ this.activityService.getBody() }} )</h4>
 				</div>
@@ -168,18 +169,18 @@
 					<label>Scrivi corpo IF</label>
 					<input type="text" [(ngModel)]="va" /><br />
 				</div>
-				<span [hidden]="this.activityService.hasBody()"><button class="btn btn-warning" (click)="generaIf()">
+				<span [hidden]="this.activityService.hasBody()"><button class="btn btn-warning btnGenera" (click)="generaIf()">
           Genera IF
 				</button></span>
-				<span [hidden]="!this.activityService.hasBody()"><button class="btn btn-warning" (click)="modificaIf()">
+				<span [hidden]="!this.activityService.hasBody()"><button class="btn btn-warning btnGenera" (click)="modificaIf()">
 					Modifica IF
 				</button></span>
 			</div>
 		</div>
 	</div>
 	<div>
-		<button type="button" class="btn btn-warning" (click)="enterClassMode()">
+		<button type="button" class="btn btn-warning btnGenera" (click)="enterClassMode()">
       <span class="glyphicon glyphicon-arrow-left freccia"></span>
       Diagramma delle Classi</button>
-    </div>
+  </div>
   </div>

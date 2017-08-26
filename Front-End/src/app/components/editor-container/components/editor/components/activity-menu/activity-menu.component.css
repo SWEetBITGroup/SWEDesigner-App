@@ -36,3 +36,11 @@ table {
   vertical-align: middle;
   padding: 5px 10px 10px 10px;
 }
+
+.upRow {
+  padding-bottom: 5px;
+}
+
+.btnGenera {
+  margin-top: 10px;
+}
