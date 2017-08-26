@@ -85,6 +85,11 @@ export class MenuService {
       }
     })
   }
+  /**
+   * Thisfunction update the data of current project into database
+   * @param proj 
+   * @param cb 
+   */
   updateData(proj: JSON, cb: Function){
     this.http.post('/updateProj', proj, {
       method: RequestMethod.Post,
@@ -97,6 +102,33 @@ export class MenuService {
       }
       else{
         cb(true);
+      }
+    })
+  }
+  /**
+   * This function provide to update the name of current project
+   * @param usr 
+   * @param oldName 
+   * @param newName 
+   * @param cb 
+   */
+  updateName(usr: string, oldName: string, newName: string, cb: Function){
+    let projData = {
+      "username" : usr,
+      "nome_progetto" : oldName,
+      "new_name" : newName
+    };
+    this.http.post('/updateNameProj', projData, {
+      method: RequestMethod.Post,
+      responseType: ResponseContentType.Text
+    })
+    .subscribe((data)=>{
+      let response = data.text();
+      if(response  == "true"){
+        cb(false);
+      }
+      else{
+        cb(false);
       }
     })
   }

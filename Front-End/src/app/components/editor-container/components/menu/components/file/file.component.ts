@@ -26,21 +26,35 @@ export class FileComponent implements OnInit {
     * This function save a project into database
     */
     save(projName: string){
-      this.mainEditorService.retriveGraph();
-      let fileJSON = JSON.parse(this.mainEditorService.getProject().toJSON(this.accountService.username, projName));
-      fileJSON.project = JSON.stringify(fileJSON.project);
-      // console.log(fileJSON);
-      this.nome_progetto = projName;
-      this.accountService.notOpenedProj = false;
-      this.menuService.saveData(fileJSON, function(err){
-        if(err){
-          alert("Progetto non salvato");
-        }
-        else{
-          $('#popup').hide();
-          alert("Progetto salvato correttamente");
-        }
-      });
+      if(this.accountService.notOpenedProj == true){
+        this.mainEditorService.retriveGraph();
+        let fileJSON = JSON.parse(this.mainEditorService.getProject().toJSON(this.accountService.username, projName));
+        fileJSON.project = JSON.stringify(fileJSON.project);
+        // console.log(fileJSON);
+        this.nome_progetto = projName;
+        this.accountService.notOpenedProj = false;
+        this.menuService.saveData(fileJSON, function(err){
+          if(err){
+            alert("Progetto non salvato");
+          }
+          else{
+            $('#popup').hide();
+            alert("Progetto salvato correttamente");
+          }
+        });
+      }
+      else{
+        this.menuService.updateName(this.accountService.username, this.accountService.projName, projName, (err)=>{
+          if(err){
+            alert("Progetto non aggiornato");
+          }
+          else{
+            $('#popup').hide();
+            this.accountService.projName = projName;
+            this.updateProj();
+          }
+        })
+      }
     }
     /**
      * This function update an existing project

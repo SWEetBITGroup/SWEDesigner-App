@@ -401,11 +401,11 @@ app.listen(port, ()=>{
       mongooseRequest.update_nameProj(name, usr, newName, function(err, x){
         if(err){
           console.log("problema aggiornamento nome del progetto");
-          res.send("problema aggiornamento nome del progetto");
+          res.send(false);
         }
         else{
           console.log("nome aggiornato");
-          res.send("nome aggiornato");
+          res.send(true);
         }
       })
     })
