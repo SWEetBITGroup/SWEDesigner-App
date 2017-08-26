@@ -16,12 +16,12 @@
       </span>
     </div>
 	</div>
-	
+
 	<!-- Lista Parametri -->
-	<div [hidden]="!getParams()">
-		<h3>Lista parametri in ingresso</h3>
-		<ul>
-			<li *ngFor="let p of this.getParams()">{{p.toString()}}</li>
+	<div class="row" [hidden]="!getParams()">
+		<h4>Lista parametri in ingresso</h4>
+		<ul class="list-group">
+			<li class="list-group-item list-group-item-warning" *ngFor="let p of this.getParams()">{{p.toString()}}</li>
 		</ul>
 	</div>
 

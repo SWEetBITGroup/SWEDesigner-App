@@ -52,3 +52,8 @@ table {
 .textInput {
   margin: 10px;
 }
+
+ul {
+  padding: 5px;
+  margin-bottom: 0px;
+}
