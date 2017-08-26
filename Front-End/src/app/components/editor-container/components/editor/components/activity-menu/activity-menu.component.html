@@ -9,6 +9,7 @@
       <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
     </button>
 	</div>
+	<!-- OPERAZIONE -->
 	<div [hidden]="!this.activityService.isOperation()">
 		<div class="container-fluid" [hidden]="this.activityService.isVarDeclaration()">
 			<div class="row">
@@ -20,6 +21,7 @@
 			</div>
 		</div>
 	</div>
+	<!-- VARIABILE -->
 	<div [hidden]="!this.activityService.isVarDeclaration()">
 		<div class="container-fluid">
 			<h3>Dichiarazione variabile</h3>
@@ -32,14 +34,32 @@
 			<div class="row">
 				<label>Nome variabile</label>
 				<input #nomeV id="nameVar" [(ngModel)]="nomeVar" (keyup.enter)="declareVar()"><br />
-				<label>Valore</label>
-				<input #valoreV id="valVar" [(ngModel)]="valVar" (keyup.enter)="declareVar()">
+				<div [hidden]="this.tipoVar != 'String'">
+					<label>Valore</label>
+					<input #valoreV id="valVar" type="text" [(ngModel)]="valVar" (keyup.enter)="declareVar()">
+				</div>
+				<div [hidden]="this.tipoVar != 'char'">
+					<label>Valore</label>
+					<input #valoreV id="valChar" type="text" [(ngModel)]="valVar" maxlength="1" (keyup.enter)="declareVar()">
+				</div>
+				<div [hidden]="this.tipoVar != 'boolean'">
+					<label>Valore</label>
+					<select [(ngModel)]="valVar">
+						<option value="true">true</option>
+						<option value="false">false</option>
+					</select>
+				</div>
+				<div [hidden]="!isNumeric()">
+					<label>Valore</label>
+					<input #valoreV id="valVar" type="number" [(ngModel)]="valVar" (keyup.enter)="declareVar()">
+				</div>
 				<button class="btn btn-default" (click)="declareVar()">
           <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
         </button>
 			</div>
 		</div>
 	</div>
+	<!-- DECISIONE -->
 	<div [hidden]="!this.activityService.isDecision()">
 		<div class="container-fluid">
 			<div class="row">

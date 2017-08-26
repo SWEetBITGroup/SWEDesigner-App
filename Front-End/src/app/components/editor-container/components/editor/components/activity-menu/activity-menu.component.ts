@@ -96,8 +96,15 @@ export class ActivityMenuComponent {
 		this.nomeVar = name;
 	}
 
+	isNumeric() {
+		if (this.tipoVar != 'String' && this.tipoVar != 'char' && this.tipoVar != 'boolean')
+			return true;
+		return false;
+	}
+
 	declareVar() {
-		this.valVar = this.valVar.trim();
+		if (typeof(this.valVar) == 'string')
+			this.valVar = this.valVar.trim();
 		this.nomeVar = this.nomeVar.trim();
 		if (this.nomeVar && this.tipoVar) {
 			let re = new RegExp('^[0-9]+| +');
