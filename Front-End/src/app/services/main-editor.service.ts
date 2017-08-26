@@ -123,32 +123,32 @@ export class MainEditorService {
    * @param nome is the name of the attribute to add as parameter to addAttributo
    * @param acc is the visibility of the attribute to add as parameter to addAttributo
    */
-	addAttributo(tipo: string, nome: string, acc: string, stat: boolean, fin: boolean) {
-		this.editorComp.copiaAttr(tipo, nome, acc, stat, fin);
-		this.editorComp.noChange = true;
-		this.editorComp.changeMethod = true;
-		this.selectedClasse.addAttributo(tipo, nome, acc, stat, fin);
-		if (this.editorComp.flagFigli != true) this.editorComp.aggiornaFigli(false, this.selectedClasse, new Attributo(tipo, nome, acc, stat, fin), null, nome, null)
-		this.editorComp.setUndoRedo();
-	}
+  addAttributo(tipo: string, nome:string, acc: string, stat: boolean, fin: boolean) {
+    this.editorComp.copiaAttr(tipo, nome, acc, stat, fin);
+    this.editorComp.noChange= true;
+    this.editorComp.changeMethod= true;
+    this.selectedClasse.addAttributo(tipo,nome,acc,stat, fin);
+    this.editorComp.aggiornaFigli(false, this.selectedClasse, new Attributo(tipo, nome, acc, stat, fin), null, nome, null)
+    this.editorComp.setUndoRedo();
+  }
 
   /**
    * Calls the removeAttr method of the ´selectedClasse´
    * @param nome is the name of the attribute to remove which is passed to the removeAttr method
    */
-	removeAttributo(nome: string) {
-		if (this.editorComp.fromUndo == true || this.editorComp.fromUndo == null) {
-			this.editorComp.noChange = true;
-			this.selectedClasse.removeAttr(nome);
-			this.editorComp.setUndoRedo();
-		}
-		this.selectedClasse.removeAttr(nome);
-		if (this.editorComp.flagFigli != true) this.editorComp.aggiornaFigli(true, this.selectedClasse, null, null, nome, null)
-	}
+  removeAttributo(nome: string) {
+    if(this.editorComp.fromUndo==true||this.editorComp.fromUndo==null) {
+      this.editorComp.noChange= true;
+      this.selectedClasse.removeAttr(nome);
+      this.editorComp.setUndoRedo();
+    }
+    this.selectedClasse.removeAttr(nome);
+    this.editorComp.aggiornaFigli(true, this.selectedClasse, null, null, nome, null)
+  }
 
-	changeAttributo(oldName: string, name: string, type: string, acc: string) {
-		this.selectedClasse.changeAttr(oldName, type, name, acc);
-	}
+  changeAttributo(oldName: string, name: string, type: string, acc: string) {
+    this.selectedClasse.changeAttr(oldName,type,name,acc);
+  }
 
   /**
    * This method stores into the ´this.graph´ properties the graph given
@@ -179,34 +179,34 @@ export class MainEditorService {
    * @param listArgs this parameter is optional, 'listArgs' is the list of parameters which defines the
    * signature of the function
    */
-	addMetodo(staticMet: boolean, costr: boolean, tipo: string, nome: string, acc: string, listArgs?: any) {
-		this.editorComp.addedMethod = new Metodo(staticMet, costr, nome, acc, tipo, listArgs);
-		this.editorComp.noChange = true;
-		this.editorComp.changeMethod = true;
-		this.selectedClasse.addMetodo(this.editorComp.addedMethod);
-		if (this.editorComp.flagFigli != true) this.editorComp.aggiornaFigli(false, this.selectedClasse, null, this.editorComp.addedMethod, null, null);
-		this.editorComp.setUndoRedo();
-	}
+  addMetodo(staticMet: boolean, costr: boolean, tipo: string, nome:string, acc: string, listArgs?: any) {
+    this.editorComp.addedMethod= new Metodo(staticMet,costr,nome,acc,tipo,listArgs);
+    this.editorComp.noChange= true;
+    this.editorComp.changeMethod= true;
+    this.selectedClasse.addMetodo(this.editorComp.addedMethod);
+    this.editorComp.aggiornaFigli(false, this.selectedClasse, null, this.editorComp.addedMethod, null, null);
+    this.editorComp.setUndoRedo();
+}
 
   /**
    * Calls removeMetodo of ´selectedClasse´
    * @param nome is the name of the method to eliminate, is passed as parameter to selectedClasse.removeMetodo
    */
-	removeMetodo(nome: string) {
-		if (this.editorComp.fromUndo == false || this.editorComp.fromUndo == null) {
-			this.editorComp.noChange = true;
-			this.editorComp.changeMethod = true;
-			this.editorComp.classeEliminata = this.editorComp.selectedCell;
-			this.editorComp.rMethod = this.selectedClasse.retriveMethod(nome);
-			this.editorComp.addedMethod = null;
-			this.editorComp.removedMethod = null;
-			this.editorComp.setUndoRedo();
-			this.selectedClasse.removeMetodo(nome);
-			this.editorComp.setUndoRedo();
-		}
-		else this.selectedClasse.removeMetodo(nome);
-		if (this.editorComp.flagFigli != true) this.editorComp.aggiornaFigli(true, this.selectedClasse, null, null, null, nome);
-	}
+  removeMetodo(nome: string) {
+    if(this.editorComp.fromUndo==false||this.editorComp.fromUndo==null) {
+      this.editorComp.noChange= true;
+      this.editorComp.changeMethod= true;
+      this.editorComp.classeEliminata= this.editorComp.selectedCell;
+      this.editorComp.rMethod= this.selectedClasse.retriveMethod(nome);
+      this.editorComp.addedMethod= null; 
+      this.editorComp.removedMethod= null;
+      this.editorComp.setUndoRedo();
+      this.selectedClasse.removeMetodo(nome);
+      this.editorComp.setUndoRedo();
+    }
+    else this.selectedClasse.removeMetodo(nome);
+    this.editorComp.aggiornaFigli(true, this.selectedClasse, null, null, null, nome);
+  }
 
   /**
    * This method search for a method into the selectedClasse and retrives it's diagram
@@ -268,43 +268,43 @@ export class MainEditorService {
    * This function load a project from database into editor.
    * @param project 
    */
-	loadProject(project) {
-		console.log(project._body);
-		let proj = project._body;
-		let newProj = new Global();
-		proj.project = JSON.parse(proj.project);
-		newProj.import(proj);
-		this.project = newProj;
-		this.editorComp.replaceDiagram(JSON.parse(newProj.getDiagramma()));
-	}
+  loadProject(project){ 
+    console.log(project._body);
+    let proj = project._body;
+    let newProj = new Global();
+    proj.project = JSON.parse(proj.project);
+    newProj.import(proj);
+    this.project = newProj;
+    this.editorComp.replaceDiagram(JSON.parse(newProj.getDiagramma()));
+  }
 
-	removeClass(name: string, classe) {
-		this.project.removeClass(name);
-		this.editorComp.deleteElement(classe);
-	}
+  removeClass(name: string, classe) {
+    this.editorComp.deleteElement(classe);
+    this.project.removeClass(name);
+  }
 
-	addShape(cell) {
-		this.editorComp.addElement(cell);
-	}
+  addShape(cell) {
+    this.editorComp.addElement(cell);
+  }
 
-	connetActivity(con: any) {
-		this.editorComp.addConnettore(con);
-	}
+  connetActivity(con: any) {
+    this.editorComp.addConnettore(con);
+  }
 
-	setConnetionActivity(ids: string[]) {
-		console.log(ids);
-	}
+  setConnetionActivity(ids: string[]) {
+    console.log(ids);
+  }
 
-	setCode(vars: string[]) {
-		this.varCode = vars;
-	}
+  setCode(vars: string[]) {
+    this.varCode = vars;
+  }
 
-	checkrefresh() {
-		window.onbeforeunload = function (e) {
-			var text = "PAGINA REFRESHATA";
-			e.returnValue = text;
-			return text;
-		}
-	}
+  checkrefresh(){
+    window.onbeforeunload = function(e){
+      var text = "PAGINA REFRESHATA";
+      e.returnValue = text;
+      return text;
+    }
+  }
 
 }
