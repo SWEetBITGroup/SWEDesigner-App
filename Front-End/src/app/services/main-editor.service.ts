@@ -128,7 +128,7 @@ export class MainEditorService {
     this.editorComp.noChange= true;
     this.editorComp.changeMethod= true;
     this.selectedClasse.addAttributo(tipo,nome,acc,stat, fin);
-    if(this.editorComp.flagFigli!=true) this.editorComp.aggiornaFigli(false, this.selectedClasse, new Attributo(tipo, nome, acc, stat, fin), null, nome, null)
+    this.editorComp.aggiornaFigli(false, this.selectedClasse, new Attributo(tipo, nome, acc, stat, fin), null, nome, null)
     this.editorComp.setUndoRedo();
   }
 
@@ -143,7 +143,7 @@ export class MainEditorService {
       this.editorComp.setUndoRedo();
     }
     this.selectedClasse.removeAttr(nome);
-    if(this.editorComp.flagFigli!=true) this.editorComp.aggiornaFigli(true, this.selectedClasse, null, null, nome, null)
+    this.editorComp.aggiornaFigli(true, this.selectedClasse, null, null, nome, null)
   }
 
   changeAttributo(oldName: string, name: string, type: string, acc: string) {
@@ -184,7 +184,7 @@ export class MainEditorService {
     this.editorComp.noChange= true;
     this.editorComp.changeMethod= true;
     this.selectedClasse.addMetodo(this.editorComp.addedMethod);
-    if(this.editorComp.flagFigli!=true) this.editorComp.aggiornaFigli(false, this.selectedClasse, null, this.editorComp.addedMethod, null, null);
+    this.editorComp.aggiornaFigli(false, this.selectedClasse, null, this.editorComp.addedMethod, null, null);
     this.editorComp.setUndoRedo();
 }
 
@@ -205,7 +205,7 @@ export class MainEditorService {
       this.editorComp.setUndoRedo();
     }
     else this.selectedClasse.removeMetodo(nome);
-    if(this.editorComp.flagFigli!=true) this.editorComp.aggiornaFigli(true, this.selectedClasse, null, null, null, nome);
+    this.editorComp.aggiornaFigli(true, this.selectedClasse, null, null, null, nome);
   }
 
   /**
@@ -279,8 +279,8 @@ export class MainEditorService {
   }
 
   removeClass(name: string, classe) {
-    this.project.removeClass(name);
     this.editorComp.deleteElement(classe);
+    this.project.removeClass(name);
   }
 
   addShape(cell) {
