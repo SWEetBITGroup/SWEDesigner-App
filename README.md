@@ -25,6 +25,12 @@ Un editor UML che genera dai diagrammi codice Java funzionante.
 
 6. Avviare il comando *npm start* all'interno della directory *SWEDsigner-App/Back-End* per avviare il server.
 
+In alternativa è possibile utilizzare gli script bash presenti all'interno della *repository* per agevolare il procedimento di installazione.
+
+1. Clonare la *repository* all'interno del server su cui si vuole installare l'applicazione
+2. Avviare il comando *sh install.sh*
+3. Avviare il comando *sh start.sh*
+
 ## Risoluzione dei problemi
 
 * I problemi, conosciuti, su cui si potrebbe incorrere utilizzando __SWEDesigner__ possono riguardale i requisiti richiesti per il funzionamento basilare dell'applicazione.
