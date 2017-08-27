@@ -369,23 +369,11 @@ export class EditorComponent implements OnInit {
       });
 
       /**
-      * This method allows to the mouse's pointer to recognize when a class is clicked and select it and allow the
-      * appear of comment menu
+      * This method allows to the mouse's pointer to recognize when a class is clicked and select it
       */
       this.paper.on('cell:pointerdown', (cellView) => {
         let commento: string = cellView.model.attributes.type;
-        let position = cellView.model.attributes.position;
-        let size = cellView.model.attributes.size;
-        this.xPos = position.x;
-        this.yPos = position.y;
-        this.xSize = size.width;
-        if (commento == 'basic.TextBlock') {
-          this.isComment = true;
-          this.selectedCellComment = cellView;
-          $('.boxComment').css({top: (this.yPos ), left: (this.xSize + this.xPos + 100), position:'absolute'});
-          return;
-        }
-        else {
+        if (commento != 'basic.TextBlock') {
           if(!this.connettore) {
             let type = cellView.model.attributes.type;
             if((type != 'uml.Generalization') &&
@@ -402,9 +390,26 @@ export class EditorComponent implements OnInit {
         }
       });
       /**
+      * This method allows to the mouse's pointer to recognize when a comment is clicked and select it  by double click
+      */
+      this.paper.on('cell:pointerdblclick', (cellView) => {
+        let commento: string = cellView.model.attributes.type;
+        let position = cellView.model.attributes.position;
+        let size = cellView.model.attributes.size;
+        this.xPos = position.x;
+        this.yPos = position.y;
+        this.xSize = size.width;
+        if (commento == 'basic.TextBlock') {
+          this.isComment = true;
+          this.selectedCellComment = cellView;
+          $('.boxComment').css({top: (this.yPos ), left: (this.xSize + this.xPos + 100), position:'absolute'});
+        }
+      });
+      /**
       * This method allows to the mouse's pointer to recognize when the class is unselected by click outside that shape
       */
       this.paper.on('blank:pointerdown', () => {
+        this.isComment = false;
         if(this.selectedCell){
           this.selectedCell.unhighlight();
           this.classMenuService.closeAllCollapsedList();

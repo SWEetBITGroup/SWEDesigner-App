@@ -28,12 +28,10 @@
 	</div>
 
   <!-- Elimina forma -->
-	<div class="row">
-    <div [hidden]="!isSelected()" >
+	<div class="row" [hidden]="!isSelected()">
       <button class="btn btn-warning" (click)="deleteElement()" title="Rimuovi elemento activity">
         Elimina forma <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
       </button>
-    </div>
   </div>
 
   <!-- OPERAZIONE -->
