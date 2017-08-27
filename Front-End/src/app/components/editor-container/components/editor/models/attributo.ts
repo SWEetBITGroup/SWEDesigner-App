@@ -66,9 +66,9 @@ export class Attributo extends Param {
       let att = '';
       if (this.finalAtt)
         att += 'final ';
-      att += this.visibility;
+      att += this.visibility + ' ';
       if (this.staticAtt)
-        att += ' static ';
+        att += 'static ';
       att += this.getTipo() + ' ';
       att += this.getNome() + ';';
       return att;

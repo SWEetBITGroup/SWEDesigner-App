@@ -23,7 +23,6 @@ export class End extends Shape{
   * @param code code string
   */
   toCode(sh: AllShape, code: string){
-    code += 'END';
     sh.setCode(code);
   }
 }

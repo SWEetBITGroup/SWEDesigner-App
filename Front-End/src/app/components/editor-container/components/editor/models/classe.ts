@@ -177,7 +177,7 @@ export class Classe {
 	/**
 	 * Returns the name of the superclass
 	 */
-	getSottoclasse() {
+	getSuperclass() {
 		return this.classePadre;
 	}
 
@@ -281,6 +281,21 @@ export class Classe {
 		});
 	}
 
+	codeAttributes() {
+		let attrs = '';
+		this.attributi.forEach((att, index) => {
+				attrs += att.toCode() + '\n';
+		});
+		return attrs;
+	}
+	codeMetodi() {
+		let meths = '';
+		this.metodi.forEach(meth => {
+			meths += meth.toCode() + '\n';
+		});
+		return meths;
+	}
+
 	toCode() {
 		let code: string;
 		if (this.hasMain())
@@ -289,9 +304,12 @@ export class Classe {
 			code = 'class ' + this.nome;
 		if (this.classePadre)
 			code += ' extends ' + this.classePadre;
-		if (this.interfaces)
+		if (this.interfaces.length > 0)
 			code += ' implements ' + this.codeInterfaces();
 		code += ' {\n';
+		code += this.codeAttributes() + '\n';
+		code += this.codeMetodi() + '\n}';
+		return code;
 	}
 
 	toMU() {

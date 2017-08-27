@@ -23,7 +23,6 @@ export class Start extends Shape{
   * @param code code string
   */
   toCode(sh: AllShape, code: string){
-    code += 'START\n';
     sh.getElementById(this.getSucc()).toCode(sh, code);
   }
 

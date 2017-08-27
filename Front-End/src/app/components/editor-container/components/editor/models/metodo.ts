@@ -197,11 +197,12 @@ export class Metodo {
 	codeParams() {
 		let par = '';
 		this.listaArgomenti.forEach((pars, index) => {
-			if (index != this.listaArgomenti.length)
+			if (index != this.listaArgomenti.length - 1)
 				par += pars.toCode() + ', ';
-			else 
+			else
 				par += pars.toCode();
 		});
+		return par;
 	}
 
 	toCode() {
@@ -212,6 +213,7 @@ export class Metodo {
 		code += this.tipoRitorno + ' ' + this.nome + '( ';
 		code += this.codeParams() + ') {\n';
 		code += this.shapeList.toCode() + '}\n';
+		return code;
 	}
 
 	// toJSON() {

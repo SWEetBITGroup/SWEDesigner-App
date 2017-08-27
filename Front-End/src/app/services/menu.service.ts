@@ -225,10 +225,11 @@ export class MenuService {
     * This function call the download function
     */
     code() {
+      console.log(this.mainEditorService.toCode());
       this.donwload().subscribe(res =>{
         FileSaver.saveAs(res, "progetto.zip");
         let fileURL = URL.createObjectURL(res);
         window.open(fileURL);
-      })
+      });
     }
   }

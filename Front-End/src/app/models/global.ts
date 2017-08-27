@@ -202,4 +202,12 @@ export class Global {
       console.log(global);
       return JSON.stringify(global);
     }
+
+    toCode() {
+      let code = '';
+      this.classi.forEach(cl => {
+        code += cl.toCode() + '\n'; 
+      });
+      return code;
+    }
   }

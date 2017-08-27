@@ -359,7 +359,16 @@ export class MainEditorService {
   }
 
   changeClassName(name: string) {
+		let oldName = this.selectedClasse.getNome();
     this.selectedClasse.changeNome(name);
+    this.project.getClassi().forEach(c => {
+      if (c.getSuperclass() == oldName)
+        c.addSuperclass(name);
+    });
+  }
+
+  toCode() {
+    return this.project.toCode();
   }
 
 }
