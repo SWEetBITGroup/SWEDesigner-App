@@ -372,7 +372,7 @@ export class EditorComponent implements OnInit {
       * This method allows to the mouse's pointer to recognize when a class is clicked and select it and allow the
       * appear of comment menu
       */
-      this.paper.on('cell:pointerdblclick', (cellView) => {
+      this.paper.on('cell:pointerdown', (cellView) => {
         // let commento: string = cellView.model.attributes.type;
         // let position = cellView.model.attributes.position;
         // let size = cellView.model.attributes.size;
