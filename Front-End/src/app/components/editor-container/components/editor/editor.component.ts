@@ -388,6 +388,7 @@ export class EditorComponent implements OnInit {
           else
             this.selectElementActivity(cellView);
         }
+        else if(this.connettore){ this.selectElementsToConnect(cellView);console.log(cellView); }
       });
       /**
       * This method allows to the mouse's pointer to recognize when a comment is clicked and select it  by double click
@@ -451,10 +452,16 @@ export class EditorComponent implements OnInit {
     */
     selectElementsToConnect(cell: any) {
       if(this.elementToConnect) {
-        this.elementSelection(cell);
-        if((this.connettore.attributes.type == 'uml.Generalization') &&
-          (this.selectedCell.model.attributes.type!='uml.Interface')) {
-          this.mainEditorService.addSuperclass(this.elementToConnect.model.attributes.name,
+        if(cell.model.attributes.type!='basic.TextBlock') this.elementSelection(cell);
+        if(this.connettore.attributes.type=='uml.Association'){
+          let freccia = new this.connettore.constructor({
+              source: { id: this.elementToConnect.model.id },
+              target: { id: cell.model.id }
+            });
+          if(cell.model.attributes.type=='uml.Interface') this.graph.addCell(freccia);
+        } else if((this.connettore.attributes.type == 'uml.Generalization') 
+                  &&(this.selectedCell.model.attributes.type=='uml.Class')) { 
+            this.mainEditorService.addSuperclass(this.elementToConnect.model.attributes.name,
             cell.model.attributes.name);
             this.extendedAttributes.forEach(element => {
               this.mainEditorService.addAttributo(element.getTipo(),
@@ -473,7 +480,7 @@ export class EditorComponent implements OnInit {
             });
           }
           else{
-            if(this.interfaceMethods!=null){
+            if(this.interfaceMethods!=null&&cell.model.attributes.type!='basic.TextBlock'){
               this.elementSelection(cell);
               this.interfaceMethods.forEach(element => {
                 this.classMenuService.addMetodo(element.getNome(),
@@ -494,9 +501,11 @@ export class EditorComponent implements OnInit {
               }
             }
           });
-          if((cell.model.attributes.type != 'uml.Interface') ||
-            ((this.connettore.attributes.type === 'uml.Implementation') &&
-          (this.interfaceMethods!=null))) {
+          if((this.connettore.attributes.type=='uml.Association')
+          &&(cell.model.attributes.type!='basic.TextBlock')
+          &&((cell.model.attributes.type != 'uml.Interface') 
+          ||((this.connettore.attributes.type == 'uml.Implementation') 
+          &&(this.interfaceMethods!=null)))) {
             let element1 = this.elementToConnect;
             let freccia = new this.connettore.constructor({
               source: { id: element1.model.id },
@@ -525,11 +534,26 @@ export class EditorComponent implements OnInit {
             this.elementToConnect= null;
           }
         }
-        else {
+        else {  //PRIMO ELEMENTO SELEZIONATO
           this.interfaceMethods= null;
           this.elementToConnect = cell;
-          this.elementSelection(cell);
-          if(this.connettore.attributes.type === 'uml.Implementation'){
+          if(cell.model.attributes.type!='basic.TextBlock') this.elementSelection(cell);
+          if(this.connettore.attributes.type=='uml.Association'){
+            if(cell.model.attributes.type!='basic.TextBlock') {
+              this.elementToConnect= null;
+              if(this.selectedCell){
+                this.selectedCell.unhighlight();
+                this.classMenuService.closeAllCollapsedList();
+              }
+              this.selectedCell = null;
+              this.activityService.deselectElement();
+              this.connettore= null;
+              $('.freccia').blur();
+              // alert('Selezionare prima il commento');
+              return;
+            }
+          } 
+          else if(this.connettore.attributes.type == 'uml.Implementation'){
             if(cell.model.attributes.type == 'uml.Interface'){
               this.interfaceMethods = this.classMenuService.getMetodi();
               cell.highlight(null/* defaults to cellView.el */, {
@@ -552,9 +576,10 @@ export class EditorComponent implements OnInit {
               this.activityService.deselectElement();
               this.connettore= null;
               $('.freccia').blur();
+              // alert("L'implementazione deve essere eseguita su un'interfaccia");
             }
           }
-          else if(cell.model.attributes.type == 'uml.Interface') {
+          else if(cell.model.attributes.type == 'uml.Interface'||cell.model.attributes.type=='basic.TextBlock') {
             $('.freccia').blur();
             this.elementToConnect= null;
             if(this.selectedCell){
@@ -564,8 +589,9 @@ export class EditorComponent implements OnInit {
             this.selectedCell = null;
             this.activityService.deselectElement();
             this.connettore= null;
+            // alert("La generalizzazione deve essere eseguita su una classe");
           }
-          else{
+          else if(cell.model.attributes.type!='basic.TextBlock'){
             this.extendedMethods = this.classMenuService.getMetodi();
             this.extendedAttributes = this.classMenuService.getAttributi();
             cell.highlight(null/* defaults to cellView.el */, {
@@ -580,6 +606,7 @@ export class EditorComponent implements OnInit {
           }
         }
       }
+
       /**
       * This method add a link to the class
       * @param connettore
@@ -624,7 +651,9 @@ export class EditorComponent implements OnInit {
         let links= this.graph.getConnectedLinks(padre);
         links.forEach(element => {
           this.graph.getCells().forEach(cell => {
-            if((cell.id==element.get('target').id)&&(padre.id==element.get('source').id)) {
+            if((cell.id==element.get('target').id)
+            &&(padre.id==element.get('source').id)
+            &&(element.attributes.type!='uml.Association')) {
               let figlio: Classe;
               figlio= this.mainEditorService.getClass(cell.attributes.name);
               if(attr!=null||nomeAtt!=null){

@@ -125,6 +125,14 @@ export class ClassMenuService {
   */
   addAttributo(nome: string, staticAtt: boolean, finalAtt: boolean, tipo: string, acc: string) {
     if (nome && tipo && acc) {
+      try {
+        this.mainEditorService.addAttributo(tipo, nome, acc, staticAtt, finalAtt);
+      } catch (error) {
+        if (error.message == 'NomePresente') {
+          alert('Non è possibile inserire due attributi con lo stesso nome');
+          return;
+        }
+      }
       let attributi = this.classe.attributes.attributes;
       let vis;
       switch (acc) {  // switch per assegnare il giusto simbolo alla visibilità di un attributo
@@ -162,14 +170,6 @@ export class ClassMenuService {
       $('#staticAtt').prop('checked', false);
     } else {
       alert('Alcuni capi del form per la creazione del nuovo attributo non sono stati compilati');
-    }
-    try {
-      this.mainEditorService.addAttributo(tipo, nome, acc, staticAtt, finalAtt);
-    } catch (error) {
-      if (error.message == 'NomePresente') {
-        alert('Non è possibile inserire due attributi con lo stesso nome');
-        return;
-      }
     }
   }
   /**
@@ -216,6 +216,18 @@ export class ClassMenuService {
   */
   addMetodo(nome: string, staticMet: boolean, constructor: boolean, tipo: string, acc: string, params: any = null) {
     if ((nome && tipo && acc) || (constructor && acc)) {
+      try {
+        if (constructor == true) {
+          nome = this.name;
+          tipo = this.name;
+        }
+        this.mainEditorService.addMetodo(staticMet, constructor, tipo, nome, acc, params);
+      } catch (error) {
+        if (error.message == 'NomePresente') {
+          alert('Non è possibile inserire due o più metodi con lo stesso nome');
+          return;
+        }
+      }
       let metodi = this.classe.attributes.methods;
       let vis;
       switch (acc) {  // switch per assegnare il giusto simbolo alla visibilità di un attributo
@@ -254,18 +266,6 @@ export class ClassMenuService {
       this.parametriMetodo = new Array<Param>(); // Cleans the array of params
     } else {
       alert('Alcuni capi del form per la creazione del nuovo metodo non sono stati compilati');
-    }
-    try {
-      if (constructor == true) {
-        nome = this.name;
-        tipo = this.name;
-      }
-      this.mainEditorService.addMetodo(staticMet, constructor, tipo, nome, acc, params);
-    } catch (error) {
-      if (error.message == 'NomePresente') {
-        alert('Non è possibile inserire due o più metodi con lo stesso nome');
-        return;
-      }
     }
   }
   /**
