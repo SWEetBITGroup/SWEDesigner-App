@@ -13,8 +13,8 @@ export class Param {
 
   /**
   * Use to model a method class it contains the parameter definition.
-  * @param tipo
-  * @param nome
+  * @param tipo parameter type
+  * @param nome parameter name
   */
   constructor(tipo: string, nome: string) {
     this.type = tipo;
