@@ -46,14 +46,14 @@ export class ToolbarComponent implements OnInit {
 			methods: [''],
 			attrs: {
 				'.uml-class-name-rect': {
-					fill: 'rgba(255,255,255,1)',
-					stroke: 'rgba(48,28,198,1)',
-					'stroke-width': 1.5
+					fill: '#bccad6',
+					stroke: '#667292',
+					'stroke-width': 1
 				},
 				'.uml-class-attrs-rect, .uml-class-methods-rect': {
-					fill: 'rgba(48,28,198,0.1)',
-					stroke: 'rgba(48,8,198,1)',
-					'stroke-width': 1.5
+					fill: '#8d9db6',
+					stroke: '#667292',
+					'stroke-width': 1
 				},
 				'.uml-class-name-text': {
 					'font-family': 'monospace'
@@ -89,14 +89,14 @@ export class ToolbarComponent implements OnInit {
 			methods: [''],
 			attrs: {
 				'.uml-class-name-rect': {
-					fill: 'rgba(48,28,198,0.1)',
-					stroke: 'rgba(48,8,198,1)',
-					'stroke-width': 1.5
+					fill: '#f9ccac',
+					stroke: '#e0876a',
+					'stroke-width': 1
 				},
 				'.uml-class-attrs-rect, .uml-class-methods-rect': {
-					fill: 'rgba(48,28,198,0.1)',
-					stroke: 'rgba(48,8,198,1)',
-					'stroke-width': 1.5
+					fill: '#f4a688',
+					stroke: '#e0876a',
+					'stroke-width': 1
 				},
 				'.uml-class-name-text': {
 					'font-family': 'monospace'
@@ -132,14 +132,14 @@ export class ToolbarComponent implements OnInit {
 			methods: [''],
 			attrs: {
 				'.uml-class-name-rect': {
-					fill: 'rgba(30,30,30,0.1)',
-					stroke: 'rgba(15,15,15,1)',
-					'stroke-width': 1.5
+					fill: '#cfe0e8',
+					stroke: '#87bdd8',
+					'stroke-width': 1
 				},
 				'.uml-class-attrs-rect, .uml-class-methods-rect': {
-					fill: 'rgba(30,30,30,0.1)',
-					stroke: 'rgba(15,15,15,1)',
-					'stroke-width': 1.5
+					fill: '#b7d7e8',
+					stroke: '#87bdd8',
+					'stroke-width': 1
 				},
 				'.uml-class-name-text': {
 					'font-family': 'monospace'
