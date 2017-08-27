@@ -56,7 +56,7 @@ export class ToolbarComponent implements OnInit {
 		let uml = joint.shapes.uml;
 		let classe = new uml.Class({
 			position: { x: 0, y: 0 },
-			size: { width: 300, height: 100 },
+			size: { width: 300, height: 160 },
 			name: [nomeClasse],
 			attributes: [''],
 			methods: [''],
@@ -98,7 +98,7 @@ export class ToolbarComponent implements OnInit {
 		let uml = joint.shapes.uml;
 		let interfaccia = new uml.Interface({
 			position: { x: 0, y: 120 },
-			size: { width: 300, height: 100 },
+			size: { width: 300, height: 160 },
 			name: [nomeInterf],
 			attributes: [''],
 			methods: [''],
@@ -141,7 +141,7 @@ export class ToolbarComponent implements OnInit {
 		let nomeClassAbst = 'ClasseAstratta#' + this.abstCounter++;
 		let abstract = new uml.Abstract({
 			position: { x: 0, y: 240 },
-			size: { width: 300, height: 100 },
+			size: { width: 300, height: 160 },
 			name: [nomeClassAbst],
 			attributes: [''],
 			methods: [''],

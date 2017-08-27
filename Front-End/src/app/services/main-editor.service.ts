@@ -353,4 +353,9 @@ export class MainEditorService {
     }
   }
 
+  addInterface(clss: string, inter: string) {
+    let classe = this.getClass(clss);
+    classe.addInterface(inter);
+  }
+
 }
