@@ -8,13 +8,21 @@ import { FileComponent } from '../../../../../file/file.component';
   styleUrls: ['./proj-list.component.css']
 })
 export class ProjListComponent implements OnInit {
+  /**
+  * This is the array of the project list
+  */
   arr: String[];
+  /**
+  * Create an instantiation of ProjListComponent
+  * @param accountService used to create a new instantiation of AccountService
+  * @param mainEditorService used to create a new instantiation of MainEditorService
+  */
   constructor(private accountService: AccountService, private mainEditorService: MainEditorService) {
     this.initProj();
   }
   /**
-   * This function initialize the user's project list
-   */
+  * This function initialize the user's project list
+  */
   initProj(){
     this.arr = [];
     this.accountService.loadProjectList(this.accountService.username, (projects)=>{
@@ -23,11 +31,10 @@ export class ProjListComponent implements OnInit {
       });
     })
   }
-
   /**
-   * This function remove an existing project
-   * @param e
-   */
+  * This function remove an existing project
+  * @param e
+  */
   removeProj(e){
     this.accountService.deleteProj(this.accountService.username, e, (err)=>{
       if(err){
@@ -39,11 +46,10 @@ export class ProjListComponent implements OnInit {
       }
     })
   }
-
   /**
-   * This function open an existing project
-   * @param e
-   */
+  * This function open an existing project
+  * @param e
+  */
   openProj(e){
     this.accountService.loadProj(this.accountService.username, e, (project)=>{
       this.mainEditorService.loadProject(project);

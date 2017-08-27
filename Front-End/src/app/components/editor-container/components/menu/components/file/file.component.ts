@@ -9,10 +9,18 @@ import { AccountService } from '../../../../../../services/account.service';
   templateUrl: './file.component.html',
   styleUrls: ['./file.component.css']
 })
+
 export class FileComponent implements OnInit {
-
+  /**
+  * This variable save the current project name
+  */
   nome_progetto: string;
-
+  /**
+  * Create an instantiation of FileComponent
+  * @param accountService used to create a new instantiation of AccountService
+  * @param mainEditorService used to create a new instantiation of mainEditorService
+  * @param menuService used to create a new instantiation of MenuService
+  */
   constructor(private menuService: MenuService,
     private mainEditorService: MainEditorService,
     private accountService: AccountService) {
@@ -57,8 +65,8 @@ export class FileComponent implements OnInit {
       }
     }
     /**
-     * This function update an existing project
-     */
+    * This function update an existing project
+    */
     updateProj(){
       this.mainEditorService.retriveGraph();
       let fileJSON = JSON.parse(this.mainEditorService.getProject().toJSON(this.accountService.username, this.accountService.projName));
@@ -73,20 +81,30 @@ export class FileComponent implements OnInit {
         }
       })
     }
+    /**
+    * This funcion return a flag if the project is open
+    */
     getOpen(){
       return this.accountService.notOpenedProj;
     }
-
+    /**
+    * This function exports the selected project
+    */
     export() {
       this.mainEditorService.retriveGraph();
       //console.log("progetto " + (this.mainEditorService.getProject().toJSON(this.accountService.username)));
       this.menuService.encrypt(JSON.parse(this.mainEditorService.getProject().toJSON(this.accountService.username, this.nome_progetto)));
     }
-
+    /**
+    * This function imports the project selected by the file
+    * @param event This value get the file
+    */
     import(event) {
       this.menuService.import(event);
     }
-
+    /**
+    * This function generate the code of the project
+    */
     generate() {
       this.menuService.code();
     }

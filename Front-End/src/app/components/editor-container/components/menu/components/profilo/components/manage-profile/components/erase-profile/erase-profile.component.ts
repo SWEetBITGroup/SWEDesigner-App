@@ -9,7 +9,10 @@ import { AccountService } from '../../../../../../../../../../services/account.s
   styleUrls: ['./erase-profile.component.css']
 })
 export class EraseProfileComponent {
-  
+  /**
+  * Create an instantiation of EraseProfileComponent
+  * @param accountService used to create a new instantiation of AccountService
+  */
   constructor(private accountService: AccountService, private router: Router) { }
   /**
   * This function delete the profile and all the project binf to it
@@ -26,5 +29,5 @@ export class EraseProfileComponent {
       }
     })
   }
-  
+
 }
