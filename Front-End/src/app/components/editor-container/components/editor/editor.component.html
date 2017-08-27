@@ -10,7 +10,7 @@
   <activity-menu [hidden]="!mainEditorService.getActivityModeStatus()"></activity-menu>
 </div>
 
-<div class="boxComment" [hidden]='!this.isComment'>
+<div class="boxComment" [hidden]='!this.isComment' (dblclick)="this.commentOn()">
   <div class="icon">
     <i class="glyphicon glyphicon-remove-sign close" (click)="this.commentOff()"></i>
   </div>
