@@ -9,7 +9,6 @@ import { MenuService } from '../src/app/services/menu.service';
 import { ActivityService } from '../src/app/components/editor-container/components/editor/services/activity.service';
 import { Http, Response } from '@angular/http';
 import { Router } from '@angular/router';
-import { AccountService } from '../src/app/services/account.service';
 
 
 describe('TestModelGlobal', () => {
@@ -46,7 +45,7 @@ describe('TestModelGlobal', () => {
 describe('TestServicesMainEditor', () => {
 
     const mes = new MainEditorService()
-    mes.setEditorComp(new EditorComponent(new ClassMenuService(),new MenuService(), new MainEditorService(), new ActivityService());
+    mes.setEditorComp(new EditorComponent(new ClassMenuService(),new MenuService(), new MainEditorService(), new ActivityService()));
 
     it('setGetActivityMode', () => {
       mes.setActivityMode();
