@@ -38,14 +38,14 @@ export class Attributo extends Param {
     }
 
     toMU(){
-        let attr;
+        let attr: string;
         if(this.visibility == "public"){
             attr = '{\"typePU\":\"'+this.getTipo()+
-                    '\", \"varPU\":\"'+this.getNome()+'\"}'
+                    '\", \"varPU\":\"'+this.getNome()+'\"}';
         }else{
             attr = '{\"typeP\":\"'+this.getTipo()+
-            '\", \"varP\":\"'+this.getNome()+'\"}'
+            '\", \"varP\":\"'+this.getNome()+'\"}';
         }
-        return JSON.stringify(attr);
+        return attr;
     }
 }

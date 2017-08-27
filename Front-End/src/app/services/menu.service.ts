@@ -190,19 +190,13 @@ export class MenuService {
     return this.importData;
   }
 
-  toCode(var1: string){
-    let code = {
-      m: 'for ( int i = 0 ; i < '+var1+' ; i++ ) { System.out.println( i ) ;'
-    }
-    return code;
-  }
-
   //servizio di download
   /**
    * This function request to server the service of parsing and download
    */
   donwload(){
     //robo da inviare
+    console.log(this.mainEditorService.getProject().toMU());
     let j ={
       "name": "Main",
       "public" : true,

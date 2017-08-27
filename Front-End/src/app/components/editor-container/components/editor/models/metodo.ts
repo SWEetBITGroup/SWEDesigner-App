@@ -185,4 +185,15 @@ export class Metodo {
 	//                  })+'],"graph":"'+this.diagramma.toJSON()
 	//     return metodo;
 	// }
+
+	/* toMU() {
+		let meth: string;
+		if(this.accesso == 'public'){
+				meth = '{\"typePU\":\"'+this.+'\", \"\, \"varPU\":\"'+this.getNome()+'\"}'
+		}else{
+				meth = '{\"typeP\":\"'+this.getTipo()+
+				'\", \"varP\":\"'+this.getNome()+'\"}'
+		}
+		return meth;
+	} */
 }
