@@ -2,7 +2,9 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 
 
 import { MenuService } from '../../../../../../services/menu.service';
-
+/**
+ * This component allow to edit the new component
+ */
 @Component({
   selector: 'app-modifica',
   templateUrl: './modifica.component.html',

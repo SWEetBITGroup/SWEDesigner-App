@@ -3,6 +3,9 @@ import { Component, AfterViewInit, ViewChild } from '@angular/core';
 // Services
 import { AccountService } from '../../../../../../../../services/account.service';
 import { ProjListComponent } from './components/proj-list/proj-list.component';
+/**
+ * This component is the container of the menage profile features
+ */
 @Component({
   selector: 'app-manage-profile',
   templateUrl: './manage-profile.component.html',

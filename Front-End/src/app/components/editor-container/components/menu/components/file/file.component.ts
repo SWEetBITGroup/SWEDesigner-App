@@ -3,7 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { MenuService } from '../../../../../../services/menu.service';
 import { MainEditorService } from '../../../../../../services/main-editor.service';
 import { AccountService } from '../../../../../../services/account.service';
-
+/**
+ * This component manage the project behavior
+ */
 @Component({
   selector: 'app-file',
   templateUrl: './file.component.html',

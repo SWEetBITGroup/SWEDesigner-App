@@ -2,7 +2,9 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AccountService } from '../../../../../../../../../../services/account.service';
 
-
+/**
+* This component esase the current user
+*/
 @Component({
   selector: 'app-erase-profile',
   templateUrl: './erase-profile.component.html',

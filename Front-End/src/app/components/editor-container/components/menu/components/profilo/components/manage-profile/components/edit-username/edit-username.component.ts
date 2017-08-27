@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { AccountService } from '../../../../../../../../../../services/account.service';
+/**
+* Allow the username's upgrade
+*/
 @Component({
   selector: 'app-edit-username',
   templateUrl: './edit-username.component.html',
   styleUrls: ['./edit-username.component.css']
 })
-/**
-* Allow the username's upgrade
-*/
 export class EditUsernameComponent {
   /**
   * Used to set the new username's value

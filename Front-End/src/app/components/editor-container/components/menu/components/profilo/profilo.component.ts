@@ -1,7 +1,9 @@
 import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { AccountService } from '../../../../../../services/account.service';
 import { ManageProfileComponent } from './components/manage-profile/manage-profile.component';
-
+/**
+ * This component allow to menage the profile
+ */
 @Component({
   selector: 'app-profilo',
   templateUrl: './profilo.component.html',
