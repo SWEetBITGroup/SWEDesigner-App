@@ -37,6 +37,7 @@ In alternativa è possibile utilizzare gli script bash presenti all'interno dell
 * Potrebbe, inoltre, verificarsi qualche problema nel momento in cui si svolgo troppe operazioni di seguito che potrebbero sovraccaricare il server.
 * Qualche volta, se utilizzata più volte in sequenza la funzionalità di generazione del codice, l'applicazione potrebbe andare in crash. Il team sta lavorando alla risoluzione di questo problema.
 * Quando viene creato un commento all'interno dell'editor, il menù di modifica non viene trascinato insieme a lui. Il team sta lavorando alla risolzuione di questo problema.
+* La classe principale deve essere per forza chiamata Main altrimenti il compilatore non funziona. Il team è al lavoro sul parametrizzare la compilazione.
 * Per qualsiasi altro problema non indicato all'interno della lista è possibile contattarci all'indirizzo *sweet.bit.group@gmail.com* 
 oppure creare un __New Issue__ nell'apposita sezione di GitHub.
 
