@@ -14,11 +14,14 @@ import { Cookie } from 'ng2-cookies/ng2-cookies';
 */
 export class LoginComponent {
   /**
+  * This variable save the user cookie
+  */
+  cookieUser: string ;
+  /**
   * Create an instantiation of LoginComponent
   * @param router used to create a new instantiation of Router
   * @param accountService used to create a new instantiation of AccountService
   */
-  cookieUser: string ;
   constructor(private router: Router, private accountService: AccountService) {
     /*Cookie.set('email', 'prova@Mail');
     Cookie.set('password', 'provapsw');
@@ -27,8 +30,6 @@ export class LoginComponent {
     this.accountService.password = Cookie.get('password');
     this.accountService.username = Cookie.get('username');*/
   }
-
-
   ngOnInit() {
     this.cookieUser = Cookie.get('username');
     if ( this.cookieUser ){
@@ -37,14 +38,17 @@ export class LoginComponent {
       this.router.navigate(['/editor']);
     }
   }
-
-  // e solo una funzione che logga sempre
+  /**
+  * This function make a login test
+  */
   loginUserProva() {
     this.accountService.setUserLoggedIn();
     this.router.navigate(['/editor']);
   }
-
-  // funzione per login
+  /**
+  * This function allow to the login
+  * @param e This value take all the input values
+  */
   loginUser(e) {
     e.preventDefault();
     this.accountService.email = e.target.elements[0].value;
