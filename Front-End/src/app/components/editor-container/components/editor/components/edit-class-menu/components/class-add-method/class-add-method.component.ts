@@ -2,6 +2,9 @@ import { Component, Input, ViewChild, ElementRef  } from '@angular/core';
 import { ClassMenuService } from '../../../../services/class-menu.service';
 import { Param } from '../../../../models/param';
 
+/**
+ * This component add methods into the selected class
+ */
 @Component({
   selector: 'app-class-add-method',
   templateUrl: './class-add-method.component.html',

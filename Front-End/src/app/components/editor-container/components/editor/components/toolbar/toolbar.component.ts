@@ -10,6 +10,9 @@ import { Operation } from '../../models/operation';
 import { MergeNode } from '../../models/merge-node';
 import * as joint from 'jointjs';
 
+/**
+ * This component is used to show the toolbar in the side
+ */
 @Component({
 	selector: 'app-toolbar',
 	templateUrl: './toolbar.component.html',

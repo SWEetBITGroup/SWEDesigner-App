@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 
 import { ClassMenuService } from '../../../../services/class-menu.service';
-
+/**
+ * This component show the methods list of the class
+ */
 @Component({
   selector: 'app-class-list-method',
   templateUrl: './class-list-method.component.html',

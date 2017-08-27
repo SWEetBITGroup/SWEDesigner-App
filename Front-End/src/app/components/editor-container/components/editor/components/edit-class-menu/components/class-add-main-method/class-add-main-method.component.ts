@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { ClassMenuService } from '../../../../services/class-menu.service';
 import { Param } from '../../../../models/param';
 
+/**
+ * This component add the main methos into selected class
+ */
 @Component({
   selector: 'app-class-add-main-method',
   templateUrl: './class-add-main-method.component.html',
