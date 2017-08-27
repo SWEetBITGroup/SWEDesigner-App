@@ -54,7 +54,10 @@ export class EditorComponent implements OnInit {
   * it point to the selected element by the click on it
   */
   selectedCell: any;
-
+  /**
+  * it point to the selected comment element by the click on it
+  */
+  selectedCellComment: any;
   /**
   * it point to the copied element after the click on "Copia" or "Taglia"
   */
@@ -141,39 +144,53 @@ export class EditorComponent implements OnInit {
   */
   bloccaChange: any;
   /**
-   * It indicates to undo the attribute that was added
-   */
+  * It indicates to undo the attribute that was added
+  */
   addedAttribute: any;
   /**
-   * It indicates to redo the attribute that was removed
-   */
+  * It indicates to redo the attribute that was removed
+  */
   removedAttribute: any;
   /**
-   * It points to the element to select after a called of undo method
-   */
+  * It points to the element to select after a called of undo method
+  */
   puntElement: any;
   /**
-   * It save the methods of interface after a association
-   */
+  * It save the methods of interface after a association
+  */
   interfaceMethods: any;
   /**
-   * It save the attributes of class after a generalization
-   */
+  * It save the attributes of class after a generalization
+  */
   extendedAttributes: any;
   /**
-   * It save the methods of class after a generalization
-   */
+  * It save the methods of class after a generalization
+  */
   extendedMethods: any;
   /**
-   * It save the methods to delete after that a association was delate
-   */
+  * It save the methods to delete after that a association was delate
+  */
   methodsToDelete: any;
   /**
-   * It save the attributes to delete after that a association eas delate
-   */
+  * It save the attributes to delete after that a association eas delate
+  */
   attributesToDelete: any;
-
-
+  /**
+  * It indicates if the shape is a comment
+  */
+  isComment: boolean = false;
+  /**
+  * It indicates the shape'x coordinate selected
+  */
+  xPos: any;
+  /**
+  * It indicates the shape'y coordinate selected
+  */
+  yPos: any;
+  /**
+  * It indicates the with of the shape selected
+  */
+  xSize: any;
   /**
   * this constructor bind this class with the services use for callback function and draw the grid in the canvas
   * @param classMenuService
@@ -234,52 +251,52 @@ export class EditorComponent implements OnInit {
       * This method allows to recognize when there is a change in the graph
       */
       this.graph.on('change', ()=> {
-          if(this.noChange==false||this.noChange==null){
-            if(this.actualGraph!=null){
-              if(this.aMethod!=null&&this.bloccaChange==true){
+        if(this.noChange==false||this.noChange==null){
+          if(this.actualGraph!=null){
+            if(this.aMethod!=null&&this.bloccaChange==true){
+              this.bloccaChange= false;
+              this.aMethod= null;
+              let metodi = this.classMenuService.classe.attributes.methods;
+              metodi.splice(metodi.findIndex(element => {
+                let met = element.split(' ');
                 this.bloccaChange= false;
-                this.aMethod= null;
-                let metodi = this.classMenuService.classe.attributes.methods;
-                metodi.splice(metodi.findIndex(element => {
-                  let met = element.split(' ');
-                  this.bloccaChange= false;
-                  for(let i=0; i<met.length; i++){
-                    if(met[i] == this.aMethod.getNome())
-                      return element;
-                  }
-                }),1);
-                this.classMenuService.classe.set('methods',null);
-                this.classMenuService.classe.set('methods',metodi);
-                this.aMethod= null;
-                this.bloccaChange= false;
-              }
-              else{
-                if(this.undoGraph==null){ this.undoGraph= new joint.dia.Graph;}
-                this.undoGraph.clear();
-                this.actualGraph.getCells().forEach(element => {
-                  this.undoGraph.addCell(element.clone());
-                });
-                this.actualGraph.clear();
-                this.redoGraph= null;
-              }
+                for(let i=0; i<met.length; i++){
+                  if(met[i] == this.aMethod.getNome())
+                    return element;
+                }
+              }),1);
+              this.classMenuService.classe.set('methods',null);
+              this.classMenuService.classe.set('methods',metodi);
+              this.aMethod= null;
+              this.bloccaChange= false;
             }
-            else this.actualGraph = new joint.dia.Graph;
-            this.graph.getCells().forEach(element => {
-              this.actualGraph.addCell(element.clone());
-            });
+            else{
+              if(this.undoGraph==null){ this.undoGraph= new joint.dia.Graph;}
+              this.undoGraph.clear();
+              this.actualGraph.getCells().forEach(element => {
+                this.undoGraph.addCell(element.clone());
+              });
+              this.actualGraph.clear();
+              this.redoGraph= null;
+            }
           }
-          this.flagAdded= false;
-          this.flagRemoved= false;
-          if(this.changeMethod==false||this.changeMethod==null){
-            this.addedMethod= null;
-            this.addedAttribute= null;
-            this.removedAttribute= null;
-            this.removedMethod= null;
-            this.rMethod= null;
-            this.bloccaChange= false;
-          }
-          this.noChange= false;
-        });
+          else this.actualGraph = new joint.dia.Graph;
+          this.graph.getCells().forEach(element => {
+            this.actualGraph.addCell(element.clone());
+          });
+        }
+        this.flagAdded= false;
+        this.flagRemoved= false;
+        if(this.changeMethod==false||this.changeMethod==null){
+          this.addedMethod= null;
+          this.addedAttribute= null;
+          this.removedAttribute= null;
+          this.removedMethod= null;
+          this.rMethod= null;
+          this.bloccaChange= false;
+        }
+        this.noChange= false;
+      });
       /**
       * This method allows to recognize when there is a add event in the graph
       */
@@ -314,24 +331,24 @@ export class EditorComponent implements OnInit {
             if(element.id===cell.get('source').id) {
               padre= this.mainEditorService.getClass(element.attributes.name);
               this.methodsToDelete= padre.getMetodi();
-              this.attributesToDelete= padre.getAttributi();    
+              this.attributesToDelete= padre.getAttributi();
             }
           });
           this.graph.getCells().forEach(element => {
-            if(element.id===cell.get('target').id){ 
+            if(element.id===cell.get('target').id){
               figlio= this.mainEditorService.getClass(element.attributes.name);
-              if(cell.attributes.type=='uml.Implementation') 
+              if(cell.attributes.type=='uml.Implementation')
                 this.methodsToDelete.forEach(met => {
-                  figlio.removeMetodo(met.getNome());
-                  this.removeMetodoGraph(met.getNome(), element)
-                });
-              else 
+                figlio.removeMetodo(met.getNome());
+                this.removeMetodoGraph(met.getNome(), element)
+              });
+              else
                 this.methodsToDelete.forEach(met => {
-                  figlio.removeMetodo(met.getNome());
-                });
+                figlio.removeMetodo(met.getNome());
+              });
               this.attributesToDelete.forEach(attr => {
                 figlio.removeAttr(attr.getNome());
-              });  
+              });
             }
           });
         }
@@ -352,25 +369,39 @@ export class EditorComponent implements OnInit {
         }
         this.noChange= false;
       });
-      
 
       /**
-      * This method allows to the mouse's pointer to recognize when a class is clicked and select it
+      * This method allows to the mouse's pointer to recognize when a class is clicked and select it and allow the
+      * appear of comment menu
       */
       this.paper.on('cell:pointerdown', (cellView) => {
-        if(!this.connettore) {
-          let type = cellView.model.attributes.type;
-          if((type != 'uml.Generalization') &&
-            (type != 'uml.Implementation') &&
-          (type != 'uml.Association') &&
-          (type != 'fsa.Arrow')){
-            this.elementSelection(cellView);
-          }
+        let commento: string = cellView.model.attributes.type;
+        let position = cellView.model.attributes.position;
+        let size = cellView.model.attributes.size;
+        this.xPos = position.x;
+        this.yPos = position.y;
+        this.xSize = size.width;
+        if (commento == 'basic.Rect') {
+          this.isComment = true;
+          this.selectedCellComment = cellView;
+          $('.boxComment').css({top: (this.yPos ), left: (this.xSize + this.xPos + 100), position:'absolute'});
+          return;
         }
-        else if(!this.mainEditorService.getActivityModeStatus())
-          this.selectElementsToConnect(cellView);
-        else
-          this.selectElementActivity(cellView);
+        else {
+          if(!this.connettore) {
+            let type = cellView.model.attributes.type;
+            if((type != 'uml.Generalization') &&
+              (type != 'uml.Implementation') &&
+            (type != 'uml.Association') &&
+            (type != 'fsa.Arrow')){
+              this.elementSelection(cellView);
+            }
+          }
+          else if(!this.mainEditorService.getActivityModeStatus())
+            this.selectElementsToConnect(cellView);
+          else
+            this.selectElementActivity(cellView);
+        }
       });
       /**
       * This method allows to the mouse's pointer to recognize when the class is unselected by click outside that shape
@@ -379,6 +410,7 @@ export class EditorComponent implements OnInit {
         if(this.selectedCell){
           this.selectedCell.unhighlight();
           this.classMenuService.closeAllCollapsedList();
+          this.isComment = false;
         }
         this.selectedCell = null;
         this.elementToConnect= null;
@@ -417,51 +449,51 @@ export class EditorComponent implements OnInit {
     selectElementsToConnect(cell: any) {
       if(this.elementToConnect) {
         this.elementSelection(cell);
-        if((this.connettore.attributes.type == 'uml.Generalization') && 
-           (this.selectedCell.model.attributes.type!='uml.Interface')) {
+        if((this.connettore.attributes.type == 'uml.Generalization') &&
+          (this.selectedCell.model.attributes.type!='uml.Interface')) {
           this.mainEditorService.addSuperclass(this.elementToConnect.model.attributes.name,
             cell.model.attributes.name);
-          this.extendedAttributes.forEach(element => {
-            this.mainEditorService.addAttributo(element.getTipo(), 
-                                                element.getNome(), 
-                                                element.getAccesso(), 
-                                                element.isStatic(), 
-                                                element.isFinal());
-          });  
-          this.extendedMethods.forEach(element => {
-            this.mainEditorService.addMetodo(element.isStatic(), 
-                                             element.isConstructor(), 
-                                             element.getTipoRitorno(), 
-                                             element.getNome(), 
-                                             element.getAccesso(), 
-                                             element.getListaArgomenti())
-          });
-        }
-        else{
-          if(this.interfaceMethods!=null){
-            this.elementSelection(cell);
-            this.interfaceMethods.forEach(element => {
-              this.classMenuService.addMetodo(element.getNome(), 
-                                              element.isStatic(), 
-                                              false, element.getTipoRitorno(), 
-                                              element.getAccesso(), 
-                                              element.getListaArgomenti());
+            this.extendedAttributes.forEach(element => {
+              this.mainEditorService.addAttributo(element.getTipo(),
+              element.getNome(),
+              element.getAccesso(),
+              element.isStatic(),
+              element.isFinal());
+            });
+            this.extendedMethods.forEach(element => {
+              this.mainEditorService.addMetodo(element.isStatic(),
+              element.isConstructor(),
+              element.getTipoRitorno(),
+              element.getNome(),
+              element.getAccesso(),
+              element.getListaArgomenti())
             });
           }
-        }
-        $('.freccia').blur();
-        this.elementToConnect.unhighlight(null/* defaults to cellView.el */, {
-          highlighter: {
-            name: 'stroke',
-            options: {
-              width: 3,
-              color: '#885500'
+          else{
+            if(this.interfaceMethods!=null){
+              this.elementSelection(cell);
+              this.interfaceMethods.forEach(element => {
+                this.classMenuService.addMetodo(element.getNome(),
+                element.isStatic(),
+                false, element.getTipoRitorno(),
+                element.getAccesso(),
+                element.getListaArgomenti());
+              });
             }
           }
-        });
-        if((cell.model.attributes.type != 'uml.Interface') || 
-            ((this.connettore.attributes.type === 'uml.Implementation') && 
-            (this.interfaceMethods!=null))) {
+          $('.freccia').blur();
+          this.elementToConnect.unhighlight(null/* defaults to cellView.el */, {
+            highlighter: {
+              name: 'stroke',
+              options: {
+                width: 3,
+                color: '#885500'
+              }
+            }
+          });
+          if((cell.model.attributes.type != 'uml.Interface') ||
+            ((this.connettore.attributes.type === 'uml.Implementation') &&
+          (this.interfaceMethods!=null))) {
             let element1 = this.elementToConnect;
             let freccia = new this.connettore.constructor({
               source: { id: element1.model.id },
@@ -489,7 +521,7 @@ export class EditorComponent implements OnInit {
             this.connettore= null;
             this.elementToConnect= null;
           }
-        } 
+        }
         else {
           this.interfaceMethods= null;
           this.elementToConnect = cell;
@@ -573,14 +605,14 @@ export class EditorComponent implements OnInit {
       }
 
       /**
-       * This method update the method and the attributes of alla the sons of the class 'dad'
-       * @param removed indicates if the class's sons had to remove an attribute or a method
-       * @param dad indicates the class
-       * @param attr indicates the attribute to add 
-       * @param met indicates the method to add
-       * @param nomeAtt indicates the attribute to remove
-       * @param nomeMet indicates the method to remove
-       */
+      * This method update the method and the attributes of alla the sons of the class 'dad'
+      * @param removed indicates if the class's sons had to remove an attribute or a method
+      * @param dad indicates the class
+      * @param attr indicates the attribute to add
+      * @param met indicates the method to add
+      * @param nomeAtt indicates the attribute to remove
+      * @param nomeMet indicates the method to remove
+      */
       aggiornaFigli(removed: boolean, dad: Classe, attr: any, met: any, nomeAtt: string, nomeMet: string){
         let padre;
         this.graph.getCells().forEach(el => {
@@ -594,13 +626,13 @@ export class EditorComponent implements OnInit {
               figlio= this.mainEditorService.getClass(cell.attributes.name);
               if(attr!=null||nomeAtt!=null){
                 if(removed==true)
-                    figlio.removeAttr(nomeAtt);
+                  figlio.removeAttr(nomeAtt);
                 else{
-                  figlio.addAttributo(attr.getTipo(), 
-                                      attr.getNome(), 
-                                      attr.getAccesso(), 
-                                      attr.isStatic(), 
-                                      attr.isFinal());
+                  figlio.addAttributo(attr.getTipo(),
+                  attr.getNome(),
+                  attr.getAccesso(),
+                  attr.isStatic(),
+                  attr.isFinal());
                 }
               }
               else{
@@ -615,13 +647,13 @@ export class EditorComponent implements OnInit {
                 else{
                   if(element.attributes.type=='uml.Implementation') {
                     figlio.addMetodo(met);
-                    this.addMetodoGraph(met.getNome(), 
-                                        met.isStatic(), 
-                                        met.isConstructor(), 
-                                        met.getTipoRitorno(), 
-                                        met.getAccesso(), 
-                                        met.getListaArgomenti(), 
-                                        cell);
+                    this.addMetodoGraph(met.getNome(),
+                    met.isStatic(),
+                    met.isConstructor(),
+                    met.getTipoRitorno(),
+                    met.getAccesso(),
+                    met.getListaArgomenti(),
+                    cell);
                   }
                   else {
                     figlio.addMetodo(met);
@@ -634,362 +666,380 @@ export class EditorComponent implements OnInit {
       }
 
       /**
-       * This method add to the cell 'class' a method
-       * @param nome indicates the name of the method
-       * @param staticMet indicates if the method is static
-       * @param constructor indicates if the method is a constructor
-       * @param tipo indicates the type of the method
-       * @param acc indicates the accessibility of the method
-       * @param params indicates the parametrs of the method
-       * @param classe indicates the cell
-       */
+      * This method add to the cell 'class' a method
+      * @param nome indicates the name of the method
+      * @param staticMet indicates if the method is static
+      * @param constructor indicates if the method is a constructor
+      * @param tipo indicates the type of the method
+      * @param acc indicates the accessibility of the method
+      * @param params indicates the parametrs of the method
+      * @param classe indicates the cell
+      */
       addMetodoGraph(nome: string, staticMet: boolean, constructor: boolean,
-                     tipo: string, acc: string, params: any = null, classe: any) {
-        if((nome && tipo && acc) || (constructor && acc) ) {
-          let metodi = classe.attributes.methods;
-          let vis;
-          switch (acc) {  // switch per assegnare il giusto simbolo alla visibilità di un attributo
-            case 'public':
-            vis = '+';
-            break;
-            case 'protected':
-            vis = '#';
-            break;
-            case 'private':
-            vis = '-';
-          }
-          let parametri: String = '';
-          for (let ind = 0; ind < params.length; ind++) {
-            parametri += params[ind].getNome() + ' : ' + params[ind].getTipo();
-            if (ind != params.length - 1 ) {
-              parametri += ', ';
+        tipo: string, acc: string, params: any = null, classe: any) {
+          if((nome && tipo && acc) || (constructor && acc) ) {
+            let metodi = classe.attributes.methods;
+            let vis;
+            switch (acc) {  // switch per assegnare il giusto simbolo alla visibilità di un attributo
+              case 'public':
+              vis = '+';
+              break;
+              case 'protected':
+              vis = '#';
+              break;
+              case 'private':
+              vis = '-';
             }
+            let parametri: String = '';
+            for (let ind = 0; ind < params.length; ind++) {
+              parametri += params[ind].getNome() + ' : ' + params[ind].getTipo();
+              if (ind != params.length - 1 ) {
+                parametri += ', ';
+              }
+            }
+            let st = '';
+            if (staticMet) {
+              st = 'static';
+            }
+            metodi.push(vis + ' ' + st + ' ' + nome + ' ( ' + parametri + ' ) : ' + tipo);
+            classe.set('methods', null);
+            classe.set('methods', metodi);
           }
-          let st = '';
-          if (staticMet) {
-            st = 'static';
-          }
-          metodi.push(vis + ' ' + st + ' ' + nome + ' ( ' + parametri + ' ) : ' + tipo);
-          classe.set('methods', null); 
+        }
+
+        /**
+        * This method remove a method to the cell 'classe'
+        * @param nome indicates the name of the method to remove
+        * @param classe indicates the cell
+        */
+        removeMetodoGraph(nome: string, classe: any) {
+          let metodi = classe.attributes.methods;
+          metodi.splice(metodi.findIndex(element => {
+            let met = element.split(' ');
+            for (let i = 0; i < met.length; i++) {
+              if (met[i] == nome) {
+                return element;
+              }
+            }
+          }), 1);
+          classe.set('methods', null);
           classe.set('methods', metodi);
         }
-      }
 
-      /**
-       * This method remove a method to the cell 'classe'
-       * @param nome indicates the name of the method to remove
-       * @param classe indicates the cell
-       */
-      removeMetodoGraph(nome: string, classe: any) {
-        let metodi = classe.attributes.methods;
-        metodi.splice(metodi.findIndex(element => {
-          let met = element.split(' ');
-          for (let i = 0; i < met.length; i++) {
-            if (met[i] == nome) {
-              return element;
-            }
-          }
-        }), 1);
-        classe.set('methods', null);
-        classe.set('methods', metodi);
-      }
-
-      // Aggiunta classe
-      /**
-      * This method add to the editor an element
-      * @param element
-      */
-      addElement(element: any) {
-        this.graph.addCell(element);
-      }
-
-      /**
-      * This method increase the scale of the editor
-      */
-      zoomIn(){
-        this.xAx+=(0.05);
-        this.paper.scale(this.xAx,this.xAx);
-      }
-
-      /**
-      * This method decrease the scale of the editor
-      */
-      zoomOut(){
-        this.xAx-=(0.05);
-        this.paper.scale(this.xAx,this.xAx);
-      }
-
-      /**
-      * This method clone the selected element
-      */
-      cloneElement() {
-        let clone = this.selectedCell.model.clone();
-        clone.translate(80,80);
-        this.graph.addCell(clone);
-      }
-
-      deleteElement(cell: any) {
-        this.flagRemoved=true;
-        this.graph.removeCells(cell);
-        this.selectedCell = null;
-      }
-
-      /**
-      * This method copy the selected element
-      */
-      copyElement(){
-        if(this.selectedCell!=null){
-          this.copiedElement= this.selectedCell;
-          this.flagCut= false;
-          this.countCopies= 0;
+        // Aggiunta classe
+        /**
+        * This method add to the editor an element
+        * @param element
+        */
+        addElement(element: any) {
+          this.graph.addCell(element);
         }
-      }
 
-      /**
-      * This method pastes the element copied earlier
-      */
-      pasteElement(){
-        if(this.copiedElement!= null){
-          this.elementSelection(this.copiedElement);
-          if(!this.mainEditorService.getActivityModeStatus()){
-            if(this.flagCut==false){
-              let nome = this.selectedCell.model.getClassName();
-              this.classMenuService.changeClassName(nome+'_copia'+this.countCopies);
-              if(this.selectedCell.model.attributes.type=='uml.Class'){
-                let nomeClasse= new Classe(this.copiedElement.model.getClassName());
-                this.mainEditorService.getSelectedClasse().getMetodi().forEach(element => {
-                  nomeClasse.addMetodo(element);
-                });
-                this.mainEditorService.getSelectedClasse().getAttributi().forEach(element => {
-                  nomeClasse.addAttributo(element.getTipo(), element.getNome(), element.getAccesso(), 
-                                          element.isStatic(), element.isFinal());
-                });
-                this.mainEditorService.addClass(nomeClasse, this.copiedElement.model.clone());
-              }
-              if(this.selectedCell.model.attributes.type=='uml.Interface') 
-                this.mainEditorService.addClass(new Interface(this.copiedElement.model.getClassName()+'_copia'+this.countCopies), 
-                                                this.copiedElement.model.clone());
-              if(this.selectedCell.model.attributes.type=='uml.Abstract') {
-                let nomeClasse= new ClasseAstratta(this.copiedElement.model.getClassName());
-                this.mainEditorService.getSelectedClasse().getMetodi().forEach(element => {
-                  nomeClasse.addMetodo(element);
-                });
-                this.mainEditorService.getSelectedClasse().getAttributi().forEach(element => {
-                  nomeClasse.addAttributo(element.getTipo(), element.getNome(), element.getAccesso(), 
-                                          element.isStatic(), element.isFinal());
-                });
-                this.mainEditorService.addClass(nomeClasse, this.copiedElement.model.clone());
-              }
-              this.classMenuService.changeClassName(nome);
-              if(this.countCopies!=null)this.countCopies=1+this.countCopies;
-              else this.countCopies=0;
-            }
-            else{
-              if(this.selectedCell.model.attributes.type=='uml.Class') 
-                this.mainEditorService.addClass(new Classe(this.copiedElement.model.getClassName()), 
-                                                this.copiedElement.model.clone());
-              if(this.selectedCell.model.attributes.type=='uml.Interface') 
-                this.mainEditorService.addClass(new Interface(this.copiedElement.model.getClassName()), 
-                                                this.copiedElement.model.clone());
-              if(this.selectedCell.model.attributes.type=='uml.Abstract') 
-                this.mainEditorService.addClass(new ClasseAstratta(this.copiedElement.model.getClassName()), 
-                                                this.copiedElement.model.clone());
-              this.flagCut=false;
-              this.copiedElement= null;
-            }
-          }
-          else {
-            if(this.selectedCell.model.attributes.type=='uml.StartState') 
-              this.activityService.addStart(this.copiedElement.model.clone());
-            if(this.selectedCell.model.attributes.type=='uml.EndState') 
-              this.activityService.addEnd(this.copiedElement.model.clone());
-            if(this.selectedCell.model.attributes.type=='erd.Relationship'&&this.selectedCell.model.attributes.attrs.text.text=='Decision') 
-              this.activityService.addIfNode(this.copiedElement.model.clone());
-            if(this.selectedCell.model.attributes.type=='basic.Rect') 
-              this.activityService.addOperation(this.copiedElement.model.clone());
-            if(this.selectedCell.model.attributes.type=='erd.Relationship'&& this.selectedCell.model.attributes.attrs.text.text=='') 
-              this.activityService.addMergeNode(this.copiedElement.model.clone());
-            if(this.flagCut==true)  
-              this.copiedElement= null;
+        /**
+        * This method increase the scale of the editor
+        */
+        zoomIn(){
+          this.xAx+=(0.05);
+          this.paper.scale(this.xAx,this.xAx);
+        }
+
+        /**
+        * This method decrease the scale of the editor
+        */
+        zoomOut(){
+          this.xAx-=(0.05);
+          this.paper.scale(this.xAx,this.xAx);
+        }
+
+        /**
+        * This method clone the selected element
+        */
+        cloneElement() {
+          let clone = this.selectedCell.model.clone();
+          clone.translate(80,80);
+          this.graph.addCell(clone);
+        }
+
+        deleteElement(cell: any) {
+          this.flagRemoved=true;
+          this.graph.removeCells(cell);
+          this.selectedCell = null;
+        }
+
+        /**
+        * This method copy the selected element
+        */
+        copyElement(){
+          if(this.selectedCell!=null){
+            this.copiedElement= this.selectedCell;
+            this.flagCut= false;
+            this.countCopies= 0;
           }
         }
-      }
 
-      /**
-      * This method cut the selected element
-      */
-      cutElement(){
-        if(this.selectedCell!=null){
-          this.copiedElement= this.selectedCell;
-          if(!this.mainEditorService.getActivityModeStatus()) 
-            this.classMenuService.removeClass(this.selectedCell.model.getClassName(), this.selectedCell.model);
-          else {
+        /**
+        * This method pastes the element copied earlier
+        */
+        pasteElement(){
+          if(this.copiedElement!= null){
+            this.elementSelection(this.copiedElement);
+            if(!this.mainEditorService.getActivityModeStatus()){
+              if(this.flagCut==false){
+                let nome = this.selectedCell.model.getClassName();
+                this.classMenuService.changeClassName(nome+'_copia'+this.countCopies);
+                if(this.selectedCell.model.attributes.type=='uml.Class'){
+                  let nomeClasse= new Classe(this.copiedElement.model.getClassName());
+                  this.mainEditorService.getSelectedClasse().getMetodi().forEach(element => {
+                    nomeClasse.addMetodo(element);
+                  });
+                  this.mainEditorService.getSelectedClasse().getAttributi().forEach(element => {
+                    nomeClasse.addAttributo(element.getTipo(), element.getNome(), element.getAccesso(),
+                    element.isStatic(), element.isFinal());
+                  });
+                  this.mainEditorService.addClass(nomeClasse, this.copiedElement.model.clone());
+                }
+                if(this.selectedCell.model.attributes.type=='uml.Interface')
+                  this.mainEditorService.addClass(new Interface(this.copiedElement.model.getClassName()+'_copia'+this.countCopies),
+                this.copiedElement.model.clone());
+                if(this.selectedCell.model.attributes.type=='uml.Abstract') {
+                  let nomeClasse= new ClasseAstratta(this.copiedElement.model.getClassName());
+                  this.mainEditorService.getSelectedClasse().getMetodi().forEach(element => {
+                    nomeClasse.addMetodo(element);
+                  });
+                  this.mainEditorService.getSelectedClasse().getAttributi().forEach(element => {
+                    nomeClasse.addAttributo(element.getTipo(), element.getNome(), element.getAccesso(),
+                    element.isStatic(), element.isFinal());
+                  });
+                  this.mainEditorService.addClass(nomeClasse, this.copiedElement.model.clone());
+                }
+                this.classMenuService.changeClassName(nome);
+                if(this.countCopies!=null)this.countCopies=1+this.countCopies;
+                else this.countCopies=0;
+              }
+              else{
+                if(this.selectedCell.model.attributes.type=='uml.Class')
+                  this.mainEditorService.addClass(new Classe(this.copiedElement.model.getClassName()),
+                this.copiedElement.model.clone());
+                if(this.selectedCell.model.attributes.type=='uml.Interface')
+                  this.mainEditorService.addClass(new Interface(this.copiedElement.model.getClassName()),
+                this.copiedElement.model.clone());
+                if(this.selectedCell.model.attributes.type=='uml.Abstract')
+                  this.mainEditorService.addClass(new ClasseAstratta(this.copiedElement.model.getClassName()),
+                this.copiedElement.model.clone());
+                this.flagCut=false;
+                this.copiedElement= null;
+              }
+            }
+            else {
+              if(this.selectedCell.model.attributes.type=='uml.StartState')
+                this.activityService.addStart(this.copiedElement.model.clone());
+              if(this.selectedCell.model.attributes.type=='uml.EndState')
+                this.activityService.addEnd(this.copiedElement.model.clone());
+              if(this.selectedCell.model.attributes.type=='erd.Relationship'&&this.selectedCell.model.attributes.attrs.text.text=='Decision')
+                this.activityService.addIfNode(this.copiedElement.model.clone());
+              if(this.selectedCell.model.attributes.type=='basic.Rect')
+                this.activityService.addOperation(this.copiedElement.model.clone());
+              if(this.selectedCell.model.attributes.type=='erd.Relationship'&& this.selectedCell.model.attributes.attrs.text.text=='')
+                this.activityService.addMergeNode(this.copiedElement.model.clone());
+              if(this.flagCut==true)
+                this.copiedElement= null;
+            }
+          }
+        }
+
+        /**
+        * This method cut the selected element
+        */
+        cutElement(){
+          if(this.selectedCell!=null){
+            this.copiedElement= this.selectedCell;
+            if(!this.mainEditorService.getActivityModeStatus())
+              this.classMenuService.removeClass(this.selectedCell.model.getClassName(), this.selectedCell.model);
+            else {
+              this.deleteElement(this.selectedCell.model);
+            }
+            this.flagCut= true;
+          }
+        }
+
+        /**
+        * This method delete the selected element
+        */
+        elimina(){
+          if(this.selectedCell!=null)
             this.deleteElement(this.selectedCell.model);
-          }
-          this.flagCut= true;
         }
-      }
 
-      /**
-      * This method delete the selected element
-      */
-      elimina(){
-        if(this.selectedCell!=null)
-          this.deleteElement(this.selectedCell.model);
-      }
-
-      /**
-      * This method undo the last change in the graph
-      */
-      undo(){
-        this.fromUndo= true;
-        if(this.undoGraph != null){
-          if(this.addedAttribute!=null){
-            this.puntElement= this.selectedCell;
-            this.classMenuService.removeAttributo(this.addedAttribute.getNome());
-            this.noChange= true;
-            this.removedAttribute= this.addedAttribute;
-          }else
-          if(this.addedMethod!=null) {
-            this.mainEditorService.removeMetodo(this.addedMethod.getNome());
-            this.removedMethod= this.addedMethod;
-          }else if(this.rMethod!= null) {
-            this.classMenuService.parametriMetodo= this.rMethod.getListaArgomenti();
-            this.aMethod= this.rMethod;
-            this.elementSelection(this.classeEliminata);
-            this.classMenuService.addMetodo(this.rMethod.getNome(),this.rMethod.isStatic(), this.rMethod.isConstructor(),
-                                            this.rMethod.getTipoRitorno(),  this.rMethod.getAccesso());
-            this.classeEliminata= null;
-          }
-          this.redoGraph= new joint.dia.Graph;
-          if(this.rMethod==null) this.aMethod= null;
-          this.graph.getCells().forEach(element => {
-            this.redoGraph.addCell(element.clone());
-          });
-          if(this.rMethod==null){
-            this.graph.getCells().forEach(element => {
-              this.graph.removeCells(element);
-              this.selectedCell= null;
-            });
-            this.undoGraph.getCells().forEach(element => {
-              this.graph.addCell(element.clone());
-            });
-          }
-          this.undoGraph.clear();
-          this.undoGraph=null;
-          this.actualGraph.clear();
-          this.graph.getCells().forEach(element => {
-            this.actualGraph.addCell(element.clone());
-          });
-        }
-        this.changeMethod= false;
-        this.noChange= false;
-        this.fromUndo= false;
-      }
-
-      /**
-      * This method redo the last change in the graph
-      */
-      redo(){
-        if(this.redoGraph!=null){
-          if(this.changeMethod==false)
-            if(this.removedAttribute!=null){
+        /**
+        * This method undo the last change in the graph
+        */
+        undo(){
+          this.fromUndo= true;
+          if(this.undoGraph != null){
+            if(this.addedAttribute!=null){
+              this.puntElement= this.selectedCell;
+              this.classMenuService.removeAttributo(this.addedAttribute.getNome());
               this.noChange= true;
-              this.classMenuService.addAttributo(this.removedAttribute.getNome(),this.removedAttribute.isStatic(), this.removedAttribute.isFinal(), 
-                                                 this.removedAttribute.getTipo(), this.removedAttribute.getAccesso());
+              this.removedAttribute= this.addedAttribute;
+            }else
+            if(this.addedMethod!=null) {
+              this.mainEditorService.removeMetodo(this.addedMethod.getNome());
+              this.removedMethod= this.addedMethod;
+            }else if(this.rMethod!= null) {
+              this.classMenuService.parametriMetodo= this.rMethod.getListaArgomenti();
+              this.aMethod= this.rMethod;
+              this.elementSelection(this.classeEliminata);
+              this.classMenuService.addMetodo(this.rMethod.getNome(),this.rMethod.isStatic(), this.rMethod.isConstructor(),
+              this.rMethod.getTipoRitorno(),  this.rMethod.getAccesso());
+              this.classeEliminata= null;
+            }
+            this.redoGraph= new joint.dia.Graph;
+            if(this.rMethod==null) this.aMethod= null;
+            this.graph.getCells().forEach(element => {
+              this.redoGraph.addCell(element.clone());
+            });
+            if(this.rMethod==null){
+              this.graph.getCells().forEach(element => {
+                this.graph.removeCells(element);
+                this.selectedCell= null;
+              });
+              this.undoGraph.getCells().forEach(element => {
+                this.graph.addCell(element.clone());
+              });
+            }
+            this.undoGraph.clear();
+            this.undoGraph=null;
+            this.actualGraph.clear();
+            this.graph.getCells().forEach(element => {
+              this.actualGraph.addCell(element.clone());
+            });
+          }
+          this.changeMethod= false;
+          this.noChange= false;
+          this.fromUndo= false;
+        }
+
+        /**
+        * This method redo the last change in the graph
+        */
+        redo(){
+          if(this.redoGraph!=null){
+            if(this.changeMethod==false)
+              if(this.removedAttribute!=null){
+              this.noChange= true;
+              this.classMenuService.addAttributo(this.removedAttribute.getNome(),this.removedAttribute.isStatic(), this.removedAttribute.isFinal(),
+              this.removedAttribute.getTipo(), this.removedAttribute.getAccesso());
             }
             if(this.removedMethod!=null) {
-            this.noChange= true;
-            this.elementSelection(this.puntElement);
-            this.puntElement= null;
-            this.mainEditorService.addMetodo(this.removedMethod.isStatic(), this.removedMethod.isConstructor(), this.removedMethod.getTipoRitorno(),
-                                             this.removedMethod.getNome(), this.removedMethod.getAccesso(),  this.removedMethod.getListaArgomenti());
-          }
-          else if(this.aMethod!= null) {
-            this.classMenuService.removeMetodo(this.aMethod.getNome());
-            this.bloccaChange= true;
-          }
-          this.flagAdded=false;
-          if(this.undoGraph==null) this.undoGraph= new joint.dia.Graph;
-          this.undoGraph.clear();
-          this.actualGraph.getCells().forEach(element => {
-            this.undoGraph.addCell(element.clone());
-          });
-          if(this.aMethod==null&&this.removedAttribute==null){
+              this.noChange= true;
+              this.elementSelection(this.puntElement);
+              this.puntElement= null;
+              this.mainEditorService.addMetodo(this.removedMethod.isStatic(), this.removedMethod.isConstructor(), this.removedMethod.getTipoRitorno(),
+              this.removedMethod.getNome(), this.removedMethod.getAccesso(),  this.removedMethod.getListaArgomenti());
+            }
+            else if(this.aMethod!= null) {
+              this.classMenuService.removeMetodo(this.aMethod.getNome());
+              this.bloccaChange= true;
+            }
+            this.flagAdded=false;
+            if(this.undoGraph==null) this.undoGraph= new joint.dia.Graph;
+            this.undoGraph.clear();
+            this.actualGraph.getCells().forEach(element => {
+              this.undoGraph.addCell(element.clone());
+            });
+            if(this.aMethod==null&&this.removedAttribute==null){
+              this.graph.getCells().forEach(element => {
+                this.graph.removeCells(element);
+                this.selectedCell= null;
+              });
+              this.redoGraph.getCells().forEach(element => {
+                this.graph.addCell(element.clone());
+              });
+            }      else {
+              this.bloccaChange= false;
+              this.aMethod= null;
+            }
+            this.redoGraph= null;
+            this.actualGraph.clear();
             this.graph.getCells().forEach(element => {
-              this.graph.removeCells(element);
-              this.selectedCell= null;
+              this.actualGraph.addCell(element.clone());
             });
-            this.redoGraph.getCells().forEach(element => {
-              this.graph.addCell(element.clone());
-            });
-          }      else {
-            this.bloccaChange= false;
-            this.aMethod= null;
           }
-          this.redoGraph= null;
-          this.actualGraph.clear();
+          this.removedMethod= null;
+          this.removedAttribute= null;
+          this.changeMethod= false;
+          this.fromUndo= false;
+        }
+
+        /**
+        * This function copies the newly created attribute
+        */
+        copiaAttr(tipo: string, nome:string, acc: string, stat: boolean, fin: boolean){
+          this.addedAttribute= new Attributo(tipo, nome, acc, stat, fin);
+        }
+
+        /**
+        * This method update the actualGraph and undoGraph
+        */
+        setUndoRedo(){
+          if(this.actualGraph!=null){
+            if(this.undoGraph==null){ this.undoGraph= new joint.dia.Graph;}
+            this.undoGraph.clear();
+            this.actualGraph.getCells().forEach(element => {
+              this.undoGraph.addCell(element.clone());
+            });
+            this.actualGraph.clear();
+          }
+          else this.actualGraph = new joint.dia.Graph;
           this.graph.getCells().forEach(element => {
             this.actualGraph.addCell(element.clone());
           });
+          this.flagAdded= false;
+          this.flagRemoved= false;
         }
-        this.removedMethod= null;
-        this.removedAttribute= null;
-        this.changeMethod= false;
-        this.fromUndo= false;
-      }
-
-      /**
-       * This function copies the newly created attribute 
-       */
-      copiaAttr(tipo: string, nome:string, acc: string, stat: boolean, fin: boolean){
-        this.addedAttribute= new Attributo(tipo, nome, acc, stat, fin);
-      }
-
-      /**
-      * This method update the actualGraph and undoGraph
-      */
-      setUndoRedo(){
-        if(this.actualGraph!=null){
-          if(this.undoGraph==null){ this.undoGraph= new joint.dia.Graph;}
-          this.undoGraph.clear();
-          this.actualGraph.getCells().forEach(element => {
-            this.undoGraph.addCell(element.clone());
-          });
-          this.actualGraph.clear();
+        /**
+        * This method resets the state of the tasks in "Modifica"
+        */
+        resetModifica(){
+          this.actualGraph= null;
+          this.undoGraph= null;
+          this.redoGraph= null;
+          this.copiedElement= null;
         }
-        else this.actualGraph = new joint.dia.Graph;
-        this.graph.getCells().forEach(element => {
-          this.actualGraph.addCell(element.clone());
-        });
-        this.flagAdded= false;
-        this.flagRemoved= false;
-      }
-      /**
-      * This method resets the state of the tasks in "Modifica"
-      */
-      resetModifica(){
-        this.actualGraph= null;
-        this.undoGraph= null;
-        this.redoGraph= null;
-        this.copiedElement= null;
-      }
 
 
-      selectElementActivity(cell: any) {
-        if(this.elementToConnect) {
-          let element1 = this.elementToConnect;
-          let freccia = new this.connettore.constructor({
-            source: { id: element1.model.id },
-            target: { id: cell.model.id }
-          });
-          this.graph.addCells([freccia]);
-          this.elementToConnect.unhighlight();
-          this.elementToConnect = this.connettore = null;
-          this.activityService.setConnector([element1.model.id,cell.model.id]);
-        } else {
-          this.elementToConnect = cell;
-          cell.highlight();
+        selectElementActivity(cell: any) {
+          if(this.elementToConnect) {
+            let element1 = this.elementToConnect;
+            let freccia = new this.connettore.constructor({
+              source: { id: element1.model.id },
+              target: { id: cell.model.id }
+            });
+            this.graph.addCells([freccia]);
+            this.elementToConnect.unhighlight();
+            this.elementToConnect = this.connettore = null;
+            this.activityService.setConnector([element1.model.id,cell.model.id]);
+          } else {
+            this.elementToConnect = cell;
+            cell.highlight();
+          }
+        }
+        /**
+        * This function set the comment off
+        */
+        commentOff() {
+          this.isComment = false;
+        }
+
+        /**
+        * This Function change the comment value
+        */
+        changeCommento( testo: string) {
+          if (testo) {
+            this.selectedCellComment.model.attr('text/text', testo);
+            (<HTMLInputElement>document.getElementById('newCommento')).value = '';
+            this.isComment = false;
+            this.selectedCellComment = null;
+          }
         }
       }
-    }

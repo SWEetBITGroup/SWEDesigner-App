@@ -17,11 +17,11 @@ import * as joint from 'jointjs';
 })
 
 /**
- * it rappresent the model that contain the shapesthat will be draw into the editor
- * @param classCouter [number] it's a counter class
- * @param interCounter [number] it's a counter interface
- * @param abstCounter [number] it's a counter astract class
- */
+* it rappresent the model that contain the shapesthat will be draw into the editor
+* @param classCouter [number] it's a counter class
+* @param interCounter [number] it's a counter interface
+* @param abstCounter [number] it's a counter astract class
+*/
 export class ToolbarComponent implements OnInit {
 
 	private classCouter: number = 0;
@@ -33,8 +33,8 @@ export class ToolbarComponent implements OnInit {
 	}
 
 	/**
-	 * Method add class to editor
-	 */
+  * Method add class to editor
+  */
 	addClasse() {
 		let nomeClasse = 'Classe#' + this.classCouter++;
 		let uml = joint.shapes.uml;
@@ -76,8 +76,8 @@ export class ToolbarComponent implements OnInit {
 	}
 
 	/**
-	 * Method add interface to editor
-	 */
+  * Method add interface to editor
+  */
 	addInterfaccia() {
 		let nomeInterf = 'Interfaccia#' + this.interCounter++;
 		let uml = joint.shapes.uml;
@@ -119,8 +119,8 @@ export class ToolbarComponent implements OnInit {
 	}
 
 	/**
-	 * Method add abstract class to editor
-	 */
+  * Method add abstract class to editor
+  */
 	addAstratta() {
 		let uml = joint.shapes.uml;
 		let nomeClassAbst = 'ClasseAstratta#' + this.abstCounter++;
@@ -162,55 +162,53 @@ export class ToolbarComponent implements OnInit {
 	}
 
 	/**
-	 * Method selects association as connector
-	 */
+  * Method selects association as connector
+  */
 	addAssociazione() {
 		this.addConnettore(new joint.shapes.uml.Association);
 	}
 
 	/**
-	 * Method selects implementation as connector
-	 */
+  * Method selects implementation as connector
+  */
 	addImplementazione() {
 		this.addConnettore(new joint.shapes.uml.Implementation);
 	}
-
 	/**
-	 * Method selects generalization as connector
-	 */
+  * Method selects generalization as connector
+  */
 	addGeneralizzazione() {
 		this.addConnettore(new joint.shapes.uml.Generalization);
 	}
-
 	/**
-	 * Method add comment cell to editor
-	 */
+  * Method add comment cell to editor
+  */
 	addCommento() {
 		let comm = new joint.shapes.basic.Rect({
-			position: { x: 60, y: 10 },
-			size: { width: 160, height: 35 },
+			position: { x: 10, y: 400 },
+			size: { width: 160, height: 100 },
 			attrs: {
 				rect: {
-					fill: '#ffffff'
-				},
-				text: {
-					text: 'prova',
-					fill: '#000000',
-					'font-size': 12,
-				}
-			}
-		});
+					fill: 'gold'
+        },
+        text: {
+          text: 'Commento'
+        }
+      }
+    });
+    this.mainEditorService.addShape( comm );
 	}
-
 	/**
-	 * Method add selected connector to editor if target element is selected, else the method selects the source element
-	 * @param cellView
-	 * Source or target element
-	 */
+  * Method add selected connector to editor if target element is selected, else the method selects the source element
+  * @param cellView
+  * Source or target element
+  */
 	addConnettore(cellView: any) {
 		this.mainEditorService.addConnettore(cellView);
 	}
-
+	/**
+  * This Method add the UML start activity element
+  */
 	addStart() {
 		let start = new joint.shapes.uml.StartState({
 			position: { x: 200, y: 20 },
@@ -224,7 +222,9 @@ export class ToolbarComponent implements OnInit {
 		});
 		this.activityService.addStart(start);
 	}
-
+	/**
+  * This Method add the UML end activity element
+  */
 	addEnd() {
 		let end = new joint.shapes.uml.EndState({
 			position: { x: 750, y: 550 },
@@ -241,7 +241,9 @@ export class ToolbarComponent implements OnInit {
 		});
 		this.activityService.addEnd(end);
 	}
-
+	/**
+  * This Method add the activity shape to the graph
+  */
 	addActivityShape() {
 		let prova = new joint.shapes.basic.Rect({
 			position: { x: 400, y: 400 },
@@ -260,59 +262,16 @@ export class ToolbarComponent implements OnInit {
 		});
 		this.activityService.addOperation(prova);
 	}
-
-	addActivityForShape() {
-		let svgFile = [
-			'<?xml version="1.0" encoding="UTF-8" standalone="no"?>',
-			'<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" id="svg6224" version="1.1" viewBox="0 0 210 297" height="297mm" width="210mm">',
-			'<defs id="defs6218" />',
-			'<metadata id="metadata6221">',
-			'<rdf:RDF>',
-			'<cc:Work rdf:about="">',
-			'<dc:format>image/svg+xml</dc:format>',
-			'<dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />',
-			'<dc:title></dc:title>',
-			'</cc:Work>',
-			'</rdf:RDF>',
-			'</metadata>',
-			'<g id="layer1">',
-			'<rect rx="35" y="60.386906" x="19.654762" height="108.1012" width="176.89285" id="rect6232" style="fill:#000000;fill-opacity:0;stroke:#000000;stroke-width:5;stroke-opacity:1;paint-order:markers fill stroke;stroke-miterlimit:4;stroke-dasharray:none" />',
-			'<rect y="117.83927" x="93.738098" height="0.7559582" width="80.130959" id="rect6813" style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke" />',
-			'<rect y="89.113091" x="134.55952" height="62.744045" width="0.75595242" id="rect6815" style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke" />',
-			'<rect y="118.61549" x="172.3774" height="34.733318" width="1.4714057" id="rect6817" style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:5.04049921;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke" />',
-			'<rect style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:5.04049921;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke" id="rect6821" width="1.4714057" height="34.733318" x="93.738098" y="117.83927" />',
-			'</g>',
-			'</svg>'
-		].join('');
-
-		let start = new joint.shapes.basic.Image({
-			position: {
-				x: 100,
-				y: 100
-			},
-			size: {
-				width: 100,
-				height: 100
-			},
-			attrs: {
-				text: {
-					text: 'ciao'
-				},
-				image: {
-					'ref-x': 2, 'ref-y': 2, ref: 'image', width: 16, height: 16,
-					'xlink:href': 'data:image/svg+xml;utf8,' + encodeURIComponent(svgFile),
-					preserveAspectRatio: 'none'
-				}
-			}
-		});
-		this.mainEditorService.addShape(start);
-	}
-
+  /**
+  * This Method add the link between the activity shape to the graph
+  */
 	addConnector() {
 		let link = new joint.shapes.uml.Transition()
 		this.mainEditorService.connetActivity(link);
 	}
-
+  /**
+  * This Method add the decision activity shape to the graph
+  */
 	addDecision() {
 		let rombo = new joint.shapes.erd.Relationship({
 			position: { x: 300, y: 390 },
@@ -330,7 +289,9 @@ export class ToolbarComponent implements OnInit {
 		});
 		this.activityService.addIfNode(rombo);
 	}
-
+  /**
+  * This Method add the end decision activity shape to the graph
+  */
 	addEndDecision() {
 		let romboNero = new joint.shapes.erd.Relationship({
 			position: { x: 300, y: 390 },
@@ -348,7 +309,9 @@ export class ToolbarComponent implements OnInit {
 		});
 		this.activityService.addMergeNode(romboNero);
 	}
-
+  /**
+  * This Method add the rectangle activity shape to the graph used for the variable declarations
+  */
 	addRettangoloAngolo() {
 		let rettVar = new joint.shapes.erd.Entity({
 			position: { x: 300, y: 200 },
@@ -366,6 +329,6 @@ export class ToolbarComponent implements OnInit {
 		});
 		this.activityService.addOperation(rettVar);
 		this.activityService.setOperationType('VarDecl', rettVar.id);
-	}
+  }
 
 }
