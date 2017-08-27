@@ -240,4 +240,15 @@ export class ActivityMenuComponent {
 		return this.activityService.getParams();
 	}
 
+	deleteElement() {
+		this.activityService.deleteElement();
+	}
+
+	isSelected() {
+		if (this.activityService.getSelectedShape() && this.activityService.getSelectedElement()) {
+			return true;
+		}
+		return false;
+	}
+
 }

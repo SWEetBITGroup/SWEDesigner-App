@@ -108,6 +108,10 @@ export class ActivityService {
 			console.log('Shape mancante'); // TODO: spend a moment to code it as a real warning
 	}
 
+	getSelectedShape() {
+		return this.selectedShape;
+	}
+
 	start() {
 		let x = false;
 		if (this.startID) {
@@ -127,6 +131,15 @@ export class ActivityService {
 		this.selectedElement = null;
 		this.selectedShape = null;
 	}
+
+	
+  deleteElement() {
+		let id = this.selectedShape.getId();
+		this.shapeList.removeShape(id);
+		this.mainEditorService.removeShapeActivity(this.selectedElement);
+		this.selectedElement = null;
+		this.selectedShape = null;
+  }
 
 	addBody(body: string) {
 		this.selectedShape.addBody(body);

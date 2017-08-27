@@ -283,6 +283,10 @@ export class MainEditorService {
     this.project.removeClass(name);
   }
 
+  removeShapeActivity(element) {
+    this.editorComp.deleteElement(element);
+  }
+
   addShape(cell) {
     this.editorComp.addElement(cell);
   }

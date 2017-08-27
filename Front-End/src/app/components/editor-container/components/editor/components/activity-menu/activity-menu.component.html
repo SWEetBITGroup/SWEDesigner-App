@@ -1,7 +1,14 @@
 <div [hidden]="selemetedMethod" class="container-fluid menu">
   <!-- Visualizza il nome del metodo -->
-  <div class="row nomeMetodo">
-		{{ this.activityService.getNameMethod() }}
+	<div>
+		<span class="row nomeMetodo">
+			{{ this.activityService.getNameMethod() }}
+		</span>
+		<div [hidden]="!isSelected()">
+			<button class="btn btn-warning" (click)="deleteElement()" title="Rimuovi elemento activity">
+				<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+			</button>
+		</div>
 	</div>
 
   <!-- Modifica il nome del metodo -->
