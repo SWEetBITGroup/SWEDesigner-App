@@ -56,4 +56,8 @@ export class Param {
   toString() {
     return this.type + ' ' + this.name;
   }
+
+  toCode() {
+      return this.type + ' ' + this.name;
+  }
 }

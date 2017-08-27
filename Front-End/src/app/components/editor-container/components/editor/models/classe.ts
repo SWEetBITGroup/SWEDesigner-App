@@ -205,6 +205,15 @@ export class Classe {
 		}));
 	}
 
+	hasMain() {
+		let x = false;
+		this.metodi.forEach(element => {
+			if (element.main == true)
+				x = true;
+		});
+		return x;
+	}
+
 	/**
 	 * Override of the toJSON function
 	 */
@@ -262,9 +271,27 @@ export class Classe {
 		return infoMeth;
 	} */
 
+	codeInterfaces() {
+		let intrs = '';
+		this.interfaces.forEach((i, index) => {
+			if (index != this.interfaces.length - 1)
+				intrs += i + ', ';
+			else
+				intrs += i;
+		});
+	}
+
 	toCode() {
 		let code: string;
-		code = 'public class ' + this.nome;
+		if (this.hasMain())
+			code = 'public class ' + this.nome;
+		else
+			code = 'class ' + this.nome;
+		if (this.classePadre)
+			code += ' extends ' + this.classePadre;
+		if (this.interfaces)
+			code += ' implements ' + this.codeInterfaces();
+		code += ' {\n';
 	}
 
 	toMU() {

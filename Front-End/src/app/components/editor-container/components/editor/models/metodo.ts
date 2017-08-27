@@ -154,13 +154,13 @@ export class Metodo {
   */
 	isConstructor() {
 		return this.costruttore;
-  }
+	}
   /**
   * This function check if an static method
   */
 	isStatic() {
 		return this.statico;
-  }
+	}
   /**
   * This method add the static string to the method
   */
@@ -170,7 +170,7 @@ export class Metodo {
 			sta = 'static';
 		}
 		return sta;
-  }
+	}
   /**
   * This function set the variable declaration into the method
   * @param vars variable list
@@ -192,6 +192,26 @@ export class Metodo {
 			}
 		}
 		return paramString;
+	}
+
+	codeParams() {
+		let par = '';
+		this.listaArgomenti.forEach((pars, index) => {
+			if (index != this.listaArgomenti.length)
+				par += pars.toCode() + ', ';
+			else 
+				par += pars.toCode();
+		});
+	}
+
+	toCode() {
+		let code = '';
+		code += this.accesso;
+		if (this.statico)
+			code += ' static ';
+		code += this.tipoRitorno + ' ' + this.nome + '( ';
+		code += this.codeParams() + ') {\n';
+		code += this.shapeList.toCode() + '}\n';
 	}
 
 	// toJSON() {
