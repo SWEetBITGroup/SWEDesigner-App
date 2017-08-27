@@ -217,7 +217,7 @@ export class ActivityService {
 	}
 
 	generaCodice() {
-		return this.shapeList.toCode();
+		console.log(this.shapeList.toCode());
 	}
 
 	isDecision() {
