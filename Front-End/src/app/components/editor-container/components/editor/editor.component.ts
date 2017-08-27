@@ -388,7 +388,8 @@ export class EditorComponent implements OnInit {
           else
             this.selectElementActivity(cellView);
         }
-        else if(this.connettore){ this.selectElementsToConnect(cellView);console.log(cellView); }
+        else if(this.connettore) 
+          this.selectElementsToConnect(cellView);
       });
       /**
       * This method allows to the mouse's pointer to recognize when a comment is clicked and select it  by double click
@@ -460,7 +461,7 @@ export class EditorComponent implements OnInit {
             });
           if(cell.model.attributes.type=='uml.Interface') this.graph.addCell(freccia);
         } else if((this.connettore.attributes.type == 'uml.Generalization') 
-                  &&(this.selectedCell.model.attributes.type=='uml.Class')) { 
+                  &&(cell.model.attributes.type=='uml.Class')) { 
             this.mainEditorService.addSuperclass(this.elementToConnect.model.attributes.name,
             cell.model.attributes.name);
             this.extendedAttributes.forEach(element => {
@@ -501,8 +502,7 @@ export class EditorComponent implements OnInit {
               }
             }
           });
-          if((this.connettore.attributes.type=='uml.Association')
-          &&(cell.model.attributes.type!='basic.TextBlock')
+          if((cell.model.attributes.type!='basic.TextBlock')
           &&((cell.model.attributes.type != 'uml.Interface') 
           ||((this.connettore.attributes.type == 'uml.Implementation') 
           &&(this.interfaceMethods!=null)))) {
