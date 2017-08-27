@@ -318,37 +318,27 @@ export class EditorComponent implements OnInit {
     * This method allows to recognize when there is a remove event in the graph
     */
     this.graph.on('remove', (cell) => {
-      if (((cell.attributes.type == 'uml.Implementation')
-        || (cell.attributes.type == 'uml.Generalization')) && this.flagGraph == true) {
-        let padre: Classe;
-        let figlio: Classe;
-        this.graph.getCells().forEach(element => {
-          if (element.id === cell.get('target').id) {
-            padre = this.mainEditorService.getClass(element.attributes.name);
-            this.methodsToDelete = padre.getMetodi();
-            this.attributesToDelete = padre.getAttributi();
-          }
-        });
-        this.graph.getCells().forEach(element => {
-          if (element.id === cell.get('source').id) {
-						figlio = this.mainEditorService.getClass(element.attributes.name);
-						figlio.removeInerface(padre.getNome());
-						console.log(figlio);
-            if (cell.attributes.type == 'uml.Implementation')
+              if((cell.attributes.type=='uml.Implementation')&&this.flagGraph==true){
+          let padre: Classe;
+          let figlio: Classe;
+          this.graph.getCells().forEach(element => {
+            if(element.id===cell.get('target').id) {
+              console.log(element.attributes.name)
+              padre= this.mainEditorService.getClass(element.attributes.name);
+              this.methodsToDelete= padre.getMetodi();
+              this.attributesToDelete= padre.getAttributi();
+            }
+          });
+          this.graph.getCells().forEach(element => {
+            if(element.id===cell.get('source').id){
+              figlio= this.mainEditorService.getClass(element.attributes.name);
               this.methodsToDelete.forEach(met => {
                 figlio.removeMetodo(met.getNome());
-                this.removeMetodoGraph(met.getNome(), element)
+              this.removeMetodoGraph(met.getNome(), element)
               });
-            else
-              this.methodsToDelete.forEach(met => {
-                figlio.removeMetodo(met.getNome());
-              });
-            this.attributesToDelete.forEach(attr => {
-              figlio.removeAttr(attr.getNome());
-            });
-          }
-        });
-      }
+            }
+          });
+        }
       if (this.noChange == null || this.noChange == false) {
         if (this.flagRemoved == true) {
           if (this.actualGraph == null) { this.actualGraph = new joint.dia.Graph; }
@@ -457,165 +447,172 @@ export class EditorComponent implements OnInit {
   * This method is used to select the element to be connectted by the connector
   * @param cell this variable refers to the selected shape
   */
-  selectElementsToConnect(cell: any) {
-    if (this.elementToConnect) {
-      if (this.elementToConnect.model.id != cell.model.id) {
-        if (cell.model.attributes.type != 'basic.TextBlock') this.elementSelection(cell);
-        if (this.connettore.attributes.type == 'uml.Association') {
-          let freccia = new this.connettore.constructor({
-            source: { id: this.elementToConnect.model.id },
-            target: { id: cell.model.id }
-          });
-          if (cell.model.attributes.type == 'uml.Interface') this.graph.addCell(freccia);
-        } else if ((this.connettore.attributes.type == 'uml.Generalization')
-          && (cell.model.attributes.type == 'uml.Class')) {
-          this.mainEditorService.addSuperclass(this.elementToConnect.model.attributes.name,
-            cell.model.attributes.name);
-          this.extendedAttributes.forEach(element => {
-            this.mainEditorService.addAttributo(element.getTipo(),
-              element.getNome(),
-              element.getAccesso(),
-              element.isStatic(),
-              element.isFinal());
-          });
-          this.extendedMethods.forEach(element => {
-            this.mainEditorService.addMetodo(element.isStatic(),
-              element.isConstructor(),
-              element.getTipoRitorno(),
-              element.getNome(),
-              element.getAccesso(),
-              element.getListaArgomenti())
-          });
+selectElementsToConnect(cell: any) {
+      if(this.elementToConnect) {
+        if(this.elementToConnect.model.id!=cell.model.id){
+          if(cell.model.attributes.type!='basic.TextBlock') this.elementSelection(cell);
+          if(this.connettore.attributes.type=='uml.Association'){
+            let freccia = new this.connettore.constructor({
+              source: { id: this.elementToConnect.model.id },
+              target: { id: cell.model.id }
+            });
+            if(cell.model.attributes.type=='uml.Interface') this.graph.addCell(freccia);
+          } else if((this.connettore.attributes.type == 'uml.Generalization')
+          &&(cell.model.attributes.type=='uml.Class')) {
+            this.mainEditorService.addSuperclass(this.elementToConnect.model.attributes.name,
+              cell.model.attributes.name);
+            }
+            else{
+              if(this.interfaceMethods!=null&&cell.model.attributes.type!='basic.TextBlock'){
+                this.elementSelection(cell);
+                this.interfaceMethods.forEach(element => {
+                  this.classMenuService.addMetodo(element.getNome(),
+                  element.isStatic(),
+                  false, element.getTipoRitorno(),
+                  element.getAccesso(),
+                  element.getListaArgomenti());
+                });
+              }
+              else if(this.interfaceMethods==null
+              &&cell.model.attributes.type!='basic.TextBlock'
+              &&cell.model.attributes.type=='uml.Interface'){
+                this.interfaceMethods= this.classMenuService.getMetodi();
+                this.elementSelection(this.elementToConnect);
+                this.interfaceMethods.forEach(element => {
+                  this.classMenuService.addMetodo(element.getNome(),
+                  element.isStatic(),
+                  false, element.getTipoRitorno(),
+                  element.getAccesso(),
+                  element.getListaArgomenti());
+                });
+                this.elementSelection(cell);
+              }
+            }
+            $('.freccia').blur();
+            this.elementToConnect.unhighlight(null/* defaults to cellView.el */, {
+              highlighter: {
+                name: 'stroke',
+                options: {
+                  width: 3,
+                  color: '#885500'
+                }
+              }
+            });
+            if((cell.model.attributes.type!='basic.TextBlock')
+            &&((cell.model.attributes.type != 'uml.Interface')
+            ||(this.connettore.attributes.type == 'uml.Implementation'))) {
+              let element1 = this.elementToConnect;
+              let freccia;
+              if(this.connettore.attributes.type == 'uml.Implementation'
+              &&element1.model.attributes.type=='uml.Interface'){
+                freccia = new this.connettore.constructor({
+                  source: { id: cell.model.id },
+                  target: {id: element1.model.id }
+              });
+             } 
+              else{
+                freccia = new this.connettore.constructor({
+                  source: {id: element1.model.id },
+                  target: {id: cell.model.id }
+                });
+              }
+              this.graph.addCells([freccia]);
+              this.elementToConnect = this.connettore = null;
+              cell.unhighlight(null/* defaults to cellView.el */, {
+                highlighter: {
+                  name: 'stroke',
+                  options: {
+                    width: 3,
+                    color: '#885500'
+                  }
+                }
+              });
+            }
+            else {
+              if(this.selectedCell){
+                this.selectedCell.unhighlight();
+                this.classMenuService.closeAllCollapsedList();
+              }
+              this.selectedCell = null;
+              this.activityService.deselectElement();
+              this.connettore= null;
+              this.elementToConnect= null;
+            }
+          }
         }
-        else {
-          if (this.interfaceMethods != null && cell.model.attributes.type != 'basic.TextBlock') {
-            this.mainEditorService.addInterface(cell.model.attributes.name,this.elementToConnect.model.attributes.name);
-            this.elementSelection(cell);
-            this.interfaceMethods.forEach(element => {
-              this.classMenuService.addMetodo(element.getNome(),
-                element.isStatic(),
-                false, element.getTipoRitorno(),
-                element.getAccesso(),
-                element.getListaArgomenti());
+        else {  //PRIMO ELEMENTO SELEZIONATO
+          this.interfaceMethods= null;
+          this.elementToConnect = cell;
+          if(cell.model.attributes.type!='basic.TextBlock') this.elementSelection(cell);
+          if(this.connettore.attributes.type=='uml.Association'){
+            if(cell.model.attributes.type!='basic.TextBlock') {
+              this.elementToConnect= null;
+              if(this.selectedCell){
+                this.selectedCell.unhighlight();
+                this.classMenuService.closeAllCollapsedList();
+              }
+              this.selectedCell = null;
+              this.activityService.deselectElement();
+              this.connettore= null;
+              $('.freccia').blur();
+              // alert('Selezionare prima il commento');
+              return;
+            }
+          }
+          else if(this.connettore.attributes.type == 'uml.Implementation'){
+            if(cell.model.attributes.type == 'uml.Class'||cell.model.attributes.type== 'uml.Interface'){
+              if(cell.model.attributes.type== 'uml.Interface') 
+                this.interfaceMethods=this.classMenuService.getMetodi();
+              this.elementToConnect= cell;
+              cell.highlight(null/* defaults to cellView.el */, {
+                highlighter: {
+                  name: 'stroke',
+                  options: {
+                    width: 3,
+                    color: '#885500'
+                  }
+                }
+              });
+            }
+          }
+          else if(this.connettore.attributes.type == 'uml.Generalization'){
+            this.elementToConnect= cell;
+            cell.highlight(null/* defaults to cellView.el */, {
+              highlighter: {
+                name: 'stroke',
+                options: {
+                  width: 3,
+                  color: '#885500'
+                }
+              }
+            });
+          }
+          else if(cell.model.attributes.type == 'uml.Interface'
+            ||cell.model.attributes.type=='basic.TextBlock') {
+            $('.freccia').blur();
+            this.elementToConnect= null;
+            if(this.selectedCell){
+              this.selectedCell.unhighlight();
+              this.classMenuService.closeAllCollapsedList();
+            }
+            this.selectedCell = null;
+            this.activityService.deselectElement();
+            this.connettore= null;
+            // alert("La generalizzazione deve essere eseguita su una classe");
+          }
+          else if(cell.model.attributes.type!='basic.TextBlock'){
+            cell.highlight(null/* defaults to cellView.el */, {
+              highlighter: {
+                name: 'stroke',
+                options: {
+                  width: 3,
+                  color: '#885500'
+                }
+              }
             });
           }
         }
-        $('.freccia').blur();
-        this.elementToConnect.unhighlight(null/* defaults to cellView.el */, {
-          highlighter: {
-            name: 'stroke',
-            options: {
-              width: 3,
-              color: '#885500'
-            }
-          }
-        });
-        if ((cell.model.attributes.type != 'basic.TextBlock')
-          && ((cell.model.attributes.type != 'uml.Interface')
-            || ((this.connettore.attributes.type == 'uml.Implementation')
-              && (this.interfaceMethods != null)))) {
-          let element1 = this.elementToConnect;
-          let freccia = new this.connettore.constructor({
-            source: { id: cell.model.id },
-            target: { id: element1.model.id }
-          });
-          this.graph.addCells([freccia]);
-          this.elementToConnect = this.connettore = null;
-          cell.unhighlight(null/* defaults to cellView.el */, {
-            highlighter: {
-              name: 'stroke',
-              options: {
-                width: 3,
-                color: '#885500'
-              }
-            }
-          });
-        }
-        else {
-          if (this.selectedCell) {
-            this.selectedCell.unhighlight();
-            this.classMenuService.closeAllCollapsedList();
-          }
-          this.selectedCell = null;
-          this.activityService.deselectElement();
-          this.connettore = null;
-          this.elementToConnect = null;
-        }
       }
-    }
-		else {  //PRIMO ELEMENTO SELEZIONATO
-      this.interfaceMethods = null;
-      this.elementToConnect = cell;
-      if (cell.model.attributes.type != 'basic.TextBlock') this.elementSelection(cell);
-      if (this.connettore.attributes.type == 'uml.Association') {
-        if (cell.model.attributes.type != 'basic.TextBlock') {
-          this.elementToConnect = null;
-          if (this.selectedCell) {
-            this.selectedCell.unhighlight();
-            this.classMenuService.closeAllCollapsedList();
-          }
-          this.selectedCell = null;
-          this.activityService.deselectElement();
-          this.connettore = null;
-          $('.freccia').blur();
-					// alert('Selezionare prima il commento');
-          return;
-        }
-      }
-      else if (this.connettore.attributes.type == 'uml.Implementation') {
-        if (cell.model.attributes.type == 'uml.Interface') {
-          this.interfaceMethods = this.classMenuService.getMetodi();
-          cell.highlight(null/* defaults to cellView.el */, {
-            highlighter: {
-              name: 'stroke',
-              options: {
-                width: 3,
-                color: '#885500'
-              }
-            }
-          });
-        }
-        else {
-          this.elementToConnect = null;
-          if (this.selectedCell) {
-            this.selectedCell.unhighlight();
-            this.classMenuService.closeAllCollapsedList();
-          }
-          this.selectedCell = null;
-          this.activityService.deselectElement();
-          this.connettore = null;
-          $('.freccia').blur();
-          // alert("L'implementazione deve essere eseguita su un'interfaccia");
-        }
-      }
-      else if (cell.model.attributes.type == 'uml.Interface'
-        || cell.model.attributes.type == 'basic.TextBlock') {
-        $('.freccia').blur();
-        this.elementToConnect = null;
-        if (this.selectedCell) {
-          this.selectedCell.unhighlight();
-          this.classMenuService.closeAllCollapsedList();
-        }
-        this.selectedCell = null;
-        this.activityService.deselectElement();
-        this.connettore = null;
-        // alert("La generalizzazione deve essere eseguita su una classe");
-      }
-      else if (cell.model.attributes.type != 'basic.TextBlock') {
-        this.extendedMethods = this.classMenuService.getMetodi();
-        this.extendedAttributes = this.classMenuService.getAttributi();
-        cell.highlight(null/* defaults to cellView.el */, {
-          highlighter: {
-            name: 'stroke',
-            options: {
-              width: 3,
-              color: '#885500'
-            }
-          }
-        });
-      }
-    }
-  }
   /**
   * This method add a link to the class
   * @param connettore this variable refers to the link shape
@@ -650,58 +647,35 @@ export class EditorComponent implements OnInit {
   * @param nomeAtt indicates the attribute to remove
   * @param nomeMet indicates the method to remove
   */
-  aggiornaFigli(removed: boolean, dad: Classe, attr: any, met: any, nomeAtt: string, nomeMet: string) {
+  aggiornaFigli(removed: boolean, superClass: Classe, attr: any, met: any, nomeAtt: string, nomeMet: string){
     let padre;
     this.graph.getCells().forEach(el => {
-      if (el.attributes.name == dad.getNome()) padre = el;
+      if(el.attributes.name==superClass.getNome()) padre= el;
     });
-    let links = this.graph.getConnectedLinks(padre);
-    links.forEach(element => {
-      this.graph.getCells().forEach(cell => {
-        if ((cell.id == element.get('target').id)
-          && (padre.id == element.get('source').id)
-          && (element.attributes.type != 'uml.Association')) {
-          let figlio: Classe;
-          figlio = this.mainEditorService.getClass(cell.attributes.name);
-          if (attr != null || nomeAtt != null) {
-            if (removed == true)
-              figlio.removeAttr(nomeAtt);
-            else {
-              figlio.addAttributo(attr.getTipo(),
-                attr.getNome(),
-                attr.getAccesso(),
-                attr.isStatic(),
-                attr.isFinal());
-            }
-          }
-          else {
-            if (removed == true) {
-              if (element.attributes.type == 'uml.Implementation') {
+    if(superClass.isInterface()){
+      let links= this.graph.getConnectedLinks(padre);
+      links.forEach(link => {
+        console.log("cu")
+        this.graph.getCells().forEach(cell => {
+          if((link.get('source').id==cell.id)&&((link.get('target').id==padre.id))){
+            let figlio: Classe;
+            this.mainEditorService.getClassList().forEach(element => {
+              if(element.getNome()==cell.attributes.name) figlio= element;
+            });
+            if(met!=null||nomeMet!=null){
+              if(removed==true){
+                figlio.removeMetodo(nomeMet);
                 this.removeMetodoGraph(nomeMet, cell);
-                figlio.removeMetodo(nomeMet);
-              }
-              else
-                figlio.removeMetodo(nomeMet);
-            }
-            else {
-              if (element.attributes.type == 'uml.Implementation') {
-                figlio.addMetodo(met);
-                this.addMetodoGraph(met.getNome(),
-                  met.isStatic(),
-                  met.isConstructor(),
-                  met.getTipoRitorno(),
-                  met.getAccesso(),
-                  met.getListaArgomenti(),
-                  cell);
               }
               else {
                 figlio.addMetodo(met);
+                this.addMetodoGraph(met.getNome(), met.isStatic(), met.isConstructor(), met.getTipoRitorno(), met.getAccesso(), met.getListaArgomenti(), cell);
               }
             }
           }
-        }
+        });
       });
-    });
+    }
   }
   /**
   * This method add to the cell 'class' a method
