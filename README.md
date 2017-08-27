@@ -13,12 +13,17 @@ Un editor UML che genera dai diagrammi codice Java funzionante.
     * macOs Sierra ver 10.12.6
 ## Installazione
 
-Clonare la *repository* sul proprio PC.
-Avviare il comando *nmp install* all'interno della directory *SWEDsigner-App/Front-End* per installare tutte le dipendenze del client.
-Avviare il comando *ng run build* all'interno della directory *SWEDsigner-App/Front-End* per avviare la build del programma.
-Copiare la cartella *dist* appena creatosi all'interno della directory *SWEDsigner-App/Front-End*, all'interno della directory *SWEDsigner-App/Back-End*
-Copiare la driectory *SWEDsigner-App/Back-End* all'interno del server su cui si ha intenzione di avviare il programma.
-Avviare il comando *npm start* all'interno della directory *SWEDsigner-App/Back-End* per avviare il server.
+1. Clonare la *repository* sul proprio PC.
+
+2. Avviare il comando *nmp install* all'interno della directory *SWEDsigner-App/Front-End* per installare tutte le dipendenze del client.
+
+3. Avviare il comando *ng run build* all'interno della directory *SWEDsigner-App/Front-End* per avviare la build del programma.
+
+4. Copiare la cartella *dist* appena creatosi all'interno della directory *SWEDsigner-App/Front-End*, all'interno della directory *SWEDsigner-App/Back-End*
+
+5. Copiare la driectory *SWEDsigner-App/Back-End* all'interno del server su cui si ha intenzione di avviare il programma.
+
+6. Avviare il comando *npm start* all'interno della directory *SWEDsigner-App/Back-End* per avviare il server.
 
 ## Risoluzione dei problemi
 
