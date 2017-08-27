@@ -71,13 +71,16 @@ export class AllShape {
       if(el.getSucc() == id) {
 				el.setSucc('');
 			}
-			if(el.getType() == 'if' && (<IfNode>el).getSuccElse() == id) {
+			if(el.getType() == 'IfNode' && (<IfNode>el).getSuccElse() == id) {
 				(<IfNode>el).setSuccElse('');
 			}
 		});
   }
 
   toCode() {
+    this.allShap.forEach(e => {
+      e.setPrinted(false);
+    });
     try {
       var start = this.getElementByType('Start');
       var end = this.getElementByType('End');
