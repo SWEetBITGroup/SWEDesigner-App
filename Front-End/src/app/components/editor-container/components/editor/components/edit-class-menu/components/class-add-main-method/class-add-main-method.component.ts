@@ -22,8 +22,8 @@ export class ClassAddMainMethodComponent {
   * This function add the main function to the target class
   */
   addMain() {
-    this.classMenuService.isThereAMain = true;
-    this.classMenuService.parametriMetodo.push( new Param ('string[]', 'args') );
+    this.classMenuService.setMain();
+    this.classMenuService.parametriMetodo.push( new Param ('String[]', 'args') );
     this.classMenuService.addMetodo('main', true, false, 'void', 'public', this.classMenuService.parametriMetodo);
   }
 

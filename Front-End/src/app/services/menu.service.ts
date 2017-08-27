@@ -204,15 +204,9 @@ export class MenuService {
     * This function request to server the service of parsing and download
     */
     donwload(){
-      //robo da inviare
-      console.log(this.mainEditorService.getProject().toMU());
-      let j ={
-        "name": "Main",
-        "public" : true,
-        "methodsPU": [
-          {"main": "true", "corpoM": "System.out.println('H');"}
-        ]
-      }
+      let j = {
+        progetto: this.mainEditorService.toCode()
+      };
       return this.http.post('\parsing', j,{
         method: RequestMethod.Post,
         responseType: ResponseContentType.Blob

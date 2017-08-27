@@ -364,7 +364,12 @@ export class MainEditorService {
     this.project.getClassi().forEach(c => {
       if (c.getSuperclass() == oldName)
         c.addSuperclass(name);
-    });
+		});
+		this.project.getClassi().forEach(c => {
+			if (c.getInterfaces().length > 0) {
+				c.replaceInterface(oldName, name);
+			}
+		});
   }
 
   toCode() {

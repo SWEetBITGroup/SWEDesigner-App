@@ -325,6 +325,11 @@ export class ClassMenuService {
       return false;
     }
   }
+
+  setMain() {
+    this.isThereAMain = true;
+    this.mainEditorService.getSelectedClasse().setMain();
+  }
   // JQUERY FUNCTION
   closeAllCollapsedList() {
     if ($('#listaMetodi').attr('aria-expanded')) {

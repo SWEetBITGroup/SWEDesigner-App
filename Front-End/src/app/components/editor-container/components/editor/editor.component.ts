@@ -505,6 +505,8 @@ selectElementsToConnect(cell: any) {
               let freccia;
               if(this.connettore.attributes.type == 'uml.Implementation'
               &&element1.model.attributes.type=='uml.Interface'){
+								console.log(element1.model.attributes.name[0])
+								this.mainEditorService.getClass(cell.model.attributes.name).addInterface(element1.model.attributes.name[0]);
                 freccia = new this.connettore.constructor({
                   source: { id: cell.model.id },
                   target: {id: element1.model.id }

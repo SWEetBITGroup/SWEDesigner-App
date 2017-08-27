@@ -27,6 +27,7 @@ export class Classe {
 		*/
 	private interfaces = new Array<string>();
 
+	private mainClass = false;
 	/**
 	 * The constructor builds a new object of type Classe and sets it's name
 	 * @param nome the only parmeter used to build an object of type Classe
@@ -188,6 +189,18 @@ export class Classe {
 		return false;
 	}
 
+	getInterfaces() {
+		return this.interfaces;
+	}
+
+	replaceInterface(oldName:string, name: string) {
+		let indx = this.interfaces.findIndex(intx => {
+				return intx == oldName;
+		});
+		this.interfaces.splice(indx);
+		this.addInterface(name);
+	}
+
 	/**
 	 * Returns true if the object is an abstract, else return false
 	 */
@@ -206,12 +219,7 @@ export class Classe {
 	}
 
 	hasMain() {
-		let x = false;
-		this.metodi.forEach(element => {
-			if (element.main == true)
-				x = true;
-		});
-		return x;
+		return this.mainClass;
 	}
 
 	/**
@@ -259,6 +267,10 @@ export class Classe {
 		return infoAttr;
 	}
 
+	setMain() {
+		this.mainClass = true;
+	}
+
 	/* getInfoMeth(x: Metodo[]) {
 		let infoMeth = new Array<string>();
 		if (x) {
@@ -279,6 +291,7 @@ export class Classe {
 			else
 				intrs += i;
 		});
+		return intrs;
 	}
 
 	codeAttributes() {
@@ -297,6 +310,7 @@ export class Classe {
 	}
 
 	toCode() {
+		console.log(this.hasMain())
 		let code: string;
 		if (this.hasMain())
 			code = 'public class ' + this.nome;
@@ -308,7 +322,7 @@ export class Classe {
 			code += ' implements ' + this.codeInterfaces();
 		code += ' {\n';
 		code += this.codeAttributes() + '\n';
-		code += this.codeMetodi() + '\n}';
+		code += this.codeMetodi() + '\n}\n';
 		return code;
 	}
 
