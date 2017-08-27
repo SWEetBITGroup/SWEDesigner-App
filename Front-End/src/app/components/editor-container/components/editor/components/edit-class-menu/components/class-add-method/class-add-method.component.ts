@@ -17,7 +17,10 @@ export class ClassAddMethodComponent {
   */
   @ViewChild('constructor') constructorCheckbox: ElementRef;
 
-
+  /**
+  * Create an instantiation of ClassAddMethodComponent
+  * @param classMenuService used to create a new instantiation of ClassMenuService
+  */
   constructor(private classMenuService: ClassMenuService){ }
   /**
   * Adds a new parameter into the array parametriMetodo
@@ -49,28 +52,28 @@ export class ClassAddMethodComponent {
   */
   removeParam(type: string, name: string) {
     this.classMenuService.parametriMetodo.splice(this.classMenuService.parametriMetodo.indexOf(new Param(type,name)), 1);
-   }
-    /**
-    * Retrives information from the template HTML of this component to build
-    * a new method. If one or more parameter isn't present an error will be shown
-    * @param nome
-    */
-    addMetodo(nome: string, staticMet: boolean, constructor: boolean, tipo: string, acc: string) {
-      let params = this.classMenuService.parametriMetodo;
-      this.classMenuService.addMetodo(nome, staticMet, constructor, tipo, acc, params);
+  }
+  /**
+  * Retrives information from the template HTML of this component to build
+  * a new method. If one or more parameter isn't present an error will be shown
+  * @param nome
+  */
+  addMetodo(nome: string, staticMet: boolean, constructor: boolean, tipo: string, acc: string) {
+    let params = this.classMenuService.parametriMetodo;
+    this.classMenuService.addMetodo(nome, staticMet, constructor, tipo, acc, params);
+  }
+  /**
+  * This function allows to be check only one element on the attribute checkbox
+  * @param event name of id element
+  */
+  justOneCheckbox(event) {
+    if ( event === 'staticMet') {
+      this.constructorCheckbox.nativeElement.checked = false;
+      this.classMenuService.costruttore = false;
     }
-    /**
-    * This function allows to be check only one element on the attribute checkbox
-    * @param event name of id element
-    */
-    justOneCheckbox(event) {
-      if ( event === 'staticMet') {
-        this.constructorCheckbox.nativeElement.checked = false;
-        this.classMenuService.costruttore = false;
-      }
-      if ( event === 'constructor') {
-        this.staticMetCheckbox.nativeElement.checked = false;
-        this.classMenuService.costruttore = true;
-      }
+    if ( event === 'constructor') {
+      this.staticMetCheckbox.nativeElement.checked = false;
+      this.classMenuService.costruttore = true;
     }
   }
+}

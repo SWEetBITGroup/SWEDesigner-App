@@ -9,10 +9,11 @@ import { ClassMenuService } from '../../../../services/class-menu.service';
 })
 export class ClassAddAttributeComponent{
   /**
+  * Create an instantiation of ClassAddAttributeComponent
   * @param classMenuService used to create a new instantiation of ClassMenuService
   */
   constructor(private classMenuService: ClassMenuService){}
- 
+
   /**
   * Retrives information from the template HTML of this component to build
   * a new attribute. If one or more parameter isn't present an error will be shown

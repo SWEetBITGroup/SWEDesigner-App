@@ -8,7 +8,10 @@ import { ClassMenuService } from '../../../../services/class-menu.service';
   styleUrls: ['./class-list-attribute.component.css']
 })
 export class ClassListAttributeComponent{
-
+  /**
+  * Create an instantiation of ClassListAttributeComponent
+  * @param classMenuService used to create a new instantiation of ClassMenuService
+  */
   constructor(private classMenuService: ClassMenuService){}
   /**
   * Removes an attribute of the given name from the class element and from the class object of type Classe

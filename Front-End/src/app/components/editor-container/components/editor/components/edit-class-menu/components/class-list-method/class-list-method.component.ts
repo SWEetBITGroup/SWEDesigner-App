@@ -8,6 +8,10 @@ import { ClassMenuService } from '../../../../services/class-menu.service';
   styleUrls: ['./class-list-method.component.css']
 })
 export class ClassListMethodComponent  {
+  /**
+  * Create an instantiation of ClassListMethodComponent
+  * @param classMenuService used to create a new instantiation of ClassMenuService
+  */
   constructor(private classMenuService: ClassMenuService){}
   /**
   * Removes a method of the given name from the class element and from the class object of type Classe

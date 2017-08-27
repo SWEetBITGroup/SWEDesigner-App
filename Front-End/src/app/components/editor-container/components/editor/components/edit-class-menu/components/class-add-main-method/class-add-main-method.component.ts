@@ -10,10 +10,11 @@ import { Param } from '../../../../models/param';
 export class ClassAddMainMethodComponent {
 
   /**
+  * Create an instantiation of ClassAddMainMethodComponent
   * @param classMenuService used to create a new instantiation of ClassMenuService
   */
   constructor(private classMenuService: ClassMenuService) {}
-  
+
   /**
   * This function add the main function to the target class
   */
