@@ -195,7 +195,7 @@ export class ToolbarComponent implements OnInit {
         //   text: 'Commento'
         // }
       },
-      content: "ciao"
+      content: "Commento"
     });
 
     // });
