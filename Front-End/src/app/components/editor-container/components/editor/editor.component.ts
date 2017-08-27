@@ -192,8 +192,8 @@ export class EditorComponent implements OnInit {
   */
   xSize: any;
   /**
-   * It indicates if the instructions in this.graph.on(remove) had to been done
-   */
+  * It indicates if the instructions in this.graph.on(remove) had to been done
+  */
   flagGraph: any;
 
   /**
@@ -329,7 +329,7 @@ export class EditorComponent implements OnInit {
       */
       this.graph.on('remove', (cell) => {
         if(((cell.attributes.type=='uml.Implementation')
-        ||(cell.attributes.type=='uml.Generalization'))&&this.flagGraph==true){
+          ||(cell.attributes.type=='uml.Generalization'))&&this.flagGraph==true){
           let padre: Classe;
           let figlio: Classe;
           this.graph.getCells().forEach(element => {
@@ -395,7 +395,7 @@ export class EditorComponent implements OnInit {
           else
             this.selectElementActivity(cellView);
         }
-        else if(this.connettore) 
+        else if(this.connettore)
           this.selectElementsToConnect(cellView);
       });
       /**
@@ -421,14 +421,14 @@ export class EditorComponent implements OnInit {
         this.isComment = false;
         if(this.selectedCell){
           this.selectedCell.unhighlight(null/* defaults to cellView.el */, {
-              highlighter: {
-                name: 'stroke',
-                options: {
-                  width: 3,
-                  color: '#885500'
-                }
+            highlighter: {
+              name: 'stroke',
+              options: {
+                width: 3,
+                color: '#885500'
               }
-            });
+            }
+          });
           this.selectedCell.unhighlight();
           this.classMenuService.closeAllCollapsedList();
           this.isComment = false;
@@ -476,13 +476,13 @@ export class EditorComponent implements OnInit {
           if(cell.model.attributes.type!='basic.TextBlock') this.elementSelection(cell);
           if(this.connettore.attributes.type=='uml.Association'){
             let freccia = new this.connettore.constructor({
-                source: { id: this.elementToConnect.model.id },
-                target: { id: cell.model.id }
-              });
+              source: { id: this.elementToConnect.model.id },
+              target: { id: cell.model.id }
+            });
             if(cell.model.attributes.type=='uml.Interface') this.graph.addCell(freccia);
-          } else if((this.connettore.attributes.type == 'uml.Generalization') 
-                    &&(cell.model.attributes.type=='uml.Class')) { 
-              this.mainEditorService.addSuperclass(this.elementToConnect.model.attributes.name,
+          } else if((this.connettore.attributes.type == 'uml.Generalization')
+          &&(cell.model.attributes.type=='uml.Class')) {
+            this.mainEditorService.addSuperclass(this.elementToConnect.model.attributes.name,
               cell.model.attributes.name);
               this.extendedAttributes.forEach(element => {
                 this.mainEditorService.addAttributo(element.getTipo(),
@@ -523,8 +523,8 @@ export class EditorComponent implements OnInit {
               }
             });
             if((cell.model.attributes.type!='basic.TextBlock')
-            &&((cell.model.attributes.type != 'uml.Interface') 
-            ||((this.connettore.attributes.type == 'uml.Implementation') 
+              &&((cell.model.attributes.type != 'uml.Interface')
+            ||((this.connettore.attributes.type == 'uml.Implementation')
             &&(this.interfaceMethods!=null)))) {
               let element1 = this.elementToConnect;
               let freccia = new this.connettore.constructor({
@@ -573,7 +573,7 @@ export class EditorComponent implements OnInit {
               // alert('Selezionare prima il commento');
               return;
             }
-          } 
+          }
           else if(this.connettore.attributes.type == 'uml.Implementation'){
             if(cell.model.attributes.type == 'uml.Interface'){
               this.interfaceMethods = this.classMenuService.getMetodi();
@@ -601,7 +601,7 @@ export class EditorComponent implements OnInit {
             }
           }
           else if(cell.model.attributes.type == 'uml.Interface'
-          ||cell.model.attributes.type=='basic.TextBlock') {
+            ||cell.model.attributes.type=='basic.TextBlock') {
             $('.freccia').blur();
             this.elementToConnect= null;
             if(this.selectedCell){
@@ -674,7 +674,7 @@ export class EditorComponent implements OnInit {
         links.forEach(element => {
           this.graph.getCells().forEach(cell => {
             if((cell.id==element.get('target').id)
-            &&(padre.id==element.get('source').id)
+              &&(padre.id==element.get('source').id)
             &&(element.attributes.type!='uml.Association')) {
               let figlio: Classe;
               figlio= this.mainEditorService.getClass(cell.attributes.name);
@@ -1096,5 +1096,12 @@ export class EditorComponent implements OnInit {
             this.isComment = false;
             this.selectedCellComment = null;
           }
+        }
+        /**
+        * This function remove the selected comment
+        */
+        removeCommento() {
+          this.selectedCellComment.model.remove();
+          this.isComment = false;
         }
       }
