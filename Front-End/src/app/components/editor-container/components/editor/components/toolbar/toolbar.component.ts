@@ -23,10 +23,23 @@ import * as joint from 'jointjs';
 * @param abstCounter [number] it's a counter astract class
 */
 export class ToolbarComponent implements OnInit {
-
-	private classCouter: number = 0;
-	private interCounter: number = 0;
-	private abstCounter: number = 0;
+  /**
+  * This variable cout the number of class
+  */
+  private classCouter: number = 0;
+  /**
+  * This variable cout the number of interface
+  */
+  private interCounter: number = 0;
+  /**
+  * This variable cout the number of abstract class
+  */
+  private abstCounter: number = 0;
+  /**
+  * Create an instantiation of ProfiloComponent
+  * @param accountService used to create a new instantiation of AccountService
+  * @param mainEditorService used to create a new instantiation of MainEditorService
+  */
 	constructor(private mainEditorService: MainEditorService, private activityService: ActivityService) { }
 
 	ngOnInit() {
@@ -74,7 +87,6 @@ export class ToolbarComponent implements OnInit {
 		});
 		this.mainEditorService.addClass(new Classe(nomeClasse), classe);
 	}
-
 	/**
   * Method add interface to editor
   */
@@ -197,8 +209,6 @@ export class ToolbarComponent implements OnInit {
       },
       content: "Commento"
     });
-
-    // });
     this.mainEditorService.addShape( comm );
 	}
 	/**
