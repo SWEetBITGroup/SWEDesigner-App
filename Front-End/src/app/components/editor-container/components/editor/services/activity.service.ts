@@ -139,6 +139,7 @@ export class ActivityService {
 		this.mainEditorService.removeShapeActivity(this.selectedElement);
 		this.selectedElement = null;
 		this.selectedShape = null;
+		console.log(this.shapeList);
   }
 
 	addBody(body: string) {

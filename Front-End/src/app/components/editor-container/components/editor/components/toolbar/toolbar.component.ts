@@ -247,7 +247,7 @@ export class ToolbarComponent implements OnInit {
 	addActivityShape() {
 		let prova = new joint.shapes.basic.Rect({
 			position: { x: 400, y: 400 },
-			size: { height: 100, width: 150 },
+			size: { height: 70, width: 150 },
 			attrs: {
 				rect: {
 					'rx': '5',
