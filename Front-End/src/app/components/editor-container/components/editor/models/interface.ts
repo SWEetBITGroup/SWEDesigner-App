@@ -3,8 +3,8 @@ import { Metodo } from './metodo';
 import { Attributo } from './attributo';
 
 // class MetodiAstratti{
-//     constructor(public nome: string, 
-//                 public tipo: string, 
+//     constructor(public nome: string,
+//                 public tipo: string,
 //                 public listaParam: string[]){}
 // }
 export class Interface extends Classe{
@@ -18,7 +18,7 @@ export class Interface extends Classe{
     //     this.abstractMethods.push(new MetodiAstratti(nome,tipo,listaParam));
     // }
 
-    
+
     // Metodo per aggiungere un attributo all'array di attributi della classe
     /**
      * This method adds a new attribute into the array of attributes ´this.attributi´,
@@ -39,7 +39,7 @@ export class Interface extends Classe{
      */
     addMetodo(metodo: Metodo) {
         super.getMetodi().forEach(met => {
-            if(met.getNome() == metodo.getNome()) 
+            if(met.getNome() == metodo.getNome())
                 throw new Error('NomePresente');
         });
         if(metodo.isStatic()) throw Error('InterfacciaNoMetodoStatico')
@@ -48,7 +48,7 @@ export class Interface extends Classe{
 
 
     /**
-     * Modify an attribute of this class if the attribute is present in the array of attributes. 
+     * Modify an attribute of this class if the attribute is present in the array of attributes.
      * It changes only the parameter given
      * @param nomeAttr the name of the attribute to modify
      * @param tipo the new type for the selected attribute. This parameter is optional
@@ -67,7 +67,9 @@ export class Interface extends Classe{
         throw Error('InterfacciaNoAttributi')
 
     }
-
+    /**
+     * This method return if is an interface
+     */
     isInterface(){
         return true;
     }
