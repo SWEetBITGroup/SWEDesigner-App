@@ -40,12 +40,10 @@ export class EditorComponent implements OnInit {
   * is the view for the joint.dia.Graph model.When a paper is associated with a graph, the paper makes sure that all the cells added to the graph are automatically rendered.
   */
   paper: any;
-
   /**
   * is used to scale the graph
   */
   public xAx: number =1;
-
   /**
   * is an subscription to allow the zoom function
   */
@@ -62,12 +60,10 @@ export class EditorComponent implements OnInit {
   * it point to the copied element after the click on "Copia" or "Taglia"
   */
   copiedElement: any;
-
   /**
   * This flag indicates if the copiedElement is to past for cut o for copy
   */
   flagCut: boolean;
-
   /**
   * is the type of the link shape selected
   */
@@ -76,37 +72,30 @@ export class EditorComponent implements OnInit {
   * it points to the selected element by the click on it, that will be connect by a link shape
   */
   elementToConnect: any;
-
   /**
   * It points to the graph after a undo
   */
   undoGraph: any;
-
   /**
   * It points to the graph after a redo
   */
   redoGraph: any;
-
   /**
   * It points to the actual graph
   */
   actualGraph: any;
-
   /**
   * It counts the copies to the same element
   */
   countCopies: any;
-
   /**
   * This flag indicates if you have to listen to the add event of the graph
   */
   flagAdded: any;
-
   /**
   * This flag indicates if you have to listen to the remove event of the graph
   */
   flagRemoved: any;
-
   /**
   * It indicates to undo method if a method are added
   */
@@ -198,9 +187,10 @@ export class EditorComponent implements OnInit {
 
   /**
   * this constructor bind this class with the services use for callback function and draw the grid in the canvas
-  * @param classMenuService
-  * @param editService
-  * @param mainEditorService
+  * @param classMenuService used to create a new instantiation of MenuService
+  * @param menuService used to create a new instantiation of EditService
+  * @param mainEditorService used to create a new instantiation of MainEditorService
+  * @param activityService used to create a new instantiation of ActivityService
   */
   constructor(private classMenuService: ClassMenuService,
     private menuService: MenuService,
@@ -446,13 +436,9 @@ export class EditorComponent implements OnInit {
       // this.mainEditorService.storeGraph(this.graph.toJSON()); // ELIMINARE
       this.mainEditorService.setEditorComp(this);
     }
-
-    /* Salva il graph corrente utilizzando il metodo storeGraph di mainEditor service,
-    pulisce this.graph e lo ripopola tramite il JSON fornito in ingresso
-    */
     /**
     *  This method is used to replace the editor with a new windows with the contents in the JSON file
-    *  @param graph
+    *  @param graph this variable is the JSON file
     */
     replaceDiagram(graph: JSON) {
       if(graph){
@@ -465,10 +451,9 @@ export class EditorComponent implements OnInit {
         this.graph.fromJSON(graph);
       }
     }
-
     /**
     * This method is used to select the element to be connectted by the connector
-    * @param cell
+    * @param cell this variable refers to the selected shape
     */
     selectElementsToConnect(cell: any) {
       if(this.elementToConnect) {
@@ -628,15 +613,13 @@ export class EditorComponent implements OnInit {
           }
         }
       }
-
       /**
       * This method add a link to the class
-      * @param connettore
+      * @param connettore this variable refers to the link shape
       */
       addConnettore(connettore: any) {
         this.connettore = connettore;
       }
-
       /**
       * This method select a shape in the editor
       * @param cellView
@@ -655,7 +638,6 @@ export class EditorComponent implements OnInit {
           this.activityService.setSelectedElement(cellView.model);
         }
       }
-
       /**
       * This method update the method and the attributes of alla the sons of the class 'dad'
       * @param removed indicates if the class's sons had to remove an attribute or a method
@@ -718,7 +700,6 @@ export class EditorComponent implements OnInit {
           });
         });
       }
-
       /**
       * This method add to the cell 'class' a method
       * @param nome indicates the name of the method
@@ -760,7 +741,6 @@ export class EditorComponent implements OnInit {
             classe.set('methods', metodi);
           }
         }
-
         /**
         * This method remove a method to the cell 'classe'
         * @param nome indicates the name of the method to remove
@@ -779,8 +759,6 @@ export class EditorComponent implements OnInit {
           classe.set('methods', null);
           classe.set('methods', metodi);
         }
-
-        // Aggiunta classe
         /**
         * This method add to the editor an element
         * @param element
@@ -788,7 +766,6 @@ export class EditorComponent implements OnInit {
         addElement(element: any) {
           this.graph.addCell(element);
         }
-
         /**
         * This method increase the scale of the editor
         */
@@ -796,7 +773,6 @@ export class EditorComponent implements OnInit {
           this.xAx+=(0.05);
           this.paper.scale(this.xAx,this.xAx);
         }
-
         /**
         * This method decrease the scale of the editor
         */
@@ -804,7 +780,6 @@ export class EditorComponent implements OnInit {
           this.xAx-=(0.05);
           this.paper.scale(this.xAx,this.xAx);
         }
-
         /**
         * This method clone the selected element
         */
@@ -819,7 +794,6 @@ export class EditorComponent implements OnInit {
           this.graph.removeCells(cell);
           this.selectedCell = null;
         }
-
         /**
         * This method copy the selected element
         */
@@ -830,7 +804,6 @@ export class EditorComponent implements OnInit {
             this.countCopies= 0;
           }
         }
-
         /**
         * This method pastes the element copied earlier
         */
@@ -900,7 +873,6 @@ export class EditorComponent implements OnInit {
             }
           }
         }
-
         /**
         * This method cut the selected element
         */
@@ -915,7 +887,6 @@ export class EditorComponent implements OnInit {
             this.flagCut= true;
           }
         }
-
         /**
         * This method delete the selected element
         */
@@ -923,7 +894,6 @@ export class EditorComponent implements OnInit {
           if(this.selectedCell!=null)
             this.deleteElement(this.selectedCell.model);
         }
-
         /**
         * This method undo the last change in the graph
         */
@@ -972,7 +942,6 @@ export class EditorComponent implements OnInit {
           this.noChange= false;
           this.fromUndo= false;
         }
-
         /**
         * This method redo the last change in the graph
         */
@@ -1024,14 +993,12 @@ export class EditorComponent implements OnInit {
           this.changeMethod= false;
           this.fromUndo= false;
         }
-
         /**
         * This function copies the newly created attribute
         */
         copiaAttr(tipo: string, nome:string, acc: string, stat: boolean, fin: boolean){
           this.addedAttribute= new Attributo(tipo, nome, acc, stat, fin);
         }
-
         /**
         * This method update the actualGraph and undoGraph
         */
@@ -1060,8 +1027,10 @@ export class EditorComponent implements OnInit {
           this.redoGraph= null;
           this.copiedElement= null;
         }
-
-
+        /**
+        * This function select one shape of the activity diagram
+        * @param cell this variable refers to the selected shape
+        */
         selectElementActivity(cell: any) {
           if(this.elementToConnect) {
             let element1 = this.elementToConnect;
@@ -1084,7 +1053,6 @@ export class EditorComponent implements OnInit {
         commentOff() {
           this.isComment = false;
         }
-
         /**
         * This Function change the comment value
         * @param testo is the new value of the comment
