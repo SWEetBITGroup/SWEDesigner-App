@@ -1,11 +1,16 @@
 .toolbar {
   height: 100%;
-  background-color: #61CFFE;
+  background-color: dimgrey;
   overflow: hidden;
+  color: darkorange;
 }
 
 .classi {
   /*display: none;*/
+}
+
+button {
+  border-color: #e0e2e4;
 }
 
 .tipo {
@@ -19,6 +24,7 @@
   display: block;
   height: 40px;
   width: 40px;
+  margin-bottom: 5px;
 }
 
 .add {
