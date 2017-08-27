@@ -184,18 +184,21 @@ export class ToolbarComponent implements OnInit {
   * Method add comment cell to editor
   */
 	addCommento() {
-		let comm = new joint.shapes.basic.Rect({
+		let comm = new joint.shapes.basic.TextBlock({
 			position: { x: 10, y: 400 },
 			size: { width: 160, height: 100 },
 			attrs: {
 				rect: {
 					fill: 'gold'
         },
-        text: {
-          text: 'Commento'
-        }
-      }
+        // text: {
+        //   text: 'Commento'
+        // }
+      },
+      content: "ciao"
     });
+
+    // });
     this.mainEditorService.addShape( comm );
 	}
 	/**

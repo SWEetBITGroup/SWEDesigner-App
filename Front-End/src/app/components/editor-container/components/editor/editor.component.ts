@@ -373,19 +373,19 @@ export class EditorComponent implements OnInit {
       * appear of comment menu
       */
       this.paper.on('cell:pointerdown', (cellView) => {
-        // let commento: string = cellView.model.attributes.type;
-        // let position = cellView.model.attributes.position;
-        // let size = cellView.model.attributes.size;
-        // this.xPos = position.x;
-        // this.yPos = position.y;
-        // this.xSize = size.width;
-        // if (commento == 'basic.Rect') {
-        //   this.isComment = true;
-        //   this.selectedCellComment = cellView;
-        //   $('.boxComment').css({top: (this.yPos ), left: (this.xSize + this.xPos + 100), position:'absolute'});
-        //   return;
-        // }
-        // else {
+        let commento: string = cellView.model.attributes.type;
+        let position = cellView.model.attributes.position;
+        let size = cellView.model.attributes.size;
+        this.xPos = position.x;
+        this.yPos = position.y;
+        this.xSize = size.width;
+        if (commento == 'basic.TextBlock') {
+          this.isComment = true;
+          this.selectedCellComment = cellView;
+          $('.boxComment').css({top: (this.yPos ), left: (this.xSize + this.xPos + 100), position:'absolute'});
+          return;
+        }
+        else {
           if(!this.connettore) {
             let type = cellView.model.attributes.type;
             if((type != 'uml.Generalization') &&
@@ -399,7 +399,7 @@ export class EditorComponent implements OnInit {
             this.selectElementsToConnect(cellView);
           else
             this.selectElementActivity(cellView);
-        // }
+        }
       });
       /**
       * This method allows to the mouse's pointer to recognize when the class is unselected by click outside that shape
@@ -1031,10 +1031,11 @@ export class EditorComponent implements OnInit {
 
         /**
         * This Function change the comment value
+        * @param testo is the new value of the comment
         */
         changeCommento( testo: string) {
           if (testo) {
-            this.selectedCellComment.model.attr('text/text', testo);
+            this.selectedCellComment.model.set('content' , testo);
             (<HTMLInputElement>document.getElementById('newCommento')).value = '';
             this.isComment = false;
             this.selectedCellComment = null;
