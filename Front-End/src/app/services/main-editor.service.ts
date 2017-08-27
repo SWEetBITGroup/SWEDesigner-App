@@ -358,4 +358,8 @@ export class MainEditorService {
     classe.addInterface(inter);
   }
 
+  changeClassName(name: string) {
+    this.selectedClasse.changeNome(name);
+  }
+
 }

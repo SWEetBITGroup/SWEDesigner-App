@@ -25,6 +25,7 @@ export class ChangeClassNameComponent {
       this.classMenuService.classe.set('name',newName);
       this.classMenuService.name = newName;
       (<HTMLInputElement>document.getElementById('newName')).value = '';
+      this.classMenuService.changeClassName(newName);
     }
   }
 }

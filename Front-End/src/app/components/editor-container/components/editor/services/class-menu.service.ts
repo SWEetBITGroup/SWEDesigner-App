@@ -117,6 +117,7 @@ export class ClassMenuService {
   */
   changeClassName(name: string) {
     this.classe.set('name', name);
+    this.mainEditorService.changeClassName(name);
   }
   /**
   * Retrives information from the template HTML of this component to build

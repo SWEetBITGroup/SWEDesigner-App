@@ -323,15 +323,17 @@ export class EditorComponent implements OnInit {
         let padre: Classe;
         let figlio: Classe;
         this.graph.getCells().forEach(element => {
-          if (element.id === cell.get('source').id) {
+          if (element.id === cell.get('target').id) {
             padre = this.mainEditorService.getClass(element.attributes.name);
             this.methodsToDelete = padre.getMetodi();
             this.attributesToDelete = padre.getAttributi();
           }
         });
         this.graph.getCells().forEach(element => {
-          if (element.id === cell.get('target').id) {
-            figlio = this.mainEditorService.getClass(element.attributes.name);
+          if (element.id === cell.get('source').id) {
+						figlio = this.mainEditorService.getClass(element.attributes.name);
+						figlio.removeInerface(padre.getNome());
+						console.log(figlio);
             if (cell.attributes.type == 'uml.Implementation')
               this.methodsToDelete.forEach(met => {
                 figlio.removeMetodo(met.getNome());
@@ -488,7 +490,6 @@ export class EditorComponent implements OnInit {
         else {
           if (this.interfaceMethods != null && cell.model.attributes.type != 'basic.TextBlock') {
             this.mainEditorService.addInterface(cell.model.attributes.name,this.elementToConnect.model.attributes.name);
-            console.log(this.mainEditorService.getClassList());
             this.elementSelection(cell);
             this.interfaceMethods.forEach(element => {
               this.classMenuService.addMetodo(element.getNome(),
@@ -542,7 +543,7 @@ export class EditorComponent implements OnInit {
         }
       }
     }
-    else {  //PRIMO ELEMENTO SELEZIONATO
+		else {  //PRIMO ELEMENTO SELEZIONATO
       this.interfaceMethods = null;
       this.elementToConnect = cell;
       if (cell.model.attributes.type != 'basic.TextBlock') this.elementSelection(cell);
@@ -557,7 +558,7 @@ export class EditorComponent implements OnInit {
           this.activityService.deselectElement();
           this.connettore = null;
           $('.freccia').blur();
-          // alert('Selezionare prima il commento');
+					// alert('Selezionare prima il commento');
           return;
         }
       }
