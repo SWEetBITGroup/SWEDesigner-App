@@ -122,7 +122,7 @@ export class ActivityMenuComponent {
     * @param corpo string code
     */
     generaOp(corpo: string) {
-      corpo = corpo.trim();
+      corpo = corpo.trim().normalize();
       this.activityService.addBody(corpo);
     }
     /**
