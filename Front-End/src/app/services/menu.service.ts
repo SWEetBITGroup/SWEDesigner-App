@@ -203,8 +203,9 @@ export class MenuService {
     /**
     * This function request to server the service of parsing and download
     */
-    donwload(){
+    donwload(mainClassName: string){
       let j = {
+        nomeMain: mainClassName,
         progetto: this.mainEditorService.toCode()
       };
       return this.http.post('\parsing', j,{
@@ -219,8 +220,15 @@ export class MenuService {
     * This function call the download function
     */
     code() {
+      let mainClassName;
+      let classes = this.mainEditorService.getClassList();
+      classes.forEach(element => {
+        if(element.hasMain){
+          mainClassName = element.getNome();
+        }
+      });
       console.log(this.mainEditorService.toCode());
-      this.donwload().subscribe(res =>{
+      this.donwload(mainClassName).subscribe(res =>{
         FileSaver.saveAs(res, "progetto.zip");
         let fileURL = URL.createObjectURL(res);
         window.open(fileURL);

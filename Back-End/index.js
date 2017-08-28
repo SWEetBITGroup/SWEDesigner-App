@@ -192,23 +192,26 @@ app.listen(port, ()=>{
         console.log("refreshed directory");
       }
     })
-    var myMu = req.body;
+    let nomeClasse = req.body.nomeMain;
+    var proj = req.body.progetto;
     //var metodo = req.body.m;
     //console.log(metodo);
     //myMU.methodsPU[0].corpoM = metodo;
-    var myMU = req.body;
+    var myMU ={
+      "progetto": proj
+    };
     console.log(myMU);
     var template = mu.getTemplate();
     mu.parse(template, myMU, function(parsed){
       console.log(parsed);
       //res.json(parsed);
       //res.attachment("./templates/template.html");
-      fs.writeFile("./code/Main.java", parsed, function(err){
+      fs.writeFile("./code/"+nomeClasse+".java", parsed, function(err){
         if(err){
           console.log("errore scrittura file");
         }
         else{
-          const compiled = spawn("javac", ["./code/Main.java"]);
+          const compiled = spawn("javac", ["./code/"+nomeClasse+".java"]);
           compiled.on('close', (err)=>{
             var zipOutput = fs.createWriteStream("./zip/Main.zip");
             zipOutput.on('close', function () {
