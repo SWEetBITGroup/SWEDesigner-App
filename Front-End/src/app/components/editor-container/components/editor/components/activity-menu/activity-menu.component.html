@@ -25,13 +25,29 @@
 		<ul class="list-group">
 			<li class="list-group-item list-group-item-warning" *ngFor="let p of this.getParams()">{{p.toString()}}</li>
 		</ul>
-	</div>
+  </div>
+
+  <!-- Lista Attributi -->
+	<div class="row S" [hidden]="!getParams()">
+    <h6>Lista attributi della classe</h6>
+    <ul class="list-group">
+      <li class="list-group-item list-group-item-warning" *ngFor="let p of this.activityService.attributesClass">{{p.toString()}}</li>
+    </ul>
+  </div>
+
+  <!-- Lista Metodi -->
+  <div class="row S" [hidden]="!getParams()">
+    <h6>Lista metodi della classe</h6>
+    <ul class="list-group">
+      <li class="list-group-item list-group-item-warning" *ngFor="let p of this.activityService.methodsClass">{{p.toString()}}</li>
+    </ul>
+  </div>
 
   <!-- Elimina forma -->
 	<div class="row" [hidden]="!isSelected()">
-      <button class="btn btn-warning" (click)="deleteElement()" title="Rimuovi elemento activity">
-        Elimina forma <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-      </button>
+    <button class="btn btn-warning" (click)="deleteElement()" title="Rimuovi elemento activity">
+      Elimina forma <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+    </button>
   </div>
 
   <!-- OPERAZIONE -->

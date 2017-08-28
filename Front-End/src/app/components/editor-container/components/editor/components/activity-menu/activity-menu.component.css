@@ -60,6 +60,10 @@ ul {
   margin-bottom: 0px;
 }
 
+li {
+  padding: 1px;
+}
+
 .delete {
   display: inline-block;
 }
@@ -71,4 +75,11 @@ ul {
   /* float: right; */
   margin-left: 20px;
   margin-right: 20px;
+}
+
+.S {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  max-height: 150px;
+  overflow-y: auto;
 }
