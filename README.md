@@ -38,6 +38,7 @@ In alternativa è possibile utilizzare gli script bash presenti all'interno dell
 * Quando viene creato un commento all'interno dell'editor, il menù di modifica non viene trascinato insieme a lui. Il team sta lavorando alla risolzuione di questo problema.
 * Se viene creata una classe a cui viene aggiunto il main e poi viene eliminata, la prossima classe creata non permette l'inserimento di un nuovo main. Il team sta lavorando alla risolzuione di questo problema.
 * Non è possibile eliminare una relazione.
+* Possono essere salvati più progetti con lo stesso nome. Il team sta lavorando alla risolzuione di questo problema.
 * Va generata prima la classe che deve stare più in alto. Il team è al lavoro sul parametrizzare la compilazione.
 * Possono essere creati più nodi di inizio e di fine peri metodi. Il team sta lavorando alla risolzuione di questo problema.
 * Per qualsiasi altro problema non indicato all'interno della lista è possibile contattarci all'indirizzo *sweet.bit.group@gmail.com* 

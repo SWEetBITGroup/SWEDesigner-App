@@ -38,7 +38,7 @@ export class FileComponent implements OnInit {
     save(projName: string){
       if(this.accountService.notOpenedProj == true){
         this.mainEditorService.retriveGraph();
-        let fileJSON = JSON.parse(this.mainEditorService.getProject().toJSONx(this.accountService.username, projName));
+        let fileJSON = JSON.parse(this.mainEditorService.getProject().toJSONk(this.accountService.username, projName));
         fileJSON.project = JSON.stringify(fileJSON.project);
         // console.log(fileJSON);
         this.nome_progetto = projName;

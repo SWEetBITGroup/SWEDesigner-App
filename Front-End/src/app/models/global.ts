@@ -115,6 +115,7 @@ export class Global {
   * @param proj project type
   */
   import(proj: any) {
+    console.log(proj);
     this.setName(proj.nome_progetto);
     this.main = proj.main;
     this.setDiagramma(JSON.stringify(proj.diagramma));
@@ -194,6 +195,14 @@ export class Global {
     }
     this.username = usr;
     return JSON.stringify(this);;
+  }
+  toJSONk(usr: string, projName: string){
+    let proj = {
+      "nome_progetto" : projName,
+      "username" : usr,
+      "project": JSON.stringify(this)
+    }
+    return JSON.stringify(proj);
   }
   /**
   * This function return all the class information
