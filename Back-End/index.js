@@ -46,10 +46,35 @@
   var errRead = "error loading request parameters";
 
   //globalFun
+  function clearDir(dirPath, removeSelf) {
+    if (removeSelf === undefined)
+      removeSelf = true;
+    try { var files = fs.readdirSync(dirPath); }
+    catch(e) { return; }
+    if (files.length > 0)
+      for (var i = 0; i < files.length; i++) {
+        var filePath = dirPath + '/' + files[i];
+        if (fs.statSync(filePath).isFile())
+          fs.unlinkSync(filePath);
+        else
+          rmDir(filePath);
+      }
+    if (removeSelf)
+      fs.rmdirSync(dirPath);
+  };
+
+  function clear(cb){
+    let removeSelf = false;
+    clearDir("./code", removeSelf);
+    clearDir("./zip", removeSelf);
+    cb(false);
+  }
+
   function writeJson(json, cb){
     fs.writeFile("./files/encr.json", json);
     cb(false);
   }
+
 
 //Init Server
 const server = require('./serverLoader'); // function loading server
@@ -162,6 +187,11 @@ app.listen(port, ()=>{
     * @see module:parse
    */
   app.post("/parsing", function(req,res) { 
+    clear((err)=>{
+      if(!err){
+        console.log("refreshed directory");
+      }
+    })
     var myMu = req.body;
     //var metodo = req.body.m;
     //console.log(metodo);
@@ -193,6 +223,7 @@ app.listen(port, ()=>{
             archive.append(fs.createReadStream(fileClass), { name: 'Main.class' });*/
             archive.directory("./code", true, {date: new Date()});
             archive.finalize();
+            archive = archiver('zip');
           })
         }
       })
