@@ -39,6 +39,7 @@ In alternativa è possibile utilizzare gli script bash presenti all'interno dell
 * La classe principale deve essere per forza chiamata Main altrimenti il compilatore non funziona. Il team è al lavoro sul parametrizzare la compilazione.
 * Se viene creata una classe a cui viene aggiunto il main e poi viene eliminata, la prossima classe creata non permette l'inserimento di un nuovo main. Il team sta lavorando alla risolzuione di questo problema.
 * Non è possibile eliminare una relazione.
+* Va generata prima la classe che deve stare più in alto. Il team è al lavoro sul parametrizzare la compilazione.
 * Possono essere creati più nodi di inizio e di fine peri metodi. Il team sta lavorando alla risolzuione di questo problema.
 * Per qualsiasi altro problema non indicato all'interno della lista è possibile contattarci all'indirizzo *sweet.bit.group@gmail.com* 
 oppure creare un __New Issue__ nell'apposita sezione di GitHub.
