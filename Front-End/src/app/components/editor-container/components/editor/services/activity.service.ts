@@ -111,7 +111,7 @@ export class ActivityService {
   * @param graphElement it refers to the graph
   */
 	addStart(graphElement: any) {
-		this.startID = graphElement.id;
+		//this.startID = graphElement.id;
 		this.mainEditorService.addShape(graphElement);
 		this.shapeList.addShape(new Start(graphElement.id));
 	}
@@ -120,7 +120,7 @@ export class ActivityService {
   * @param graphElement it refers to the graph
   */
 	addEnd(graphElement: any) {
-		this.endID = graphElement.id;
+		//this.endID = graphElement.id;
 		this.mainEditorService.addShape(graphElement);
 		this.shapeList.addShape(new End(graphElement.id));
 	}
