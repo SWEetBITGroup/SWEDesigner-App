@@ -126,10 +126,10 @@ export class Global {
   generateClassArray(classArray) {
     classArray.forEach(classe => {
       let c = new Classe(classe.nome);
-      c.setMain = classe.mainClass;
       this.generateMethods(c, classe.metodi);
       this.generateAttributes(c, classe.attributi);
       c.addSuperclass(classe.classePadre);
+      c.setMain(classe.mainClass);
       if (classe.interfaces)
         classe.interfaces.forEach(i => {
           c.addInterface(i);

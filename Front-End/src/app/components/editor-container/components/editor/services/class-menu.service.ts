@@ -282,6 +282,8 @@ export class ClassMenuService {
     this.classe.set('methods', null);
     this.classe.set('methods', metodi);
     this.mainEditorService.removeMetodo(nome);
+    if (nome == 'main' && this.mainEditorService.getSelectedClasse().hasMain())
+      this.mainEditorService.getSelectedClasse().setMain(false);
   }
   /**
   * Set the editor in activity mode to modify the behavior of the method of the given name
@@ -330,7 +332,7 @@ export class ClassMenuService {
 
   setMain() {
     console.log(this.mainEditorService.getSelectedClasse());
-    this.mainEditorService.getSelectedClasse().setMain();
+    this.mainEditorService.getSelectedClasse().setMain(true);
     console.log(this.mainEditorService.getSelectedClasse());
   }
   // JQUERY FUNCTION

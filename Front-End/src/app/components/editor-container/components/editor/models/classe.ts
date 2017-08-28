@@ -267,8 +267,8 @@ export class Classe {
 		return infoAttr;
 	}
 
-	setMain() {
-		this.mainClass = true;
+	setMain(x: boolean) {
+		this.mainClass = x;
 	}
 
 	/* getInfoMeth(x: Metodo[]) {
@@ -310,7 +310,6 @@ export class Classe {
 	}
 
 	toCode() {
-		console.log(this.hasMain())
 		let code: string;
 		if (this.hasMain())
 			code = 'public class ' + this.nome;
