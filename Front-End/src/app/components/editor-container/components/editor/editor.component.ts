@@ -658,7 +658,6 @@ selectElementsToConnect(cell: any) {
     if(superClass.isInterface()){
       let links= this.graph.getConnectedLinks(padre);
       links.forEach(link => {
-        console.log("cu")
         this.graph.getCells().forEach(cell => {
           if((link.get('source').id==cell.id)&&((link.get('target').id==padre.id))){
             let figlio: Classe;
@@ -745,6 +744,8 @@ selectElementsToConnect(cell: any) {
   */
   addElement(element: any) {
     this.graph.addCell(element);
+    if(element.attributes.type=='uml.Class')
+      this.classMenuService.addType(element.attributes.name);
   }
   /**
   * This method increase the scale of the editor

@@ -112,6 +112,18 @@ export class ClassMenuService {
   * @param name
   */
   changeClassName(name: string) {
+    this.types.forEach(element => {
+      if(element==this.mainEditorService.getSelectedClasse().getNome()){
+        this.types.splice(this.types.indexOf(element), 1);
+        this.types.push(name);
+      }        
+    });
+    this.methodTypes.forEach(element => {
+      if(element==this.mainEditorService.getSelectedClasse().getNome()){
+        this.methodTypes.splice(this.types.indexOf(element), 1);
+        this.methodTypes.push(name);
+      }        
+    });
     this.classe.set('name', name);
     this.mainEditorService.changeClassName(name);
   }
@@ -285,6 +297,12 @@ export class ClassMenuService {
     if (nome == 'main' && this.mainEditorService.getSelectedClasse().hasMain())
       this.mainEditorService.getSelectedClasse().setMain(false);
   }
+
+  addType(name: string) {
+    this.types.push(name);
+    this.methodTypes.push(name);
+  }
+
   /**
   * Set the editor in activity mode to modify the behavior of the method of the given name
   * @param nome name of method to modify
@@ -308,6 +326,14 @@ export class ClassMenuService {
   */
   removeClass(name: string, classe: Classe) {
     this.mainEditorService.removeClass(name, classe);
+    this.types.forEach(element => {
+      if(element==name) 
+        this.types.splice(this.types.indexOf(element), 1);
+    });
+    this.methodTypes.forEach(element => {
+      if(element==name) 
+        this.methodTypes.splice(this.methodTypes.indexOf(element), 1);
+    });
   }
   /**
   * This method return true only if the method is addable by logic
