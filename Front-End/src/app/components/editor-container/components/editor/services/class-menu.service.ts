@@ -171,7 +171,7 @@ export class ClassMenuService {
         attributi.push(vis + ' ' + nome + ' : ' + tipo);
         attributes= vis + ' ' + nome + ' : ' + tipo;
       }
-      this.mainEditorService.getSelectedClasse().nomiAttributi.push(attributes);
+      this.activityService.addAttributesClass(attributes);
       this.classe.set('attributes', null); // Hack per far funzionare l'event change:attrs
       this.classe.set('attributes', attributi);
       // Reset input field
@@ -268,8 +268,7 @@ export class ClassMenuService {
       }
       methods= vis + ' ' + st + ' ' + nome + ' ( ' + parametri + ' ) : ' + tipo;
       metodi.push(vis + ' ' + st + ' ' + nome + ' ( ' + parametri + ' ) : ' + tipo);
-      let a= this.mainEditorService.getSelectedClasse().nomiMetodi;
-      this.mainEditorService.getSelectedClasse().nomiMetodi.push(methods);
+      this.activityService.addMethodClass(methods);
       this.classe.set('methods', null); // Hack per far funzionare l'event change:attrs
       this.classe.set('methods', metodi);
       this.selectedAccMet = 'public';

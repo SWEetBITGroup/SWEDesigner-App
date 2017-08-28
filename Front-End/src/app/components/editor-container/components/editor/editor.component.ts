@@ -438,6 +438,8 @@ export class EditorComponent implements OnInit {
       if (!this.mainEditorService.getActivityModeStatus()){
         this.mainEditorService.storeGraph(this.graph.toJSON());
         this.activityService.resetMethodsAttributesClass();
+        this.activityService.setAttributesClass(this.selectedCell.model.attributes.attributes);
+        this.activityService.setMethodsClass(this.selectedCell.model.attributes.methods);
       }
       else
         this.flagGraph = true;

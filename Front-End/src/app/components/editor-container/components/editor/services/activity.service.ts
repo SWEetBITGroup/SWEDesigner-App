@@ -459,15 +459,26 @@ export class ActivityService {
 			this.selectedElement.attr('text/text', text);
 	}
 
-		setMethodsClass() {
-		this.mainEditorService.getSelectedClasse().nomiMetodi.forEach(element => {
+	setMethodsClass(nomiMetodi: string[]) {
+		nomiMetodi.forEach(element => {
 			this.methodsClass.push(element);
 		});
 	}
 
-	setAttributesClass() {
-		this.mainEditorService.getSelectedClasse().nomiAttributi.forEach(element => {
+	setAttributesClass(nomiAttributi: string[]) {
+		nomiAttributi.forEach(element => {
 			this.attributesClass.push(element);
+		});
+	}
+
+	addAttributesClass(nome: string) {
+		this.attributesClass.push(nome);
+	}
+
+	addMethodClass(nome: string) {
+		this.methodsClass.push(nome);
+		this.methodsClass.forEach(element => {
+			console.log(element);
 		});
 	}
 
@@ -476,7 +487,5 @@ export class ActivityService {
 			this.methodsClass.splice(0, this.methodsClass.length);
 		if(this.attributesClass.length>0)
 			this.attributesClass.splice(0, this.attributesClass.length)
-		this.setMethodsClass();
-		this.setAttributesClass();
 	}
 }
