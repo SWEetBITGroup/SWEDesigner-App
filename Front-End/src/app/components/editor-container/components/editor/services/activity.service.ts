@@ -49,11 +49,11 @@ export class ActivityService {
   /**
   * This variable rappresent the list of parametres
   */
-  private params: Param[];
+	private params: Param[];
   /**
   * This variable rappresent the list of variables
   */
-  private varibles: Map<string, string>;
+	private varibles: Map<string, string>;
   /**
   * This variable rappresent a variable
   */
@@ -202,14 +202,14 @@ export class ActivityService {
   /**
   * This functon delete the selected element
   */
-  deleteElement() {
+	deleteElement() {
 		let id = this.selectedShape.getId();
 		this.shapeList.removeShape(id);
 		this.mainEditorService.removeShapeActivity(this.selectedElement);
 		this.selectedElement = null;
 		this.selectedShape = null;
 		console.log(this.shapeList);
-  }
+	}
   /**
   * This function add the body of the shape
   * @param body body content
@@ -223,33 +223,33 @@ export class ActivityService {
   */
 	getSelectedMethod() {
 		return this.selectedMethod;
-  }
+	}
   /**
   * This function return the 'selectedElement' value
   */
 	getSelectedElement() {
 		return this.selectedElement;
-  }
+	}
   /**
   * This function return the '' value
   */
 	getNameMethod() {
 		if (this.selectedMethod)
 			return this.selectedMethod.getNome();
-  }
+	}
   /**
   * This function return the 'vars' value
   */
 	getVarVis() {
 		return this.vars;
-  }
+	}
   /**
   * This function return the shape refer
   */
 	getShapeType() {
 		if (this.selectedShape.getType() != 'IfNode' &&
 			this.selectedShape.getType() != 'WhileNode')
-    return this.selectedShape.getType();
+			return this.selectedShape.getType();
 		else {
 			if (this.selectedShape.getType() == 'IfNode')
 				return 'if';
@@ -258,7 +258,7 @@ export class ActivityService {
 			else
 				return 'while';
 		}
-  }
+	}
   /**
   * This function return the 'params' value
   */
@@ -337,7 +337,7 @@ export class ActivityService {
 				return true;
 		}
 		return false;
-  }
+	}
   /**
   * This function check if the shape is an uml operation shape
   */
@@ -369,7 +369,7 @@ export class ActivityService {
 		this.selectedElement.attr('text/text', dec);
 		if (dec == 'if') {
 			if (this.selectedShape.getType() == 'IfNode')
-				this.addBody(code);
+				this.selectedShape.addBody(code);
 			else {
 				let id = this.selectedShape.getId();
 				let succ = this.selectedShape.getSucc();
@@ -443,7 +443,7 @@ export class ActivityService {
   */
 	changeTextElement(text: string) {
 		if (text.length > 18)
-			this.selectedElement.attr('text/text', text.substr(0,17)+'...');
+			this.selectedElement.attr('text/text', text.substr(0, 17) + '...');
 		else
 			this.selectedElement.attr('text/text', text);
 	}

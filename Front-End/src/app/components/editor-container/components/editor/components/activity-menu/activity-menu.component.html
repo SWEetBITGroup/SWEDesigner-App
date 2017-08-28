@@ -74,6 +74,10 @@
           <label>Valore</label>
           <input #valoreV id="valVar" type="text" [(ngModel)]="valVar" (keyup.enter)="declareVar()">
         </div>
+        <div [hidden]="!isArray()">
+          <label>Valore</label>
+          <input #valoreV id="valVar" type="text" [(ngModel)]="valVar" (keyup.enter)="declareVar()">
+        </div>
         <div [hidden]="this.tipoVar != 'char'">
           <label>Valore</label>
           <input #valoreV id="valChar" type="text" [(ngModel)]="valVar" maxlength="1" (keyup.enter)="declareVar()">

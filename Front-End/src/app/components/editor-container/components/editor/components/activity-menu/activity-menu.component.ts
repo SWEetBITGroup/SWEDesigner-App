@@ -31,7 +31,7 @@ export class ActivityMenuComponent {
   /**
   * This value rappresent the type list
   */
-	types = ['short', 'int', 'long', 'float', 'double', 'boolean', 'char', 'String'];
+	types = ['short', 'int', 'long', 'float', 'double', 'boolean', 'char', 'String', 'int[]', 'long[]','short[]','long[]','double[]','char[]','String[]'];
   /**
   * This value rappresent the mode of make the body
   */
@@ -182,7 +182,12 @@ export class ActivityMenuComponent {
     * This function check if the string is numeric
     */
     isNumeric() {
-      if (this.tipoVar != 'String' && this.tipoVar != 'char' && this.tipoVar != 'boolean')
+      if (this.tipoVar != 'short' && this.tipoVar != 'int' && this.tipoVar != 'long' && this.tipoVar != 'double' && this.tipoVar != 'float')
+        return false;
+      return true;
+    }
+    isArray() {
+      if (this.tipoVar != 'short' && this.tipoVar != 'int' && this.tipoVar != 'long' && this.tipoVar != 'double' && this.tipoVar != 'float' && this.tipoVar != 'char' && this.tipoVar != 'boolean' && this.tipoVar != 'String')
         return true;
       return false;
     }
@@ -229,7 +234,7 @@ export class ActivityMenuComponent {
           if (re.test(this.nomeVar))
             alert('Il nome della variabile non può iniziare con un numero o contenere spazi al suo interno');
           else {
-            if (this.valVar) {
+            if (this.valVar !== null) {
               this.confezionaVar();
               var code = this.tipoVar + ' ' + this.nomeVar + ' = ' + this.valVar;
             }
