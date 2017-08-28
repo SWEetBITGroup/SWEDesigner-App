@@ -156,17 +156,22 @@ export class ClassMenuService {
       }
       let stat = '';
       let final = '';
+      let attributes: string;
       if (staticAtt) {
         stat = 'static';
         attributi.push(vis + ' ' + stat + ' ' + nome + ' : ' + tipo);
+        attributes= vis + ' ' + stat + ' ' + nome + ' : ' + tipo;
       }
       else if (finalAtt) {
         final = 'final';
         attributi.push(vis + ' ' + final + ' ' + nome + ' : ' + tipo);
+        attributes= vis + ' ' + final + ' ' + nome + ' : ' + tipo;
       }
       else {
         attributi.push(vis + ' ' + nome + ' : ' + tipo);
+        attributes= vis + ' ' + nome + ' : ' + tipo;
       }
+      this.mainEditorService.getSelectedClasse().nomiAttributi.push(attributes);
       this.classe.set('attributes', null); // Hack per far funzionare l'event change:attrs
       this.classe.set('attributes', attributi);
       // Reset input field
@@ -250,6 +255,7 @@ export class ClassMenuService {
           vis = '-';
       }
       let parametri: String = '';
+      let methods: string;
       for (let ind = 0; ind < params.length; ind++) {
         parametri += params[ind].getNome() + ' : ' + params[ind].getTipo();
         if (ind != params.length - 1) {
@@ -260,7 +266,10 @@ export class ClassMenuService {
       if (staticMet) {
         st = 'static';
       }
+      methods= vis + ' ' + st + ' ' + nome + ' ( ' + parametri + ' ) : ' + tipo;
       metodi.push(vis + ' ' + st + ' ' + nome + ' ( ' + parametri + ' ) : ' + tipo);
+      let a= this.mainEditorService.getSelectedClasse().nomiMetodi;
+      this.mainEditorService.getSelectedClasse().nomiMetodi.push(methods);
       this.classe.set('methods', null); // Hack per far funzionare l'event change:attrs
       this.classe.set('methods', metodi);
       this.selectedAccMet = 'public';

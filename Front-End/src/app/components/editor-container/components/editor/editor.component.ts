@@ -435,8 +435,10 @@ export class EditorComponent implements OnInit {
   replaceDiagram(graph: JSON) {
     if (graph) {
       this.flagGraph = false;
-      if (!this.mainEditorService.getActivityModeStatus())
+      if (!this.mainEditorService.getActivityModeStatus()){
         this.mainEditorService.storeGraph(this.graph.toJSON());
+        this.activityService.resetMethodsAttributesClass();
+      }
       else
         this.flagGraph = true;
       this.graph.clear();

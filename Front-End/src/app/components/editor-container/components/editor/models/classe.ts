@@ -30,6 +30,9 @@ export class Classe {
 	private tipo = 'calsse';
 
 	private mainClass = false;
+
+	nomiMetodi  = new Array<string>();
+	nomiAttributi=new Array<string>();
 	/**
 	 * The constructor builds a new object of type Classe and sets it's name
 	 * @param nome the only parmeter used to build an object of type Classe

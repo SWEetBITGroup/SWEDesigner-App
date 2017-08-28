@@ -58,6 +58,14 @@ export class ActivityService {
   * This variable rappresent a variable
   */
 	private vars: string[];
+		/**
+  * This variable rappresent a the list of methods of the class
+  */
+	private methodsClass: string[];
+	/**
+  * This variable rappresent a the list of attributes of the class
+  */	
+	private attributesClass: string[];
   /**
   * Make an instance of ActivityShape
   * @param mainEditorService used to create a new instantiation of MainEditorService
@@ -446,5 +454,30 @@ export class ActivityService {
 			this.selectedElement.attr('text/text', text.substr(0, 17) + '...');
 		else
 			this.selectedElement.attr('text/text', text);
+	}
+
+		setMethodsClass() {
+		this.mainEditorService.getSelectedClasse().nomiMetodi.forEach(element => {
+			this.methodsClass.push(element);
+		});
+	}
+
+	setAttributesClass() {
+		this.mainEditorService.getSelectedClasse().nomiAttributi.forEach(element => {
+			this.attributesClass.push(element);
+		});
+	}
+
+	resetMethodsAttributesClass(){
+		if(this.methodsClass==undefined)
+			this.methodsClass= new Array<string>();
+		if(this.attributesClass==undefined)
+			this.attributesClass= new Array<string>();
+		if(this.methodsClass.length>0)
+			this.methodsClass.splice(0, this.methodsClass.length);
+		if(this.attributesClass.length>0)
+			this.attributesClass.splice(0, this.attributesClass.length)
+		this.setMethodsClass();
+		this.setAttributesClass();
 	}
 }
