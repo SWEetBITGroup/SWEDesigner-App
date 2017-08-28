@@ -122,7 +122,7 @@ export class ActivityMenuComponent {
     * @param corpo string code
     */
     generaOp(corpo: string) {
-      corpo = corpo.trim().normalize();
+      corpo = corpo.trim();
       this.activityService.addBody(corpo);
     }
     /**
@@ -150,11 +150,11 @@ export class ActivityMenuComponent {
         let re = new RegExp('^[0-9]+| +');
         if (re.test(this.nomeInd))
           alert("Il nome dell'indice non può contenere spazi o iniziare con un numero");
-        else if (this.nomeInd && this.valInd && this.maxInd)
-          var code = 'int ' + this.nomeInd + ' = ' + this.valInd + '; ' + this.nomeInd + ' ' + this.op +
-        ' ' + this.maxInd + '; ' + this.nomeInd + '++';
+        else if (this.nomeInd !== null && this.valInd !== null && this.maxInd !== null)
+          var code = 'int ' + this.nomeInd + ' = ' + this.valInd + '; ' + this.nomeInd + ' ' + this.op + 
+          ' ' + this.maxInd + '; ' + this.nomeInd + '++';
       } else
-			var code = this.nomeInd;
+			  var code = this.nomeInd;
       this.activityService.setDecisione('for', code);
       this.nomeInd = this.op = '';
       this.valInd = this.maxInd = 0;
