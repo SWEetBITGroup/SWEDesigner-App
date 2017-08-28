@@ -210,7 +210,7 @@ export class Metodo {
 		code += this.accesso;
 		if (this.statico)
 			code += ' static ';
-		code += this.tipoRitorno + ' ' + this.nome + '( ';
+		code += ' ' + this.tipoRitorno + ' ' + this.nome + '( ';
 		code += this.codeParams() + ') {\n';
 		code += this.shapeList.toCode() + '}\n';
 		return code;
