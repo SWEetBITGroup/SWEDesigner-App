@@ -180,17 +180,18 @@ app.listen(port, ()=>{
         else{
           const compiled = spawn("javac", ["./code/Main.java"]);
           compiled.on('close', (err)=>{
-            var zipOutput = fs.createWriteStream("./code/Main.zip");
+            var zipOutput = fs.createWriteStream("./code/zip/Main.zip");
             zipOutput.on('close', function () {
                 console.log(archive.pointer() + ' total bytes');
                 console.log('archiver has been finalized and the output file descriptor has closed.');
-                res.download("./code/Main.zip");
+                res.download("./code/zip/Main.zip");
             });
             archive.pipe(zipOutput);
-            var fileJava = "./code/Main.java";
+            /*var fileJava = "./code/Main.java";
             var fileClass = "./code/Main.class";
             archive.append(fs.createReadStream(fileJava), { name: 'Main.java' });
-            archive.append(fs.createReadStream(fileClass), { name: 'Main.class' });
+            archive.append(fs.createReadStream(fileClass), { name: 'Main.class' });*/
+            archive.directory("./code", true, {date: new Date()});
             archive.finalize();
           })
         }
