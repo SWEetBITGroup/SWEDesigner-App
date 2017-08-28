@@ -180,11 +180,11 @@ app.listen(port, ()=>{
         else{
           const compiled = spawn("javac", ["./code/Main.java"]);
           compiled.on('close', (err)=>{
-            var zipOutput = fs.createWriteStream("./code/zip/Main.zip");
+            var zipOutput = fs.createWriteStream("./zip/Main.zip");
             zipOutput.on('close', function () {
                 console.log(archive.pointer() + ' total bytes');
                 console.log('archiver has been finalized and the output file descriptor has closed.');
-                res.download("./code/zip/Main.zip");
+                res.download("./zip/Main.zip");
             });
             archive.pipe(zipOutput);
             /*var fileJava = "./code/Main.java";

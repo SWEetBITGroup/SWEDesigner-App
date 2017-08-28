@@ -1,7 +1,7 @@
 class Ciao {
 
 public void hello( ) {
-System.out.println("dioporco");
+System.out.println("diocane");
 }
 
 
@@ -11,10 +11,10 @@ public class Main extends Ciao {
 
 public static  void main( String[] args) {
 Main x = new Main();
-x.culo();
+x.diocane();
 }
 
-public void culo( ) {
+public void diocane( ) {
 super.hello();
 }
 
