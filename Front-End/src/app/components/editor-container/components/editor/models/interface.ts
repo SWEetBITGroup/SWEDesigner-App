@@ -81,7 +81,7 @@ export class Interface extends Classe {
 			meths += meth.getAccesso() + ' ';
 			if (meth.isStatic())
 				meths += 'static ';
-			meths += meth.getTipoRitorno() + ' ' + meth.getNome() + '( ' + meth.codeParams() + ');/n';
+			meths += meth.getTipoRitorno() + ' ' + meth.getNome() + '( ' + meth.codeParams() + ');\n';
 		});
 		return meths;
 	}
