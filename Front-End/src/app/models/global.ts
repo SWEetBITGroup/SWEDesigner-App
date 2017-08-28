@@ -194,7 +194,7 @@ export class Global {
       this.nome_progetto = projName;
     }
     this.username = usr;
-    return JSON.stringify(this);;
+    return JSON.stringify(this);
   }
   toJSONk(usr: string, projName: string){
     let proj = {
