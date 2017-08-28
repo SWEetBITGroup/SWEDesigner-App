@@ -61,11 +61,11 @@ export class ActivityService {
 		/**
   * This variable rappresent a the list of methods of the class
   */
-	private methodsClass: string[];
+	private methodsClass= new Array<string>();
 	/**
   * This variable rappresent a the list of attributes of the class
   */	
-	private attributesClass: string[];
+	private attributesClass= new Array<string>();
   /**
   * Make an instance of ActivityShape
   * @param mainEditorService used to create a new instantiation of MainEditorService
@@ -122,6 +122,9 @@ export class ActivityService {
 		//this.startID = graphElement.id;
 		this.mainEditorService.addShape(graphElement);
 		this.shapeList.addShape(new Start(graphElement.id));
+		this.methodsClass.forEach(element => {
+			console.log(element)
+		});
 	}
   /**
   * This function connect the logic of the end with grafic shape
@@ -469,10 +472,6 @@ export class ActivityService {
 	}
 
 	resetMethodsAttributesClass(){
-		if(this.methodsClass==undefined)
-			this.methodsClass= new Array<string>();
-		if(this.attributesClass==undefined)
-			this.attributesClass= new Array<string>();
 		if(this.methodsClass.length>0)
 			this.methodsClass.splice(0, this.methodsClass.length);
 		if(this.attributesClass.length>0)
