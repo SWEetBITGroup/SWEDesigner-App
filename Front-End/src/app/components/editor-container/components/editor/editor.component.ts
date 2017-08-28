@@ -504,16 +504,13 @@ selectElementsToConnect(cell: any) {
               let element1 = this.elementToConnect;
               let freccia;
               if(this.connettore.attributes.type == 'uml.Implementation'
-              &&element1.model.attributes.type=='uml.Interface'){
-								console.log(element1.model.attributes.name[0])
+              && element1.model.attributes.type=='uml.Interface'){
 								this.mainEditorService.getClass(cell.model.attributes.name).addInterface(element1.model.attributes.name[0]);
                 freccia = new this.connettore.constructor({
                   source: { id: cell.model.id },
                   target: {id: element1.model.id }
               });
-             } 
-              else{
-                this.mainEditorService.getClass(cell.model.attributes.name).addInterface(cell.model.attributes.name[0]);
+             } else if(!(this.connettore.attributes.type == 'uml.Implementation')){
                 freccia = new this.connettore.constructor({
                   source: {id: element1.model.id },
                   target: {id: cell.model.id }
