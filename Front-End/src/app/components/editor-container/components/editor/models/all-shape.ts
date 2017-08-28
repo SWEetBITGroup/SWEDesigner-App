@@ -153,20 +153,24 @@ export class AllShape {
         ifNode.setSucc(s.succ);
         ifNode.setSuccElse(s.succElse);
         ifNode.setBody(s.body);
+        return ifNode;
       case 'WhileNode':
         let wf = new WhileNode(s.id);
         if (s._for)
           wf.setFor(true);
         wf.setSucc(s.succ);
         wf.setBody(s.body);
+        return wf;
       case 'Operation':
         let op = new Operation(s.id);
         op.setOperationType(s.operationType);
         op.setBody(s.body);
         op.setSucc(s.succ);
+        return op
       case 'MergeNode':
         let mer = new MergeNode(s.id);
         mer.setSucc(s.succ);
+        return mer;
     }
   }
 
