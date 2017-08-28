@@ -88,7 +88,7 @@ export class Interface extends Classe {
 
 	toCode() {
 		let code: string;
-		code = 'interface ' + this.getNome() + '{\n';
+		code = 'interface ' + this.getNome() + ' {\n';
 		code += this.codeMetodiInt() + '\n}\n';
 		return code;
 	}

@@ -513,6 +513,7 @@ selectElementsToConnect(cell: any) {
               });
              } 
               else{
+                this.mainEditorService.getClass(cell.model.attributes.name).addInterface(cell.model.attributes.name[0]);
                 freccia = new this.connettore.constructor({
                   source: {id: element1.model.id },
                   target: {id: cell.model.id }
