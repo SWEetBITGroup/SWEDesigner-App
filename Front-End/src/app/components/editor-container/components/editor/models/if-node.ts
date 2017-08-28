@@ -8,6 +8,8 @@ export class IfNode extends Shape {
   * This variable refers to the else statement
   */
   private succElse: string;
+
+  private type = 'IfNode';
   /**
   * Make an instance of IfNode
   * @param id shape's id

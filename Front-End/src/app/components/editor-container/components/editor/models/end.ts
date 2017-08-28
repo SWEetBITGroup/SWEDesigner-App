@@ -4,6 +4,8 @@ import {AllShape} from './all-shape';
 * This class rappresent the uml end shape
 */
 export class End extends Shape{
+  
+  private type = 'End';
   /**
   * Make an instance of End
   * @param id shape id

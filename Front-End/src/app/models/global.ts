@@ -1,6 +1,6 @@
-import { Classe }     from '../components/editor-container/components/editor/models/classe';
-import { Metodo }     from '../components/editor-container/components/editor/models/metodo';
-import { Param }      from '../components/editor-container/components/editor/models/param';
+import { Classe } from '../components/editor-container/components/editor/models/classe';
+import { Metodo } from '../components/editor-container/components/editor/models/metodo';
+import { Param } from '../components/editor-container/components/editor/models/param';
 
 
 /**
@@ -28,9 +28,9 @@ export class Global {
   * This function create a new class
   * @param nome the name of class
   */
-  addClasse(nome: string){
+  addClasse(nome: string) {
     this.classi.forEach(c => {
-      if(c.getNome() == nome) throw new Error('NomePresente');
+      if (c.getNome() == nome) throw new Error('NomePresente');
     })
     let c;
     c = new Classe(nome);
@@ -40,14 +40,14 @@ export class Global {
   * This function change the project name
   * @param titolo this value is the new project name
   */
-  changeTitolo(titolo: string){
+  changeTitolo(titolo: string) {
     this.nome_progetto = titolo;
   }
   /**
   * This function reset the diagram
   * @param diagramma this i diagramma value
   */
-  setDiagramma(diagramma: string){
+  setDiagramma(diagramma: string) {
     this.diagramma = diagramma;
   }
   /**
@@ -60,19 +60,19 @@ export class Global {
   /**
   * This function return the diagram string
   */
-  getDiagramma(){
+  getDiagramma() {
     return this.diagramma;
   }
   /**
   * This function return the project name
   */
-  getTitolo(){
+  getTitolo() {
     return this.nome_progetto;
   }
   /**
   * This function return the class list
   */
-  public getClassi(){
+  public getClassi() {
     return this.classi;
   }
   /**
@@ -82,7 +82,7 @@ export class Global {
   getClasse(name: string) {
     let classe;
     this.classi.forEach(c => {
-      if(c.getNome() == name)
+      if (c.getNome() == name)
         classe = c;
     });
     return classe;
@@ -104,9 +104,9 @@ export class Global {
   * @param name name of the class
   */
   removeClass(name: string) {
-    for(let i=0;i<this.classi.length;i++){
-      if(this.classi[i].getNome() == name)
-        this.classi.splice(i,1);
+    for (let i = 0; i < this.classi.length; i++) {
+      if (this.classi[i].getNome() == name)
+        this.classi.splice(i, 1);
     }
   }
   /**
@@ -115,8 +115,9 @@ export class Global {
   */
   import(proj: any) {
     this.setName(proj.nome_progetto);
-    this.setDiagramma(JSON.stringify(proj.project.graph));
-    this.generateClassArray(proj.project.classi);
+    this.main = proj.main;
+    this.setDiagramma(JSON.stringify(proj.diagramma));
+    this.generateClassArray(proj.classi);
   }
   /**
   * This function generate the string of class information
@@ -124,10 +125,16 @@ export class Global {
   */
   generateClassArray(classArray) {
     classArray.forEach(classe => {
-      let c = new Classe(classe.name);
-      this.generateMethods(c,classe.methods);
-      this.generateAttributes(c,classe.attributes);
-      c.addSuperclass(classe.superclass);
+      let c = new Classe(classe.nome);
+      c.setMain = classe.mainClass;
+      this.generateMethods(c, classe.metodi);
+      this.generateAttributes(c, classe.attributi);
+      c.addSuperclass(classe.classePadre);
+      if (classe.interfaces)
+        classe.interfaces.forEach(i => {
+          c.addInterface(i);
+        });
+      console.log(c);
       this.classi.push(c);
     });
   }
@@ -138,76 +145,77 @@ export class Global {
   */
   generateMethods(classe: Classe, methods) {
     methods.forEach(met => {
-      let m = new Metodo(met.statico,met.costruttore,met.nome,
-        met.accesso,met.tipo,this.generateParams(met.listaArgomenti));
-        m.addDiagram(met.diagramma);
-        classe.addMetodo(m);
-      });
-    }
-    /**
-    * This function generate the parameter string
-    * @param params the list of parameter in the method
-    */
-    generateParams(params) {
-      let parametri = new Array<Param>();
-      params.forEach(param => {
-        parametri.push(new Param(param.name,param.type));
-      });
-      return parametri;
-    }
-    /**
-    * This function generate the attribute string
-    * @param classe class where the method is
-    * @param attributi class'attribute
-    */
-    generateAttributes(classe: Classe, attributi) {
-      attributi.forEach(att => {
-        classe.addAttributo(att.type,att.name,att.visibility,att.staticAtt, att.finalAtt);
-      });
-    }
-    /**
-    * This function trasform the project in a JSON file
-    * @param usr username
-    * @param projName the project name selected
-    */
-    toJSON(usr: String, projName: string){
-      if (projName) {
-        this.nome_progetto = projName;
-      }
-      let global = '{\"username\":\"'+usr+'\",\"nome_progetto\":\"'+this.nome_progetto+
-      '\",\"project\":{\"graph\":'+ JSON.stringify(this.diagramma) +
-      ',\"classi\":'+JSON.stringify(this.classi)+'}}';
-      return global;
-    }
-    /**
-    * This function return all the class information
-    * @param x this value refers to a class
-    */
-    getInfoClasse(x){
-      let info = new Array();
-      x.forEach((element, i) => {
-        let classe = element.toMU();
-        if(i!= x.length-1) classe += ',';
-        info.push(classe);
-      });
-      return info;
-    }
-    /**
-    * This function help to trasform the project into a JSON file
-    */
-    toMU(){
-      let global = '{'+
-      JSON.stringify(this.getInfoClasse(this.classi))
-      +'}';
-      console.log(global);
-      return JSON.stringify(global);
-    }
-
-    toCode() {
-      let code = '';
-      this.classi.forEach(cl => {
-        code += cl.toCode() + '\n'; 
-      });
-      return code;
-    }
+      let m = new Metodo(met.statico, met.costruttore, met.nome,
+        met.accesso, met.tipoRitorno, this.generateParams(met.listaArgomenti));
+      m.addDiagram(met.diagramma);
+      m.addShapelist(met.shapeList);
+      m.changeTipoRitorno(met.tipoRitorno);
+      classe.addMetodo(m);
+    });
   }
+  /**
+  * This function generate the parameter string
+  * @param params the list of parameter in the method
+  */
+  generateParams(params) {
+    let parametri = new Array<Param>();
+    params.forEach(param => {
+      parametri.push(new Param(param.name, param.type));
+    });
+    return parametri;
+  }
+  /**
+  * This function generate the attribute string
+  * @param classe class where the method is
+  * @param attributi class'attribute
+  */
+  generateAttributes(classe: Classe, attributi) {
+    attributi.forEach(att => {
+      classe.addAttributo(att.type, att.name, att.visibility, att.staticAtt, att.finalAtt);
+    });
+  }
+  private username: string;
+  /**
+  * This function trasform the project in a JSON file
+  * @param usr username
+  * @param projName the project name selected
+  */
+  toJSONx(usr: string, projName: string) {
+    if (projName) {
+      this.nome_progetto = projName;
+    }
+    this.username = usr;
+    return JSON.stringify(this);;
+  }
+  /**
+  * This function return all the class information
+  * @param x this value refers to a class
+  */
+  getInfoClasse(x) {
+    let info = new Array();
+    x.forEach((element, i) => {
+      let classe = element.toMU();
+      if (i != x.length - 1) classe += ',';
+      info.push(classe);
+    });
+    return info;
+  }
+  /**
+  * This function help to trasform the project into a JSON file
+  */
+  toMU() {
+    let global = '{' +
+      JSON.stringify(this.getInfoClasse(this.classi))
+      + '}';
+    console.log(global);
+    return JSON.stringify(global);
+  }
+
+  toCode() {
+    let code = '';
+    this.classi.forEach(cl => {
+      code += cl.toCode() + '\n';
+    });
+    return code;
+  }
+}

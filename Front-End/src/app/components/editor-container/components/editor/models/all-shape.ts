@@ -1,5 +1,10 @@
 import { Shape } from "./shape";
-import { IfNode } from "./if-node"
+import { IfNode } from "./if-node";
+import { WhileNode } from './while-node';
+import { Operation } from './operation';
+import { Start } from './start';
+import { End } from './end';
+import { MergeNode } from './merge-node';
 
 /**
 * This class is the abstract of all the shapes
@@ -98,20 +103,20 @@ export class AllShape {
   * @param id shape's id
   */
   removeShape(id: string) {
-		let ind;
-    this.allShap.forEach((e,index) => {
-			if (e.getId() == id)
-				ind = index;
-		});
-		this.allShap.splice(ind,1);
+    let ind;
+    this.allShap.forEach((e, index) => {
+      if (e.getId() == id)
+        ind = index;
+    });
+    this.allShap.splice(ind, 1);
     this.allShap.forEach(el => {
-      if(el.getSucc() == id) {
-				el.setSucc('');
-			}
-			if(el.getType() == 'IfNode' && (<IfNode>el).getSuccElse() == id) {
-				(<IfNode>el).setSuccElse('');
-			}
-		});
+      if (el.getSucc() == id) {
+        el.setSucc('');
+      }
+      if (el.getType() == 'IfNode' && (<IfNode>el).getSuccElse() == id) {
+        (<IfNode>el).setSuccElse('');
+      }
+    });
   }
   /**
    * This function convert the shape into code string
@@ -133,6 +138,42 @@ export class AllShape {
     }
     else
       return '';
+  }
+
+  generateShape(s: any) {
+    switch (s.type) {
+      case 'Start':
+        let start = new Start(s.id);
+        start.setSucc(s.succ);
+        return start;
+      case 'End':
+        return new End(s.id);
+      case 'IfNode':
+        let ifNode = new IfNode(s.id);
+        ifNode.setSucc(s.succ);
+        ifNode.setSuccElse(s.succElse);
+        ifNode.setBody(s.body);
+      case 'WhileNode':
+        let wf = new WhileNode(s.id);
+        if (s._for)
+          wf.setFor(true);
+        wf.setSucc(s.succ);
+        wf.setBody(s.body);
+      case 'Operation':
+        let op = new Operation(s.id);
+        op.setOperationType(s.operationType);
+        op.setBody(s.body);
+        op.setSucc(s.succ);
+      case 'MergeNode':
+        let mer = new MergeNode(s.id);
+        mer.setSucc(s.succ);
+    }
+  }
+
+  fromJSON(list: any) {
+    list.allShap.forEach(s => {
+      this.allShap.push(this.generateShape(s));
+    });
   }
 
 }

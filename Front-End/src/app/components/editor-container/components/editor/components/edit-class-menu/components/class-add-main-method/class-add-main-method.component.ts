@@ -22,9 +22,11 @@ export class ClassAddMainMethodComponent {
   * This function add the main function to the target class
   */
   addMain() {
-    this.classMenuService.setMain();
-    this.classMenuService.parametriMetodo.push( new Param ('String[]', 'args') );
-    this.classMenuService.addMetodo('main', true, false, 'void', 'public', this.classMenuService.parametriMetodo);
+    if (!this.classMenuService.isThereAMain()) {
+      this.classMenuService.setMain();
+      this.classMenuService.parametriMetodo.push( new Param ('String[]', 'args') );
+      this.classMenuService.addMetodo('main', true, false, 'void', 'public', this.classMenuService.parametriMetodo);
+    }
   }
 
 }

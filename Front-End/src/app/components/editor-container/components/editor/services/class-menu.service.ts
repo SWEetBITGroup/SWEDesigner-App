@@ -78,10 +78,6 @@ export class ClassMenuService {
   */
   costruttore: boolean;
   /**
-  * Used to store the information if main method is added
-  */
-  isThereAMain: boolean = false;
-  /**
   * Used to point to a HTML checkbox element
   */
   @ViewChild('staticMet') staticMetCheckbox: ElementRef;
@@ -286,9 +282,6 @@ export class ClassMenuService {
     this.classe.set('methods', null);
     this.classe.set('methods', metodi);
     this.mainEditorService.removeMetodo(nome);
-    if (nome == 'main') {
-      this.isThereAMain = false;
-    }
   }
   /**
   * Set the editor in activity mode to modify the behavior of the method of the given name
@@ -326,9 +319,19 @@ export class ClassMenuService {
     }
   }
 
+  isThereAMain() {
+    let m = false;
+    this.mainEditorService.getClassList().forEach(c => {
+      if (c.hasMain())
+        m = true;
+    });
+    return m;
+  }
+
   setMain() {
-    this.isThereAMain = true;
+    console.log(this.mainEditorService.getSelectedClasse());
     this.mainEditorService.getSelectedClasse().setMain();
+    console.log(this.mainEditorService.getSelectedClasse());
   }
   // JQUERY FUNCTION
   closeAllCollapsedList() {

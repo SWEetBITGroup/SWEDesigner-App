@@ -4,6 +4,8 @@ import { AllShape } from './all-shape';
 * This class rappresent the UML activity operation
 */
 export class Operation extends Shape {
+
+  private type = 'Operation';
   /**
   * Make an instance of Operation
   * @param id shape's id

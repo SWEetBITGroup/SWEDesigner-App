@@ -8,6 +8,8 @@ export class WhileNode extends Shape {
   * This variable check if the for loop is required
   */
   _for = false;
+
+  private type = 'WhileNode';
   /**
   * Make an instance of WhileNode
   * @param id shape's id

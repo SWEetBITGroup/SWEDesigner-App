@@ -194,6 +194,10 @@ export class Metodo {
 		return paramString;
 	}
 
+	addShapelist(shapelist: JSON) {
+		this.shapeList.fromJSON(shapelist);
+	}
+
 	codeParams() {
 		let par = '';
 		this.listaArgomenti.forEach((pars, index) => {

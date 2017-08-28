@@ -38,7 +38,7 @@ export class FileComponent implements OnInit {
     save(projName: string){
       if(this.accountService.notOpenedProj == true){
         this.mainEditorService.retriveGraph();
-        let fileJSON = JSON.parse(this.mainEditorService.getProject().toJSON(this.accountService.username, projName));
+        let fileJSON = JSON.parse(this.mainEditorService.getProject().toJSONx(this.accountService.username, projName));
         fileJSON.project = JSON.stringify(fileJSON.project);
         // console.log(fileJSON);
         this.nome_progetto = projName;
@@ -71,7 +71,8 @@ export class FileComponent implements OnInit {
     */
     updateProj(){
       this.mainEditorService.retriveGraph();
-      let fileJSON = JSON.parse(this.mainEditorService.getProject().toJSON(this.accountService.username, this.accountService.projName));
+      console.log(JSON.parse(this.mainEditorService.getProject().toJSONx(this.accountService.username, this.accountService.projName)));
+      let fileJSON = JSON.parse(this.mainEditorService.getProject().toJSONx(this.accountService.username, this.accountService.projName));
       fileJSON.project = JSON.stringify(fileJSON.project);
       //this.nome_progetto = projName;
       this.menuService.updateData(fileJSON, function(err){
@@ -94,8 +95,8 @@ export class FileComponent implements OnInit {
     */
     export() {
       this.mainEditorService.retriveGraph();
-      //console.log("progetto " + (this.mainEditorService.getProject().toJSON(this.accountService.username)));
-      this.menuService.encrypt(JSON.parse(this.mainEditorService.getProject().toJSON(this.accountService.username, this.nome_progetto)));
+      console.log(JSON.parse(this.mainEditorService.getProject().toJSONx(this.accountService.username, this.accountService.projName)));
+      this.menuService.encrypt(JSON.parse(this.mainEditorService.getProject().toJSONx(this.accountService.username, this.nome_progetto)));
     }
     /**
     * This function imports the project selected by the file

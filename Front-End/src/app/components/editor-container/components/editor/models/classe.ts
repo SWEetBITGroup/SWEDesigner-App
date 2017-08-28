@@ -225,13 +225,13 @@ export class Classe {
 	/**
 	 * Override of the toJSON function
 	 */
-	toJSON() {
-		let classe = '{\"name\":\"' + this.nome + '\",\"attributes\":' +
-			JSON.stringify(this.attributi) + ',\"methods\":' +
-			JSON.stringify(this.metodi) + ',\"superclass\":"' +
-			this.classePadre + '\"}';
-		return JSON.parse(classe);
-	}
+	// toJSON() {
+	// 	let classe = '{\"name\":\"' + this.nome + '\",\"attributes\":' +
+	// 		JSON.stringify(this.attributi) + ',\"methods\":' +
+	// 		JSON.stringify(this.metodi) + ',\"superclass\":"' +
+	// 		this.classePadre + '\"}';
+	// 	return JSON.parse(classe);
+	// }
 
 	retrieveAttr(visibility: string) {
 		let attr = new Array<Attributo>();
@@ -326,57 +326,4 @@ export class Classe {
 		return code;
 	}
 
-	toMU() {
-		let program;
-		let attListPrivate = this.retrieveAttr('private');
-		let attListPublic = this.retrieveAttr('public');
-		let methListPrivate = this.retrieveMeth('private');
-		let methListPublic = this.retrieveMeth('public');
-		let pub;
-		let priv;
-		if (attListPrivate.length == 0) {
-			priv = false;
-		}
-		else {
-			priv = true;
-		}
-		if (attListPublic.length == 0) {
-			pub = false;
-		}
-		else {
-			pub = true;
-		}
-		if (pub && !priv) {
-			console.log(this.getInfoAttr(attListPublic));
-			program = {
-				name: this.nome,
-				public: true,
-				attrPU: this.getInfoAttr(attListPublic),
-				methodsPU: [
-
-				]
-			}
-		} else if (!pub && priv) {
-			program = {
-				name: this.nome,
-				private: true,
-				attrP: [
-					JSON.stringify(this.getInfoAttr(attListPrivate))
-				]
-			}
-		} else if (pub & priv) {
-			program = {
-				name: this.nome,
-				private: true,
-				attrP: [
-					JSON.stringify(this.getInfoAttr(attListPrivate))
-				],
-				public: true,
-				attrPU: [
-					JSON.stringify(this.getInfoAttr(attListPublic))
-				]
-			}
-		}
-		return JSON.stringify(program);
-	}
 }
