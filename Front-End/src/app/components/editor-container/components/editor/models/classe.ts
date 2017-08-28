@@ -27,6 +27,8 @@ export class Classe {
 		*/
 	private interfaces = new Array<string>();
 
+	private tipo = 'calsse';
+
 	private mainClass = false;
 	/**
 	 * The constructor builds a new object of type Classe and sets it's name
@@ -82,6 +84,10 @@ export class Classe {
 	 */
 	changeNome(name: string) {
 		this.nome = name;
+	}
+
+	setTipo(t: string) {
+		this.tipo = t;
 	}
 
 	/**

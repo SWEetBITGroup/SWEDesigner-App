@@ -46,13 +46,25 @@ class MetodiAstratti{
       return true;
     }
 
+    codeMetodiAb() {
+      let meths = '';
+      super.getMetodi().forEach(meth => {
+        meths += meth.getAccesso() + ' ';
+        if (meth.isStatic())
+          meths += 'static ';
+        meths += meth.getTipoRitorno() + ' ' + meth.getNome() + '( ' + meth.codeParams() + ');/n';
+      });
+      return meths;
+    }
+
     /**
     * This method parse the selected class and transform it into a JSON format
     */
-    toJSON() {
-      let classe = '{"name":"'+super.getNome()+'","attributes":'+
-      JSON.stringify(super.getAttributi)+',"methods":'+
-      JSON.stringify(super.getMetodi)+',"abstract-methods":'+
-      JSON.stringify(this.abstractMethods)+'}';
+    toCode() {
+      let code: string;
+      code = 'abstract class ' + this.getNome() + '{\n';
+      code += this.codeAttributes() + '\n';
+      code += this.codeMetodiAb() + '\n}\n';
+      return code;
     }
   }

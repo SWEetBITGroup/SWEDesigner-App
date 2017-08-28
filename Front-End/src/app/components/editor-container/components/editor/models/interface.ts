@@ -12,6 +12,7 @@ export class Interface extends Classe {
 	// abstractMethods = new Array<MetodiAstratti>();
 	constructor(nome: string) {
 		super(nome);
+		super.setTipo('interface');
 	}
 
 	// addAbstractMethods(nome: string, tipo: string, listaParam: string[]) {
@@ -74,7 +75,21 @@ export class Interface extends Classe {
 		return true;
 	}
 
+	codeMetodiInt() {
+		let meths = '';
+		super.getMetodi().forEach(meth => {
+			meths += meth.getAccesso() + ' ';
+			if (meth.isStatic())
+				meths += 'static ';
+			meths += meth.getTipoRitorno() + ' ' + meth.getNome() + '( ' + meth.codeParams() + ');/n';
+		});
+		return meths;
+	}
+
 	toCode() {
 		let code: string;
+		code = 'interface ' + this.getNome() + '{\n';
+		code += this.codeMetodiInt() + '\n}\n';
+		return code;
 	}
 }

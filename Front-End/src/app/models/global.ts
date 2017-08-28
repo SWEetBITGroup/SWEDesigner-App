@@ -1,4 +1,5 @@
 import { Classe } from '../components/editor-container/components/editor/models/classe';
+import { Interface } from '../components/editor-container/components/editor/models/interface';
 import { Metodo } from '../components/editor-container/components/editor/models/metodo';
 import { Param } from '../components/editor-container/components/editor/models/param';
 
@@ -125,17 +126,24 @@ export class Global {
   */
   generateClassArray(classArray) {
     classArray.forEach(classe => {
-      let c = new Classe(classe.nome);
-      this.generateMethods(c, classe.metodi);
-      this.generateAttributes(c, classe.attributi);
-      c.addSuperclass(classe.classePadre);
-      c.setMain(classe.mainClass);
-      if (classe.interfaces)
-        classe.interfaces.forEach(i => {
-          c.addInterface(i);
-        });
-      console.log(c);
-      this.classi.push(c);
+      if (classe.tipo == 'interface') {
+        var i = new Interface(classe.nome);
+        this.generateMethods(i, classe.metodi);
+        this.classi.push(i);
+      } else {
+        var c = new Classe(classe.nome);
+        this.generateMethods(c, classe.metodi);
+        this.generateAttributes(c, classe.attributi);
+        c.addSuperclass(classe.classePadre);
+        c.setMain(classe.mainClass);
+        if (classe.interfaces)
+          classe.interfaces.forEach(i => {
+            c.addInterface(i);
+          });
+        console.log(c);
+        this.classi.push(c);
+      }
+      
     });
   }
   /**
