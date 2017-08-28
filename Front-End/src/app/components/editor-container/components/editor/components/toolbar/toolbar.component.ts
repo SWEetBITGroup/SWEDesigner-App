@@ -52,7 +52,7 @@ export class ToolbarComponent implements OnInit {
   * Method add class to editor
   */
 	addClasse() {
-		let nomeClasse = 'Classe#' + this.classCouter++;
+		let nomeClasse = 'Classe_' + this.classCouter++;
 		let uml = joint.shapes.uml;
 		let classe = new uml.Class({
 			position: { x: 0, y: 0 },
@@ -94,7 +94,7 @@ export class ToolbarComponent implements OnInit {
   * Method add interface to editor
   */
 	addInterfaccia() {
-		let nomeInterf = 'Interfaccia#' + this.interCounter++;
+		let nomeInterf = 'Interfaccia_' + this.interCounter++;
 		let uml = joint.shapes.uml;
 		let interfaccia = new uml.Interface({
 			position: { x: 0, y: 120 },
@@ -138,7 +138,7 @@ export class ToolbarComponent implements OnInit {
   */
 	addAstratta() {
 		let uml = joint.shapes.uml;
-		let nomeClassAbst = 'ClasseAstratta#' + this.abstCounter++;
+		let nomeClassAbst = 'ClasseAstratta_' + this.abstCounter++;
 		let abstract = new uml.Abstract({
 			position: { x: 0, y: 240 },
 			size: { width: 300, height: 160 },
