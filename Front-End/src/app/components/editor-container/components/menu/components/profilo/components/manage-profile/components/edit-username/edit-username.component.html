@@ -4,11 +4,12 @@
           <div class="input-group">
             <span class="input-group-addon">
               <i class="glyphicon glyphicon-user"></i>
-            </span>  
+            </span>
             <input type="text" class="form-control" placeholder="Username" required
             [(ngModel)]="newUsername" name="username"
-            id="username" />
+            id="username"
+            placeholder="{{this.accountService.username}}" />
           </div>
-          <input type="submit" class="btn btn-warning" value="Modifica username" [disabled]="!changeUsernameForm.form.valid"/> 
+          <input type="submit" class="btn btn-warning" value="Modifica username" [disabled]="!changeUsernameForm.form.valid"/>
         </div></form>
 </div>

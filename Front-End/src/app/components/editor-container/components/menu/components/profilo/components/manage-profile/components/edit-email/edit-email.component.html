@@ -4,12 +4,13 @@
           <div class="input-group">
             <span class="input-group-addon">
               <i class="glyphicon glyphicon-envelope"></i>
-            </span>  
+            </span>
             <input type="email" class="form-control" placeholder="Email" required
             ngModel email
             [(ngModel)]="newEmail" name="email"
-            id="email" />
+            id="email"
+            placeholder="{{this.accountService.email}}" />
           </div>
-          <input type="submit" class="btn btn-warning" value="Modifica email" [disabled]="!changeEmailForm.form.valid"/> 
+          <input type="submit" class="btn btn-warning" value="Modifica email" [disabled]="!changeEmailForm.form.valid"/>
         </div></form>
 </div>
