@@ -325,6 +325,8 @@ export class ClassMenuService {
   * @memberof ClassMenuService
   */
   removeClass(name: string, classe: Classe) {
+    console.log(this.mainEditorService.getSelectedClasse().getNome());
+    name = this.mainEditorService.getSelectedClasse().getNome();
     this.mainEditorService.removeClass(name, classe);
     this.types.forEach(element => {
       if(element==name) 
