@@ -44,6 +44,7 @@ export class WhileNode extends Shape {
   toCode(sh: AllShape, code: string) {
     if (!this.getPrinted()) {
       this.setPrinted(true);
+      console.log('passo');
       sh.addStatement(this.getId());
       if (this.isFor())
         code += 'for( ' + this.getBody() + ' ) {\n';

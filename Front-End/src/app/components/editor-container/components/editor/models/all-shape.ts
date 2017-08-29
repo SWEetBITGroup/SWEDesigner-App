@@ -175,7 +175,9 @@ export class AllShape {
   }
 
   fromJSON(list: any) {
+    console.log(list);
     list.allShap.forEach(s => {
+      console.log(this.generateShape(s));
       this.allShap.push(this.generateShape(s));
     });
   }
